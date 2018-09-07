@@ -48,10 +48,10 @@ jobs:
       - save_cache:
           name: Saving nmb2b-xsd in cache for future builds
           paths:
-            - /tmp/b2b-xsd
+            - ./b2b-xsd
           key: b2b-xsd
 
-      - run: ls /tmp/b2b-xsd/
+      - run: ls ./b2b-xsd/
 
 
       # Typecheck the library
