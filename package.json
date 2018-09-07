@@ -15,7 +15,7 @@
     "clean": "rimraf dist",
     "build": "yarn clean && node ./scripts/build.js",
     "test": "jest",
-    "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit",
+    "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
     "flow": "flow"
   },
   "files": [
@@ -38,6 +38,7 @@
     "@babel/preset-flow": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^23.4.2",
+    "codecov": "^3.1.0",
     "dotenv": "6.0.0",
     "flow-bin": "0.80.0",
     "flow-copy-source": "2.0.2",
