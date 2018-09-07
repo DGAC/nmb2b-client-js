@@ -11,14 +11,18 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      # Download and cache dependencies
-      - run: echo "$NM_B2B_PEM" > /tmp/client.pem
-      - run: echo "$NM_B2B_PEM_KEY" > /tmp/client.key.pem
-      - run: export B2B_CERT=/tmp/client.pem
-      - run: export B2B_CERT_KEY=/tmp/client.key.pem
-      - run: export B2B_CERT_PASSPHRASE=$NM_B2B_PASSPHRASE
-      - run: export B2B_CERT_FORMAT=pem
+      - run:
+          name: Setup B2B client certificate
+          command: |
+            echo "$NM_B2B_PEM" > /tmp/client.pem
+            echo "$NM_B2B_PEM_KEY" > /tmp/client.key.pem
+            echo 'export B2B_CERT=/tmp/client.pem' >> $BASH_ENV
+            echo 'export B2B_CERT_KEY=/tmp/client.key.pem' >> $BASH_ENV
+            echo 'export B2B_CERT_PASSPHRASE=$NM_B2B_PASSPHRASE' >> $BASH_ENV
+            echo 'export B2B_CERT_FORMAT=pem' >> $BASH_ENV
+            echo 'export B2B_FLAVOUR=preops' >> $BASH_ENV
 
+      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
@@ -29,6 +33,11 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: ls /tmp/client.pem
+      - run: echo $B2B2B_CERT_FORMAT
+      - run: head -n 10 /tmp/client.pem
+
       # Build the library
       - run: yarn build
       # Typecheck the library
