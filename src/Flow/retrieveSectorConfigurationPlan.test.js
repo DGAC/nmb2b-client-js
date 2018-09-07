@@ -61,7 +61,7 @@ describe('retrieveSectorConfigurationPlan', () => {
             unt: expect.any(Date),
           },
           dataSource: expect.any(String),
-          sectorConfigurationId: expect.any(String),
+          // sectorConfigurationId: expect.any(String),
         });
 
         expect(keys).toContain(conf.sectorConfigurationId);
