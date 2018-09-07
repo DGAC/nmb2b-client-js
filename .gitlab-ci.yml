@@ -1,0 +1,22 @@
+image: node:8.11.4
+
+before_script:
+  - echo "$NM_B2B_PEM" > /tmp/client.pem
+  - echo "$NM_B2B_PEM_KEY" > /tmp/client.key.pem
+  - export B2B_CERT=/tmp/client.pem
+  - export B2B_CERT_KEY=/tmp/client.key.pem
+  - export B2B_CERT_PASSPHRASE=$NM_B2B_PASSPHRASE
+  - export B2B_CERT_FORMAT=pem
+
+cache:
+  key: "b2b-xsd"
+  paths:
+    - b2b-xsd/
+
+test:
+  script:
+    - yarn
+    - yarn build
+    - yarn downloadWSDL
+    - yarn flow
+    - yarn test --coverage --color

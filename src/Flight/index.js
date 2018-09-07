@@ -1,0 +1,75 @@
+/* @flow */
+import path from 'path';
+import { getWSDLPath } from '../constants';
+import { getEndpoint } from '../config';
+import { prepareSecurity } from '../security';
+import soap from 'soap';
+import type { Config } from '../config';
+import util from 'util';
+import { deserializer as customDeserializer } from '../utils/transformers';
+
+const getWSDL = ({ flavour, XSD_PATH }) =>
+  getWSDLPath({ service: 'FlightServices', flavour, XSD_PATH });
+
+export type FlightClient = Object;
+function createFlightServices(config: Config): Promise<FlightClient> {
+  const endpoint = getEndpoint(config);
+  const WSDL = getWSDL(config);
+  const security = prepareSecurity(config);
+  return new Promise((resolve, reject) => {
+    try {
+      soap.createClient(
+        WSDL,
+        { customDeserializer, endpoint },
+        (err, client) => {
+          if (err) {
+            return reject(err);
+          }
+          client.setSecurity(security);
+
+          // console.log(util.inspect(client.describe().FlightManagementService.FlightManagementPort.queryFlightPlans, { depth: 3 }));
+          // console.log(
+          //   client.wsdl.definitions.schemas['eurocontrol/cfmu/b2b/CommonServices']
+          //     .complexTypes['Reply'].children[0].children,
+          // );
+          return resolve(client);
+        },
+      );
+
+    } catch (err) {
+      console.log(err);
+      return reject(err);
+    }
+  });
+}
+
+import retrieveFlight from './retrieveFlight';
+import type { Resolver as RetrieveFlight } from './retrieveFlight';
+import queryFlightsByAirspace from './queryFlightsByAirspace';
+import type { Resolver as QueryFlightsByAirspace } from './queryFlightsByAirspace';
+import queryFlightPlans from './queryFlightPlans';
+import type { Resolver as QueryFlightPlans } from './queryFlightPlans';
+import queryFlightsByTrafficVolume from './queryFlightsByTrafficVolume';
+import type { Resolver as QueryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume';
+import queryFlightsByMeasure from './queryFlightsByMeasure';
+import type { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure';
+
+export type FlightService = {
+  __soapClient: Object,
+  retrieveFlight: RetrieveFlight,
+  queryFlightsByAirspace: QueryFlightsByAirspace,
+  queryFlightPlans: QueryFlightPlans,
+  queryFlightsByTrafficVolume: QueryFlightsByTrafficVolume,
+  queryFlightsByMeasure: QueryFlightsByMeasure,
+};
+
+export function getFlightClient(config: Config): Promise<FlightService> {
+  return createFlightServices(config).then(client => ({
+    __soapClient: client,
+    retrieveFlight: retrieveFlight(client),
+    queryFlightsByAirspace: queryFlightsByAirspace(client),
+    queryFlightPlans: queryFlightPlans(client),
+    queryFlightsByTrafficVolume: queryFlightsByTrafficVolume(client),
+    queryFlightsByMeasure: queryFlightsByMeasure(client),
+  }));
+}

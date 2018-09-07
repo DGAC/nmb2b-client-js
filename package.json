@@ -1,0 +1,52 @@
+{
+  "name": "@dsna/b2b.client",
+  "version": "0.0.1",
+  "description": "DSNA NM B2B Soap client",
+  "main": "dist/index.js",
+  "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
+  "license": "MIT",
+  "repository": "https://gitlab.asap.dsna.fr/4ME/nm-n2b-client",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "prepack": "yarn build && yarn flow && yarn test",
+    "downloadWSDL": "node ./scripts/downloadWSDL.js",
+    "clean": "rimraf dist",
+    "build": "yarn clean && node ./scripts/build.js",
+    "test": "jest",
+    "flow": "flow"
+  },
+  "files": [
+    "dist"
+  ],
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "testEnvironment": "./tests/B2BClientEnv.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-core": "^7.0.0-0",
+    "babel-jest": "^23.4.2",
+    "dotenv": "6.0.0",
+    "flow-bin": "0.80.0",
+    "flow-copy-source": "2.0.2",
+    "jest": "^23.5.0",
+    "rimraf": "2.6.2"
+  },
+  "dependencies": {
+    "debug": "^3.1.0",
+    "invariant": "^2.2.4",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.22.2",
+    "ramda": "^0.25.0",
+    "request": "^2.88.0",
+    "soap": "^0.25.0",
+    "tar": "^4.4.6"
+  }
+}

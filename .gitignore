@@ -1,0 +1,16 @@
+.env
+b2b-xsd
+node_modules
+dist
+es
+coverage
+yarn-error.log
+
+.DS_Store
+
+website/translated_docs
+website/build/
+website/yarn.lock
+website/node_modules
+website/i18n/*
+

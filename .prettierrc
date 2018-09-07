@@ -1,0 +1,6 @@
+overrides:
+  - files: "*.js"
+    options:
+      parser: flow
+      singleQuote: true
+      trailingComma: all
