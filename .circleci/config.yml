@@ -24,21 +24,35 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
+          name: Restoring node_modules from cache
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run: yarn install
       - save_cache:
+          name: Saving node_modules in cache for future builds
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: ls /tmp/client.pem
-      - run: echo $B2B_CERT_FORMAT
-      - run: head -n 10 /tmp/client.pem
-
       # Build the library
       - run: yarn build
+
+      # Download WSDL files
+      - restore_cache:
+          name: Restoring nmb2b-xsd from cache
+          keys:
+            - b2b-xsd
+      - run: yarn downloadWSDL
+      - save_cache:
+          name: Saving nmb2b-xsd in cache for future builds
+          paths:
+            - /tmp/b2b-xsd
+          key: b2b-xsd
+
+      - run: ls /tmp/b2b-xsd/
+
+
       # Typecheck the library
       - run: yarn flow
