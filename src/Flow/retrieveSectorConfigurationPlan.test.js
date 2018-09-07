@@ -30,7 +30,7 @@ describe('retrieveSectorConfigurationPlan', () => {
       expect(Array.isArray(res.data.plan.clientSchedule.item)).toBe(true);
       expect(Array.isArray(res.data.plan.knownConfigurations.item)).toBe(true);
 
-      console.log(res.data.plan.nmSchedule.item);
+      console.log(res.data.plan.clientSchedule.item);
 
       res.data.plan.knownConfigurations.item.forEach(conf =>
         expect(conf).toMatchObject({
@@ -71,6 +71,7 @@ describe('retrieveSectorConfigurationPlan', () => {
       res.data.plan.clientSchedule.item.forEach(testSchedule);
     } catch (err) {
       console.log(inspect(err, { depth: null }));
+      throw err;
     }
   });
 });

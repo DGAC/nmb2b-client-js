@@ -90,6 +90,7 @@ describe('queryFlightsByMeasure', () => {
       console.log(res.data);
     } catch (err) {
       console.log(inspect(err, { depth: null }));
+      throw err;
     }
   });
 });

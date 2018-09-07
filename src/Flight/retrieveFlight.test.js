@@ -86,6 +86,7 @@ describe('retrieveFlight', () => {
       console.log(inspect(res, { depth: null }));
     } catch (err) {
       console.error(inspect(err, { depth: null }));
+      throw err;
     }
   });
 
@@ -113,6 +114,7 @@ describe('retrieveFlight', () => {
       console.log(inspect(res, { depth: null }));
     } catch (err) {
       console.error(inspect(err, { depth: null }));
+      throw err;
     }
   });
 });
