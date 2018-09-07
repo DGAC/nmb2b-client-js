@@ -1,5 +1,6 @@
 # Network Manager B2B Client
 [![CircleCI](https://circleci.com/gh/DGAC/nmb2b-client-js/tree/master.svg?style=svg)](https://circleci.com/gh/DGAC/nmb2b-client-js/tree/master)
+[![codecov](https://codecov.io/gh/DGAC/nmb2b-client-js/branch/master/graph/badge.svg)](https://codecov.io/gh/DGAC/nmb2b-client-js)
 
 Exposes a general purpose Javascript library to interact with NM B2B
 
