@@ -55,4 +55,8 @@ jobs:
       - run: yarn flow
 
       # Test the library
-      - run: yarn test
+      - run:
+          name: Jest test suite
+          command: yarn test:ci
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"

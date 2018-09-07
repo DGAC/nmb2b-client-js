@@ -15,6 +15,7 @@
     "clean": "rimraf dist",
     "build": "yarn clean && node ./scripts/build.js",
     "test": "jest",
+    "test:ci": "yarn test --ci --color --reporters=default --reporters=jest-junit",
     "flow": "flow"
   },
   "files": [
@@ -23,6 +24,10 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.js"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
     ],
     "testEnvironment": "./tests/B2BClientEnv.js"
   },
@@ -37,6 +42,7 @@
     "flow-bin": "0.80.0",
     "flow-copy-source": "2.0.2",
     "jest": "^23.5.0",
+    "jest-junit": "^5.1.0",
     "rimraf": "2.6.2"
   },
   "dependencies": {
