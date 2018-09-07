@@ -1,11 +1,11 @@
 {
-  "name": "@dsna/b2b.client",
+  "name": "@dgac/b2b.client",
   "version": "0.0.1",
-  "description": "DSNA NM B2B Soap client",
+  "description": "DGAC NM B2B Soap client",
   "main": "dist/index.js",
   "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "license": "MIT",
-  "repository": "https://gitlab.asap.dsna.fr/4ME/nm-n2b-client",
+  "repository": "https://github.com/DGAC/nmb2b-client-js",
   "engines": {
     "node": ">=8.0.0"
   },

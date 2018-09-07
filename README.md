@@ -1,9 +1,9 @@
 # Network Manager B2B Client
-[![build status](https://gitlab.asap.dsna.fr/4ME/nm-n2b-client/badges/master/build.svg)](https://gitlab.asap.dsna.fr/4ME/nm-n2b-client/commits/master) [![coverage report](https://gitlab.asap.dsna.fr/4ME/nm-n2b-client/badges/master/coverage.svg)](https://gitlab.asap.dsna.fr/4ME/nm-n2b-client/commits/master)
+[![CircleCI](https://circleci.com/gh/DGAC/nmb2b-client-js/tree/master.svg?style=svg)](https://circleci.com/gh/DGAC/nmb2b-client-js/tree/master)
 
 Exposes a general purpose Javascript library to interact with NM B2B
 
-NM target version: 21.0.0
+NM target version: 22.0.0
 
 # Exposed services
 
