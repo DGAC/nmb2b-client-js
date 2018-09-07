@@ -53,6 +53,26 @@ describe('reorderKeys', () => {
       // Expected output
       { a: [1, 2, 3], b: 'bar', c: { first: 'bar', second: 'foo' } },
     ],
+    [
+      // Schema
+      {
+        'a[]': {
+          foo: 'string',
+          bar: 'string',
+        },
+      },
+      // Input
+      {
+        a: [
+          {
+            bar: 'bar',
+            foo: 'foo',
+          },
+        ],
+      },
+      // Expected output
+      { a: [{ foo: 'foo', bar: 'bar' }] },
+    ],
   ];
 
   test.each(testCases)(

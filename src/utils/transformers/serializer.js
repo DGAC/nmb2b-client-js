@@ -46,15 +46,15 @@ export function reorderKeys(schema: Schema): Object => Object {
 
     // Loop through schema, pull property from Object
     return Object.keys(schema).reduce((prev, curr) => {
-      const key: string = curr.replace(/\[\]$/, '');
+      const lookupKey: string = curr.replace(/\[\]$/, '');
+      const isArrayExpected: boolean = curr.slice(-2) === '[]';
 
-
-      if (!(key in obj)) {
+      if (!(lookupKey in obj)) {
         return prev;
       }
 
       if (typeof schema[curr] === 'string') {
-        prev[key] = obj[key];
+        prev[lookupKey] = obj[lookupKey];
         return prev;
       }
 
@@ -66,12 +66,14 @@ export function reorderKeys(schema: Schema): Object => Object {
             k => k !== 'targetNSAlias' && k !== 'targetNamespace',
           ).length
         ) {
-
-          prev[key] = reorderKeys(currSchema)(obj[key]);
+          prev[lookupKey] =
+            isArrayExpected && obj[lookupKey] && Array.isArray(obj[lookupKey])
+              ? obj[lookupKey].map(reorderKeys(currSchema))
+              : reorderKeys(currSchema)(obj[lookupKey]);
           return prev;
         }
 
-        prev[key] = obj[key];
+        prev[lookupKey] = obj[lookupKey];
         return prev;
       }
 
