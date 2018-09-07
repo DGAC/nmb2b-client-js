@@ -147,15 +147,15 @@ export type RegulationField =
   | 'updateCapacityRequired'
   | 'updateTVActivationRequired';
 
-export type SectorConfigurationPlanRetrievalRequest = {|
-  ...TacticalConfigurationRetrievalRequest,
-  airspace: AirspaceId,
-|};
+export interface SectorConfigurationPlanRetrievalRequest
+  extends TacticalConfigurationRetrievalRequest {
+  airspace: AirspaceId;
+}
 
-export type TacticalConfigurationRetrievalRequest = {|
-  dataset: Dataset,
-  day: DateYearMonthDay,
-|};
+export interface TacticalConfigurationRetrievalRequest {
+  dataset: Dataset;
+  day: DateYearMonthDay;
+}
 
 export interface SectorConfigurationPlanRetrievalReply extends Reply {
   data: {|
@@ -337,10 +337,10 @@ export type TrafficVolumeLocation_ReferenceLocation =
     };
 
 export type TrafficVolumeLocation = {
-  id: TrafficVolumeId;
-  flightLevels?: FlightLevelRange;
-  description?: string;
-  setIds?: NMSet<TrafficVolumeSetId>;
+  id: TrafficVolumeId,
+  flightLevels?: FlightLevelRange,
+  description?: string,
+  setIds?: NMSet<TrafficVolumeSetId>,
 } & TrafficVolumeLocation_ReferenceLocation;
 
 export type RegulationInitialConstraint = {|
@@ -385,3 +385,55 @@ export type HotspotPlans = {|
   hotspotKind: HotspotKind,
   schedules: NMMap<TrafficVolumeId, NMMap<DurationHourMinute, NMSet<Hotspot>>>,
 |};
+
+export type OTMVWithDuration = {|
+  trafficVolume: TrafficVolumeId,
+  otvmDuration?: DurationHourMinute,
+|};
+
+export interface OTMVPlanRetrievalRequest
+  extends TacticalConfigurationRetrievalRequest {
+  otmvsWithDuration: NMSet<OTMVWithDuration>;
+}
+
+type OTMVPlans = NMMap<
+  TrafficVolumeId,
+  Map<DurationHourMinute, OTMVPlanForDuration>,
+>;
+
+type OTMVPlanForDuration = {
+  nmSchedule: NMSet<PlannedOTMV>,
+  clientSchedule: NMSet<PlannedOTMV>,
+};
+
+type PlannedOTMV = {
+  applicabilityPeriod: DateTimeMinutePeriod,
+  dataSource: PlanDataSource,
+  otmv?: OTMV,
+};
+
+type OTMV = {
+  trafficVolume: TrafficVolumeId,
+  otmvDuration: DurationHourMinute,
+  peak?: OTMVPeak,
+  sustained?: OTMVSustained,
+  remark?: string,
+};
+
+type OTMVPeak = {
+  threshold: OTMVThreshold,
+};
+
+type OTMVSustained = {
+  threshold: OTMVThreshold,
+  crossingOccurences: number,
+  elapsed: DurationHourMinute,
+};
+
+type OTMVThreshold = number;
+
+export interface OTMVPlanRetrievalReply extends Reply {
+  data: {|
+    plans: OTMVPlans,
+  |};
+}

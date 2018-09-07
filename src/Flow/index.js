@@ -52,6 +52,9 @@ import queryHotspots from './queryHotspots';
 import type { Resolver as QueryHotspots } from './queryHotspots';
 import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolume';
 import type { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume';
+import retrieveOTMVPlan from './retrieveOTMVPlan';
+import type { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
+
 
 export type FlowService = {
   __soapClient: Object,
@@ -60,6 +63,7 @@ export type FlowService = {
   queryRegulations: QueryRegulations,
   queryHotspots: QueryHotspots,
   queryTrafficCountsByTrafficVolume: QueryTrafficCountsByTrafficVolume,
+  retrieveOTMVPlan: RetrieveOTMVPlan,
 };
 
 export function getFlowClient(config: Config): Promise<FlowService> {
@@ -72,5 +76,6 @@ export function getFlowClient(config: Config): Promise<FlowService> {
     queryTrafficCountsByTrafficVolume: queryTrafficCountsByTrafficVolume(
       client,
     ),
+    retrieveOTMVPlan: retrieveOTMVPlan(client),
   }));
 }
