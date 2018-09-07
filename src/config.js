@@ -10,6 +10,7 @@ export type Config = {
   security: Security,
   flavour: B2BFlavour,
   XSD_PATH: string,
+  soapClient?: ?Object,
 };
 
 export function isConfigValid(args: Config): boolean {

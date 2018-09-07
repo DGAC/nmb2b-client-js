@@ -1,19 +1,19 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
 import { inspect } from 'util';
-import { dateFormat, timeFormat } from '../utils/timeFormats';
+import { makeGeneralInformationClient } from '../';
 import moment from 'moment';
-
+import b2bOptions from '../../tests/options';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let GeneralInformation;
+beforeAll(async () => {
+  GeneralInformation = await makeGeneralInformationClient(b2bOptions);
+});
 
 describe('queryNMB2BWSDLs', () => {
   conditionalTest('Version 22.0.0', async () => {
-    const GeneralInformation = b2bClient.GeneralInformation;
-
     try {
       const res = await GeneralInformation.queryNMB2BWSDLs({
         version: '22.0.0',

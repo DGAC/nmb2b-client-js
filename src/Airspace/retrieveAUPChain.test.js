@@ -1,19 +1,20 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
 import { inspect } from 'util';
-import { dateFormat, timeFormat } from '../utils/timeFormats';
+import { makeAirspaceClient } from '../';
 import moment from 'moment';
+import b2bOptions from '../../tests/options';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let Airspace;
+beforeAll(async () => {
+  Airspace = await makeAirspaceClient(b2bOptions);
+});
 
 describe('retrieveAUPChain', () => {
   conditionalTest('AUP Retrieval', async () => {
-    const { Airspace } = b2bClient;
-
     const res = await Airspace.retrieveAUPChain({
       amcIds: ['LFFAZAMC'],
       chainDate: new Date(),

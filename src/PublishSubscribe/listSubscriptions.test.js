@@ -1,29 +1,30 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
 import { inspect } from 'util';
-import { timeFormat } from '../utils/timeFormats';
+import { makePublishSubscribeClient } from '../';
 import moment from 'moment';
-
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
-
-
+import b2bOptions from '../../tests/options';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let PublishSubscribe;
+beforeAll(async () => {
+  PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
+});
 
 describe('listSubscriptions', () => {
   test('Empty test', () => {});
 
   xtest('list subscriptions', async () => {
-    if (!b2bClient) {
-      return;
-    }
-
-    const res = await b2bClient.PublishSubscribe.listSubscriptions();
+    const res = await PublishSubscribe.listSubscriptions();
 
     console.log(inspect(res.data, { depth: null }));
 
-    const { data: { subscriptions: { item: subscriptions } } } = res;
+    const {
+      data: {
+        subscriptions: { item: subscriptions },
+      },
+    } = res;
 
     expect(subscriptions).toBeDefined();
     expect(Array.isArray(subscriptions)).toBe(true);

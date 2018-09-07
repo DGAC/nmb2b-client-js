@@ -1,26 +1,27 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
 import { inspect } from 'util';
-import { flightPlanToFlightKeys } from './utils';
-import { timeFormat } from '../utils/timeFormats';
+import { makeFlightClient, makeFlowClient } from '../';
 import moment from 'moment';
-
+import b2bOptions from '../../tests/options';
+import { flightPlanToFlightKeys } from './utils';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let Flight;
+let Flow;
+beforeAll(async () => {
+  [Flight, Flow] = await Promise.all([
+    makeFlightClient(b2bOptions),
+    makeFlowClient(b2bOptions),
+  ]);
+});
+
 
 describe('queryFlightsByMeasure', () => {
   let measureId;
 
   beforeAll(async () => {
-    if (!b2bClient) {
-      return;
-    }
-
-    const { Flight, Flow } = b2bClient;
-
     const res = await Flow.queryRegulations({
       dataset: { type: 'OPERATIONAL' },
       queryPeriod: {
@@ -62,8 +63,6 @@ describe('queryFlightsByMeasure', () => {
       console.warn('No measure was found, cannot query flights by measure');
       return;
     }
-
-    const { Flight } = b2bClient;
 
     try {
       const res = await Flight.queryFlightsByMeasure({

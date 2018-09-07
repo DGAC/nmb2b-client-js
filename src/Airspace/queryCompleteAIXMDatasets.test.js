@@ -1,17 +1,22 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
+// import { getClients } from '../../tests/utils';
+import b2bOptions from '../../tests/options';
+import { makeAirspaceClient } from '../';
 import { inspect } from 'util';
-import { dateFormat, timeFormat } from '../utils/timeFormats';
 import moment from 'moment';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-const conditionalTest = global.__B2B_CLIENT__ ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let Airspace;
+
+beforeAll(async () => {
+  Airspace = await makeAirspaceClient(b2bOptions);
+});
 
 describe('queryCompleteAIXMDatasets', () => {
   conditionalTest('Complete dataset', async () => {
-    const Airspace = global.__B2B_CLIENT__.Airspace;
-
     const res = await Airspace.queryCompleteAIXMDatasets({
       queryCriteria: {
         publicationPeriod: {

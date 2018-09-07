@@ -1,19 +1,21 @@
 /* @flow */
 import { inspect } from 'util';
-import { dateFormat } from '../utils/timeFormats';
+import { makeFlowClient } from '../';
 import moment from 'moment';
+import b2bOptions from '../../tests/options';
 import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan';
-
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+const xconditionalTest = xtest;
+
+let Flow;
+beforeAll(async () => {
+  Flow = await makeFlowClient(b2bOptions);
+});
 
 describe('retrieveSectorConfigurationPlan', () => {
   conditionalTest('LFEERMS', async () => {
-    const { Flow } = b2bClient;
-
     try {
       const res = await Flow.retrieveSectorConfigurationPlan({
         dataset: { type: 'OPERATIONAL' },
@@ -44,6 +46,8 @@ describe('retrieveSectorConfigurationPlan', () => {
       // Test that we can generate a valid map
       const map = knownConfigurationsToMap(res.data.plan.knownConfigurations);
 
+      console.log(map);
+
       const keys = Array.from(map.keys());
       expect(keys.length).toBeGreaterThan(0);
       keys.forEach(k => expect(typeof k).toBe('string'));
@@ -64,7 +68,9 @@ describe('retrieveSectorConfigurationPlan', () => {
           // sectorConfigurationId: expect.any(String),
         });
 
-        expect(keys).toContain(conf.sectorConfigurationId);
+        if (conf.sectorConfigurationId) {
+          expect(keys).toContain(conf.sectorConfigurationId);
+        }
       };
 
       res.data.plan.nmSchedule.item.forEach(testSchedule);

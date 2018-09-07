@@ -1,18 +1,21 @@
 /* @flow */
 import { inspect } from 'util';
+import { makeFlowClient } from '../';
 import moment from 'moment';
+import b2bOptions from '../../tests/options';
+import { type Result as OTMVRetrievalResult } from './retrieveOTMVPlan';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+const xconditionalTest = xtest;
 
-import { type Result as OTMVRetrievalResult } from './retrieveOTMVPlan';
+let Flow;
+beforeAll(async () => {
+  Flow = await makeFlowClient(b2bOptions);
+});
 
 describe('retrieveOTMVPlan', () => {
   conditionalTest('LFERMS', async () => {
-    const { Flow } = b2bClient;
-
     try {
       const res: OTMVRetrievalResult = await Flow.retrieveOTMVPlan({
         dataset: { type: 'OPERATIONAL' },

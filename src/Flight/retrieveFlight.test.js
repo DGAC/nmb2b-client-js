@@ -1,26 +1,22 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
 import { inspect } from 'util';
-import { flightToFlightKeys } from './utils';
-import { timeFormat } from '../utils/timeFormats';
+import { makeFlightClient } from '../';
 import moment from 'moment';
-
+import b2bOptions from '../../tests/options';
+import { flightPlanToFlightKeys, flightToFlightKeys } from './utils';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let Flight;
+beforeAll(async () => {
+  Flight = await makeFlightClient(b2bOptions);
+});
 
 describe('retrieveFlight', () => {
   let knownFlight = {};
 
   beforeAll(async () => {
-    if (!b2bClient) {
-      return;
-    }
-
-    const { Flight } = b2bClient;
-
     const res = await Flight.queryFlightsByAirspace({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
@@ -68,8 +64,6 @@ describe('retrieveFlight', () => {
       return;
     }
 
-    const { Flight } = b2bClient;
-
     try {
       const res = await Flight.retrieveFlight({
         dataset: {
@@ -94,8 +88,6 @@ describe('retrieveFlight', () => {
     if (!knownFlight.keys) {
       return;
     }
-
-    const { Flight } = b2bClient;
 
     try {
       const res = await Flight.retrieveFlight({

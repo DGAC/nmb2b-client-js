@@ -8,7 +8,8 @@ const { fromEnv } = require('../dist/security');
 
 const XSD_PATH = process.env.B2B_XSD_PATH || path.join(__dirname, '../b2b-xsd');
 const security = fromEnv();
-const flavour = process.env.B2B_FLAVOUR || 'OPS';
+// $FlowFixMe
+const flavour/*: 'OPS' | 'PREOPS'*/ = process.env.B2B_FLAVOUR || 'OPS';
 
 module.exports = {
   XSD_PATH,

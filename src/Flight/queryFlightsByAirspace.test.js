@@ -1,20 +1,20 @@
 /* @flow */
 import { inspect } from 'util';
-import { flightPlanToFlightKeys } from './utils';
-import { timeFormat } from '../utils/timeFormats';
-import { getClients } from '../../tests/utils';
+import { makeFlightClient } from '../';
 import moment from 'moment';
-
+import b2bOptions from '../../tests/options';
+import { flightPlanToFlightKeys } from './utils';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let Flight;
+beforeAll(async () => {
+  Flight = await makeFlightClient(b2bOptions);
+});
 
 describe('queryFlightsByAirspace', () => {
   conditionalTest('query in LFEERMS', async () => {
-    const { Flight } = b2bClient;
-
     const res = await Flight.queryFlightsByAirspace({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,

@@ -4,11 +4,17 @@ import { getWSDLPath } from '../constants';
 import { getEndpoint } from '../config';
 import { prepareSecurity } from '../security';
 import soap from 'soap';
-import type { Config } from '../config';
+import { type Config } from '../config';
+import { type B2BFlavour } from '../constants';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
-const getWSDL = ({ XSD_PATH, flavour }) =>
-  getWSDLPath({ service: 'AirspaceServices', flavour, XSD_PATH });
+export const getWSDL = ({
+  XSD_PATH,
+  flavour,
+}: {
+  XSD_PATH: string,
+  flavour: B2BFlavour,
+}) => getWSDLPath({ service: 'AirspaceServices', flavour, XSD_PATH });
 
 export type AirspaceClient = Object;
 function createAirspaceServices(config: Config): Promise<AirspaceClient> {

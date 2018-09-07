@@ -4,7 +4,7 @@ import { getWSDLPath } from '../constants';
 import { getEndpoint } from '../config';
 import { prepareSecurity } from '../security';
 import soap from 'soap';
-import type { Config } from '../config';
+import { type Config } from '../config';
 import util from 'util';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
@@ -35,7 +35,6 @@ function createFlightServices(config: Config): Promise<FlightClient> {
           return resolve(client);
         },
       );
-
     } catch (err) {
       console.log(err);
       return reject(err);

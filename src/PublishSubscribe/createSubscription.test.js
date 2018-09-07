@@ -1,24 +1,24 @@
 /* @flow */
-import { getClients } from '../../tests/utils';
 import { inspect } from 'util';
-import { timeFormat } from '../utils/timeFormats';
+import { makePublishSubscribeClient } from '../';
 import moment from 'moment';
-
+import b2bOptions from '../../tests/options';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-import { type B2BClient } from '../';
-const b2bClient: B2BClient = global.__B2B_CLIENT__;
-const conditionalTest = b2bClient ? test : test.skip;
+const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
+
+let PublishSubscribe;
+beforeAll(async () => {
+  PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
+});
 
 describe('createSubscriptions', () => {
   afterAll(async () => {
-    if (!b2bClient) {
-      return;
-    }
+    const res = await PublishSubscribe.listSubscriptions();
 
-    const res = await b2bClient.PublishSubscribe.listSubscriptions();
-
-    const { data: { subscriptions } } = res;
+    const {
+      data: { subscriptions },
+    } = res;
     if (
       !subscriptions ||
       !subscriptions.item ||
@@ -32,7 +32,7 @@ describe('createSubscriptions', () => {
       .map(({ uuid }) => uuid);
 
     await Promise.all(
-      toDelete.map(uuid => b2bClient.PublishSubscribe.deleteSubscription({ uuid })),
+      toDelete.map(uuid => PublishSubscribe.deleteSubscription({ uuid })),
     );
   });
 
