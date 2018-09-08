@@ -17,9 +17,11 @@ describe('retrieveAUPChain', () => {
   conditionalTest('AUP Retrieval', async () => {
     const res = await Airspace.retrieveAUPChain({
       amcIds: ['LFFAZAMC'],
-      chainDate: new Date(),
+      chainDate: moment.utc().toDate(),
     });
 
-    expect(Array.isArray(res.data.chains)).toBe(true);
+    if (res.data) {
+      expect(Array.isArray(res.data.chains)).toBe(true);
+    }
   });
 });

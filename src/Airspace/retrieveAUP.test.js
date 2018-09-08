@@ -13,7 +13,6 @@ beforeAll(async () => {
   Airspace = await makeAirspaceClient(b2bOptions);
 });
 
-
 describe('retrieveAUP', () => {
   let AUPIds = [];
   beforeAll(async () => {
@@ -22,8 +21,10 @@ describe('retrieveAUP', () => {
       amcIds: ['LFFAZAMC'],
       chainDate: moment.utc().toDate(),
     });
-
-    AUPIds = res.data.chains[0].aups.map(({ id }) => id);
+    
+    if (res.data) {
+      AUPIds = res.data.chains[0].aups.map(({ id }) => id);
+    }
   });
 
   conditionalTest('AUP Retrieval', async () => {
