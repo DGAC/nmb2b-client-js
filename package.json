@@ -1,6 +1,6 @@
 {
   "name": "@dgac/nmb2b-client",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "DGAC NM B2B Soap client",
   "main": "dist/index.js",
   "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
