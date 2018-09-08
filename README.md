@@ -10,7 +10,7 @@ NM target version: 22.0.0
 
 ## Main service
 ```javascript
-import makeB2BClient from '4me.libb2b';
+import makeB2BClient from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
 makeB2BClient({ security }).then(client => {
@@ -20,7 +20,7 @@ makeB2BClient({ security }).then(client => {
 ```
 ## Per domain service
 ```javascript
-import { makeAirspaceService } from '4me.libb2b';
+import { makeAirspaceService } from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
 makeAirspaceService({ security }).then(Airspace => {
