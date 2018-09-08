@@ -3,12 +3,15 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.11
+
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.11
-    working_directory: ~/repo
+  test:
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -21,7 +24,7 @@ jobs:
             echo 'export B2B_CERT_PASSPHRASE=$NM_B2B_PASSPHRASE' >> $BASH_ENV
             echo 'export B2B_CERT_FORMAT=pem' >> $BASH_ENV
             echo 'export B2B_FLAVOUR=PREOPS' >> $BASH_ENV
-            
+
       - run:
           name: Prepare greenkeeper-lockfile
           command: |
@@ -77,3 +80,28 @@ jobs:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
