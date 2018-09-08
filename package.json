@@ -10,7 +10,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "prepack": "yarn build && yarn flow && yarn test",
+    "prepack": "yarn build",
     "downloadWSDL": "node ./scripts/downloadWSDL.js",
     "clean": "rimraf dist",
     "build": "yarn clean && node ./scripts/build.js",
