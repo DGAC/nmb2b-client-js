@@ -83,7 +83,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-  
+
   deploy:
     <<: *defaults
     steps:
@@ -112,5 +112,3 @@ workflows:
           filters:
             tags:
               only: /^v.*/
-            branches:
-              only: master
