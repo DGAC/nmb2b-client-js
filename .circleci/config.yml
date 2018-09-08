@@ -80,6 +80,10 @@ jobs:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  
   deploy:
     <<: *defaults
     steps:
