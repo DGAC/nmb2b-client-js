@@ -1,3 +1,6 @@
+# Master
+* Export flow types to make it easier to use with Flow
+
 # v0.1.0 (2018-09-10)
 * First usable release
 
