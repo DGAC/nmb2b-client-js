@@ -20,9 +20,9 @@ For instance, the Flow.retrieveOTMVPlan query expects a `day` attribute with the
 
 ```javascript
 Flow.retrieveOTMVPlan({
-  dataset: { type: "OPERATIONAL" },
+  dataset: { type: 'OPERATIONAL' },
   day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: "LFERMS" }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
 });
 ```
 
@@ -33,16 +33,16 @@ In SOAP, key order matters.
 ```javascript
 // OK
 Flow.retrieveOTMVPlan({
-  dataset: { type: "OPERATIONAL" },
+  dataset: { type: 'OPERATIONAL' },
   day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: "LFERMS" }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
 });
 
 // Would normally fail
 Flow.retrieveOTMVPlan({
   day: moment.utc().toDate(),
-  dataset: { type: "OPERATIONAL" },
-  otmvsWithDuration: { item: [{ trafficVolume: "LFERMS" }] }
+  dataset: { type: 'OPERATIONAL' },
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
 });
 ```
 
@@ -55,9 +55,9 @@ The following example will raise a Flow error.
 ```javascript
 // Raises a Flow error
 Flow.retrieveOTMVPlan({
-  dataset: { type: "OPERATIONNAL" }, // Notice the typo
+  dataset: { type: 'OPERATIONNAL' }, // Notice the typo
   day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: "LFERMS" }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
 });
 ```
 
@@ -66,7 +66,7 @@ Flow.retrieveOTMVPlan({
 ## Main service
 
 ```javascript
-import makeB2BClient from "@dgac/nmb2b-client";
+import makeB2BClient from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
 makeB2BClient({ security }).then(client => {
@@ -77,7 +77,7 @@ makeB2BClient({ security }).then(client => {
 ## Per domain service
 
 ```javascript
-import { makeAirspaceService } from "@dgac/nmb2b-client";
+import { makeAirspaceService } from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
 makeAirspaceService({ security }).then(Airspace => {
@@ -92,11 +92,11 @@ Every request to the NM B2B web services must be authenticated using a client ce
 ### With P12 certificate
 
 ```javascript
-import fs from "fs";
+import fs from 'fs';
 
 const security = {
-  pfx: fs.readFileSync("/path/to/cert.p12"),
-  passphrase: "your-passphrase"
+  pfx: fs.readFileSync('/path/to/cert.p12'),
+  passphrase: 'your-passphrase'
 };
 
 makeB2BClient({ security }).then(client => {
@@ -107,12 +107,12 @@ makeB2BClient({ security }).then(client => {
 ### With PEM certificate
 
 ```javascript
-import fs from "fs";
+import fs from 'fs';
 
 const security = {
-  pem: fs.readFileSync("/path/to/cert.pem"),
-  key: fs.readFileSync("/path/to/cert.key"),
-  passphrase: "your-passphrase"
+  pem: fs.readFileSync('/path/to/cert.pem'),
+  key: fs.readFileSync('/path/to/cert.key'),
+  passphrase: 'your-passphrase'
 };
 
 makeB2BClient({ security }).then(client => {
