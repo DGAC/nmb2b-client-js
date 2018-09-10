@@ -19,7 +19,7 @@ describe('queryNMB2BWSDLs', () => {
         version: '22.0.0',
       });
 
-      console.dir(res, { depth: null });
+      process.env.CI && console.dir(res, { depth: null });
     } catch (err) {
       console.error(inspect(err, { depth: null }));
       throw err;
