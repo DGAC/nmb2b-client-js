@@ -1,4 +1,4 @@
-# Master
+# v0.1.1 (2018-09-10)
 * Export flow types to make it easier to use with Flow
 
 # v0.1.0 (2018-09-10)
