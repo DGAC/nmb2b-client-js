@@ -1,6 +1,6 @@
 /* @flow */
 import { inspect } from 'util';
-import { makeFlowClient } from '../';
+import { makeFlowClient, type B2BClient } from '../';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { type Result as OTMVRetrievalResult } from './retrieveOTMVPlan';
