@@ -3,13 +3,13 @@
 [![CircleCI](https://circleci.com/gh/DGAC/nmb2b-client-js/tree/master.svg?style=svg)](https://circleci.com/gh/DGAC/nmb2b-client-js/tree/master)
 [![codecov](https://codecov.io/gh/DGAC/nmb2b-client-js/branch/master/graph/badge.svg)](https://codecov.io/gh/DGAC/nmb2b-client-js) [![Greenkeeper badge](https://badges.greenkeeper.io/DGAC/nmb2b-client-js.svg)](https://greenkeeper.io/)
 
-Exposes a general purpose Javascript library to interact with NM B2B
+Exposes a general purpose Javascript library to interact with NM B2B web services.
 
 NM target version: **22.0.0**
 
 ## Simple usage example
 
-https://github.com/dGAC/nmb2b-client-js-example
+https://github.com/DGAC/nmb2b-client-js-example
 
 # Usage
 
