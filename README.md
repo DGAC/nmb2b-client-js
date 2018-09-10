@@ -37,14 +37,16 @@ makeAirspaceService({ security }).then(Airspace => {
 
 ## B2B Security
 
+Every request to the NM B2B web services must be authenticated using a client certificate. This library needs to be initialized with a `security` object, containing the certificate, key and passphrase associated.
+
 ### With P12 certificate
 
 ```javascript
 import fs from "fs";
 
 const security = {
-  pfx: fs.readFileSync("cert.p12"),
-  passphrase: "fme"
+  pfx: fs.readFileSync("/path/to/cert.p12"),
+  passphrase: "your-passphrase"
 };
 
 makeB2BClient({ security }).then(client => {
@@ -58,9 +60,9 @@ makeB2BClient({ security }).then(client => {
 import fs from "fs";
 
 const security = {
-  pem: fs.readFileSync("cert.pem"),
-  key: fs.readFileSync("cert.key"),
-  passphrase: "fme"
+  pem: fs.readFileSync("/path/to/cert.pem"),
+  key: fs.readFileSync("/path/to/cert.key"),
+  passphrase: "your-passphrase"
 };
 
 makeB2BClient({ security }).then(client => {
