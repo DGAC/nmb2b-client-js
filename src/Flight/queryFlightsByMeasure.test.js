@@ -17,7 +17,6 @@ beforeAll(async () => {
   ]);
 });
 
-
 describe('queryFlightsByMeasure', () => {
   let measureId;
 
@@ -86,7 +85,7 @@ describe('queryFlightsByMeasure', () => {
         mode: 'CONCERNED_BY_MEASURE',
       });
 
-      console.log(res.data);
+      !process.env.CI && console.log(res.data);
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;

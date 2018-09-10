@@ -27,7 +27,7 @@ describe('queryHotspots', () => {
         hotspotKind: 'PROBLEM',
       });
 
-      console.log(res);
+      !process.env.CI && console.log(res);
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;

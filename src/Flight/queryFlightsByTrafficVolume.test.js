@@ -43,7 +43,7 @@ describe('queryFlightsByTrafficVolume', () => {
       data: { flights },
     } = res;
 
-    console.log(inspect(res, { depth: null }));
+    !process.env.CI && console.log(inspect(res, { depth: null }));
     expect(Array.isArray(flights)).toBe(true);
 
     flights.forEach(flight =>

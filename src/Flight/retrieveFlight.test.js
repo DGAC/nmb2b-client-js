@@ -77,7 +77,7 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      console.log(inspect(res, { depth: null }));
+      !process.env.CI && console.log(inspect(res, { depth: null }));
     } catch (err) {
       console.error(inspect(err, { depth: null }));
       throw err;
@@ -103,7 +103,7 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      console.log(inspect(res, { depth: null }));
+      !process.env.CI && console.log(inspect(res, { depth: null }));
     } catch (err) {
       console.error(inspect(err, { depth: null }));
       throw err;

@@ -32,7 +32,7 @@ describe('retrieveSectorConfigurationPlan', () => {
       expect(Array.isArray(res.data.plan.clientSchedule.item)).toBe(true);
       expect(Array.isArray(res.data.plan.knownConfigurations.item)).toBe(true);
 
-      console.log(res.data.plan.clientSchedule.item);
+      !process.env.CI && console.log(res.data.plan.clientSchedule.item);
 
       res.data.plan.knownConfigurations.item.forEach(conf =>
         expect(conf).toMatchObject({
@@ -46,7 +46,7 @@ describe('retrieveSectorConfigurationPlan', () => {
       // Test that we can generate a valid map
       const map = knownConfigurationsToMap(res.data.plan.knownConfigurations);
 
-      console.log(map);
+      !process.env.CI && console.log(map);
 
       const keys = Array.from(map.keys());
       expect(keys.length).toBeGreaterThan(0);
