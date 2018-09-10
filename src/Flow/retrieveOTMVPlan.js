@@ -4,14 +4,8 @@ import { injectSendTime, responseStatusHandler } from '../utils';
 import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 
-import type {
-  OTMVPlanRetrievalRequest,
-  OTMVPlanRetrievalReply,
-  KnownConfigurations,
-  SectorConfigurationId,
-} from './types';
-
-import type { AirspaceId } from '../Airspace/types';
+import type { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
+export type { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
 
 export type Values = OTMVPlanRetrievalRequest;
 export type Result = OTMVPlanRetrievalReply;

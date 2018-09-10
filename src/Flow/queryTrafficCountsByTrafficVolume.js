@@ -3,7 +3,12 @@ import type { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+
 import type {
+  TrafficCountsByTrafficVolumeRequest,
+  TrafficCountsByTrafficVolumeReply,
+} from './types';
+export type {
   TrafficCountsByTrafficVolumeRequest,
   TrafficCountsByTrafficVolumeReply,
 } from './types';

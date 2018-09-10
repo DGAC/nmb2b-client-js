@@ -2,8 +2,10 @@
 import type { FlightClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import type { SoapOptions } from '../soap';
-import type { FlightRetrievalRequest, FlightRetrievalReply } from './types';
 import { prepareSerializer } from '../utils/transformers';
+
+import type { FlightRetrievalRequest, FlightRetrievalReply } from './types';
+export type { FlightRetrievalRequest, FlightRetrievalReply } from './types';
 
 type Values = FlightRetrievalRequest;
 type Result = FlightRetrievalReply;

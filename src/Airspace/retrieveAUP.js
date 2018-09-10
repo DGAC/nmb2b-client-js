@@ -30,12 +30,12 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
 import type { AUPId, AUP } from './types';
 import type { Request, Reply } from '../Common/types';
 
-interface AUPRetrievalRequest {
+export interface AUPRetrievalRequest {
   aupId: AUPId;
   returnComputed?: boolean;
 }
 
-interface AUPRetrievalReply extends Reply {
+export interface AUPRetrievalReply extends Reply {
   data: {
     aup: AUP,
   };

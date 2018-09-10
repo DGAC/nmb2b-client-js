@@ -2,6 +2,7 @@
 export type DateYearMonthDay = Date;
 export type DateTimeMinute = Date;
 export type DateTimeSecond = Date;
+export type Timestamp = Date;
 export type ShiftHourMinute = {
   sign: 'MINUS' | 'PLUS',
   value: DurationHourMinute,
@@ -110,3 +111,6 @@ export type B2B_Error = {
   parameters: { [key: string]: string },
   message?: string,
 };
+
+export type UUID = string;
+export type NMRelease = string;

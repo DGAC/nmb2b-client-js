@@ -9,6 +9,11 @@ import type {
   FlightListByTrafficVolumeReply,
 } from './types';
 
+export type {
+  FlightListByTrafficVolumeRequest,
+  FlightListByTrafficVolumeReply,
+} from './types';
+
 type Values = FlightListByTrafficVolumeRequest;
 type Result = FlightListByTrafficVolumeReply;
 

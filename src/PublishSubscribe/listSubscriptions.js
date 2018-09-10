@@ -1,19 +1,21 @@
 /* @flow */
-import type { PublishSubscribeClient } from "./";
-import { injectSendTime, responseStatusHandler } from "../utils";
-import type { SoapOptions } from "../soap";
-import { prepareSerializer } from "../utils/transformers";
+import type { PublishSubscribeClient } from './';
+import { injectSendTime, responseStatusHandler } from '../utils';
+import type { SoapOptions } from '../soap';
+import { prepareSerializer } from '../utils/transformers';
 
-type Values = void | null;
-type Result = Object;
+import type { SubscriptionListRequest, SubscriptionListReply } from './types';
+export type { SubscriptionListRequest, SubscriptionListReply } from './types';
+type Values = SubscriptionListRequest;
+type Result = SubscriptionListReply;
 
 export type Resolver = (
   values?: Values,
-  options?: SoapOptions
+  options?: SoapOptions,
 ) => Promise<Result>;
 
 export default function prepareListSubscriptions(
-  client: PublishSubscribeClient
+  client: PublishSubscribeClient,
 ): Resolver {
   const schema = client.describe().SubscriptionManagementService
     .SubscriptionManagementPort.listSubscriptions.input;
@@ -24,7 +26,7 @@ export default function prepareListSubscriptions(
       client.listSubscriptions(
         serializer(injectSendTime(values)),
         options,
-        responseStatusHandler(resolve, reject)
+        responseStatusHandler(resolve, reject),
       );
     });
 }

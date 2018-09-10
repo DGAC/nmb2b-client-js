@@ -8,18 +8,24 @@ import { isConfigValid, type Config } from './config';
 import { dirExists, createDir } from './utils/fs';
 import { downloadFile } from './utils/xsd/downloadFile';
 import { requestFilename } from './utils/xsd/filePath';
+
 import { getAirspaceClient } from './Airspace';
-import type { AirspaceService } from './Airspace';
 import { getFlightClient } from './Flight';
-import type { FlightService } from './Flight';
 import { getPublishSubscribeClient } from './PublishSubscribe';
-import type { PublishSubscribeService } from './PublishSubscribe';
 import { getFlowClient } from './Flow';
+import { getGeneralInformationClient } from './GeneralInformation';
+
+import type { AirspaceService } from './Airspace';
+import type { FlightService } from './Flight';
+import type { PublishSubscribeService } from './PublishSubscribe';
 import type { FlowService } from './Flow';
-import {
-  getGeneralInformationClient,
-  type GeneralInformationService,
-} from './GeneralInformation';
+import type { GeneralInformationService } from './GeneralInformation';
+
+export type { AirspaceService } from './Airspace';
+export type { FlightService } from './Flight';
+export type { PublishSubscribeService } from './PublishSubscribe';
+export type { FlowService } from './Flow';
+export type { GeneralInformationService } from './GeneralInformation';
 
 export type B2BClient = {
   Airspace: AirspaceService,

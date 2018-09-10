@@ -9,6 +9,11 @@ import type {
   TrafficCountsByAirspaceReply,
 } from './types';
 
+export type {
+  TrafficCountsByAirspaceRequest,
+  TrafficCountsByAirspaceReply,
+} from './types';
+
 type Values = TrafficCountsByAirspaceRequest;
 type Result = TrafficCountsByAirspaceReply;
 

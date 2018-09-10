@@ -1,7 +1,15 @@
 /* @flow */
 import type { FlightExchangeModel } from '../Flight/types';
 import type { RegulationField } from '../Flow/types';
-import type { NMSet } from '../Common/types';
+import type {
+  AirNavigationUnitId,
+  UUID,
+  NMRelease,
+  Reply,
+  NMSet,
+  DateTimeSecond,
+  Timestamp,
+} from '../Common/types';
 
 export type QueueName = string; // ANY{1,200}
 export type SubscriptionTopic =
@@ -18,6 +26,56 @@ export type SubscriptionCreationRequest =
   | SubscriptionCreationRequest_EAUP
   | SubscriptionCreationRequest_AIXM_Datasets
   | SubscriptionCreationRequest_ATM_INFORMATION;
+
+export interface SubscriptionCreationReply extends Reply {
+  subscription: Subscription;
+}
+
+export type SubscriptionListRequest = {
+  states?: NMSet<SubscriptionState>,
+};
+
+export interface SubscriptionListReply extends Reply {
+  data: {
+    subscriptions?: NMSet<Subscription>,
+  };
+}
+
+export type Subscription = {
+  uuid: UUID,
+  release: NMRelease,
+  anuId: AirNavigationUnitId,
+  queueName: QueueName,
+  topic: SubscriptionTopic,
+  state: SubscriptionState,
+  description?: string,
+  creationDate: DateTimeSecond,
+  lastUpdatedBy: string,
+  lastUpdatedOn: Timestamp,
+  lastUpdateReason: SubscriptionUpdateReason,
+  lastUpdateComment?: string,
+  messageFilter?: SubscriptionMessageFilter,
+  payloadConfiguration: SubscriptionPayloadConfiguration,
+};
+
+export type SubscriptionState =
+  | 'ACTIVE'
+  | 'DELETED'
+  | 'PAUSED'
+  | 'SUSPENDED_ACTIVE'
+  | 'SUSPENDED_PAUSED';
+
+export type SubscriptionUpdateReason =
+  | 'MAINTENANCE'
+  | 'MSG_EXPIRED'
+  | 'USER_REQUEST';
+
+export type SubscriptionMessageFilter =
+  | AIXMDatasetMessageFilter
+  | FlightPlanMessageFilter
+  | RegulationMessageFilter
+  | FlightFilingResultMessageFilter
+  | FlightDataMessageFilter;
 
 export type SubscriptionCreationRequest_FlightData = {|
   topic: 'FLIGHT_DATA',
@@ -75,6 +133,10 @@ export type FlightPlanMessageFilter = {|
 export type FlightDataMessageFilter = {|
   flightSet: NMSet<FlightSetDefinitionElement>,
 |};
+
+export type FlightFilingResultMessageFilter = {
+  originatorAnuId: AirNavigationUnitId,
+};
 
 export type RegulationMessageFilter = {|
   tvs?: Array<any>, // TrafficVolumeIdWildcard

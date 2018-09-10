@@ -38,13 +38,13 @@ import type {
 
 import type { AUPChain } from './types';
 
-type AUPChainRetrievalRequest = {
+export type AUPChainRetrievalRequest = {
   ...Request,
   chainDate: DateYearMonthDay,
   amcIds?: Array<AirNavigationUnitId>,
 };
 
-type AUPChainRetrievalReply = Reply & {
+export type AUPChainRetrievalReply = Reply & {
   data: {
     chains: Array<AUPChain>,
   },

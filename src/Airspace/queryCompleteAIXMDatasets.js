@@ -4,12 +4,12 @@ import { injectSendTime, responseStatusHandler } from '../utils';
 import { prepareSerializer } from '../utils/transformers';
 import type { SoapOptions } from '../soap';
 
-type CompleteAIXMDatasetRequest = {
+export type CompleteAIXMDatasetRequest = {
   ...Request,
   queryCriteria: CompleteDatasetQueryCriteria,
 };
 
-type Result = Reply & {
+export type CompleteAIXMDatasetReply = Reply & {
   data: {
     datasetSummaries: Array<CompleteDatasetSummary>,
   },
@@ -18,7 +18,7 @@ type Result = Reply & {
 export type Resolver = (
   values?: CompleteAIXMDatasetRequest,
   options?: SoapOptions,
-) => Promise<Result>;
+) => Promise<CompleteAIXMDatasetReply>;
 
 export default function prepareQueryCompleteAIXMDatasets(
   client: AirspaceClient,

@@ -5,6 +5,7 @@ import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 
 import type { RegulationListRequest, RegulationListReply } from './types';
+export type { RegulationListRequest, RegulationListReply } from './types';
 
 type Values = RegulationListRequest;
 type Result = RegulationListReply;

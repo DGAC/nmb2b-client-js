@@ -11,6 +11,11 @@ import type {
   SectorConfigurationId,
 } from './types';
 
+export type {
+  SectorConfigurationPlanRetrievalRequest,
+  SectorConfigurationPlanRetrievalReply,
+} from './types';
+
 import type { AirspaceId } from '../Airspace/types';
 
 type Values = SectorConfigurationPlanRetrievalRequest;

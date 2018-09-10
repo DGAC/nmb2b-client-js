@@ -5,6 +5,7 @@ import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 
 import type { HotspotListRequest, HotspotListReply } from './types';
+export type { HotspotListRequest, HotspotListReply } from './types';
 
 type Values = HotspotListRequest;
 type Result = HotspotListReply;
