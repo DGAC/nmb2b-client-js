@@ -5,6 +5,8 @@ import { type Security } from '../../security';
 import request from 'request';
 import zlib from 'zlib';
 import tar from 'tar';
+import d from 'debug';
+const debug = d('b2b-client');
 
 export async function downloadFile(
   filePath: string,
@@ -26,9 +28,9 @@ export async function downloadFile(
       })
       .get(getFileUrl(filePath, { flavour }))
       .on('response', response => {
-        console.log('downloadFile: streaming started');
-        console.log(`downloading to ${outputDir}`);
-        console.log(response.statusCode);
+        debug('downloadFile: streaming started');
+        debug(`downloading to ${outputDir}`);
+        debug(`B2B reponse status code is ${response.statusCode}`);
         if (response.statusCode && response.statusCode !== 200) {
           r.abort();
           reject(new Error('Unable to download B2B XSD files'));
@@ -38,7 +40,8 @@ export async function downloadFile(
       .pipe(tar.x({ cwd: outputDir }))
       .on('error', reject)
       .on('close', (...args) => {
-        console.log('downloadFile: success');
+        debug('downloadFile: success');
+        resolve();
       });
   });
 }

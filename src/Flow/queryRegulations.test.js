@@ -5,6 +5,8 @@ import moment from 'moment';
 import b2bOptions from '../../tests/options';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
+import type { RegulationListReply } from './queryRegulations';
+
 const conditionalTest = global.__DISABLE_B2B_CONNECTIONS__ ? test.skip : test;
 const xconditionalTest = xtest;
 
@@ -16,7 +18,7 @@ beforeAll(async () => {
 describe('queryRegulations', () => {
   conditionalTest('List all regulations', async () => {
     try {
-      const res = await Flow.queryRegulations({
+      const res: RegulationListReply = await Flow.queryRegulations({
         dataset: { type: 'OPERATIONAL' },
         queryPeriod: {
           wef: moment

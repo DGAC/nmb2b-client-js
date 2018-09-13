@@ -149,4 +149,6 @@ async function downloadWSDLIfNotPresent(options: Config): Promise<void> {
       `Downloaded B2B XSD to ${path.join(options.XSD_PATH, B2B_VERSION)}`,
     );
   }
+
+  return Promise.resolve();
 }
