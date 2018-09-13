@@ -1,4 +1,4 @@
-# Master
+# v0.1.2 (2018-09-13)
 * Fix broken WSDL download
 
 # v0.1.1 (2018-09-10)
