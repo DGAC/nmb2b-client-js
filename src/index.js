@@ -6,8 +6,7 @@ import type { Security } from './security';
 import { B2B_VERSION, type B2BFlavour } from './constants';
 import { isConfigValid, type Config } from './config';
 import { dirExists, createDir } from './utils/fs';
-import { downloadFile } from './utils/xsd/downloadFile';
-import { requestFilename } from './utils/xsd/filePath';
+import { download as downloadWSDL } from './utils/xsd';
 
 import { getAirspaceClient } from './Airspace';
 import { getFlightClient } from './Flight';
@@ -52,7 +51,7 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
     throw new Error('Invalid options provided');
   }
 
-  await downloadWSDLIfNotPresent(options);
+  await downloadWSDL(options);
 
   return promiseMap({
     Airspace: getAirspaceClient(options),
@@ -71,7 +70,7 @@ export async function makeAirspaceClient(
     throw new Error('Invalid options provided');
   }
 
-  await downloadWSDLIfNotPresent(options);
+  await downloadWSDL(options);
 
   return getAirspaceClient(options);
 }
@@ -84,7 +83,7 @@ export async function makeFlightClient(
     throw new Error('Invalid options provided');
   }
 
-  await downloadWSDLIfNotPresent(options);
+  await downloadWSDL(options);
 
   return getFlightClient(options);
 }
@@ -95,7 +94,7 @@ export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
     throw new Error('Invalid options provided');
   }
 
-  await downloadWSDLIfNotPresent(options);
+  await downloadWSDL(options);
 
   return getFlowClient(options);
 }
@@ -108,7 +107,7 @@ export async function makeGeneralInformationClient(
     throw new Error('Invalid options provided');
   }
 
-  await downloadWSDLIfNotPresent(options);
+  await downloadWSDL(options);
 
   return getGeneralInformationClient(options);
 }
@@ -121,34 +120,7 @@ export async function makePublishSubscribeClient(
     throw new Error('Invalid options provided');
   }
 
-  await downloadWSDLIfNotPresent(options);
+  await downloadWSDL(options);
 
   return getPublishSubscribeClient(options);
-}
-
-async function downloadWSDLIfNotPresent(options: Config): Promise<void> {
-  // Check if XSD are available, if not, download them
-  if (
-    !(await dirExists(options.XSD_PATH)) ||
-    !(await dirExists(path.join(options.XSD_PATH, B2B_VERSION)))
-  ) {
-    console.log('XSD files not found, downloading from B2B ...');
-    console.log(`Creating dir ${options.XSD_PATH}`);
-    await createDir(options.XSD_PATH);
-    await requestFilename({
-      flavour: options.flavour,
-      security: options.security,
-    }).then(fileName =>
-      downloadFile(fileName, {
-        flavour: options.flavour,
-        security: options.security,
-        outputDir: options.XSD_PATH,
-      }),
-    );
-    console.log(
-      `Downloaded B2B XSD to ${path.join(options.XSD_PATH, B2B_VERSION)}`,
-    );
-  }
-
-  return Promise.resolve();
 }

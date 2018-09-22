@@ -44,6 +44,7 @@
     "flow-copy-source": "2.0.2",
     "jest": "^23.5.0",
     "jest-junit": "^5.1.0",
+    "nock": "^9.6.1",
     "rimraf": "2.6.2"
   },
   "dependencies": {
@@ -51,6 +52,7 @@
     "invariant": "^2.2.4",
     "mkdirp": "^0.5.1",
     "moment": "^2.22.2",
+    "proper-lockfile": "^3.0.2",
     "ramda": "^0.25.0",
     "request": "^2.88.0",
     "soap": "^0.25.0",

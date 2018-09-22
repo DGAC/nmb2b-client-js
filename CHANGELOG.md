@@ -1,3 +1,6 @@
+# Master
+* Implement lockfile to handle multiple concurrent WSDL downloads
+
 # v0.1.2 (2018-09-13)
 * Fix broken WSDL download
 

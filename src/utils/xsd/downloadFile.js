@@ -6,7 +6,7 @@ import request from 'request';
 import zlib from 'zlib';
 import tar from 'tar';
 import d from 'debug';
-const debug = d('b2b-client');
+const debug = d('b2b-client.wsdl');
 
 export async function downloadFile(
   filePath: string,
@@ -28,15 +28,18 @@ export async function downloadFile(
       })
       .get(getFileUrl(filePath, { flavour }))
       .on('response', response => {
-        debug('downloadFile: streaming started');
         debug(`downloading to ${outputDir}`);
         debug(`B2B reponse status code is ${response.statusCode}`);
         if (response.statusCode && response.statusCode !== 200) {
+          reject(new Error('Unable to download B2B WSDL files'));
           r.abort();
-          reject(new Error('Unable to download B2B XSD files'));
+          debug('Rejecting due to wrong status code');
         }
       })
-      .on('error', reject)
+      .on('error', err => {
+        debug('rejecting due to error event', err);
+        reject(err);
+      })
       .pipe(tar.x({ cwd: outputDir }))
       .on('error', reject)
       .on('close', (...args) => {
