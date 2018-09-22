@@ -34,7 +34,7 @@ export async function download(config: Config): Promise<void> {
   const outputDir = getWSDLPath(config);
 
   if (!(await dirExists(outputDir))) {
-    console.log(`Creating directory ${outputDir}`);
+    debug(`Creating directory ${outputDir}`);
     await createDir(outputDir);
   }
 
