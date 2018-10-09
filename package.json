@@ -44,7 +44,7 @@
     "flow-copy-source": "2.0.2",
     "jest": "^23.5.0",
     "jest-junit": "^5.1.0",
-    "nock": "^9.6.1",
+    "nock": "^10.0.1",
     "rimraf": "2.6.2"
   },
   "dependencies": {
