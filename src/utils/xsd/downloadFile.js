@@ -31,7 +31,13 @@ export async function downloadFile(
         debug(`downloading to ${outputDir}`);
         debug(`B2B reponse status code is ${response.statusCode}`);
         if (response.statusCode && response.statusCode !== 200) {
-          reject(new Error('Unable to download B2B WSDL files'));
+          reject(
+            new Error(
+              `Unable to download B2B WSDL files, statusCode is ${
+                response.statusCode
+              }`,
+            ),
+          );
           r.abort();
           debug('Rejecting due to wrong status code');
         }

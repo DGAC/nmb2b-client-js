@@ -7,6 +7,8 @@ const debug = d('nm-b2b-client.security');
 import fs from 'fs';
 import path from 'path';
 
+require('tls').DEFAULT_ECDH_CURVE = 'auto';
+
 export type Security =
   | {
       pfx: Buffer,
@@ -75,6 +77,7 @@ export function fromEnv(): Security {
 
   if (!process.env.B2B_CERT_FORMAT || process.env.B2B_CERT_FORMAT === 'pfx') {
     envSecurity = {
+      ecdhCurve: 'auto',
       pfx: pfxOrPem,
       passphrase: process.env.B2B_CERT_PASSPHRASE || '',
     };
@@ -87,6 +90,7 @@ export function fromEnv(): Security {
     }
 
     envSecurity = {
+      ecdhCurve: 'auto',
       cert: pfxOrPem,
       key: fs.readFileSync(process.env.B2B_CERT_KEY),
     };

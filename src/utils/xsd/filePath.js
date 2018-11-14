@@ -34,8 +34,8 @@ export async function requestFilename({
 }): Promise<string> {
   // NM B2B takes a long long time to respond here
   // Hardcode the return value which (hopefully) should not change
-  return 'b2b_publications/22.0.0/B2B_WSDL_XSD.22.0.0.4.60.tar.gz';
-
+  return 'b2b_publications/22.0.0/B2B_WSDL_XSD.22.0.0.4.84.tar.gz';
+  
   // return new Promise((resolve, reject) => {
   //   request.post(
   //     {
@@ -45,6 +45,8 @@ export async function requestFilename({
   //       body: makeQuery({ version: B2B_VERSION }),
   //     },
   //     (e, r, body) => {
+  //       console.log('BLABLABLA');
+  //       console.log(body);
   //       if (e) {
   //         return reject(e);
   //       }
