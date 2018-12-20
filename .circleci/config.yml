@@ -68,7 +68,7 @@ jobs:
           key: v1-b2b-xsd-{{ checksum "src/constants.ts" }}
 
       # Typecheck the library
-      - run: yarn flow
+      - run: yarn type-check
 
       # Test the library
       - run:
