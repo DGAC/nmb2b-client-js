@@ -3,6 +3,7 @@
   "version": "0.1.4",
   "description": "DGAC NM B2B Soap client",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "license": "MIT",
   "repository": "https://github.com/DGAC/nmb2b-client-js",
@@ -16,37 +17,40 @@
     "build": "yarn clean && node ./scripts/build.js",
     "test": "jest",
     "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
-    "flow": "flow"
+    "type-check": "tsc"
   },
   "files": [
     "dist"
   ],
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "testEnvironment": "./tests/B2BClientEnv.js"
-  },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
-    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/bluebird": "^3.5.25",
+    "@types/debug": "^0.0.31",
+    "@types/dotenv": "^6.1.0",
+    "@types/invariant": "^2.2.29",
+    "@types/jest": "^23.3.10",
+    "@types/mkdirp": "^0.5.2",
+    "@types/nock": "^9.3.0",
+    "@types/node": "^10.12.18",
+    "@types/proper-lockfile": "^3.0.0",
+    "@types/ramda": "^0.25.45",
+    "@types/request": "^2.48.1",
+    "@types/rimraf": "^2.0.2",
+    "@types/tar": "^4.0.0",
+    "@types/uuid": "^3.4.4",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^23.6.0",
     "codecov": "^3.1.0",
     "dotenv": "6.0.0",
-    "flow-bin": "0.85.0",
-    "flow-copy-source": "2.0.2",
-    "flow-typed": "^2.5.1",
     "jest": "^23.6.0",
     "jest-junit": "^5.2.0",
     "nock": "^10.0.4",
-    "rimraf": "2.6.2"
+    "prettier": "^1.15.3",
+    "rimraf": "2.6.2",
+    "typescript": "^3.2.2"
   },
   "dependencies": {
     "debug": "^3.1.0",

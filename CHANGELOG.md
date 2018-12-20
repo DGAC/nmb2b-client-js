@@ -1,3 +1,6 @@
+# Master
+* Full rewrite in TypeScript
+
 # v0.1.4 (2018-11-14)
 * Fix NMB2B TLS evolution
 

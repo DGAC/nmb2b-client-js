@@ -26,7 +26,7 @@ For instance, the Flow.retrieveOTMVPlan query expects a `day` attribute with the
 Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONAL' },
   day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
 
@@ -39,29 +39,29 @@ In SOAP, key order matters.
 Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONAL' },
   day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 
 // Would normally fail
 Flow.retrieveOTMVPlan({
   day: moment.utc().toDate(),
   dataset: { type: 'OPERATIONAL' },
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
 
 The library reorder request object keys to match what's expressed in the XSD/WSDL. Therefore, the second example works fine.
 
-- Flow typing.
+- TypeScript support.
 
-The following example will raise a Flow error.
+The following example will raise a type error.
 
 ```javascript
-// Raises a Flow error
+// Raises a type error
 Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONNAL' }, // Notice the typo
   day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] }
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
 
@@ -100,7 +100,7 @@ import fs from 'fs';
 
 const security = {
   pfx: fs.readFileSync('/path/to/cert.p12'),
-  passphrase: 'your-passphrase'
+  passphrase: 'your-passphrase',
 };
 
 makeB2BClient({ security }).then(client => {
@@ -116,7 +116,7 @@ import fs from 'fs';
 const security = {
   pem: fs.readFileSync('/path/to/cert.pem'),
   key: fs.readFileSync('/path/to/cert.key'),
-  passphrase: 'your-passphrase'
+  passphrase: 'your-passphrase',
 };
 
 makeB2BClient({ security }).then(client => {

@@ -1,6 +1,6 @@
 const execSync = require('child_process').execSync;
 
-const IGNORE = ['**/*.test.js'];
+const IGNORE = ['**/*.test.js', '**/*.test.ts'];
 
 const exec = (command, extraEnv) =>
   execSync(command, {
@@ -10,8 +10,15 @@ const exec = (command, extraEnv) =>
 
 console.log('Building CommonJS modules ...');
 
-exec(`babel src -d dist --ignore ${IGNORE.map(s => `'${s}'`).join(',')}`, {
-  BABEL_ENV: 'cjs',
-});
+exec(
+  `babel src -d dist --extensions '.js,.ts' --ignore ${IGNORE.map(
+    s => `'${s}'`,
+  ).join(',')}`,
+  {
+    BABEL_ENV: 'cjs',
+  },
+);
 
-exec(`flow-copy-source -i ${IGNORE.map(s => `'${s}'`).join(',')} src dist`, {});
+console.log('Building TS declarations');
+
+exec(`tsc --emitDeclarationOnly`);
