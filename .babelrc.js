@@ -4,26 +4,10 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          node: '8'
-        }
-      }
+          node: '8',
+        },
+      },
     ],
-    '@babel/preset-flow'
+    '@babel/preset-typescript',
   ],
-  overrides: [
-    {
-      test: ['./src/**/*.ts'],
-      presets: [
-        [
-          '@babel/preset-env',
-          {
-            targets: {
-              node: '8'
-            }
-          }
-        ],
-        '@babel/preset-typescript'
-      ]
-    }
-  ]
 };
