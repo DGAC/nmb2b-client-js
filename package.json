@@ -17,7 +17,7 @@
     "build": "yarn clean && node ./scripts/build.js",
     "test": "jest",
     "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "files": [
     "dist"

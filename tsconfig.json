@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "allowJs": true,
     "module": "commonjs",
     "outDir": "dist",
     "declaration": true,
@@ -11,6 +12,6 @@
     "pretty": true,
     "strictNullChecks": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["dist", "node_modules", "**/*.test.ts"]
 }
