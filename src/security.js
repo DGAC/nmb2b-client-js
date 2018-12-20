@@ -7,6 +7,7 @@ const debug = d('nm-b2b-client.security');
 import fs from 'fs';
 import path from 'path';
 
+// $FlowFixMe
 require('tls').DEFAULT_ECDH_CURVE = 'auto';
 
 export type Security =

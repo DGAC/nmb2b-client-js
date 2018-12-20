@@ -14,7 +14,7 @@ beforeAll(async () => {
 });
 
 describe('queryFlightsByTrafficVolume', () => {
-  conditionalTest('query in LFEERMS', async () => {
+  conditionalTest('query in LFERMS', async () => {
     const res = await Flight.queryFlightsByTrafficVolume({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
@@ -23,27 +23,27 @@ describe('queryFlightsByTrafficVolume', () => {
       trafficWindow: {
         wef: moment
           .utc()
-          .subtract(10, 'minutes')
+          .subtract(2, 'hours')
           .toDate(),
         unt: moment
           .utc()
-          .add(10, 'minutes')
+          .add(2, 'hours')
           .toDate(),
       },
-      trafficVolume: 'EGKKARR',
+      trafficVolume: 'LFERMS',
     });
 
     expect(res.status).toBe('OK');
 
-    if (!res.data) {
+    if (!res.data || !res.data.flights) {
       // No flights in the TV, return early
+      console.warn('No flights returned in the query');
       return;
     }
     const {
       data: { flights },
     } = res;
 
-    !process.env.CI && console.log(inspect(res, { depth: null }));
     expect(Array.isArray(flights)).toBe(true);
 
     flights.forEach(flight =>

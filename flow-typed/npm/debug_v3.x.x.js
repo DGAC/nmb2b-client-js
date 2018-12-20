@@ -1,5 +1,5 @@
-// flow-typed signature: c7b1e1d8d9c2230d131299ddc21dcb0e
-// flow-typed version: da30fe6876/debug_v2.x.x/flow_>=v0.28.x
+// flow-typed signature: da5374f88debab76c20fc67be7295ba7
+// flow-typed version: da30fe6876/debug_v3.x.x/flow_>=v0.28.x
 
 declare module "debug" {
   declare type Debugger = {

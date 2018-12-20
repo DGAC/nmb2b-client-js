@@ -5,7 +5,7 @@ import { compose, identity, evolve } from 'ramda';
 
 export function prepareSerializer(schema: any) {
   const transformer = prepareTransformer(schema);
-  return compose(
+  return compose<*, *, *>(
     transformer ? evolve(transformer) : identity,
     reorderKeys(schema),
   );

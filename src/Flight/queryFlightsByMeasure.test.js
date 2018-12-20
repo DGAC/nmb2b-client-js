@@ -38,20 +38,19 @@ describe('queryFlightsByMeasure', () => {
       requestedRegulationFields: { item: ['location', 'reason'] },
     });
 
-    // console.log(res.data.regulations.item);
+    console.log(res.data.regulations.item);
 
     const hasAirspaceMatching = regex => item =>
       item &&
       item.location &&
-      // $FlowFixMe
       item.location['referenceLocation-ReferenceLocationAirspace'] &&
       item.location['referenceLocation-ReferenceLocationAirspace'].id &&
       regex.test(
         item.location['referenceLocation-ReferenceLocationAirspace'].id,
       );
 
-    const measure = res.data.regulations.item.find(hasAirspaceMatching(/LFE/));
-    // console.log(inspect(measure, { depth: null }));
+    const measure = res.data.regulations.item[0];
+    console.log(inspect(measure, { depth: null }));
 
     measureId = measure.regulationId;
   });
