@@ -59,13 +59,13 @@ jobs:
       - restore_cache:
           name: Restoring nmb2b-xsd from cache
           keys:
-            - v1-b2b-xsd-{{ checksum "src/constants.js" }}
+            - v1-b2b-xsd-{{ checksum "src/constants.ts" }}
       - run: yarn downloadWSDL
       - save_cache:
           name: Saving nmb2b-xsd in cache for future builds
           paths:
             - ./b2b-xsd
-          key: v1-b2b-xsd-{{ checksum "src/constants.js" }}
+          key: v1-b2b-xsd-{{ checksum "src/constants.ts" }}
 
       # Typecheck the library
       - run: yarn flow
