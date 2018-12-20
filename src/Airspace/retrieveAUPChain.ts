@@ -1,4 +1,3 @@
-/* @flow */
 import { AirspaceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';

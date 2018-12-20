@@ -1,4 +1,3 @@
-/* @flow */
 import injectSendTime_ from './injectSendTime';
 import responseStatusHandler_ from './responseStatusHandler';
 

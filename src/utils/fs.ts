@@ -1,4 +1,3 @@
-/* @flow */
 import fs, { Stats } from 'fs';
 import mkdirpCb from 'mkdirp';
 import { promisify } from 'util';

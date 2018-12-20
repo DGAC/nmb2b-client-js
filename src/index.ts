@@ -1,4 +1,3 @@
-/* @flow */
 import invariant from 'invariant';
 import promiseMap from './utils/promiseMap';
 import path from 'path';

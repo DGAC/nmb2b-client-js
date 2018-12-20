@@ -1,4 +1,3 @@
-/* @flow */
 export { B2BClient } from './';
 export { AirspaceService } from './Airspace';
 export { FlightService } from './Flight';

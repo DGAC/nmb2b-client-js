@@ -1,5 +1,3 @@
-/* @flow */
-
 type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 
 async function promiseMap<M extends { [key: string]: Promise<any> }>(

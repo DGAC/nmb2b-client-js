@@ -1,4 +1,3 @@
-/* @flow */
 import { Flight, FlightKeys } from '../types';
 
 export default function flightToFlightKeys(

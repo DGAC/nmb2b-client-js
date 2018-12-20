@@ -1,4 +1,3 @@
-/* @flow */
 export type DateYearMonthDay = Date;
 export type DateTimeMinute = Date;
 export type DateTimeSecond = Date;

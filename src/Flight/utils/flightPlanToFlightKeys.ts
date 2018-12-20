@@ -1,4 +1,3 @@
-/* @flow */
 import { StructuredFlightPlan, FlightKeys } from '../types';
 
 export default function flightPlanToFlightKeys(

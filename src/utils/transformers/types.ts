@@ -1,4 +1,3 @@
-/* @flow */
 import moment from 'moment';
 import * as timeFormats from '../timeFormats';
 import any from 'ramda/es/any';

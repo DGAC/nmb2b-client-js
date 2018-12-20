@@ -1,4 +1,3 @@
-/* @flow */
 export type ReroutingId = string; // (UALPHA|DIGIT|*){1,8}
 export type RegulationId = string; // UALPHA(UALPHA|DIGIT){0,5}DIGIT{2}UALPHA{0,1}
 export type MeasureId =

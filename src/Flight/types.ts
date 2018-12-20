@@ -1,5 +1,3 @@
-/* @flow */
-
 export type IFPLId = string; // UALPHA{2}DIGIT{8}
 export type FlightDataset = 'flight' | 'flightPlan';
 export type FlightIdentificationInput = { id: IFPLId } | { keys: FlightKeys };

@@ -1,4 +1,4 @@
-/* @flow */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import { fromEnv } from '../src/security';

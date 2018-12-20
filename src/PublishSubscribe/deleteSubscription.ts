@@ -1,4 +1,3 @@
-/* @flow */
 import { PublishSubscribeClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';

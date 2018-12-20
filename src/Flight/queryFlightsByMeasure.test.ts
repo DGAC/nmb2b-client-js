@@ -1,4 +1,3 @@
-/* @flow */
 import { inspect } from 'util';
 import { makeFlightClient, makeFlowClient } from '..';
 import moment from 'moment';

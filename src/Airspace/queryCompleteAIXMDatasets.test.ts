@@ -1,4 +1,3 @@
-/* @flow */
 // import { getClients } from '../../tests/utils';
 // @ts-ignore
 import b2bOptions from '../../tests/options';

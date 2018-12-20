@@ -1,4 +1,3 @@
-/* @flow */
 import { FlightExchangeModel } from '../Flight/types';
 import { RegulationField } from '../Flow/types';
 import {

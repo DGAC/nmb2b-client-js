@@ -1,4 +1,3 @@
-/* @flow */
 import request from 'request';
 import { fromEnv } from '../../security';
 import dotenv from 'dotenv';

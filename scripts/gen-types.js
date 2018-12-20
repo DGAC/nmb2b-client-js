@@ -1,4 +1,4 @@
-/* @flow */
+
 import { makeB2BClient } from '..';
 import b2bOptions from '../tests/options';
 import { inspect } from 'util';

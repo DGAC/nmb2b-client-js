@@ -1,4 +1,3 @@
-/* @flow */
 import path from 'path';
 import { getWSDLPath } from '../constants';
 import { getEndpoint } from '../config';

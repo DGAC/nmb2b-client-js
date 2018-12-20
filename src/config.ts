@@ -1,4 +1,3 @@
-/* @flow */
 import { Security, isValidSecurity } from './security';
 import { B2B_VERSION, B2BFlavours, B2BFlavour } from './constants';
 import invariant from 'invariant';

@@ -1,4 +1,3 @@
-/* @flow */
 import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { Security } from '../../security';

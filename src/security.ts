@@ -1,4 +1,3 @@
-/* @flow */
 import invariant from 'invariant';
 import d from 'debug';
 import { Config } from './config';

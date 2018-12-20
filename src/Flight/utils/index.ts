@@ -1,4 +1,3 @@
-/* @flow */
 import flightPlanToFlightKeys_ from './flightPlanToFlightKeys';
 export const flightPlanToFlightKeys = flightPlanToFlightKeys_;
 

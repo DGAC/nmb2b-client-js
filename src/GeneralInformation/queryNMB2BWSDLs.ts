@@ -1,4 +1,3 @@
-/* @flow */
 import { GeneralInformationServiceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';

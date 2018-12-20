@@ -1,4 +1,3 @@
-/* @flow */
 export type RouteId = string; // (UALPHA|DIGIT){1,7}
 export type PublishedPointId = string; // (UALPHA|DIGIT){1,5}
 export type AerodromeSetId = string; // ANY{1,8}

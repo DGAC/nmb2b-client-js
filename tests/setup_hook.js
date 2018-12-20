@@ -1,4 +1,4 @@
-/* @flow */
+
 const dotenv = require('dotenv');
 dotenv.config();
 const { B2B_VERSION } = require('../dist/constants');

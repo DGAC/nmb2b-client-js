@@ -1,4 +1,3 @@
-/* @flow */
 import moment from 'moment';
 import { timeFormatWithSeconds } from './timeFormats';
 import { Request } from '../Common/types';

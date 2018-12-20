@@ -1,4 +1,3 @@
-/* @flow */
 import path from 'path';
 const usedEnvKeys = [
   'B2B_CERT',

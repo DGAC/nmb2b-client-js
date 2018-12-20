@@ -1,4 +1,3 @@
-/* @flow */
 import { types } from './types';
 export { prepareSerializer } from './serializer';
 
