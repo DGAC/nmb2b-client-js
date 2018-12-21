@@ -18,7 +18,7 @@
     "test": "jest",
     "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
     "lint": "tslint -p .",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "files": [
     "dist"
