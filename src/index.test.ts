@@ -11,13 +11,13 @@ import {
   makeAirspaceClient,
   makePublishSubscribeClient,
 } from '.';
+import { Config } from './config';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
 describe('Main API', () => {
-  test('makeB2BClient', async () => {
-    // $FlowFixMe
-    const b2bClient = await makeB2BClient(b2bOptions);
+  test.only('makeB2BClient', async () => {
+    const b2bClient = await makeB2BClient(b2bOptions as Config);
     expect(b2bClient).toBeDefined();
     expect(b2bClient.Airspace).toBeDefined();
     expect(b2bClient.Flight).toBeDefined();

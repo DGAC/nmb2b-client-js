@@ -1,6 +1,3 @@
-import invariant from 'invariant';
-import promiseMap from './utils/promiseMap';
-import path from 'path';
 import { Security } from './security';
 import { B2B_VERSION, B2BFlavour } from './constants';
 import { isConfigValid, Config } from './config';
@@ -53,13 +50,19 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
 
   await downloadWSDL(options);
 
-  return promiseMap({
-    Airspace: getAirspaceClient(options),
-    Flight: getFlightClient(options),
-    PublishSubscribe: getPublishSubscribeClient(options),
-    Flow: getFlowClient(options),
-    GeneralInformation: getGeneralInformationClient(options),
-  });
+  return Promise.all([
+    getAirspaceClient(options),
+    getFlightClient(options),
+    getPublishSubscribeClient(options),
+    getFlowClient(options),
+    getGeneralInformationClient(options),
+  ]).then(([Airspace, Flight, PublishSubscribe, Flow, GeneralInformation]) => ({
+    Airspace,
+    Flight,
+    PublishSubscribe,
+    Flow,
+    GeneralInformation,
+  }));
 }
 
 export async function makeAirspaceClient(
