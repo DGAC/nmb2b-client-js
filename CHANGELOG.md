@@ -1,4 +1,4 @@
-# Master
+# v0.2.0 (2018-12-21)
 * Full rewrite in TypeScript
 
 # v0.1.4 (2018-11-14)
