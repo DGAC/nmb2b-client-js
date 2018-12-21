@@ -33,11 +33,11 @@ export interface B2BClient {
   GeneralInformation: GeneralInformationService;
 }
 
-type InputOptions = {
+interface InputOptions {
   security: Security;
   flavour?: B2BFlavour;
   XSD_PATH?: string;
-};
+}
 
 const defaults = {
   flavour: 'OPS',
@@ -45,7 +45,7 @@ const defaults = {
 };
 
 export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
-  const options = Object.assign({}, defaults, args);
+  const options = {...defaults, ...args};
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -64,7 +64,7 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
 export async function makeAirspaceClient(
   args: InputOptions,
 ): Promise<AirspaceService> {
-  const options = Object.assign({}, defaults, args);
+  const options = {...defaults, ...args};
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -77,7 +77,7 @@ export async function makeAirspaceClient(
 export async function makeFlightClient(
   args: InputOptions,
 ): Promise<FlightService> {
-  const options = Object.assign({}, defaults, args);
+  const options = {...defaults, ...args};
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -88,7 +88,7 @@ export async function makeFlightClient(
 }
 
 export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
-  const options = Object.assign({}, defaults, args);
+  const options = {...defaults, ...args};
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -101,7 +101,7 @@ export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
 export async function makeGeneralInformationClient(
   args: InputOptions,
 ): Promise<GeneralInformationService> {
-  const options = Object.assign({}, defaults, args);
+  const options = {...defaults, ...args};
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -114,7 +114,7 @@ export async function makeGeneralInformationClient(
 export async function makePublishSubscribeClient(
   args: InputOptions,
 ): Promise<PublishSubscribeService> {
-  const options = Object.assign({}, defaults, args);
+  const options = {...defaults, ...args};
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }

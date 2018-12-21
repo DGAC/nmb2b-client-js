@@ -36,6 +36,8 @@ function createFlowServices(config: Config): Promise<FlowClient> {
         },
       );
     } catch (err) {
+      // TODO: Implement a proper debug log message output
+      // tslint:disable-next-line
       console.log(err);
       return reject(err);
     }
@@ -55,15 +57,15 @@ import { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCou
 import retrieveOTMVPlan from './retrieveOTMVPlan';
 import { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
 
-export type FlowService = {
-  __soapClient: Object;
+export interface FlowService {
+  __soapClient: object;
   retrieveSectorConfigurationPlan: RetrieveSectorConfigurationPlan;
   queryTrafficCountsByAirspace: QueryTrafficCountsByAirspace;
   queryRegulations: QueryRegulations;
   queryHotspots: QueryHotspots;
   queryTrafficCountsByTrafficVolume: QueryTrafficCountsByTrafficVolume;
   retrieveOTMVPlan: RetrieveOTMVPlan;
-};
+}
 
 export function getFlowClient(config: Config): Promise<FlowService> {
   return createFlowServices(config).then(client => ({

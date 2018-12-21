@@ -44,14 +44,14 @@ export default function prepareRetrieveSectorConfigurationPlan(
 
 export function knownConfigurationsToMap(
   knownConfigurations: undefined | null | KnownConfigurations,
-): Map<SectorConfigurationId, Array<AirspaceId>> {
+): Map<SectorConfigurationId, AirspaceId[]> {
   if (!knownConfigurations || !knownConfigurations.item) {
     return new Map();
   }
 
   const { item } = knownConfigurations;
 
-  const map: Map<SectorConfigurationId, Array<AirspaceId>> = new Map();
+  const map: Map<SectorConfigurationId, AirspaceId[]> = new Map();
   item.forEach(({ key, value: { item: value } }) => {
     map.set(key, value);
   });

@@ -37,13 +37,13 @@ import {
 
 import { AUPChain } from './types';
 
-export type AUPChainRetrievalRequest = {
+export interface AUPChainRetrievalRequest {
   chainDate: DateYearMonthDay;
-  amcIds?: Array<AirNavigationUnitId>;
-};
+  amcIds?: AirNavigationUnitId[];
+}
 
 export type AUPChainRetrievalReply = Reply & {
   data: {
-    chains: Array<AUPChain>;
+    chains: AUPChain[];
   };
 };

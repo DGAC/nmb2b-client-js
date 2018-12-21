@@ -6,7 +6,7 @@ const debug = d('nm-b2b-client.security');
 import fs from 'fs';
 import path from 'path';
 
-// $FlowFixMe
+// tslint:disable-next-line
 require('tls').DEFAULT_ECDH_CURVE = 'auto';
 
 interface PfxSecurity {
@@ -45,16 +45,16 @@ export function prepareSecurity(config: Config): ISecurity {
     const { pfx, passphrase } = security;
     debug('Using PFX certificates');
     return new soap.ClientSSLSecurityPFX(pfx, passphrase);
+  } else {
+    debug('Using PEM certificates');
+    const { key, cert, passphrase } = security;
+    return new soap.ClientSSLSecurity(
+      key,
+      cert,
+      undefined,
+      !!passphrase ? { passphrase } : null,
+    );
   }
-
-  debug('Using PEM certificates');
-  const { key, cert, passphrase } = security;
-  return new soap.ClientSSLSecurity(
-    key,
-    cert,
-    undefined,
-    !!passphrase ? { passphrase } : null,
-  );
 }
 
 let envSecurity: Security | undefined;

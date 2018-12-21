@@ -1,13 +1,11 @@
 import moment from 'moment';
 import * as timeFormats from '../timeFormats';
-import any from 'ramda/es/any';
-import T from 'ramda/es/T';
 
 const outputBase = {
-  integer: (text: string, context: Object) => {
+  integer: (text: string, context: object) => {
     return parseInt(text, 10);
   },
-  date: (text: string, context: Object) => {
+  date: (text: string, context: object) => {
     const d = moment.utc(text).toDate();
     return d;
   },

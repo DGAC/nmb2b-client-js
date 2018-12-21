@@ -36,6 +36,8 @@ function createFlightServices(config: Config): Promise<FlightClient> {
         },
       );
     } catch (err) {
+      // TODO: Implement a proper debug log message output
+      // tslint:disable-next-line
       console.log(err);
       return reject(err);
     }
@@ -53,14 +55,14 @@ import { Resolver as QueryFlightsByTrafficVolume } from './queryFlightsByTraffic
 import queryFlightsByMeasure from './queryFlightsByMeasure';
 import { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure';
 
-export type FlightService = {
-  __soapClient: Object;
+export interface FlightService {
+  __soapClient: object;
   retrieveFlight: RetrieveFlight;
   queryFlightsByAirspace: QueryFlightsByAirspace;
   queryFlightPlans: QueryFlightPlans;
   queryFlightsByTrafficVolume: QueryFlightsByTrafficVolume;
   queryFlightsByMeasure: QueryFlightsByMeasure;
-};
+}
 
 export function getFlightClient(config: Config): Promise<FlightService> {
   return createFlightServices(config).then(client => ({

@@ -41,19 +41,19 @@ import {
 
 import { TrafficType } from '../Flight/types';
 
-export type FlightRegulationLocation = {
+export interface FlightRegulationLocation {
   regulationId: RegulationId;
   referenceLocation: ReferenceLocation;
   toConfirm: boolean;
-};
+}
 
-export type FlightAtfcmMeasureLocation = Object;
+export type FlightAtfcmMeasureLocation = object;
 
-export type RegulationCause = {
+export interface RegulationCause {
   reason: RegulationReason;
   locationCategory: RegulationLocationCategory;
   iataDelayCode: number;
-};
+}
 
 export type RegulationLocationCategory = 'ARRIVAL' | 'DEPARTURE' | 'ENROUTE';
 
@@ -73,34 +73,34 @@ export type RegulationReason =
   | 'SPECIAL_EVENT'
   | 'WEATHER';
 
-export type FlightHotspotLocation = {
+export interface FlightHotspotLocation {
   hotspot: Hotspot;
   referenceLocation: ReferenceLocation;
-};
+}
 
-export type Hotspot = {
+export interface Hotspot {
   hotspotId: HotspotId;
   severity: HotspotSeverity;
   status: HotspotStatus;
   remark?: string;
   trafficVolumeDescription?: string;
-};
+}
 
 export type HotspotSeverity = 'HIGH' | 'LOW' | 'MEDIUM';
 export type HotspotStatus = 'ACCEPTABLE' | 'ACTIVE' | 'DRAFT' | 'SOLVED';
-export type HotspotId = {
+export interface HotspotId {
   applicabilityPeriod: DateTimeMinutePeriod;
   trafficVolume: TrafficVolumeId;
   duration: DurationHourMinute;
-};
+}
 
-export type FlightMCDMInfo = {
+export interface FlightMCDMInfo {
   firstAssociatedMCDMMeasure: MeasureId;
   nrAssociatedMCDMRegulations: number;
   nrAssociatedMCDMReroutings: number;
   nrAssociatedMCDMOnlyMeasures: number;
   worstMCDMState: MCDMState;
-};
+}
 
 export type MCDMState =
   | 'ABANDONED'
@@ -115,10 +115,10 @@ export type MCDMState =
 export type OtmvStatus = 'PEAK' | 'SUSTAINED';
 
 export type CountsCalculationType = 'ENTRY' | 'OCCUPANCY';
-export type CountsInterval = {
+export interface CountsInterval {
   duration: DurationHourMinute;
   step: DurationHourMinute;
-};
+}
 
 export type RegulationField =
   | 'applicability'
@@ -174,19 +174,19 @@ export type SectorConfigurationPlan = TacticalConfigurationPlan & {
   clientSchedule?: NMSet<PlannedSectorConfigurationActivation>; // Set<PlannedSectorConfigurationActivation>
 };
 
-export type PlannedSectorConfigurationActivation = {
+export interface PlannedSectorConfigurationActivation {
   applicabilityPeriod: DateTimeMinutePeriod;
   dataSource: PlanDataSource;
   sectorConfigurationId?: SectorConfigurationId;
-};
+}
 
-export type TacticalConfigurationPlan = {
+export interface TacticalConfigurationPlan {
   dataId: PlanDataId;
   dataset: Dataset;
   day: DateYearMonthDay;
   planTransferred?: BooleanString;
   planCutOffReached?: BooleanString;
-};
+}
 
 export type TrafficCountsByAirspaceRequest = TrafficCountsRequest & {
   airspace: AirspaceId;
@@ -201,7 +201,7 @@ export type TrafficCountsByTrafficVolumeRequest = TrafficCountsRequest & {
   includeInvisibleFlights?: boolean;
 };
 
-export type TrafficCountsRequest = {
+export interface TrafficCountsRequest {
   dataset: Dataset;
   trafficWindow: DateTimeMinutePeriod;
   includeProposalFlights: boolean;
@@ -209,7 +209,7 @@ export type TrafficCountsRequest = {
   trafficTypes: NMSet<TrafficType>;
   computeSubTotals: boolean;
   countsInterval: CountsInterval;
-};
+}
 
 export interface TrafficCountsByAirspaceReply extends Reply {
   data: TrafficCountsReplyData;
@@ -219,18 +219,18 @@ export interface TrafficCountsByTrafficVolumeReply extends Reply {
   data: TrafficCountsReplyData;
 }
 
-export type TrafficCountsReplyData = {
+export interface TrafficCountsReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
   flows?: NMSet<Flow>;
   counts?: NMMap<DateTimeMinutePeriod, NMMap<TrafficType, Counts>>;
   otmvAlerts?: NMMap<TrafficType, NMSet<OtmvAlert>>;
-};
+}
 
-export type Flow = {
+export interface Flow {
   id: FlowId;
   type: FlowType;
   role: FlowRoleSelection;
-};
+}
 
 export type FlowType = 'ASSOCIATED' | 'LINKED';
 export type FlowRoleSelection =
@@ -239,11 +239,11 @@ export type FlowRoleSelection =
   | 'INCLUDED'
   | 'INCLUDED_AND_EXEMPTED';
 
-export type Counts = {
+export interface Counts {
   totalCounts: CountsValue;
   flowCounts?: NMMap<FlowId, CountsValue>;
   subTotalCounts: NMMap<SubTotalsTrafficCountsType, CountsValue>;
-};
+}
 
 export type CountsValue = NMInt;
 export type SubTotalsTrafficCountsType =
@@ -255,10 +255,10 @@ export type SubTotalsTrafficCountsType =
   | 'TACT_ACTIVATED_WITHOUT_FSA'
   | 'TACT_ACTIVATED_WITH_FSA';
 
-export type OtmvAlert = {
+export interface OtmvAlert {
   period: DateTimeMinutePeriod;
   status: OtmvStatus;
-};
+}
 
 export type RegulationState =
   | 'APPLIED'
@@ -276,33 +276,33 @@ export interface RegulationListReply extends Reply {
   data: RegulationListReplyData;
 }
 
-export type RegulationListReplyData = {
+export interface RegulationListReplyData {
   regulations: NMSet<Regulation>;
-};
+}
 
 export type RegulationOrMCDMOnlyListRequest = MeasureListRequest & {
   regulations?: NMSet<RegulationIdWildcard>;
   reasons?: NMSet<RegulationReason>;
 };
 
-export type MeasureListRequest = {
+export interface MeasureListRequest {
   dataset: Dataset;
   queryPeriod: DateTimeMinutePeriod;
   tvs?: NMSet<TrafficVolumeIdWildcard>;
   tvSets?: NMSet<TrafficVolumeSetIdWildcard>;
-};
+}
 
 export type Regulation = RegulationOrMCDMOnly & {
   regulationState: RegulationState;
 };
 
-export type RegulationOrMCDMOnly = {
+export interface RegulationOrMCDMOnly {
   regulationId: RegulationId;
   reason?: RegulationReason;
   location?: TrafficVolumeLocation;
   protectedLocation?: ReferenceLocation;
-  initialConstraints?: Array<RegulationInitialConstraint>;
-  supplementaryConstraints?: Array<RegulationSupplementaryConstraint>;
+  initialConstraints?: RegulationInitialConstraint[];
+  supplementaryConstraints?: RegulationSupplementaryConstraint[];
   remark?: string;
   autolink?: BooleanString;
   linkedRegulations: NMSet<RegulationId>;
@@ -310,7 +310,7 @@ export type RegulationOrMCDMOnly = {
   updateCapacityRequired?: BooleanString;
   updateTCActivationRequired?: BooleanString;
   delayTVSet?: TrafficVolumeSetId;
-};
+}
 
 export type TrafficVolumeLocation_ReferenceLocation =
   | {
@@ -336,32 +336,32 @@ export type TrafficVolumeLocation = {
   setIds?: NMSet<TrafficVolumeSetId>;
 } & TrafficVolumeLocation_ReferenceLocation;
 
-export type RegulationInitialConstraint = {
+export interface RegulationInitialConstraint {
   constraintPeriod: DateTimeMinutePeriod;
   normalRate: NMInt;
   pendingRate: NMInt;
   equipmentRate: NMInt;
   exceptionalConstraint?: RegulationExceptionalConstraint;
-};
+}
 
-export type RegulationExceptionalConstraint = {
+export interface RegulationExceptionalConstraint {
   runwayVisualRange?: DistanceM;
   fcmMandatory: BooleanString;
   shift: BooleanString;
-};
+}
 
-export type RegulationSupplementaryConstraint = {
+export interface RegulationSupplementaryConstraint {
   constraintPeriod: DateTimeMinutePeriod;
   supplementaryRate: NMInt;
-};
+}
 
-export type HotspotListRequest = {
+export interface HotspotListRequest {
   dataset: Dataset;
   day: DateYearMonthDay;
   trafficVolume?: TrafficVolumeId;
   duration?: DurationHourMinute;
   hotspotKind: HotspotKind;
-};
+}
 
 export type HotspotKind = 'LOCATION_OF_INTEREST' | 'PROBLEM';
 
@@ -369,7 +369,7 @@ export interface HotspotListReply extends Reply {
   plans: HotspotPlans;
 }
 
-export type HotspotPlans = {
+export interface HotspotPlans {
   dataId: PlanDataId;
   dataset: Dataset;
   day: DateYearMonthDay;
@@ -377,12 +377,12 @@ export type HotspotPlans = {
   planCutOffreached?: BooleanString;
   hotspotKind: HotspotKind;
   schedules: NMMap<TrafficVolumeId, NMMap<DurationHourMinute, NMSet<Hotspot>>>;
-};
+}
 
-export type OTMVWithDuration = {
+export interface OTMVWithDuration {
   trafficVolume: TrafficVolumeId;
   otvmDuration?: DurationHourMinute;
-};
+}
 
 export interface OTMVPlanRetrievalRequest
   extends TacticalConfigurationRetrievalRequest {
@@ -394,34 +394,34 @@ type OTMVPlans = NMMap<
   Map<DurationHourMinute, OTMVPlanForDuration>
 >;
 
-type OTMVPlanForDuration = {
+interface OTMVPlanForDuration {
   nmSchedule: NMSet<PlannedOTMV>;
   clientSchedule: NMSet<PlannedOTMV>;
-};
+}
 
-type PlannedOTMV = {
+interface PlannedOTMV {
   applicabilityPeriod: DateTimeMinutePeriod;
   dataSource: PlanDataSource;
   otmv?: OTMV;
-};
+}
 
-type OTMV = {
+interface OTMV {
   trafficVolume: TrafficVolumeId;
   otmvDuration: DurationHourMinute;
   peak?: OTMVPeak;
   sustained?: OTMVSustained;
   remark?: string;
-};
+}
 
-type OTMVPeak = {
+interface OTMVPeak {
   threshold: OTMVThreshold;
-};
+}
 
-type OTMVSustained = {
+interface OTMVSustained {
   threshold: OTMVThreshold;
   crossingOccurences: number;
   elapsed: DurationHourMinute;
-};
+}
 
 type OTMVThreshold = number;
 

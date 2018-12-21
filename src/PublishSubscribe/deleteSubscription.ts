@@ -4,9 +4,9 @@ import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { Reply } from '../Common/types';
 
-type Values = {
+interface Values {
   uuid: string;
-};
+}
 
 type Result = Reply;
 

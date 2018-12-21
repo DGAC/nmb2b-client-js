@@ -2,7 +2,7 @@ import { types } from './types';
 export { prepareSerializer } from './serializer';
 
 type T = typeof types;
-type Diff<T, U> = T extends U ? never : T;
+type Diff<K, U> = K extends U ? never : K;
 
 type WithOutput = {
   [K in keyof T]: T[K]['output'] extends null ? never : K

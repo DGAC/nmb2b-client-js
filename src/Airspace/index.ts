@@ -4,7 +4,6 @@ import { getEndpoint } from '../config';
 import { prepareSecurity } from '../security';
 import soap from 'soap';
 import { Config } from '../config';
-import { B2BFlavour } from '../constants';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
 export const getWSDL = ({
@@ -41,12 +40,12 @@ import retrieveAUPChain, {
 } from './retrieveAUPChain';
 import retrieveAUP, { Resolver as RetrieveAUP } from './retrieveAUP';
 
-export type AirspaceService = {
-  __soapClient: Object;
+export interface AirspaceService {
+  __soapClient: object;
   queryCompleteAIXMDatasets: QueryCompleteAIXMDatasets;
   retrieveAUPChain: RetrieveAUPChain;
   retrieveAUP: RetrieveAUP;
-};
+}
 
 export function getAirspaceClient(config: Config): Promise<AirspaceService> {
   return createAirspaceServices(config).then(client => ({

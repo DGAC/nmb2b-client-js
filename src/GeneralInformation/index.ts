@@ -32,6 +32,9 @@ function createGeneralInformationServices(
         },
       );
     } catch (err) {
+      // TODO: Implement a proper debug log message output
+      // tslint:disable-next-line
+      console.log(err);
       return reject(err);
     }
   });
@@ -41,10 +44,10 @@ import queryNMB2BWSDLs, {
   Resolver as QueryNMB2BWSDLs,
 } from './queryNMB2BWSDLs';
 
-export type GeneralInformationService = {
-  __soapClient: Object;
+export interface GeneralInformationService {
+  __soapClient: object;
   queryNMB2BWSDLs: QueryNMB2BWSDLs;
-};
+}
 
 export function getGeneralInformationClient(
   config: Config,
@@ -55,6 +58,8 @@ export function getGeneralInformationClient(
       queryNMB2BWSDLs: queryNMB2BWSDLs(client),
     }),
     err => {
+      // TODO: Implement a proper debug log message output
+      // tslint:disable-next-line
       console.error(err);
       return Promise.reject(err);
     },

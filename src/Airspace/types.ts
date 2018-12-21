@@ -17,15 +17,15 @@ export type AiracIdentifier =
     }
   | { airacSequenceNumber: number };
 
-export type AirSpeed = {
+export interface AirSpeed {
   speed: number;
   unit: SpeedUnit;
-};
+}
 
-export type NetworkAddress = {
+export interface NetworkAddress {
   network: 'AFTN' | 'OTHER' | 'SITA'; // Network
   address: string; // NetworkAddress_DataType ANY{1,8},
-};
+}
 
 export type SpeedUnit =
   | 'FEET_PER_MINUTE'
@@ -36,12 +36,12 @@ export type SpeedUnit =
 
 export type AIRACId = string; // Pattern DIGIT{4}
 export type AerodromeICAOId = string;
-export type AIXMFile = {
+export interface AIXMFile {
   fileLength: string;
   id: string;
   releaseTime: string;
   type: string;
-};
+}
 
 import {
   DateYearMonthDay,
@@ -53,16 +53,16 @@ import {
   DateYearMonthDayPeriod,
 } from '../Common/types';
 
-export type AUPChain = {
+export interface AUPChain {
   chainDate: DateYearMonthDay;
   amcId: AirNavigationUnitId;
-  aups: Array<AUPSummary>;
-};
+  aups: AUPSummary[];
+}
 
 export type AUPId = string;
 export type AUPType = 'BASELINE' | 'UPDATE';
 export type AUPState = 'DRAFT' | 'READY' | 'RELEASED';
-export type AUPSummary = {
+export interface AUPSummary {
   id: AUPId;
   originatingAupId?: AUPId;
   chainDate: DateYearMonthDay;
@@ -75,25 +75,25 @@ export type AUPSummary = {
   note: Array<string | null>;
   expandedAUP: boolean;
   lastUpdate: LastUpdate;
-};
+}
 
-type ADRMessageType = Object; // eurocontrol.cfmu.cua.b2b.aixm.ADRMessage
-export type AUPManualEntries = {
+type ADRMessageType = object; // eurocontrol.cfmu.cua.b2b.aixm.ADRMessage
+export interface AUPManualEntries {
   cdrs: ADRMessageType;
   rsas: ADRMessageType;
-};
+}
 
-export type AUPComputedEntries = {
+export interface AUPComputedEntries {
   implicitCDRs?: ADRMessageType;
   mergedCDRs?: ADRMessageType;
   implicitRSAs?: ADRMessageType;
-};
+}
 
-export type AUP = {
+export interface AUP {
   summary: AUPSummary;
   aupManualEntries?: AUPManualEntries;
   aupComputedEntries?: AUPComputedEntries;
-};
+}
 
 export type FlightLevelUnit =
   | 'A' // Hundreds of feet
@@ -103,42 +103,42 @@ export type FlightLevelUnit =
   | 'S' // Standard metric level in tens of meters
   | 'SS'; // Standard metric level in meters
 
-export type FlightLevel = {
+export interface FlightLevel {
   unit: FlightLevelUnit;
   level?: number;
   ground?: boolean;
   ceiling?: boolean;
-};
+}
 
 export type TerminalProcedure =
   | { id: RouteId }
   | { DCT: void }
   | { pointId: PublishedPointId };
 
-export type ReferenceLocationAerodrome = {
+export interface ReferenceLocationAerodrome {
   type: 'AERODROME';
   id: AerodromeICAOId;
-};
+}
 
-export type ReferenceLocationAerodromeSet = {
+export interface ReferenceLocationAerodromeSet {
   type: 'AERODROME_SET';
   id: AerodromeSetId;
-};
+}
 
-export type ReferenceLocationAirspace = {
+export interface ReferenceLocationAirspace {
   type: 'AIRSPACE';
   id: AirspaceId;
-};
+}
 
-export type ReferenceLocationDBEPoint = {
+export interface ReferenceLocationDBEPoint {
   type: 'DBE_POINT';
   id: DBEPointId;
-};
+}
 
-export type ReferenceLocationPublishedPoint = {
+export interface ReferenceLocationPublishedPoint {
   type: 'PUBLISHED_POINT';
   id: PublishedPointId;
-};
+}
 
 export type ReferenceLocation =
   | ReferenceLocationAirspace
@@ -169,23 +169,23 @@ export type RouteOrTerminalProcedure =
   | { SID: TerminalProcedureIdentifier }
   | { STAR: TerminalProcedureIdentifier };
 
-export type TerminalProcedureIdentifier = {
+export interface TerminalProcedureIdentifier {
   id: RouteId;
   aerodromeId: AerodromeIATAOrICAOId;
-};
+}
 
 export type ICAOPoint =
   | { pointId: PublishedPointId }
   | { nonPublishedPoint: NonPublishedPoint };
 
 export type NonPublishedPoint = GeoPoint | DBEPoint | ReferencePoint;
-export type GeoPoint = { position: Position };
-export type DBEPoint = { dbePointId: DBEPointId };
-export type ReferencePoint = {
+export interface GeoPoint { position: Position }
+export interface DBEPoint { dbePointId: DBEPointId }
+export interface ReferencePoint {
   reference: PublishedPointId;
   bearing: Bearing;
   distance: DistanceNM;
-};
+}
 
 export type AirspaceType =
   | 'AOI'
@@ -204,19 +204,19 @@ export type AirspaceType =
   | 'NAS'
   | 'REG';
 
-type CompleteDatasetSummary = {
+interface CompleteDatasetSummary {
   updateId: string;
   publicationDate: DateYearMonthDay;
   sourceAIRACs: [AiracIdentifier] | [AiracIdentifier, AiracIdentifier];
-  files: Array<AIXMFile>;
-};
+  files: AIXMFile[];
+}
 
 type CompleteDatasetQueryCriteria =
   | { publicationPeriod: DateYearMonthDayPeriod }
   | { airac: AiracIdentifier }
   | { date: DateYearMonthDay };
 
-export type FlightLevelRange = {
+export interface FlightLevelRange {
   min: FlightLevel;
   max: FlightLevel;
-};
+}

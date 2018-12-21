@@ -17,6 +17,7 @@
     "build": "yarn clean && node ./scripts/build.js",
     "test": "jest",
     "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
+    "lint": "tslint -p .",
     "type-check": "tsc --noEmit"
   },
   "files": [
@@ -50,6 +51,8 @@
     "nock": "^10.0.4",
     "prettier": "^1.15.3",
     "rimraf": "2.6.2",
+    "tslint": "^5.12.0",
+    "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2"
   },
   "dependencies": {

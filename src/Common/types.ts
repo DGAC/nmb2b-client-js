@@ -2,10 +2,10 @@ export type DateYearMonthDay = Date;
 export type DateTimeMinute = Date;
 export type DateTimeSecond = Date;
 export type Timestamp = Date;
-export type ShiftHourMinute = {
+export interface ShiftHourMinute {
   sign: 'MINUS' | 'PLUS';
   value: DurationHourMinute;
-};
+}
 
 export type AirNavigationUnitId = string; // ANY{1,12}
 export type UserId = string; // ANY{1,12}
@@ -13,48 +13,48 @@ export type PlanDataId = string; // (O|F|S)(DIGIT){14}(UALPHA|DIGIT){0,40}
 
 export type BooleanString = 'true' | 'false';
 export type NMInt = string;
-export type NMSet<A> = {
-  item: Array<A>;
-};
-export type NMMap<K, V> = {
+export interface NMSet<A> {
+  item: A[];
+}
+export interface NMMap<K, V> {
   item: Array<{
     key: K;
     value: V;
   }>;
-};
+}
 
 export type DurationHourMinute = number;
 export type DurationMinute = number;
 export type DurationHourMinuteSecond = number;
 
-export type DateYearMonthDayPeriod = {
+export interface DateYearMonthDayPeriod {
   wef?: DateYearMonthDay;
   unt?: DateYearMonthDay;
-};
+}
 
-export type DateTimeMinutePeriod = {
+export interface DateTimeMinutePeriod {
   wef: DateTimeMinute;
   unt: DateTimeMinute;
-};
+}
 
 export type TimeHourMinute = string; // DIGIT{2}:DIGIT{2}
-export type TimeHourMinutePeriod = {
+export interface TimeHourMinutePeriod {
   wef: TimeHourMinute;
   unt: TimeHourMinute;
-};
+}
 
-export type LastUpdate = {
+export interface LastUpdate {
   timestamp: DateTimeSecond;
   userId: UserId;
   airNavigationUnitId?: AirNavigationUnitId;
-};
+}
 
 export type DatasetType = 'FORECAST' | 'OPERATIONAL' | 'SIMULATION';
 export type SimulationId = string; // ANY{1,100}
-export type Dataset = {
+export interface Dataset {
   type: DatasetType;
   simulationId?: SimulationId;
-};
+}
 
 export type ReceivedOrSent = 'RECEIVED' | 'SENT' | 'UNKNOWN';
 
@@ -82,9 +82,9 @@ export interface Reply {
   requestId?: string;
   sendTime?: DateTimeSecond;
   status: ReplyStatus;
-  inputValidationErrors?: Array<B2B_Error>;
-  outputValidationErrors?: Array<B2B_Error>;
-  warnings?: Array<B2B_Error>;
+  inputValidationErrors?: B2B_Error[];
+  outputValidationErrors?: B2B_Error[];
+  warnings?: B2B_Error[];
   slaError?: B2B_Error;
   reason?: string;
 }
@@ -102,14 +102,15 @@ export type ServiceGroup =
   | 'GENERAL_INFORMATION'
   | 'PUBLISH_SUBSCRIBE';
 
-export type B2B_Error = {
-  attributes?: Array<string>;
+// tslint:disable-next-line
+export interface B2B_Error {
+  attributes?: string[];
   group: ServiceGroup;
   category: string;
   type: string;
   parameters: { [key: string]: string };
   message?: string;
-};
+}
 
 export type UUID = string;
 export type NMRelease = string;

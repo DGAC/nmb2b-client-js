@@ -30,9 +30,9 @@ export interface SubscriptionCreationReply extends Reply {
   subscription: Subscription;
 }
 
-export type SubscriptionListRequest = {
+export interface SubscriptionListRequest {
   states?: NMSet<SubscriptionState>;
-};
+}
 
 export interface SubscriptionListReply extends Reply {
   data: {
@@ -40,7 +40,7 @@ export interface SubscriptionListReply extends Reply {
   };
 }
 
-export type Subscription = {
+export interface Subscription {
   uuid: UUID;
   release: NMRelease;
   anuId: AirNavigationUnitId;
@@ -55,7 +55,7 @@ export type Subscription = {
   lastUpdateComment?: string;
   messageFilter?: SubscriptionMessageFilter;
   payloadConfiguration: SubscriptionPayloadConfiguration;
-};
+}
 
 export type SubscriptionState =
   | 'ACTIVE'
@@ -76,80 +76,80 @@ export type SubscriptionMessageFilter =
   | FlightFilingResultMessageFilter
   | FlightDataMessageFilter;
 
-export type SubscriptionCreationRequest_FlightData = {
+export interface SubscriptionCreationRequest_FlightData {
   topic: 'FLIGHT_DATA';
   description?: string;
   'messageFilter-FlightDataMessageFilter': FlightDataMessageFilter;
   'payloadConfiguration-FlightDataPayloadConfiguration'?: FlightDataPayloadConfiguration;
   queueName?: QueueName;
-};
+}
 
-export type SubscriptionCreationRequest_FlightPlan = {
+export interface SubscriptionCreationRequest_FlightPlan {
   topic: 'FLIGHT_PLAN';
   description?: string;
   'messageFilter-FlightPlanMessageFilter': NMSet<FlightPlanMessageFilter>;
   'payloadConfiguration-FlightPlanPayloadConfiguration'?: FlightPlanPayloadConfiguration;
   queueName?: QueueName;
-};
+}
 
-export type SubscriptionCreationRequest_Regulation = {
+export interface SubscriptionCreationRequest_Regulation {
   topic: 'REGULATIONS';
   description?: string;
   'messageFilter-RegulationMessageFilter'?: NMSet<RegulationMessageFilter>;
   'payloadConfiguration-RegulationPayloadConfiguration'?: RegulationPayloadConfiguration;
   queueName?: QueueName;
-};
+}
 
-export type SubscriptionCreationRequest_EAUP = {
+export interface SubscriptionCreationRequest_EAUP {
   topic: 'EAUP';
   description?: string;
   'payloadConfiguration-EAUPPayloadConfiguration'?: EAUPPayloadConfiguration;
   queueName?: QueueName;
-};
+}
 
-export type SubscriptionCreationRequest_AIXM_Datasets = {
+export interface SubscriptionCreationRequest_AIXM_Datasets {
   topic: 'AIXM_DATASETS';
   description?: string;
   'messageFilter-AIXMDatasetMessageFilter'?: NMSet<AIXMDatasetMessageFilter>;
   queueName?: QueueName;
-};
+}
 
-export type SubscriptionCreationRequest_ATM_INFORMATION = {
+export interface SubscriptionCreationRequest_ATM_INFORMATION {
   topic: 'ATM_INFORMATION';
   description?: string;
   queueName?: QueueName;
-};
+}
 
-export type AIXMDatasetMessageFilter = {
-  datasetTypes: Array<any>;
-};
+export interface AIXMDatasetMessageFilter {
+  datasetTypes: any[];
+}
 
-export type FlightPlanMessageFilter = {
-  events?: Array<any>; // FlightPlanEventType
-  flightSet: Array<Object>; // FlightSetDefinitionElement
-};
+export interface FlightPlanMessageFilter {
+  events?: any[]; // FlightPlanEventType
+  flightSet: object[]; // FlightSetDefinitionElement
+}
 
-export type FlightDataMessageFilter = {
+export interface FlightDataMessageFilter {
   flightSet: NMSet<FlightSetDefinitionElement>;
-};
+}
 
-export type FlightFilingResultMessageFilter = {
+export interface FlightFilingResultMessageFilter {
   originatorAnuId: AirNavigationUnitId;
-};
+}
 
-export type RegulationMessageFilter = {
-  tvs?: Array<any>; // TrafficVolumeIdWildcard
-  tvSets?: Array<any>; //TrafficVolumeSetIdWildcard
-};
+export interface RegulationMessageFilter {
+  tvs?: any[]; // TrafficVolumeIdWildcard
+  tvSets?: any[]; // TrafficVolumeSetIdWildcard
+}
 
-export type FlightSetDefinitionElement = {
-  aircraftOperators?: Array<any>; // AircraftOperatorIATAId
-  aircraftRegistrations?: Array<any>; // AircraftRegistrationMark
-  aerodromesOfDeparture?: Array<any>; // AerodromeIATAOrICAOId
-  aerodromesOfArrival?: Array<any>; // AerodromeIATAOrICAOId
-  anuIds?: Array<any>; // AirNavigationUnitId
-  flightPlanOriginators?: Array<any>; // AirNavigationUnitId
-};
+export interface FlightSetDefinitionElement {
+  aircraftOperators?: any[]; // AircraftOperatorIATAId
+  aircraftRegistrations?: any[]; // AircraftRegistrationMark
+  aerodromesOfDeparture?: any[]; // AerodromeIATAOrICAOId
+  aerodromesOfArrival?: any[]; // AerodromeIATAOrICAOId
+  anuIds?: any[]; // AirNavigationUnitId
+  flightPlanOriginators?: any[]; // AirNavigationUnitId
+}
 
 export type SubscriptionPayloadConfiguration =
   | FlightPlanPayloadConfiguration
@@ -157,22 +157,22 @@ export type SubscriptionPayloadConfiguration =
   | FlightDataPayloadConfiguration
   | RegulationPayloadConfiguration;
 
-export type FlightPlanPayloadConfiguration = {
+export interface FlightPlanPayloadConfiguration {
   flightPlanFormat: FlightExchangeModel;
-};
+}
 
-export type EAUPPayloadConfiguration = {
+export interface EAUPPayloadConfiguration {
   includeCDROpeningsClosures: boolean;
   includeRSAAllocations: boolean;
-};
+}
 
-export type FlightDataPayloadConfiguration = {
-  flightFields: Array<PSFlightField>;
-};
+export interface FlightDataPayloadConfiguration {
+  flightFields: PSFlightField[];
+}
 
-export type RegulationPayloadConfiguration = {
-  regulationFields: Array<RegulationField>;
-};
+export interface RegulationPayloadConfiguration {
+  regulationFields: RegulationField[];
+}
 
 export type PSFlightField =
   | 'actualTakeOffTime'

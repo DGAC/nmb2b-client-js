@@ -9,31 +9,30 @@ export function prepareSerializer(schema: any) {
   );
 }
 
-function reduceXSDType(string: string): string {
-  return string.split('|')[0];
+function reduceXSDType(str: string): string {
+  return str.split('|')[0];
 }
 
-type Schema = {
+interface Schema {
   [k: string]: string | Schema;
-};
+}
 
-type Transformer = {
+interface Transformer {
   [k: string]: (input: any) => any | Transformer;
-};
+}
 
 function prepareTransformer(schema: Schema): null | Transformer {
   return Object.keys(schema).reduce((prev: null | Transformer, curr) => {
     if (typeof schema[curr] === 'string') {
       const type = reduceXSDType(schema[curr] as string);
       if ((types as any)[type] && (types as any)[type].input) {
-        return Object.assign({}, prev, { [curr]: (types as any)[type].input });
+        return {...prev,  [curr]: (types as any)[type].input};
       }
     } else if (typeof schema[curr] === 'object') {
       const subItem = prepareTransformer(schema[curr] as Schema);
       if (subItem) {
-        return Object.assign({}, prev, {
-          [curr]: subItem,
-        });
+        return {...prev, 
+          [curr]: subItem};
       }
     }
 

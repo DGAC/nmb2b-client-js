@@ -10,13 +10,13 @@ import {
   Reply,
 } from '../Common/types';
 
-export type CompleteAIXMDatasetRequest = {
+export interface CompleteAIXMDatasetRequest {
   queryCriteria: CompleteDatasetQueryCriteria;
-};
+}
 
 export type CompleteAIXMDatasetReply = Reply & {
   data: {
-    datasetSummaries: Array<CompleteDatasetSummary>;
+    datasetSummaries: CompleteDatasetSummary[];
   };
 };
 
@@ -44,12 +44,12 @@ export default function prepareQueryCompleteAIXMDatasets(
 
 import { AiracIdentifier, AIXMFile } from './types';
 
-type CompleteDatasetSummary = {
+interface CompleteDatasetSummary {
   updateId: string;
   publicationDate: DateYearMonthDay;
   sourceAIRACs: [AiracIdentifier] | [AiracIdentifier, AiracIdentifier];
-  files: Array<AIXMFile>;
-};
+  files: AIXMFile[];
+}
 
 type CompleteDatasetQueryCriteria =
   | { publicationPeriod: DateYearMonthDayPeriod }

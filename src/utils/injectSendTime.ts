@@ -9,5 +9,5 @@ export default function injectSendTime<T>(values: T): Request {
     return { sendTime };
   }
 
-  return Object.assign({}, { sendTime }, values);
+  return { sendTime, ...values};
 }

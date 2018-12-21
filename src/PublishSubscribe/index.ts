@@ -41,14 +41,14 @@ import { Resolver as ResumeSubscription } from './resumeSubscription';
 import pauseSubscription from './pauseSubscription';
 import { Resolver as PauseSubscription } from './pauseSubscription';
 
-export type PublishSubscribeService = {
-  __soapClient: Object;
+export interface PublishSubscribeService {
+  __soapClient: object;
   listSubscriptions: ListSubscriptions;
   createSubscription: CreateSubscription;
   deleteSubscription: DeleteSubscription;
   resumeSubscription: ResumeSubscription;
   pauseSubscription: PauseSubscription;
-};
+}
 
 export function getPublishSubscribeClient(
   config: Config,

@@ -3,12 +3,12 @@ import { B2B_VERSION, B2BFlavours, B2BFlavour } from './constants';
 import invariant from 'invariant';
 import fs from 'fs';
 
-export type Config = {
+export interface Config {
   security: Security;
   flavour: B2BFlavour;
   XSD_PATH: string;
   soapClient?: null | unknown;
-};
+}
 
 export function isConfigValid(args: Config): boolean {
   invariant(
