@@ -10,7 +10,7 @@ export interface Config {
   soapClient?: null | unknown;
 }
 
-export function isConfigValid(args: Config): boolean {
+export function isConfigValid(args: Config): args is Config {
   invariant(
     args.security && isValidSecurity(args.security),
     'Please provide a valid security option',

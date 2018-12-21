@@ -40,12 +40,13 @@ interface InputOptions {
 }
 
 const defaults = {
-  flavour: 'OPS',
+  flavour: 'OPS' as B2BFlavour,
   XSD_PATH: '/tmp/b2b-xsd',
 };
 
 export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
-  const options = {...defaults, ...args};
+  const options = { ...defaults, ...args };
+
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -64,7 +65,7 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
 export async function makeAirspaceClient(
   args: InputOptions,
 ): Promise<AirspaceService> {
-  const options = {...defaults, ...args};
+  const options = { ...defaults, ...args };
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -77,7 +78,7 @@ export async function makeAirspaceClient(
 export async function makeFlightClient(
   args: InputOptions,
 ): Promise<FlightService> {
-  const options = {...defaults, ...args};
+  const options = { ...defaults, ...args };
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -88,7 +89,7 @@ export async function makeFlightClient(
 }
 
 export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
-  const options = {...defaults, ...args};
+  const options = { ...defaults, ...args };
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -101,7 +102,7 @@ export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
 export async function makeGeneralInformationClient(
   args: InputOptions,
 ): Promise<GeneralInformationService> {
-  const options = {...defaults, ...args};
+  const options = { ...defaults, ...args };
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
@@ -114,7 +115,7 @@ export async function makeGeneralInformationClient(
 export async function makePublishSubscribeClient(
   args: InputOptions,
 ): Promise<PublishSubscribeService> {
-  const options = {...defaults, ...args};
+  const options = { ...defaults, ...args };
   if (!isConfigValid(options)) {
     throw new Error('Invalid options provided');
   }
