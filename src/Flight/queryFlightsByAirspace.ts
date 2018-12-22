@@ -2,6 +2,7 @@ import { FlightClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 import {
   FlightListByAirspaceRequest,
@@ -28,12 +29,18 @@ export default function prepareQueryFlightsByAirspace(
   const schema = client.describe().FlightManagementService.FlightManagementPort
     .queryFlightsByAirspace.input;
   const serializer = prepareSerializer(schema);
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.queryFlightsByAirspace(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+
+  return instrument<Values, Result>({
+    service: 'Flight',
+    query: 'queryFlightsByAirspace',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.queryFlightsByAirspace(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }

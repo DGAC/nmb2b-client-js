@@ -1,20 +1,31 @@
+# Master
+
+- Implement proper logging via `debug` library (scope `@dgac/nmb2b-client`)
+
 # v0.2.0 (2018-12-21)
-* Full rewrite in TypeScript
+
+- Full rewrite in TypeScript
 
 # v0.1.4 (2018-11-14)
-* Fix NMB2B TLS evolution
+
+- Fix NMB2B TLS evolution
 
 # v0.1.3 (2018-09-22)
-* Implement lockfile to handle multiple concurrent WSDL downloads
+
+- Implement lockfile to handle multiple concurrent WSDL downloads
 
 # v0.1.2 (2018-09-13)
-* Fix broken WSDL download
+
+- Fix broken WSDL download
 
 # v0.1.1 (2018-09-10)
-* Export flow types to make it easier to use with Flow
+
+- Export flow types to make it easier to use with Flow
 
 # v0.1.0 (2018-09-10)
-* First usable release
+
+- First usable release
 
 # v0.0.1 (2018-09-08)
-* initial import
+
+- initial import

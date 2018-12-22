@@ -1,11 +1,10 @@
-import { getFileUrl, getEndpoint } from '../../config';
-import { B2B_VERSION, B2BFlavour } from '../../constants';
+import { getFileUrl } from '../../config';
+import { B2BFlavour } from '../../constants';
 import { Security } from '../../security';
 import request from 'request';
-import zlib from 'zlib';
 import tar from 'tar';
-import d from 'debug';
-const debug = d('b2b-client.wsdl');
+import d from '../debug';
+const debug = d('wsdl-downloader');
 
 export async function downloadFile(
   filePath: string,
@@ -30,6 +29,7 @@ export async function downloadFile(
         debug(`downloading to ${outputDir}`);
         debug(`B2B reponse status code is ${response.statusCode}`);
         if (response.statusCode && response.statusCode !== 200) {
+          debug('Rejecting due to wrong status code (%d)', response.statusCode);
           reject(
             new Error(
               `Unable to download B2B WSDL files, statusCode is ${
@@ -38,18 +38,17 @@ export async function downloadFile(
             ),
           );
           r.abort();
-          debug('Rejecting due to wrong status code');
         }
       })
       .on('error', (err: any) => {
-        debug('rejecting due to error event', err);
+        debug('Rejecting due to error event', err);
         reject(err);
       });
 
     r.pipe(tar.x({ cwd: outputDir }))
       .on('error', reject)
       .on('close', () => {
-        debug('downloadFile: success');
+        debug('Downloaded and extracted WSDL files');
         resolve();
       });
   });

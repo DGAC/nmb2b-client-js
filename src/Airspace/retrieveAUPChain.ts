@@ -2,6 +2,7 @@ import { AirspaceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 type Values = AUPChainRetrievalRequest;
 type Result = AUPChainRetrievalReply;
@@ -18,14 +19,19 @@ export default function prepareRetrieveAUPChain(
     .AirspaceAvailabilityPort.retrieveAUPChain.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.retrieveAUPChain(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'Airspace',
+    query: 'retrieveAUPChain',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.retrieveAUPChain(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }
 
 import {

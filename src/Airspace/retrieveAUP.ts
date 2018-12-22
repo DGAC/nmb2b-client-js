@@ -2,6 +2,7 @@ import { AirspaceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 type Values = AUPRetrievalRequest;
 type Result = AUPRetrievalReply;
@@ -16,14 +17,19 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
     .AirspaceAvailabilityPort.retrieveAUP.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.retrieveAUP(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'Airspace',
+    query: 'retrieveAUP',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.retrieveAUP(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }
 
 import { AUPId, AUP } from './types';

@@ -15,7 +15,7 @@
     "downloadWSDL": "node ./scripts/downloadWSDL.js",
     "clean": "rimraf dist",
     "build": "yarn clean && node ./scripts/build.js",
-    "test": "jest",
+    "test": "DEBUG=@dgac* jest",
     "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
     "lint": "tslint -p .",
     "typecheck": "tsc --noEmit"
@@ -56,7 +56,7 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "^3.0.0 || ^4.0.0",
     "invariant": "^2.2.4",
     "mkdirp": "^0.5.1",
     "moment": "^2.22.2",

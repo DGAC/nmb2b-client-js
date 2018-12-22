@@ -2,6 +2,7 @@ import { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 import { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
 export { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
@@ -19,12 +20,17 @@ export default function prepareRetrieveOTMVPlan(client: FlowClient): Resolver {
     .retrieveOTMVPlan.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.retrieveOTMVPlan(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'Flow',
+    query: 'retrieveOTMVPlan',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.retrieveOTMVPlan(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }

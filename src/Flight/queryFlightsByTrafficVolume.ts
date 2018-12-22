@@ -2,6 +2,7 @@ import { FlightClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 import {
   FlightListByTrafficVolumeRequest,
@@ -29,12 +30,17 @@ export default function prepareQueryFlightsByTrafficVolume(
     .queryFlightsByTrafficVolume.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.queryFlightsByTrafficVolume(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'Flight',
+    query: 'queryFlightsByTrafficVolume',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.queryFlightsByTrafficVolume(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }

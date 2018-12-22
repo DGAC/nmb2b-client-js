@@ -2,6 +2,7 @@ import { PublishSubscribeClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 import { Reply } from '../Common/types';
 
 interface Values {
@@ -24,12 +25,17 @@ export default function prepareDeleteSubscription(
     .SubscriptionManagementPort.deleteSubscription.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.deleteSubscription(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'PublishSubscribe',
+    query: 'deleteSubscription',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.deleteSubscription(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }

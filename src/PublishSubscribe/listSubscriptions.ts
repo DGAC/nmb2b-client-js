@@ -2,6 +2,7 @@ import { PublishSubscribeClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 import { SubscriptionListRequest, SubscriptionListReply } from './types';
 export { SubscriptionListRequest, SubscriptionListReply } from './types';
@@ -20,12 +21,17 @@ export default function prepareListSubscriptions(
     .SubscriptionManagementPort.listSubscriptions.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.listSubscriptions(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'PublishSubscribe',
+    query: 'listSubscriptions',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.listSubscriptions(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }

@@ -2,6 +2,7 @@ import { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 import {
   SectorConfigurationPlanRetrievalRequest,
@@ -32,14 +33,19 @@ export default function prepareRetrieveSectorConfigurationPlan(
     .retrieveSectorConfigurationPlan.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.retrieveSectorConfigurationPlan(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'Flow',
+    query: 'retrieveSectorConfigurationPlan',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.retrieveSectorConfigurationPlan(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }
 
 export function knownConfigurationsToMap(

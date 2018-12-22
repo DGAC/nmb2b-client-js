@@ -2,6 +2,7 @@ import { GeneralInformationServiceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
+import { instrument } from '../utils/instrumentation';
 
 type Values = any;
 type Result = any;
@@ -19,12 +20,17 @@ export default function prepareQueryNMB2BWSDLs(
     .queryNMB2BWSDLs.input;
   const serializer = prepareSerializer(schema);
 
-  return (values, options) =>
-    new Promise((resolve, reject) => {
-      client.queryNMB2BWSDLs(
-        serializer(injectSendTime(values)),
-        options,
-        responseStatusHandler(resolve, reject),
-      );
-    });
+  return instrument<Values, Result>({
+    service: 'GeneralInformation',
+    query: 'queryNMB2BWSDLs',
+  })(
+    (values, options) =>
+      new Promise((resolve, reject) => {
+        client.queryNMB2BWSDLs(
+          serializer(injectSendTime(values)),
+          options,
+          responseStatusHandler(resolve, reject),
+        );
+      }),
+  );
 }
