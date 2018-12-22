@@ -7,7 +7,12 @@ export function withLog<Input, Output>(
   const debug = d(namespace);
 
   return fn => (values, options) => {
-    debug('Called with input %o', values);
+    if (values) {
+      debug('Called with input %o', values);
+    } else {
+      debug('Called');
+    }
+
     return fn(values, options).then(
       res => {
         debug('Succeded');
