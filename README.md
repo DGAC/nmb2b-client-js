@@ -15,6 +15,8 @@ NM target version: **22.0.0**
 
 https://github.com/DGAC/nmb2b-client-js-example
 
+[![asciicast](https://asciinema.org/a/Q3pPaXOVF3646JufOipA9bpUX.svg)](https://asciinema.org/a/Q3pPaXOVF3646JufOipA9bpUX)
+
 # Features
 
 - No WSDL/XSD dependency. The library will download and cache those on start up.
@@ -64,6 +66,13 @@ Flow.retrieveOTMVPlan({
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
+
+- Debug output
+
+Debug output is controlled via the [`debug`](https://npmjs.com/package/debug) package. All debug output from this library is scoped under `@dgac/nmb2b-client` namespace.
+
+Just set a `DEBUG=@dgac/nmb2b-client*` environment variable :
+[![asciicast](https://asciinema.org/a/xWovjkKlkqePBolRl3OqAFBi8.svg)](https://asciinema.org/a/xWovjkKlkqePBolRl3OqAFBi8)
 
 # Usage
 
