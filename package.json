@@ -15,7 +15,7 @@
     "downloadWSDL": "node ./scripts/downloadWSDL.js",
     "clean": "rimraf dist",
     "build": "yarn clean && node ./scripts/build.js",
-    "test": "DEBUG=@dgac* jest",
+    "test": "jest",
     "test:ci": "yarn test --ci --color --runInBand --reporters=default --reporters=jest-junit --coverage && codecov",
     "lint": "tslint -p .",
     "typecheck": "tsc --noEmit"
