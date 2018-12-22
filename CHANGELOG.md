@@ -1,4 +1,4 @@
-# Master
+# v0.2.1 (2018-12-22)
 
 - Implement proper logging via `debug` library (scope `@dgac/nmb2b-client`)
 
