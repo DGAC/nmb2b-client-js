@@ -55,3 +55,15 @@ export function getFileUrl(
     path
   );
 }
+
+export function obfuscate(config: Config) {
+  return {
+    ...config,
+    security: Object.keys(config.security).reduce((prev, curr) => {
+      return {
+        ...prev,
+        [curr]: 'xxxxxxxxxxxxxxxx',
+      };
+    }, {}),
+  };
+}

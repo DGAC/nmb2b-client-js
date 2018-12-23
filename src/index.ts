@@ -1,6 +1,6 @@
 import { Security } from './security';
 import { B2B_VERSION, B2BFlavour } from './constants';
-import { isConfigValid, Config } from './config';
+import { isConfigValid, Config, obfuscate } from './config';
 import { dirExists, createDir } from './utils/fs.js';
 import { download as downloadWSDL } from './utils/xsd';
 import d from './utils/debug';
@@ -52,6 +52,8 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
     throw new Error('Invalid options provided');
   }
 
+  debug('Config is %o', obfuscate(options));
+
   await downloadWSDL(options);
 
   return Promise.all([
@@ -85,6 +87,8 @@ export async function makeAirspaceClient(
     throw new Error('Invalid options provided');
   }
 
+  debug('Config is %o', obfuscate(options));
+
   await downloadWSDL(options);
 
   return getAirspaceClient(options).then(res => {
@@ -104,6 +108,8 @@ export async function makeFlightClient(
     throw new Error('Invalid options provided');
   }
 
+  debug('Config is %o', obfuscate(options));
+
   await downloadWSDL(options);
 
   return getFlightClient(options).then(res => {
@@ -120,6 +126,8 @@ export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
     debug('Invalid options provided');
     throw new Error('Invalid options provided');
   }
+
+  debug('Config is %o', obfuscate(options));
 
   await downloadWSDL(options);
 
@@ -140,6 +148,8 @@ export async function makeGeneralInformationClient(
     throw new Error('Invalid options provided');
   }
 
+  debug('Config is %o', obfuscate(options));
+
   await downloadWSDL(options);
 
   return getGeneralInformationClient(options).then(res => {
@@ -158,6 +168,8 @@ export async function makePublishSubscribeClient(
     debug('Invalid options provided');
     throw new Error('Invalid options provided');
   }
+
+  debug('Config is %o', obfuscate(options));
 
   await downloadWSDL(options);
 

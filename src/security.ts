@@ -1,10 +1,9 @@
 import invariant from 'invariant';
-import d from 'debug';
+import d from './utils/debug';
+const debug = d('security');
 import { Config } from './config';
 import soap, { ISecurity } from 'soap';
-const debug = d('nm-b2b-client.security');
 import fs from 'fs';
-import path from 'path';
 
 // tslint:disable-next-line
 require('tls').DEFAULT_ECDH_CURVE = 'auto';
