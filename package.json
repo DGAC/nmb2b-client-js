@@ -29,7 +29,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
     "@types/bluebird": "^3.5.25",
-    "@types/debug": "^0.0.31",
+    "@types/debug": "^4.1.0",
     "@types/dotenv": "^6.1.0",
     "@types/invariant": "^2.2.29",
     "@types/jest": "^23.3.10",
