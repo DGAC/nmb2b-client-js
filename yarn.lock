@@ -4129,9 +4129,10 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-soap@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/soap/-/soap-0.25.0.tgz#deda92e1454e77ac942033cb7ca18b88f57b0abf"
+soap@^0.26.0:
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/soap/-/soap-0.26.0.tgz#fcb89b9e05855fa7d5f46f6d56f334cdeccbc487"
+  integrity sha512-tTS3lnGl6lfjQQuJgNnWOgC0Xa6qYQSwl2G7DX3kCdGmek/FTNmHDM/7icKP1KBMFfCrKpAWEbZiGefa92SCYw==
   dependencies:
     bluebird "^3.5.0"
     concat-stream "^1.5.1"
