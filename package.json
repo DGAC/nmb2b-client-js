@@ -35,7 +35,7 @@
     "@types/jest": "^23.3.10",
     "@types/mkdirp": "^0.5.2",
     "@types/nock": "^9.3.0",
-    "@types/node": "^10.12.18",
+    "@types/node": "^11.9.0",
     "@types/proper-lockfile": "^3.0.0",
     "@types/ramda": "^0.25.45",
     "@types/request": "^2.48.1",
