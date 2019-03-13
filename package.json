@@ -60,7 +60,7 @@
     "invariant": "^2.2.4",
     "mkdirp": "^0.5.1",
     "moment": "^2.22.2",
-    "proper-lockfile": "^3.2.0",
+    "proper-lockfile": "^4.0.0",
     "ramda": "^0.25.0",
     "request": "^2.88.0",
     "soap": "^0.25.0",
