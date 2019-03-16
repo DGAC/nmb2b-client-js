@@ -1,5 +1,7 @@
 # Master
 
+- Jest v24
+- Soap v0.26.0
 - Add plenty of Flow types (MDCM stuff)
 - Fix ICAOPoint type
 - Fix Flight.retrieveFlight reply type

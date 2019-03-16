@@ -28,7 +28,6 @@ describe('queryHotspots', () => {
       });
 
       !process.env.CI && console.log(inspect(res, { depth: null }));
-      console.log('\n\n');
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;
