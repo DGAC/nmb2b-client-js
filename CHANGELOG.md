@@ -1,4 +1,4 @@
-# Master
+# v0.2.4 (2019-03-16)
 
 - Fix typescript errors in test files
 
