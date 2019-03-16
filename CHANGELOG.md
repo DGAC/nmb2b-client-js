@@ -1,4 +1,8 @@
-# v0.2.3 (2019-03-16)
+# Master
+
+- Fix typescript errors in test files
+
+# v0.2.3 (2019-03-16) **UNRELEASED**
 
 - Jest v24
 - Soap v0.26.0

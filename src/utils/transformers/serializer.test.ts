@@ -74,7 +74,7 @@ describe('reorderKeys', () => {
     ],
   ];
 
-  test.each(testCases)(
+  test.each(testCases as any)(
     'reorderKeys(%p)(%p) => %p',
     (schema, input, expected) => {
       expect(JSON.stringify(reorderKeys(schema)(input), null, 2)).toEqual(
