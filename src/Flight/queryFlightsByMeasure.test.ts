@@ -6,6 +6,7 @@ import b2bOptions from '../../tests/options';
 import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlowService } from '../Flow';
+import { Regulation } from '../Flow/types';
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -22,7 +23,7 @@ beforeAll(async () => {
 });
 
 describe('queryFlightsByMeasure', () => {
-  let measureId: string;
+  let measure: Regulation;
 
   beforeAll(async () => {
     const res = await Flow.queryRegulations({
@@ -30,7 +31,7 @@ describe('queryFlightsByMeasure', () => {
       queryPeriod: {
         wef: moment
           .utc()
-          .subtract(10, 'hour')
+          .subtract(2, 'hour')
           .startOf('hour')
           .toDate(),
         unt: moment
@@ -39,10 +40,12 @@ describe('queryFlightsByMeasure', () => {
           .startOf('hour')
           .toDate(),
       },
-      requestedRegulationFields: { item: ['location', 'reason'] },
+      requestedRegulationFields: {
+        item: ['applicability', 'location', 'reason'],
+      },
     });
 
-    console.log(res.data.regulations.item);
+    // console.log(res.data.regulations.item);
 
     const hasAirspaceMatching = (regex: RegExp) => (item: any) =>
       item &&
@@ -53,15 +56,13 @@ describe('queryFlightsByMeasure', () => {
         item.location['referenceLocation-ReferenceLocationAirspace'].id,
       );
 
-    const measure = res.data.regulations.item[0];
-    console.log(inspect(measure, { depth: null }));
-
-    measureId = measure.regulationId;
+    measure = res.data.regulations.item[0];
+    // console.log(inspect(measure, { depth: null }));
   });
 
-  // Not authorised with current certificate
+  // Not authorised with current certificate in OPS
   conditionalTest('query in regulation', async () => {
-    if (!measureId) {
+    if (!measure || !measure.regulationId || !measure.applicability) {
       console.warn('No measure was found, cannot query flights by measure');
       return;
     }
@@ -72,23 +73,12 @@ describe('queryFlightsByMeasure', () => {
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficType: 'LOAD',
-        trafficWindow: {
-          wef: moment
-            .utc()
-            .subtract(1, 'hour')
-            .startOf('hour')
-            .toDate(),
-          unt: moment
-            .utc()
-            .add(1, 'hour')
-            .startOf('hour')
-            .toDate(),
-        },
-        measure: { REGULATION: measureId },
+        trafficWindow: measure.applicability,
+        measure: { REGULATION: measure.regulationId },
         mode: 'CONCERNED_BY_MEASURE',
       });
 
-      !process.env.CI && console.log(res.data);
+      // !process.env.CI && console.log(res.data);
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;
