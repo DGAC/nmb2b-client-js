@@ -1,5 +1,6 @@
 # Master
 
+- Fix ICAOPoint type
 - Fix Flight.retrieveFlight reply type
 
 # v0.2.2 (2018-12-23)
