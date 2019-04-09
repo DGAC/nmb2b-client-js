@@ -1,5 +1,6 @@
 # Master
 
+- Drop compatibility with node 8 (>= 10)
 - Fix compatibility with typescript 3.4
 
 # v0.2.4 (2019-03-16)
