@@ -26,6 +26,11 @@ jobs:
             echo 'export B2B_FLAVOUR=PREOPS' >> $BASH_ENV
 
       - run:
+          name: Debug node version
+          command: |
+            node --version
+
+      - run:
           name: Prepare greenkeeper-lockfile
           command: |
             echo 'export PATH=$(yarn global bin):$PATH' >> $BASH_ENV
