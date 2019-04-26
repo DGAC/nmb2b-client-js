@@ -982,10 +982,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/nock@^9.3.0":
-  version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@types/nock/-/nock-9.3.0.tgz#9d34358fdcc08afd07144e0784ac9e951d412dd4"
-  integrity sha512-ZHf/X8rTQ5Tb1rHjxIJYqm55uO265agE3G7NoSXVa2ep+EcJXgB2fsme+zBvK7MhrxTwkC/xkB6THyv50u0MGw==
+"@types/nock@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@types/nock/-/nock-10.0.0.tgz#08584a37447e61bfbe641a08c7d15310a08febd4"
+  integrity sha512-DJM4sOEUeGzqjDkMtCubuN8zQ9gUxzPC+WVMzK2X4q6Kc5pnRFWcm8gkk4JNsDs7Zs6jjVf+dNYbNOii8fzPLA==
   dependencies:
     "@types/node" "*"
 
