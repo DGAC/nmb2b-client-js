@@ -1,3 +1,8 @@
+# v0.3.1 (2019-05-01)
+
+- Pull WSDL file URL from B2B instead of having it hardcoded
+- Restore compatibility with node 8
+
 # v0.3.0 (2019-04-09)
 
 - Drop compatibility with node 8 (>= 10)

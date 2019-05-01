@@ -31,31 +31,33 @@ export async function requestFilename({
   flavour: B2BFlavour;
   security: Security;
 }): Promise<string> {
-  // NM B2B takes a long long time to respond here
-  // Hardcode the return value which (hopefully) should not change
-  return 'b2b_publications/22.0.0/B2B_WSDL_XSD.22.0.0.4.84.tar.gz';
+  return new Promise((resolve, reject) => {
+    request.post(
+      {
+        agentOptions: security,
+        timeout: 15 * 1000,
+        url: getEndpoint({ flavour }),
+        body: makeQuery({ version: B2B_VERSION }),
+      },
+      (e, r, body) => {
+        if (e) {
+          return reject(e);
+        }
 
-  // return new Promise((resolve, reject) => {
-  //   request.post(
-  //     {
-  //       agentOptions: security,
-  //       timeout: 15 * 1000,
-  //       url: getEndpoint({ flavour }),
-  //       body: makeQuery({ version: B2B_VERSION }),
-  //     },
-  //     (e, r, body) => {
-  //       console.log('BLABLABLA');
-  //       console.log(body);
-  //       if (e) {
-  //         return reject(e);
-  //       }
-  //
-  //       if (r.statusCode !== 200) {
-  //         return reject(r);
-  //       }
-  //
-  //       resolve(body);
-  //     },
-  //   );
-  // });
+        if (r.statusCode !== 200) {
+          return reject(r);
+        }
+
+        const matches = body.match(/<id>(.+)<\/id>/);
+
+        if (!matches || !matches[1]) {
+          reject(
+            new Error(`Could not extract WSDL tarball file from B2B response`),
+          );
+        }
+
+        resolve(matches[1]);
+      },
+    );
+  });
 }
