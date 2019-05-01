@@ -7,6 +7,8 @@ import { timeFormatWithSeconds } from '../timeFormats';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { getEndpoint } from '../../config';
 import { Security } from '../../security';
+import d from '../debug';
+const debug = d('wsdl-downloader');
 
 const makeQuery = ({ version }: { version: string }) => `
 <soap:Envelope
@@ -48,12 +50,14 @@ export async function requestFilename({
           return reject(r);
         }
 
+        debug(`B2B Reponse body is:\n${body}`);
         const matches = body.match(/<id>(.+)<\/id>/);
 
         if (!matches || !matches[1]) {
           reject(
             new Error(`Could not extract WSDL tarball file from B2B response`),
           );
+          return;
         }
 
         resolve(matches[1]);

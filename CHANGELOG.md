@@ -1,4 +1,8 @@
-# v0.3.1 (2019-05-01)
+# Master 
+
+- Fix failing tests
+
+# v0.3.1 (2019-05-01) **UNRELEASED**
 
 - Pull WSDL file URL from B2B instead of having it hardcoded
 - Restore compatibility with node 8

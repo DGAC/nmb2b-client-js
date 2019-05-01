@@ -23,7 +23,7 @@ beforeAll(async () => {
 });
 
 describe('queryFlightsByMeasure', () => {
-  let measure: Regulation;
+  let measure: void | Regulation;
 
   beforeAll(async () => {
     const res = await Flow.queryRegulations({
@@ -56,7 +56,7 @@ describe('queryFlightsByMeasure', () => {
         item.location['referenceLocation-ReferenceLocationAirspace'].id,
       );
 
-    measure = res.data.regulations.item[0];
+    measure = res.data.regulations ? res.data.regulations.item[0] : undefined;
     // console.log(inspect(measure, { depth: null }));
   });
 
