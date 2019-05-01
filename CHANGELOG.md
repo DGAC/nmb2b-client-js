@@ -1,4 +1,4 @@
-# Master 
+# v0.3.2 (2019-05-01)
 
 - Fix failing tests
 
