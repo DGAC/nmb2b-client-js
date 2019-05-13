@@ -41,7 +41,7 @@ jobs:
       - restore_cache:
           name: Restoring node_modules from cache
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Greenkeeper update
           command: greenkeeper-lockfile-update
@@ -78,7 +78,7 @@ jobs:
           name: Jest test suite
           command: yarn test:ci
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       - store_test_results:
           path: reports/junit
       - store_artifacts:
