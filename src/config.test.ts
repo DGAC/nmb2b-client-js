@@ -7,13 +7,13 @@ import { getEndpoint, getFileUrl, getFileEndpoint } from './config';
 describe('getEndpoint', () => {
   test('without flavour', () => {
     expect(getEndpoint()).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/22.0.0"`,
+      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/23.0.0"`,
     );
   });
 
   test('with flavour', () => {
     expect(getEndpoint({ flavour: 'OPS' })).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/22.0.0"`,
+      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/23.0.0"`,
     );
   });
 });

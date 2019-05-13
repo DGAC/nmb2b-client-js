@@ -30,11 +30,15 @@ afterEach(async () => {
 test('should prevent concurrent downloads', async () => {
   const flavour = 'PREOPS';
   const filePath = 'test.tar.gz';
+
   const scope = nock(getFileUrl(filePath, { flavour }))
-    .get(/.tar.gz/)
+    .get(/.*/)
     .once()
-    .reply(200, fs.readFileSync(TEST_FILE))
+    .reply(200, fs.readFileSync(TEST_FILE));
+
+  const soap = nock(getFileUrl(filePath, { flavour }))
     .post(/.+/)
+    .once()
     .reply(
       200,
       `
@@ -48,7 +52,7 @@ test('should prevent concurrent downloads', async () => {
       <status>OK</status>
       <data>
         <file>
-          <id>b2b_publications/22.0.0/B2B_WSDL_XSD.22.5.0.3.74.tar.gz</id>
+          <id>b2b_publications/${B2B_VERSION}/B2B_WSDL_XSD.22.5.0.3.74.tar.gz</id>
           <type>Publication</type>
           <releaseTime>2019-04-30 19:25:35</releaseTime>
           <fileLength>303725</fileLength>
@@ -68,7 +72,7 @@ test('should prevent concurrent downloads', async () => {
       XSD_PATH: OUTPUT_DIR,
     }),
     // We add a 10 ms delay to prevent exact concurrency
-    delay(10).then(() =>
+    delay(500).then(() =>
       download({
         security: undefined as any,
         flavour,

@@ -42,7 +42,7 @@ describe('downloadFile', () => {
     // Expect that a B2B has been made
     expect(scope.isDone()).toBe(true);
 
-    const outputFile = path.join(OUTPUT_DIR, '22.0.0/foo.json');
+    const outputFile = path.join(OUTPUT_DIR, `${B2B_VERSION}/foo.json`);
     const obj = JSON.parse(fs.readFileSync(outputFile, { encoding: 'utf8' }));
     expect(obj.foo).toEqual('bar');
   });

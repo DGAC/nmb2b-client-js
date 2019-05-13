@@ -38,14 +38,9 @@ export async function download(config: Config): Promise<void> {
   }
 
   const release = await lockfile.lock(outputDir, {
-    retries: {
-      retries: 5,
-      factor: 3,
-      minTimeout: 1 * 1000,
-      maxTimeout: 5 * 1000,
-      randomize: true,
-    },
-  } as any);
+    retries: 5,
+  });
+
   const hasWSDL = await WSDLExists(config);
 
   if (hasWSDL) {

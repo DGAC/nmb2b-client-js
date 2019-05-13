@@ -16,10 +16,10 @@ beforeAll(async () => {
 });
 
 describe('queryNMB2BWSDLs', () => {
-  conditionalTest('Version 22.0.0', async () => {
+  conditionalTest('Version 23.0.0', async () => {
     try {
       const res = await GeneralInformation.queryNMB2BWSDLs({
-        version: '22.0.0',
+        version: '23.0.0',
       });
 
       process.env.CI && console.dir(res, { depth: null });
