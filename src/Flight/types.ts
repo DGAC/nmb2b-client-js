@@ -83,6 +83,7 @@ import {
   Dataset,
   Reply,
   BooleanString,
+  NMSet,
 } from '../Common/types';
 
 import {
@@ -116,21 +117,125 @@ export interface TimeAndModel {
 
 export type TrafficType = 'DEMAND' | 'LOAD' | 'REGULATED_DEMAND';
 
-export type FlightField = string;
+export type FlightField =
+  | 'divertedAerodromeOfDestination'
+  | 'readyEstimatedOffBlockTime'
+  | 'cdmEstimatedOffBlockTime'
+  | 'aircraftType'
+  | 'estimatedTakeOffTime'
+  | 'calculatedTakeOffTime'
+  | 'actualTakeOffTime'
+  | 'ctotShiftAlreadyAppliedByTower'
+  | 'taxiTime'
+  | 'currentlyUsedTaxiTime'
+  | 'revisionTimes'
+  | 'estimatedTimeOfArrival'
+  | 'calculatedTimeOfArrival'
+  | 'actualTimeOfArrival'
+  | 'requestedFlightLevel'
+  | 'timeAtReferenceLocationEntry'
+  | 'timeAtReferenceLocationExit'
+  | 'flightLevelAtReferenceLocationEntry'
+  | 'flightLevelAtReferenceLocationExit'
+  | 'trendAtReferenceLocationEntry'
+  | 'trendAtReferenceLocationExit'
+  | 'trendAtReferenceLocationMiddle'
+  | 'lateFiler'
+  | 'lateUpdater'
+  | 'suspensionStatus'
+  | 'suspensionResponseBy'
+  | 'exclusionFromRegulations'
+  | 'famStatus'
+  | 'readyStatus'
+  | 'aircraftOperator'
+  | 'operatingAircraftOperator'
+  | 'reroutingIndicator'
+  | 'newRouteMinShiftDelayImprovement'
+  | 'reroutable'
+  | 'reroutingOpportunitiesExist'
+  | 'cdm'
+  | 'slotIssued'
+  | 'slotImprovementProposal'
+  | 'exemptedFromRegulations'
+  | 'delay'
+  | 'delayCharacteristics'
+  | 'mostPenalisingRegulation'
+  | 'hasOtherRegulations'
+  | 'regulationLocations'
+  | 'atfcmMeasureLocations'
+  | 'lastATFMMessageType'
+  | 'lastATFMMessageReceivedOrSent'
+  | 'runwayVisualRange'
+  | 'confirmedCTFM'
+  | 'requestedInitialFlightLevel'
+  | 'requestedInitialSpeed'
+  | 'estimatedElapsedTime'
+  | 'filingRule'
+  | 'initialFPLMessageOriginator'
+  | 'lastFPLMessageOriginator'
+  | 'icaoRoute'
+  | 'routeLength'
+  | 'reroutingReference'
+  | 'defaultReroutingRequestedFlightLevel'
+  | 'defaultReroutingRequestedSpeed'
+  | 'departureTolerance'
+  | 'mostPenalisingRegulationCause'
+  | 'lastATFMMessageOriginator'
+  | 'ftfmPointProfile'
+  | 'rtfmPointProfile'
+  | 'ctfmPointProfile'
+  | 'ftfmAirspaceProfile'
+  | 'rtfmAirspaceProfile'
+  | 'ctfmAirspaceProfile'
+  | 'ftfmRequestedFlightLevels'
+  | 'rtfmRequestedFlightLevels'
+  | 'ctfmRequestedFlightLevels'
+  | 'flightHistory'
+  | 'operationalLog'
+  | 'equipmentCapabilityAndStatus'
+  | 'ftfmRestrictionProfile'
+  | 'rtfmRestrictionProfile'
+  | 'ctfmRestrictionProfile'
+  | 'cfmuFlightType'
+  | 'ccamsSSRCode'
+  | 'filedRegistrationMark'
+  | 'isProposalFlight'
+  | 'proposalExists'
+  | 'hasBeenForced'
+  | 'caughtInHotspots'
+  | 'hotspots'
+  | 'mcdmInfo'
+  | 'worstLoadStateAtReferenceLocation'
+  | 'compareWithOtherTrafficType'
+  | 'ctotLimitReason'
+  | 'profileValidity'
+  | 'targetTimeOverFix'
+  | 'flightState'
+  | 'lastKnownPosition'
+  | 'highestModelPointProfile'
+  | 'highestModelAirspaceProfile'
+  | 'highestModelRestrictionProfile'
+  | 'slotSwapCounter'
+  | 'slotSwapCandidateList'
+  | 'aircraftAddress'
+  | 'arrivalInformation'
+  | 'slotZone'
+  | 'flightDataVersionNr'
+  | 'applicableScenarios'
+  | 'apiSubmissionRules'
+  | 'avoidedRegulations'
+  | 'routeChargeIndicator'
+  | 'fuelConsumptionIndicator'
+  | 'excludedRegulations';
 
 export type FlightExchangeModel = 'FIXM' | 'NM_B2B';
 
 export type FlightPlanOutput =
   | { structured: StructuredFlightPlan }
-  | { fixm: FIXMFlight };
+  | { fixm_v4_1: FIXMFlight };
 
 export interface BasicTrajectoryData {
   takeOffWeight?: unknown;
-  topOfClimb?: Array<unknown>;
-  topOfDescent?: Array<unknown>;
-  bottomOfClimb?: Array<unknown>;
-  bottomOfDescent?: Array<unknown>;
-  distanceAtLocationInfo: unknown;
 }
 
 export interface DepartureData {
@@ -267,6 +372,7 @@ export interface Flight {
     afterCTO: DurationMinute;
   };
   flightDataVersionNr?: number; // FlightDataVersionNumber
+  excludedRegulations?: NMSet<RegulationId>;
 }
 
 export type MessageOriginator =
@@ -283,7 +389,8 @@ export type SuspensionStatus =
   | 'REGULATION_CONFIRMATION'
   | 'SIT_TIME_OUT'
   | 'SLOT_MISSED'
-  | 'TRAFFIC_VOLUMES_CONDITION';
+  | 'TRAFFIC_VOLUMES_CONDITION'
+  | 'V_MANUAL_SUSPENSION';
 
 export type FAMStatus =
   | 'AIRBORNE_WHEN_SHIFTED_BY_FAM'
@@ -369,7 +476,7 @@ export interface FlightPlan {
   ifplId?: IFPLId;
   airFiledData?: AirFiledData;
   aerodromeOfDeparture?: Aerodrome;
-  aerodromesOfDestination?: AerodromesOfDestination;
+  aerodromesOfDestination: AerodromesOfDestination;
   enrouteAlternateAerodromes?: AlternateAerodrome_DataType;
   takeOffAlternateAerodromes?: AlternateAerodrome_DataType;
   aircraftId?: AircraftIdentification;
@@ -400,21 +507,7 @@ export interface CDM {
     | 'PRE_SEQUENCED'
     | 'TARGETED';
   AirportType: 'ADVANCED_ATC_TWR' | 'CDM' | 'STANDARD';
-  provisionalInfo?: CDMProvisionalInfo;
   info?: CDMInfo;
-}
-
-export interface CDMProvisionalInfo {
-  timestamp?: DateTimeMinute;
-  aoTargetTakeOffTime?: DateTimeMinute;
-  taxiTime?: DurationHourMinuteSecond;
-  departureProc?: TerminalProcedure;
-  aircraftType?: AircraftType;
-  registrationMark?: AircraftRegistrationMark;
-  departureStatus: DepartureStatus;
-  mostPenalisingRegulation?: RegulationId;
-  possibleCFMUTakeOffTime?: DateTimeMinute;
-  suspensionStatus: SuspensionStatus;
 }
 
 export interface CDMInfo {
