@@ -19,6 +19,7 @@ export async function downloadFile(
   },
 ): Promise<void> {
   return new Promise((resolve, reject) => {
+    debug(`Downloading ${getFileUrl(filePath, { flavour })}`);
     const r = request
       .get({
         agentOptions: security,

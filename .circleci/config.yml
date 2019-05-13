@@ -7,7 +7,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:8.11
+    - image: circleci/node:10
 
 jobs:
   test:
@@ -26,6 +26,11 @@ jobs:
             echo 'export B2B_FLAVOUR=PREOPS' >> $BASH_ENV
 
       - run:
+          name: Debug node version
+          command: |
+            node --version
+
+      - run:
           name: Prepare greenkeeper-lockfile
           command: |
             echo 'export PATH=$(yarn global bin):$PATH' >> $BASH_ENV
@@ -37,8 +42,6 @@ jobs:
           name: Restoring node_modules from cache
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
       - run:
           name: Greenkeeper update
           command: greenkeeper-lockfile-update
@@ -47,7 +50,7 @@ jobs:
           name: Saving node_modules in cache for future builds
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Greenkeeper upload
           command: greenkeeper-lockfile-upload

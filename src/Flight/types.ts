@@ -1,7 +1,10 @@
 export type IFPLId = string; // UALPHA{2}DIGIT{8}
 export type FlightDataset = 'flight' | 'flightPlan';
 export type FlightIdentificationInput = { id: IFPLId } | { keys: FlightKeys };
-export interface FlightIdentificationOutput { id?: IFPLId; keys?: FlightKeys }
+export interface FlightIdentificationOutput {
+  id?: IFPLId;
+  keys?: FlightKeys;
+}
 export type AircraftICAOId = string; // (ALPHA|DIGIT){2,7}
 export type ExtendedAircraftICAOId = string; // (ALPHA|DIGIT|$|#){2,7}
 export type AircraftRegistrationMark = string; // (ALPHA|DIGIT|'|+|=|?|.|/|:| ){1,50}
@@ -767,9 +770,11 @@ export interface FlightRetrievalRequest {
 }
 
 export interface FlightRetrievalReply extends Reply {
-  latestFlightPlan?: FlightPlanOutput;
-  flightPlanHistory?: FlightPlanHistory;
-  flight?: Flight;
+  data: {
+    latestFlightPlan?: FlightPlanOutput;
+    flightPlanHistory?: FlightPlanHistory;
+    flight?: Flight;
+  };
 }
 
 export interface FlightListByTrafficVolumeRequest

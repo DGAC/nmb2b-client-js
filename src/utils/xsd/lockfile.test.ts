@@ -1,5 +1,4 @@
 /**
- * @flow
  * @jest-environment node
  */
 import path from 'path';
@@ -34,7 +33,33 @@ test('should prevent concurrent downloads', async () => {
   const scope = nock(getFileUrl(filePath, { flavour }))
     .get(/.tar.gz/)
     .once()
-    .reply(200, fs.readFileSync(TEST_FILE));
+    .reply(200, fs.readFileSync(TEST_FILE))
+    .post(/.+/)
+    .reply(
+      200,
+      `
+  <?xml version='1.0' encoding='utf-8'?>
+  <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <gi:NMB2BWSDLsReply xmlns:gi="eurocontrol/cfmu/b2b/GeneralinformationServices" xmlns:cm="eurocontrol/cfmu/b2b/CommonServices">
+      <requestReceptionTime>2019-05-01 14:46:46</requestReceptionTime>
+      <requestId>B2B_CUR:451971</requestId>
+      <sendTime>2019-05-01 14:46:47</sendTime>
+      <status>OK</status>
+      <data>
+        <file>
+          <id>b2b_publications/22.0.0/B2B_WSDL_XSD.22.5.0.3.74.tar.gz</id>
+          <type>Publication</type>
+          <releaseTime>2019-04-30 19:25:35</releaseTime>
+          <fileLength>303725</fileLength>
+          <hasAddendaErrata>false</hasAddendaErrata>
+        </file>
+      </data>
+    </gi:NMB2BWSDLsReply>
+  </S:Body>
+  </S:Envelope>
+`,
+    );
 
   await Promise.all([
     download({

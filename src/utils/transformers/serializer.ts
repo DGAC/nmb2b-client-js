@@ -1,12 +1,12 @@
 import { types } from './types';
 import { compose, identity, evolve } from 'ramda';
 
-export function prepareSerializer(schema: any) {
+export function prepareSerializer<T>(schema: any): (input: T) => T {
   const transformer = prepareTransformer(schema);
   return compose(
     transformer ? evolve(transformer) : identity,
     reorderKeys(schema),
-  );
+  ) as any as (input: T) => T;
 }
 
 function reduceXSDType(str: string): string {
@@ -26,13 +26,12 @@ function prepareTransformer(schema: Schema): null | Transformer {
     if (typeof schema[curr] === 'string') {
       const type = reduceXSDType(schema[curr] as string);
       if ((types as any)[type] && (types as any)[type].input) {
-        return {...prev,  [curr]: (types as any)[type].input};
+        return { ...prev, [curr]: (types as any)[type].input };
       }
     } else if (typeof schema[curr] === 'object') {
       const subItem = prepareTransformer(schema[curr] as Schema);
       if (subItem) {
-        return {...prev, 
-          [curr]: subItem};
+        return { ...prev, [curr]: subItem };
       }
     }
 
@@ -43,7 +42,7 @@ function prepareTransformer(schema: Schema): null | Transformer {
 export function reorderKeys<T extends Schema, O extends { [key: string]: any }>(
   schema: T,
 ): (obj: O) => O {
-  return (obj: O) => {
+  return (obj: O): O => {
     // console.log(JSON.stringify(schema, null, 2));
     // console.log(JSON.stringify(obj, null, 2));
 

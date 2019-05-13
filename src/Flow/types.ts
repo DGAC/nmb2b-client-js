@@ -5,6 +5,7 @@ export type MeasureId =
   | { REROUTING: ReroutingId }
   | { MCDM_ONLY: RegulationId };
 export type FlowId = string; // TEXT{1,8}
+export type ScenarioId = string;
 export type SectorConfigurationId = string; // (UALPHA|DIGIT|.){1,6}
 export type PlanDataSource = 'AIRSPACE' | 'MEASURE' | 'NO_DATA' | 'TACTICAL';
 export type RegulationIdWildcard = string; // (UALPHA|DIGIT){1,8}|(UALPHA|DIGIT){0,7}*
@@ -37,9 +38,13 @@ import {
   NMMap,
   NMInt,
   DistanceM,
+  DateTimeSecond,
+  UserId,
+  AirNavigationUnitId,
+  DateTimeMinute,
 } from '../Common/types';
 
-import { TrafficType } from '../Flight/types';
+import { TrafficType, FlightKeys } from '../Flight/types';
 
 export interface FlightRegulationLocation {
   regulationId: RegulationId;
@@ -296,7 +301,7 @@ export type Regulation = RegulationOrMCDMOnly & {
   regulationState: RegulationState;
 };
 
-export interface RegulationOrMCDMOnly {
+export type RegulationOrMCDMOnly = {
   regulationId: RegulationId;
   reason?: RegulationReason;
   location?: TrafficVolumeLocation;
@@ -310,7 +315,115 @@ export interface RegulationOrMCDMOnly {
   updateCapacityRequired?: BooleanString;
   updateTCActivationRequired?: BooleanString;
   delayTVSet?: TrafficVolumeSetId;
+} & Measure;
+
+export interface Measure {
+  dataId?: PlanDataId;
+  applicability?: DateTimeMinutePeriod;
+  measureCherryPicked?: boolean;
+  lastUpdate?: LifeCycleEvent;
+  externallyEditable?: boolean;
+  subType?: MeasureSubType;
+  createdByFMP?: boolean;
+  mcdmRequired?: boolean;
+  sourceHotspot?: HotspotId;
+  scenarioReference?: MeasureFromScenarioRepository;
+  mcdmInfo?: MCDMMeasureTopic;
 }
+
+export type MeasureSubType =
+  | 'AIRBORNE_HORIZONTAL_REROUTING'
+  | 'AIRBORNE_LEVEL_CAP'
+  | 'GROUND_DELAY'
+  | 'GROUND_HORIZONTAL_REROUTING'
+  | 'GROUND_LEVEL_CAP'
+  | 'MILES_MINUTES_IN_TRAIL'
+  | 'MINIMUM_DEPARTURE_INTERVAL'
+  | 'OTHER_KIND_OF_STAM_MEASURE'
+  | 'TAKE_OFF_NOT_AFTER'
+  | 'TAKE_OFF_NOT_BEFORE'
+  | 'TERMINAL_PROCEDURE_CHANGE';
+
+export interface MeasureFromScenarioRepository {
+  scenarioId: ScenarioId;
+  measureId: MeasureId;
+}
+
+export interface LifeCycleEvent {
+  eventTime: DateTimeSecond;
+  userUpdateEventTime?: DateTimeSecond;
+  userUpdateType: LifeCycleEventType;
+  userId: UserId;
+}
+
+export type MCDMMeasureTopic = MCDMStatefulTopic & {
+  userCategories?: NMSet<MCDMRoleUserCategory>;
+  deadlines?: MCDMDeadlines;
+  flightTopics?: NMSet<MCDMFlightTopic>;
+  predefinedUsersForFlightCoordinationLevel?: NMSet<MCDMUserAndRole>;
+  remark?: string;
+};
+
+export interface MCDMStatefulTopic {
+  measureId?: MeasureId;
+  hotspotId?: HotspotId;
+  state?: MCDMState;
+  initiator?: AirNavigationUnitId;
+  initiatorIsImplementer?: boolean;
+  userRolesAndApprovalStates?: NMSet<MCDMUserRoleAndApprovalState>;
+}
+
+export interface MCDMRoleUserCategory {
+  category: MCDMUserCategory;
+  coordinationLevel: MCDMCoordinationLevel;
+  role: MCDMRole;
+}
+
+export interface MCDMDeadlines {
+  timeToCoordinate?: DateTimeMinute;
+  timeToStartImplement?: DateTimeMinute;
+  timeToImplement?: DateTimeMinute;
+}
+
+export interface MCDMFlightTopic {
+  flightKeys: FlightKeys;
+}
+
+export interface MCDMUserAndRole {
+  user: AirNavigationUnitId;
+  role?: MCDMRole;
+}
+
+export type MCDMCoordinationLevel = 'FLIGHT' | 'MEASURE';
+
+export type MCDMUserCategory =
+  | 'ADJACENT_FMP'
+  | 'AIRCRAFT_OPERATOR'
+  | 'ALL_FMP'
+  | 'NMOC'
+  | 'TOWER';
+
+export interface MCDMUserRoleAndApprovalState {
+  user: AirNavigationUnitId;
+  role?: MCDMRole;
+  approvalState?: MCDMApprovalState;
+}
+
+export type MCDMRole =
+  | 'APPROVAL'
+  | 'IMPLEMENTER'
+  | 'INFO'
+  | 'INITIATOR'
+  | 'NOT_INVOLVED'
+  | 'ROLE_INFO';
+
+export type MCDMApprovalState =
+  | 'ACKNOWLEDGED'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'UNKNOWN';
+
+export type LifeCycleEventType = 'CREATION' | 'DELETION' | 'UPDATE';
 
 export type TrafficVolumeLocation_ReferenceLocation =
   | {

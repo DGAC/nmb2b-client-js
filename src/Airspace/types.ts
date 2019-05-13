@@ -176,11 +176,17 @@ export interface TerminalProcedureIdentifier {
 
 export type ICAOPoint =
   | { pointId: PublishedPointId }
-  | { nonPublishedPoint: NonPublishedPoint };
+  | { 'nonPublishedPoint-DBEPoint': DBEPoint }
+  | { 'nonPublishedPoint-GeoPoint': GeoPoint }
+  | { 'nonPublishedPoint-ReferencePoint': ReferencePoint };
 
 export type NonPublishedPoint = GeoPoint | DBEPoint | ReferencePoint;
-export interface GeoPoint { position: Position }
-export interface DBEPoint { dbePointId: DBEPointId }
+export interface GeoPoint {
+  position: Position;
+}
+export interface DBEPoint {
+  dbePointId: DBEPointId;
+}
 export interface ReferencePoint {
   reference: PublishedPointId;
   bearing: Bearing;

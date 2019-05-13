@@ -17,17 +17,17 @@ beforeAll(async () => {
 });
 
 describe('queryHotspots', () => {
-  // Not authorised with this certificate
-  xconditionalTest('List all hotspots', async () => {
+  // Not authorised with this certificate in OPS
+  conditionalTest('List all hotspots', async () => {
     try {
       const res = await Flow.queryHotspots({
         dataset: { type: 'OPERATIONAL' },
         day: new Date(),
-        trafficVolume: 'EGLLARR',
+        trafficVolume: 'LFRMZI',
         hotspotKind: 'PROBLEM',
       });
 
-      !process.env.CI && console.log(res);
+      !process.env.CI && console.log(inspect(res, { depth: null }));
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;

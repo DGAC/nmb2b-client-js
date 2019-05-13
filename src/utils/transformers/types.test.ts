@@ -16,7 +16,7 @@ const serialization = [
   ],
 ];
 
-test.each(serialization)('%s.input(%p) => %p', (t, input, expected) => {
+test.each(serialization as any)('%s.input(%p) => %p', (t, input, expected) => {
   expect((types as any)[t].input(input)).toEqual(expected);
 });
 
@@ -33,6 +33,9 @@ const deserialization = [
   ],
 ];
 
-test.each(deserialization)('%s.output(%p) => %p', (t, input, expected) => {
-  expect((types as any)[t].output(input)).toEqual(expected);
-});
+test.each(deserialization as any)(
+  '%s.output(%p) => %p',
+  (t, input, expected) => {
+    expect((types as any)[t].output(input)).toEqual(expected);
+  },
+);
