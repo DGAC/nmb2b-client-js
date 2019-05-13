@@ -1,3 +1,8 @@
+# Master
+
+- Update dependencies
+- NM B2B 23.0.0 (#32)
+
 # v0.3.2 (2019-05-01)
 
 - Fix failing tests
