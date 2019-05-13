@@ -2,7 +2,7 @@ import path from 'path';
 import { getWSDLPath } from '../constants';
 import { getEndpoint } from '../config';
 import { prepareSecurity } from '../security';
-import soap from 'soap';
+import { createClient } from 'soap';
 import { Config } from '../config';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
@@ -20,7 +20,7 @@ function createAirspaceServices(config: Config): Promise<AirspaceClient> {
   const security = prepareSecurity(config);
 
   return new Promise((resolve, reject) =>
-    soap.createClient(WSDL, { customDeserializer, endpoint }, (err, client) => {
+    createClient(WSDL, { customDeserializer, endpoint }, (err, client) => {
       if (err) {
         return reject(err);
       }

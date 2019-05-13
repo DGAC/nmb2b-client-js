@@ -1,7 +1,7 @@
 import { getWSDLPath } from '../constants';
 import { getEndpoint } from '../config';
 import { prepareSecurity } from '../security';
-import soap from 'soap';
+import { createClient } from 'soap';
 import { Config } from '../config';
 import util from 'util';
 import { deserializer as customDeserializer } from '../utils/transformers';
@@ -19,18 +19,14 @@ function createGeneralInformationServices(
   const security = prepareSecurity(config);
   return new Promise((resolve, reject) => {
     try {
-      soap.createClient(
-        WSDL,
-        { customDeserializer, endpoint },
-        (err, client) => {
-          if (err) {
-            return reject(err);
-          }
-          client.setSecurity(security);
+      createClient(WSDL, { customDeserializer, endpoint }, (err, client) => {
+        if (err) {
+          return reject(err);
+        }
+        client.setSecurity(security);
 
-          return resolve(client);
-        },
-      );
+        return resolve(client);
+      });
     } catch (err) {
       // TODO: Implement a proper debug log message output
       // tslint:disable-next-line

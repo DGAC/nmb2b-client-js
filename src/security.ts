@@ -2,7 +2,7 @@ import invariant from 'invariant';
 import d from './utils/debug';
 const debug = d('security');
 import { Config } from './config';
-import soap, { ISecurity } from 'soap';
+import { ClientSSLSecurity, ClientSSLSecurityPFX, ISecurity } from 'soap';
 import fs from 'fs';
 
 // tslint:disable-next-line
@@ -43,11 +43,13 @@ export function prepareSecurity(config: Config): ISecurity {
   if ('pfx' in security) {
     const { pfx, passphrase } = security;
     debug('Using PFX certificates');
-    return new soap.ClientSSLSecurityPFX(pfx, passphrase);
+    // console.log(Object.keys(require('soap')));
+    // console.log(Object.keys(soap));
+    return new ClientSSLSecurityPFX(pfx, passphrase);
   } else {
     debug('Using PEM certificates');
     const { key, cert, passphrase } = security;
-    return new soap.ClientSSLSecurity(
+    return new (ClientSSLSecurity as any)(
       key,
       cert,
       undefined,
