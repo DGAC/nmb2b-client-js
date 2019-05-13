@@ -30,7 +30,7 @@ jobs:
           command: |
             echo 'export PATH=$(yarn global bin):$PATH' >> $BASH_ENV
             source $BASH_ENV
-            yarn global add greenkeeper-lockfile
+            yarn global add greenkeeper-lockfile@2
 
       # Download and cache dependencies
       - restore_cache:
