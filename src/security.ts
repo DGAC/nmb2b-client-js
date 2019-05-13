@@ -43,8 +43,6 @@ export function prepareSecurity(config: Config): ISecurity {
   if ('pfx' in security) {
     const { pfx, passphrase } = security;
     debug('Using PFX certificates');
-    // console.log(Object.keys(require('soap')));
-    // console.log(Object.keys(soap));
     return new ClientSSLSecurityPFX(pfx, passphrase);
   } else {
     debug('Using PEM certificates');
