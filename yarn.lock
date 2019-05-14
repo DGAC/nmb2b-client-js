@@ -1028,10 +1028,12 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.0.tgz#d11813b9c0ff8aaca29f04cbc12817f4c7d656e5"
   integrity sha512-Jrb/x3HT4PTJp6a4avhmJCDEVrPdqLfl3e8GGMbpkGGdwAV5UGlIs4vVEfsHHfylZVOKZWpOqmqFH8CbfOZ6kg==
 
-"@types/proper-lockfile@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/proper-lockfile/-/proper-lockfile-3.0.0.tgz#dcc7cc3714857a4ae6583331d2687e89dc5c94d2"
-  integrity sha512-+tfnsA3KNPDm7Sj9x5omRgvS6ALc+edjTZXYeR3kVEm+qmsrF+59yJUWZDreV/O0+EQ6t0YSWlzxfdV58UOEVg==
+"@types/proper-lockfile@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@types/proper-lockfile/-/proper-lockfile-4.1.0.tgz#2b6ce7d0554d7cf2d45c081899b38a6e8781727d"
+  integrity sha512-Jlu4JBbhU29/GP3mniXWOneMWmLXKc6f0VklcXU9RIXpDP5JksYBG4pm/IOjxf4LHD/BvCUT9YGF4OnVh+hZJA==
+  dependencies:
+    "@types/retry" "*"
 
 "@types/ramda@^0.26.8":
   version "0.26.8"
@@ -1047,6 +1049,11 @@
     "@types/form-data" "*"
     "@types/node" "*"
     "@types/tough-cookie" "*"
+
+"@types/retry@*":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@types/retry/-/retry-0.12.0.tgz#2b35eccfcee7d38cd72ad99232fbd58bffb3c84d"
+  integrity sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==
 
 "@types/rimraf@^2.0.2":
   version "2.0.2"
