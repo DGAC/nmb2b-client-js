@@ -2,7 +2,12 @@ import invariant from 'invariant';
 import d from './utils/debug';
 const debug = d('security');
 import { Config } from './config';
-import { ClientSSLSecurity, ClientSSLSecurityPFX, ISecurity } from 'soap';
+import {
+  ClientSSLSecurity,
+  ClientSSLSecurityPFX,
+  BasicAuthSecurity,
+  ISecurity,
+} from 'soap';
 import fs from 'fs';
 
 // tslint:disable-next-line

@@ -33,6 +33,10 @@ export async function requestFilename({
   flavour: B2BFlavour;
   security: Security;
 }): Promise<string> {
+  if (process.env.B2B_REMOTE_XSD_URL) {
+    return process.env.B2B_REMOTE_XSD_URL;
+  }
+
   return new Promise((resolve, reject) => {
     request.post(
       {
