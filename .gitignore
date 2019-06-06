@@ -12,3 +12,4 @@ b2b.cert*
 junit.xml
 
 .vscode
+.vscode/*
