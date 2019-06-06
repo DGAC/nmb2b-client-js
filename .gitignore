@@ -10,3 +10,5 @@ yarn-error.log
 
 b2b.cert*
 junit.xml
+
+.vscode
