@@ -49,16 +49,10 @@ export async function download(config: Config): Promise<void> {
     return;
   }
 
-  const fileName = await requestFilename({
-    flavour: config.flavour,
-    security: config.security,
-  });
+  const fileName = await requestFilename(config);
+
   debug(`Downloading ${fileName}`);
 
-  await downloadFile(fileName, {
-    flavour: config.flavour,
-    security: config.security,
-    outputDir: config.XSD_PATH,
-  });
+  await downloadFile(fileName, config);
   await release();
 }

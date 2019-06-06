@@ -15,12 +15,11 @@ export const getWSDL = ({
 export type AirspaceClient = any;
 
 function createAirspaceServices(config: Config): Promise<AirspaceClient> {
-  const endpoint = getEndpoint(config);
   const WSDL = getWSDL(config);
   const security = prepareSecurity(config);
 
   return new Promise((resolve, reject) =>
-    createClient(WSDL, { customDeserializer, endpoint }, (err, client) => {
+    createClient(WSDL, { customDeserializer }, (err, client) => {
       if (err) {
         return reject(err);
       }

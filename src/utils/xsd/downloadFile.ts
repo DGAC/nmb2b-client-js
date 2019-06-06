@@ -11,20 +11,34 @@ export async function downloadFile(
   {
     flavour,
     security,
-    outputDir,
+    XSD_PATH: outputDir,
+    xsdEndpoint,
   }: {
     flavour: B2BFlavour;
     security: Security;
-    outputDir: string;
+    XSD_PATH: string;
+    xsdEndpoint?: string;
   },
 ): Promise<void> {
+  const options =
+    !!security && 'apiKeyId' in security
+      ? {
+          auth: {
+            user: security.apiKeyId,
+            pass: security.apiSecretKey,
+          },
+        }
+      : { agentOptions: security };
+
   return new Promise((resolve, reject) => {
-    debug(`Downloading ${getFileUrl(filePath, { flavour })}`);
+    const url = xsdEndpoint || getFileUrl(filePath, { flavour });
+
+    debug(`Downloading ${url}`);
     const r = request
       .get({
-        agentOptions: security,
+        ...options,
         timeout: 15 * 1000,
-        url: getFileUrl(filePath, { flavour }),
+        url,
       })
       .on('response', (response: any) => {
         debug(`downloading to ${outputDir}`);

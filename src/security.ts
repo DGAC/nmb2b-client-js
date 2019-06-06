@@ -24,9 +24,28 @@ interface PemSecurity {
   passphrase?: string;
 }
 
-export type Security = PfxSecurity | PemSecurity;
+interface ApiGwSecurity {
+  apiKeyId: string;
+  apiSecretKey: string;
+}
 
-export function isValidSecurity(obj: Security): boolean {
+export type Security = PfxSecurity | PemSecurity | ApiGwSecurity;
+
+export function isValidSecurity(obj: Security): obj is Security {
+  if ('apiKeyId' in obj) {
+    invariant(
+      !!obj.apiKeyId && obj.apiKeyId.length > 0,
+      'security.apiKeyId must be a string with a length > 0',
+    );
+
+    invariant(
+      !!obj.apiSecretKey && obj.apiSecretKey.length > 0,
+      'security.apiSecretKey must be defined when using security.apiKeyId',
+    );
+
+    return true;
+  }
+
   invariant(
     ('pfx' in obj && Buffer.isBuffer(obj.pfx)) ||
       ('cert' in obj && Buffer.isBuffer(obj.cert)),
@@ -45,11 +64,16 @@ export function isValidSecurity(obj: Security): boolean {
 
 export function prepareSecurity(config: Config): ISecurity {
   const { security } = config;
-  if ('pfx' in security) {
+
+  if ('apiKeyId' in security) {
+    const { apiKeyId, apiSecretKey } = security;
+    debug('Using ApiGateway security');
+    return new BasicAuthSecurity(apiKeyId, apiSecretKey);
+  } else if ('pfx' in security) {
     const { pfx, passphrase } = security;
     debug('Using PFX certificates');
     return new ClientSSLSecurityPFX(pfx, passphrase);
-  } else {
+  } else if ('cert' in security) {
     debug('Using PEM certificates');
     const { key, cert, passphrase } = security;
     return new (ClientSSLSecurity as any)(
@@ -59,6 +83,8 @@ export function prepareSecurity(config: Config): ISecurity {
       !!passphrase ? { passphrase } : null,
     );
   }
+
+  throw new Error('Invalid security object');
 }
 
 let envSecurity: Security | undefined;
@@ -68,10 +94,29 @@ export function fromEnv(): Security {
     return envSecurity;
   }
 
-  const { B2B_CERT } = process.env;
+  const { B2B_CERT, B2B_API_KEY_ID, B2B_API_SECRET_KEY } = process.env;
+
+  if (!B2B_CERT && !B2B_API_KEY_ID) {
+    throw new Error(
+      'Please define a B2B_CERT or a B2B_API_KEY_ID environment variable',
+    );
+  }
+
+  if (!!B2B_API_KEY_ID) {
+    if (!B2B_API_SECRET_KEY) {
+      throw new Error(
+        `When using B2B_API_KEY_ID, a B2B_API_SECRET_KEY must be defined`,
+      );
+    }
+
+    return {
+      apiKeyId: B2B_API_KEY_ID,
+      apiSecretKey: B2B_API_SECRET_KEY,
+    };
+  }
 
   if (!B2B_CERT) {
-    throw new Error('Please define a B2B_CERT environment variable');
+    throw new Error('Should never happen');
   }
 
   if (!fs.existsSync(B2B_CERT)) {

@@ -17,12 +17,14 @@ function createGeneralInformationServices(
   const endpoint = getEndpoint(config);
   const WSDL = getWSDL(config);
   const security = prepareSecurity(config);
+
   return new Promise((resolve, reject) => {
     try {
-      createClient(WSDL, { customDeserializer, endpoint }, (err, client) => {
+      createClient(WSDL, { customDeserializer }, (err, client) => {
         if (err) {
           return reject(err);
         }
+
         client.setSecurity(security);
 
         return resolve(client);
@@ -30,7 +32,7 @@ function createGeneralInformationServices(
     } catch (err) {
       // TODO: Implement a proper debug log message output
       // tslint:disable-next-line
-      console.log(err);
+      console.log(err.message);
       return reject(err);
     }
   });

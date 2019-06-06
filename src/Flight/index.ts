@@ -13,12 +13,11 @@ const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
 export type FlightClient = any;
 
 function createFlightServices(config: Config): Promise<FlightClient> {
-  const endpoint = getEndpoint(config);
   const WSDL = getWSDL(config);
   const security = prepareSecurity(config);
   return new Promise((resolve, reject) => {
     try {
-      createClient(WSDL, { customDeserializer, endpoint }, (err, client) => {
+      createClient(WSDL, { customDeserializer }, (err, client) => {
         if (err) {
           return reject(err);
         }

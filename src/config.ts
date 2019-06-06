@@ -1,9 +1,12 @@
+import 'dotenv/config';
 import { Security, isValidSecurity } from './security';
 import { B2B_VERSION, B2BFlavours, B2BFlavour } from './constants';
 import invariant from 'invariant';
-import fs from 'fs';
+import { URL } from 'url';
 
 export interface Config {
+  endpoint?: string;
+  xsdEndpoint?: string;
   security: Security;
   flavour: B2BFlavour;
   XSD_PATH: string;
@@ -22,33 +25,60 @@ export function isConfigValid(args: Config): args is Config {
       `Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
+  invariant(
+    !('apiKeyId' in args.security) ? true : !!args.endpoint,
+    `When using an config.security.apiKeyId, config.endpoint must be defined`,
+  );
+
+  invariant(
+    !('apiKeyId' in args.security) ? true : !!args.xsdEndpoint,
+    `When using an config.security.apiKeyId, config.xsdEndpoint must be defined`,
+  );
+
   return true;
 }
 
-export function getEndpoint(config: { flavour?: B2BFlavour } = {}): string {
-  const { flavour } = config;
+const B2B_ROOTS = {
+  OPS: 'https://www.b2b.nm.eurocontrol.int',
+  PREOPS: 'https://www.b2b.preops.nm.eurocontrol.int',
+};
+
+export function getEndpoint(
+  config: { endpoint?: string; flavour?: B2BFlavour } = {},
+): string {
+  const { endpoint, flavour } = config;
 
   if (flavour && flavour === 'PREOPS') {
-    return `https://www.b2b.preops.nm.eurocontrol.int/B2B_PREOPS/gateway/spec/${B2B_VERSION}`;
+    return `${endpoint ||
+      B2B_ROOTS.PREOPS}/B2B_PREOPS/gateway/spec/${B2B_VERSION}`;
   }
 
-  return `https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/${B2B_VERSION}`;
+  return `${endpoint || B2B_ROOTS.OPS}/B2B_OPS/gateway/spec/${B2B_VERSION}`;
 }
 
-export function getFileEndpoint(config: { flavour?: B2BFlavour } = {}): string {
-  const { flavour } = config;
+export function getFileEndpoint(
+  config: { endpoint?: string; flavour?: B2BFlavour } = {},
+): string {
+  const { endpoint, flavour } = config;
 
   if (flavour && flavour === 'PREOPS') {
-    return `https://www.b2b.preops.nm.eurocontrol.int/FILE_PREOPS/gateway/spec`;
+    return `${endpoint || B2B_ROOTS.PREOPS}/FILE_PREOPS/gateway/spec`;
   }
 
-  return `https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec`;
+  return `${endpoint || B2B_ROOTS.OPS}/FILE_OPS/gateway/spec`;
 }
 
 export function getFileUrl(
   path: string,
-  config: { flavour?: B2BFlavour } = {},
+  config: { flavour?: B2BFlavour; endpoint?: string } = {},
 ): string {
+  if (!!config.endpoint) {
+    return new URL(
+      (path && path[0] && path[0] === '/' ? '' : '/') + path,
+      config.endpoint,
+    ).toString();
+  }
+
   return (
     getFileEndpoint(config) +
     (path && path[0] && path[0] === '/' ? '' : '/') +

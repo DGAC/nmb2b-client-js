@@ -36,7 +36,7 @@ describe('downloadFile', () => {
     await downloadFile(filePath, {
       security: undefined as any,
       flavour,
-      outputDir: OUTPUT_DIR,
+      XSD_PATH: OUTPUT_DIR,
     });
 
     // Expect that a B2B has been made
@@ -59,7 +59,7 @@ describe('downloadFile', () => {
       await downloadFile(filePath, {
         security: undefined as any,
         flavour,
-        outputDir: OUTPUT_DIR,
+        XSD_PATH: OUTPUT_DIR,
       });
     } catch (err) {
       expect(err.message).toMatch(/Unable.*WSDL.*/);

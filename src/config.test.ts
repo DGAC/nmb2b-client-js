@@ -50,4 +50,10 @@ describe('getFileUrl', () => {
       `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla"`,
     );
   });
+
+  test('with overriden endpoint', () => {
+    expect(
+      getFileUrl('/bla', { endpoint: 'https://blabla' }),
+    ).toMatchInlineSnapshot(`"https://blabla/bla"`);
+  });
 });

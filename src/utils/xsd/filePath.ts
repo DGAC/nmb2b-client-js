@@ -29,18 +29,28 @@ const makeQuery = ({ version }: { version: string }) => `
 export async function requestFilename({
   flavour,
   security,
+  xsdEndpoint,
 }: {
   flavour: B2BFlavour;
   security: Security;
+  xsdEndpoint?: string;
 }): Promise<string> {
-  if (process.env.B2B_REMOTE_XSD_URL) {
-    return process.env.B2B_REMOTE_XSD_URL;
+  if (xsdEndpoint) {
+    return xsdEndpoint;
   }
+
+  if (!!security && 'apiKeyId' in security) {
+    throw new Error(
+      'Should never happen, config.xsdEndpoint should be defined',
+    );
+  }
+
+  const options = { agentOptions: security };
 
   return new Promise((resolve, reject) => {
     request.post(
       {
-        agentOptions: security,
+        ...options,
         timeout: 15 * 1000,
         url: getEndpoint({ flavour }),
         body: makeQuery({ version: B2B_VERSION }),
