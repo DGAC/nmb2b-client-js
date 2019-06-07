@@ -43,7 +43,7 @@ export async function download(config: Config): Promise<void> {
 
   const hasWSDL = await WSDLExists(config);
 
-  if (hasWSDL) {
+  if (!config.ignoreWSDLCache && hasWSDL) {
     debug('WSDL found');
     await release();
     return;

@@ -7,6 +7,7 @@ import { URL } from 'url';
 export interface Config {
   endpoint?: string;
   xsdEndpoint?: string;
+  ignoreWSDLCache?: boolean;
   security: Security;
   flavour: B2BFlavour;
   XSD_PATH: string;
