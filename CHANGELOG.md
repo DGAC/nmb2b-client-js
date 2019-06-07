@@ -1,3 +1,7 @@
+# v0.3.5 (2019-06-07)
+
+- Fix typo in InputOptions type
+
 # v0.3.4 (2019-06-07)
 
 - Fix input options type declaration

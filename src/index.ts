@@ -37,7 +37,7 @@ interface InputOptions {
   flavour?: B2BFlavour;
   XSD_PATH?: string;
   endpoint?: string;
-  xsdEnpoint?: string;
+  xsdEndpoint?: string;
   ignoreWSDLCache?: boolean;
 }
 
