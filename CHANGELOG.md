@@ -1,4 +1,4 @@
-# Master
+# v0.3.4 (2019-06-07)
 
 - Fix input options type declaration
 - Fix `@types/*` dependencies
