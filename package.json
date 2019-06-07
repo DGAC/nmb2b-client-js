@@ -28,7 +28,6 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
-    "@types/bluebird": "^3.5.25",
     "@types/debug": "^4.1.4",
     "@types/dotenv": "^6.1.0",
     "@types/invariant": "^2.2.29",
@@ -56,6 +55,7 @@
     "typescript": "^3.4.2"
   },
   "dependencies": {
+    "@types/bluebird": "^3.5.27",
     "debug": "^3.0.0 || ^4.0.0",
     "invariant": "^2.2.4",
     "mkdirp": "^0.5.1",
