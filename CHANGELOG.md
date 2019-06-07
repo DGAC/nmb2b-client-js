@@ -1,5 +1,6 @@
 # Master
 
+- Works with a B2B proxy
 - Update dependencies
 - NM B2B 23.0.0 (#32)
 
