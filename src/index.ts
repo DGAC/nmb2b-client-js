@@ -36,6 +36,9 @@ interface InputOptions {
   security: Security;
   flavour?: B2BFlavour;
   XSD_PATH?: string;
+  endpoint?: string;
+  xsdEnpoint?: string;
+  ignoreWSDLCache?: boolean;
 }
 
 const defaults = {

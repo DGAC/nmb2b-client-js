@@ -1,3 +1,7 @@
+# Master
+
+- Fix input options type declaration
+
 # v0.3.3 (2019-06-07) 
 
 - Works with a B2B proxy
