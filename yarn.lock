@@ -4507,10 +4507,10 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-soap@^0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/soap/-/soap-0.27.1.tgz#044fc69a8fd67c13922be380737b4e9a973b6239"
-  integrity sha512-64kq+4IeRxxR7HUPhFzwjdM17xovZxYMS8n4JE7LGrytM8Kl0NFaA5DlKOafgGBGENhgapsIYS6sVKJE43PmWA==
+soap@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/soap/-/soap-0.28.0.tgz#e3221096f17587b6ab26031c55f71a8a5dcee352"
+  integrity sha512-NCKR9kiX/Tdv0r+FCV0L3u12FI5LddzE8ZDzbG4rdwdtD4rT/6JRq/sm2Wd/2alNlVy71fJfj8p2C/JUvMEZ+g==
   dependencies:
     "@types/request" "^2.48.1"
     bluebird "^3.5.0"
