@@ -23,7 +23,7 @@ function createFlowServices(config: Config): Promise<FlowClient> {
         }
         client.setSecurity(security);
 
-        // console.log(util.inspect(client.describe().FlightManagementService.FlightManagementPort.queryFlightPlans, { depth: 3 }));
+        // console.log(util.inspect(client.describe(), { depth: 3 }));
         // console.log(
         //   client.wsdl.definitions.schemas['eurocontrol/cfmu/b2b/CommonServices']
         //     .complexTypes['Reply'].children[0].children,
@@ -51,6 +51,9 @@ import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolu
 import { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume';
 import retrieveOTMVPlan from './retrieveOTMVPlan';
 import { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
+import retrieveCapacityPlan, {
+  Resolver as RetrieveCapacityPlan,
+} from './retrieveCapacityPlan';
 
 export interface FlowService {
   __soapClient: object;
@@ -60,6 +63,7 @@ export interface FlowService {
   queryHotspots: QueryHotspots;
   queryTrafficCountsByTrafficVolume: QueryTrafficCountsByTrafficVolume;
   retrieveOTMVPlan: RetrieveOTMVPlan;
+  retrieveCapacityPlan: RetrieveCapacityPlan;
 }
 
 export function getFlowClient(config: Config): Promise<FlowService> {
@@ -73,5 +77,6 @@ export function getFlowClient(config: Config): Promise<FlowService> {
       client,
     ),
     retrieveOTMVPlan: retrieveOTMVPlan(client),
+    retrieveCapacityPlan: retrieveCapacityPlan(client),
   }));
 }

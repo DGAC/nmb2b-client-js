@@ -543,3 +543,31 @@ export interface OTMVPlanRetrievalReply extends Reply {
     plans: OTMVPlans;
   };
 }
+
+export interface CapacityPlanRetrievalRequest
+  extends TacticalConfigurationRetrievalRequest {
+  trafficVolumes: NMSet<TrafficVolumeId>;
+}
+
+export interface CapacityPlanRetrievalReply extends Reply {
+  data: {
+    plans: CapacityPlans;
+  };
+}
+
+export interface CapacityPlans extends TacticalConfigurationPlan {
+  tvCapacities: NMMap<TrafficVolumeId, PlannedCapacities>;
+}
+
+export interface PlannedCapacities {
+  nmSchedule: NMSet<PlannedCapacity>;
+  clientSchedule: NMSet<PlannedCapacity>;
+}
+
+export interface PlannedCapacity {
+  applicabilityPeriod: DateTimeMinutePeriod;
+  dataSource: PlanDataSource;
+  capacity?: Capacity;
+}
+
+export type Capacity = number;

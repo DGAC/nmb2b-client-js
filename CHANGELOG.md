@@ -1,3 +1,7 @@
+# Master
+
+- Implement Flow.retrieveCapacityPlan
+
 # v0.3.5 (2019-06-07)
 
 - Fix typo in InputOptions type
