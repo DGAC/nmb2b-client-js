@@ -52,7 +52,7 @@
     "rimraf": "2.6.3",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.4.2"
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.27",
@@ -63,7 +63,7 @@
     "proper-lockfile": "^4.1.1",
     "ramda": "^0.26.1",
     "request": "^2.88.0",
-    "soap": "^0.27.1",
+    "soap": "^0.30.0",
     "tar": "^4.4.6"
   }
 }

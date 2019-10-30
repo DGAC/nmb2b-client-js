@@ -3353,6 +3353,11 @@ lodash@^4.17.11:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
+lodash@^4.17.15:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
 lodash@^4.17.5:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
@@ -4507,23 +4512,23 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-soap@^0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/soap/-/soap-0.27.1.tgz#044fc69a8fd67c13922be380737b4e9a973b6239"
-  integrity sha512-64kq+4IeRxxR7HUPhFzwjdM17xovZxYMS8n4JE7LGrytM8Kl0NFaA5DlKOafgGBGENhgapsIYS6sVKJE43PmWA==
+soap@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/soap/-/soap-0.30.0.tgz#f5fb6fd5ca8073d41c973661772acc697e8c8921"
+  integrity sha512-nPDbX8Y/EJNyMXog50BRONUa/S0oaDYvFO3IAegh7IoxOwGpWr6xoyUx+ZgAY9tvstZDnOHRPdfvxDhAVCVyAQ==
   dependencies:
     "@types/request" "^2.48.1"
     bluebird "^3.5.0"
     concat-stream "^2.0.0"
     debug "^4.1.1"
     httpntlm "^1.5.2"
-    lodash "^4.17.5"
+    lodash "^4.17.15"
     request ">=2.9.0"
     sax ">=0.6"
     serve-static "^1.11.1"
     strip-bom "^3.0.0"
     uuid "^3.1.0"
-    xml-crypto "^1.2.0"
+    xml-crypto "^1.4.0"
 
 source-map-resolve@^0.5.0:
   version "0.5.2"
@@ -4908,10 +4913,10 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.2.tgz#9ed4e6475d906f589200193be056f5913caed481"
-  integrity sha512-Og2Vn6Mk7JAuWA1hQdDQN/Ekm/SchX80VzLhjKN9ETYrIepBFAd8PkOdOTK2nKt0FCkmMZKBJvQ1dV1gIxPu/A==
+typescript@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
+  integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
 
 uglify-js@^3.1.4:
   version "3.4.10"
@@ -5138,7 +5143,7 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-xml-crypto@^1.2.0:
+xml-crypto@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/xml-crypto/-/xml-crypto-1.4.0.tgz#de1cec8cd31cbd689cd90d3d6e8a27d4ae807de7"
   integrity sha512-K8FRdRxICVulK4WhiTUcJrRyAIJFPVOqxfurA3x/JlmXBTxy+SkEENF6GeRt7p/rB6WSOUS9g0gXNQw5n+407g==
