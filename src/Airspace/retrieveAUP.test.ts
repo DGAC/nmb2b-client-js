@@ -4,6 +4,8 @@ import moment from 'moment';
 // @ts-ignore
 import b2bOptions from '../../tests/options';
 import { AirspaceService } from '.';
+import { AUPSummary } from './types';
+import * as R from 'ramda';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
@@ -17,7 +19,7 @@ beforeAll(async () => {
 });
 
 describe('retrieveAUP', () => {
-  let AUPIds: string[] = [];
+  let AUPSummaries: AUPSummary[] = [];
   beforeAll(async () => {
     // Find some AUP id
     const res = await Airspace.retrieveAUPChain({
@@ -26,22 +28,35 @@ describe('retrieveAUP', () => {
     });
 
     if (res.data) {
-      AUPIds = res.data.chains[0].aups.map(({ id }) => id);
+      AUPSummaries = R.compose<
+        AUPSummary[],
+        AUPSummary[],
+        AUPSummary[],
+        AUPSummary[]
+      >(
+        R.filter<AUPSummary>(({ aupState }) => aupState === 'RELEASED'),
+        R.reverse,
+        R.sortBy(({ lastUpdate }) => lastUpdate.timestamp),
+      )(res.data.chains[0].aups);
+
+      console.log(AUPSummaries);
     }
   });
 
   conditionalTest('AUP Retrieval', async () => {
-    if (AUPIds.length === 0) {
+    if (AUPSummaries.length === 0) {
       console.error('AUPChainRetrieval did not yield any AUP id');
       return;
     }
 
     const res = await Airspace.retrieveAUP({
-      aupId: AUPIds[0],
+      aupId: AUPSummaries[0].id,
+      returnComputed: true,
     });
 
     expect(res.data.aup).toBeDefined();
     expect(res.data.aup.summary).toBeDefined();
+    console.log(inspect(res.data.aup.aupManualEntries!.rsas, { depth: null }));
     expect(res.data.aup.aupManualEntries).toBeDefined();
   });
 });
