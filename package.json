@@ -58,7 +58,7 @@
     "@types/bluebird": "^3.5.27",
     "debug": "^3.0.0 || ^4.0.0",
     "invariant": "^2.2.4",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.0",
     "moment": "^2.22.2",
     "proper-lockfile": "^4.1.1",
     "ramda": "^0.26.1",
