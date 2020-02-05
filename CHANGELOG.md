@@ -1,5 +1,6 @@
 # Master
 
+- Revert soap to 0.26.0
 - Implement Flow.retrieveCapacityPlan
 
 # v0.3.5 (2019-06-07)
