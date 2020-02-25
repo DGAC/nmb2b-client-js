@@ -1,11 +1,10 @@
 import fs, { Stats } from 'fs';
-import mkdirpCb from 'mkdirp';
+import mkdirp from 'mkdirp';
 import { promisify } from 'util';
 import d from './debug';
 const debug = d('dir-exists');
 const stat = promisify(fs.stat);
 const access = promisify(fs.access);
-const mkdirp = promisify(mkdirpCb);
 
 export async function dirExists(
   path: string,

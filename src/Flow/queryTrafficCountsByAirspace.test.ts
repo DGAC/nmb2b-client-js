@@ -63,11 +63,11 @@ describe('queryTrafficCountsByAirspace', () => {
           value: {
             item: expect.arrayContaining([
               expect.objectContaining({
-                key: 'DEMAND',
+                key: 'LOAD',
                 value: { totalCounts: expect.any(Number) },
               }),
               expect.objectContaining({
-                key: 'LOAD',
+                key: 'DEMAND',
                 value: { totalCounts: expect.any(Number) },
               }),
               expect.objectContaining({

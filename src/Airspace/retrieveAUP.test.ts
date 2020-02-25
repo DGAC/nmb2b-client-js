@@ -56,7 +56,7 @@ describe('retrieveAUP', () => {
 
     expect(res.data.aup).toBeDefined();
     expect(res.data.aup.summary).toBeDefined();
-    console.log(inspect(res.data.aup.aupManualEntries?.rsas, { depth: null }));
+    console.log(inspect(res.data.aup.aupManualEntries, { depth: null }));
     expect(res.data.aup.aupManualEntries).toBeDefined();
   });
 });
