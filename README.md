@@ -3,6 +3,7 @@
 ![License](https://img.shields.io/npm/l/@dgac/nmb2b-client.svg)
 ![NodeVersion](https://img.shields.io/node/v/@dgac/nmb2b-client.svg)
 [![PackageVersion](https://img.shields.io/npm/v/@dgac/nmb2b-client.svg)](https://npmjs.com/package/@dgac/nmb2b-client)
+![Downloads](https://img.shields.io/npm/dm/@dgac/nmb2b-client)
 ![Test](https://github.com/DGAC/nmb2b-client-js/workflows/Build,%20test,%20publish/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/DGAC/nmb2b-client-js/branch/master/graph/badge.svg)](https://codecov.io/gh/DGAC/nmb2b-client-js)
 
