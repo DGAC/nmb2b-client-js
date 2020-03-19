@@ -4,10 +4,13 @@ const usedEnvKeys = [
   'B2B_CERT_FORMAT',
   'B2B_CERT_PASSPHRASE',
   'B2B_CERT_KEY',
+  'B2B_API_KEY_ID',
+  'B2B_API_SECRET_KEY',
 ];
 
 describe('fromEnv', () => {
   const OLD_ENV = process.env;
+
   beforeEach(() => {
     jest.resetModules();
     process.env = { ...OLD_ENV };
