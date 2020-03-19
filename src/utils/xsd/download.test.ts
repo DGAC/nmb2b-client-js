@@ -4,7 +4,7 @@
 import path from 'path';
 import nock from 'nock';
 import fs from 'fs';
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 import rimrafCb from 'rimraf';
 import { promisify } from 'util';
 import { createDir as mkdirp } from '../fs';
