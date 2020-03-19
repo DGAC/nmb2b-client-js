@@ -1,4 +1,4 @@
-name: Test
+name: Test & publish
 
 env:
   CI: true
@@ -11,12 +11,17 @@ env:
 
 on:
   push:
-    branches: [master]
+    branches:
+      - '*'
+    tags:
+      - '*'
   pull_request:
-    branches: [master]
+    branches:
+      - '*'
 
 jobs:
-  build:
+  # Test the lib, runs on every commit
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -73,3 +78,11 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
+
+  release:
+    if: contains(github.ref, "release")
+    steps:
+      - name: Publish new version
+        run: yarn publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
