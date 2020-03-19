@@ -72,5 +72,4 @@ jobs:
       - name: 'Upload coverage'
         uses: codecov/codecov-action@v1
         with:
-          file: ./junit.xml # optional
           fail_ci_if_error: true
