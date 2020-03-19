@@ -75,6 +75,7 @@ export interface AUPSummary {
   note: Array<string | null>;
   expandedAUP: boolean;
   lastUpdate: LastUpdate;
+  isP3?: boolean;
 }
 
 type ADRMessageType = object; // eurocontrol.cfmu.cua.b2b.aixm.ADRMessage

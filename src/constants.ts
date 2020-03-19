@@ -1,7 +1,7 @@
 import path from 'path';
 export type B2BFlavour = 'OPS' | 'PREOPS';
 
-export const B2B_VERSION = '23.0.0';
+export const B2B_VERSION = '23.5.0';
 export const B2BFlavours = ['OPS', 'PREOPS'];
 
 export const getWSDLPath = ({

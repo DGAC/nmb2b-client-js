@@ -1,6 +1,7 @@
 # Master
 
-- Update depencies
+- NM B2B 23.5.0
+- Update deps
 
 # v0.3.6 (2010-02-05)
 

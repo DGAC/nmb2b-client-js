@@ -56,7 +56,10 @@ describe('queryFlightsByMeasure', () => {
         item.location['referenceLocation-ReferenceLocationAirspace'].id,
       );
 
-    measure = res.data.regulations ? res.data.regulations.item[0] : undefined;
+    measure = res.data.regulations?.item?.filter(
+      hasAirspaceMatching(/LF/),
+    )?.[0];
+
     // console.log(inspect(measure, { depth: null }));
   });
 
@@ -78,7 +81,7 @@ describe('queryFlightsByMeasure', () => {
         mode: 'CONCERNED_BY_MEASURE',
       });
 
-      // !process.env.CI && console.log(res.data);
+      // !process.env.CI && console.log(inspect(res.data, { depth: null }));
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;
