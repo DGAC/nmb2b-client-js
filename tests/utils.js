@@ -18,7 +18,6 @@ async function getClients(args) {
     return client;
   }
 
-  // $FlowFixMe
   client = await makeB2BClient(b2bOptions);
   return client;
 }

@@ -80,7 +80,7 @@ jobs:
           fail_ci_if_error: true
 
       - name: Save repo for publication
-        if: github.repository == 'dgac/nmb2b-client-js' && startsWith(github.ref, 'refs/tags/v')
+        if: github.repository == 'dgac/nmb2b-client-js'
         uses: actions/upload-artifact@v1
         with:
           name: build_artifact
