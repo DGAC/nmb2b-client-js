@@ -80,6 +80,7 @@ jobs:
           fail_ci_if_error: true
 
   release:
+    runs-on: ubuntu-latest
     if: contains(github.ref, "release")
     steps:
       - name: Publish new version
