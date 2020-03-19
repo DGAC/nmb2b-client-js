@@ -43,6 +43,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
 
+      - name: 'Create b2b-xsd folder'
+        run: mkdir b2b-xsd
+
       - name: '[GH Cache] B2B XSD'
         uses: actions/cache@v1
         with:
