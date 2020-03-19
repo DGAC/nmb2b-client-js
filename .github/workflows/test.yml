@@ -34,13 +34,22 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v1
+      - name: '[GH Cache] yarn'
+        uses: actions/cache@v1
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+
+      - name: '[GH Cache] B2B XSD'
+        uses: actions/cache@v1
+        with:
+          path: 'b2b-xsd'
+          key: ${{ runner.os }}-b2b-xsd-${{ hashFiles('b2b-xsd/**') }}
+          restore-keys: |
+            ${{ runner.os }}-b2b-xsd
 
       - run: yarn
       - run: yarn typecheck
