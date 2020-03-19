@@ -81,7 +81,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    if: contains(github.ref, "release")
+    if: 'contains(github.ref, "release")'
     steps:
       - name: Publish new version
         run: yarn publish
