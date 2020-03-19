@@ -1,0 +1,35 @@
+name: Test
+
+env:
+  CI: true
+  B2B_FLAVOUR: PREOPS
+  B2B_ENDPOINT: https://b2b-proxy.4me.im/
+  B2B_XSD_REMOTE_URL: https://wsdl.b2B-proxy.4me.im/23.5.0.tar.gz
+  B2B_API_KEY_ID: ${{ secrets.B2B_API_KEY_ID }}
+  B2B_API_SECRET_KEY: ${{ secrets.B2B_API_SECRET_KEY }}
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - run: yarn typecheck
+      - run: yarn build
+      - run: yarn downloadWSDL
+      - run: yarn test:ci
