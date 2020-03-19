@@ -1,9 +1,9 @@
-# Master
+# v0.4.0 (2020-03-19)
 
 - NM B2B 23.5.0
 - Update deps
 
-# v0.3.6 (2010-02-05)
+# v0.3.6 (2020-02-05)
 
 - Revert soap to 0.26.0
 - Implement Flow.retrieveCapacityPlan
