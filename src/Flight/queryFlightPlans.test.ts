@@ -96,7 +96,7 @@ describe('queryFlightPlans', () => {
 
     const { data } = res;
 
-    if (data.summaries.length === 0) {
+    if (!data?.summaries || data.summaries.length === 0) {
       console.error(
         'Query did not return any flight plan, this should never happen.',
       );

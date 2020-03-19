@@ -849,7 +849,7 @@ export interface FlightPlanListRequest {
 
 export interface FlightPlanListReply extends Reply {
   data: {
-    summaries: FlightPlanOrInvalidFiling[];
+    summaries?: FlightPlanOrInvalidFiling[];
   };
 }
 
