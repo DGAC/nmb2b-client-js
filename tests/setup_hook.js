@@ -1,4 +1,3 @@
-
 const dotenv = require('dotenv');
 dotenv.config();
 const { B2B_VERSION } = require('../dist/constants');
@@ -12,7 +11,7 @@ const b2bOptions = require('./options');
 module.exports = async function() {
   console.log('Global setup !');
 
-  const { flavour, security, XSD_PATH } = b2bOptions;
+  const { flavour, security, XSD_PATH, xsdEndpoint } = b2bOptions;
 
   if (
     !(await dirExists(XSD_PATH)) ||
@@ -20,18 +19,17 @@ module.exports = async function() {
   ) {
     console.log('XSD files not found, downloading from B2B ...');
     await createDir(XSD_PATH);
-    // $FlowFixMe
-    await requestFilename({ flavour, security })
+    await requestFilename({ flavour, security, xsdEndpoint })
       .then(fileName => {
-        console.log(fileName);
+        console.log(`Downloading ${fileName}`);
         return fileName;
       })
       .then(fileName =>
         downloadFile(fileName, {
-          // $FlowFixMe
           flavour,
           security,
-          outputDir: XSD_PATH,
+          XSD_PATH,
+          xsdEndpoint,
         }),
       );
   }

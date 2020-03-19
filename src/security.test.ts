@@ -38,7 +38,6 @@ describe('fromEnv', () => {
     expect(fromEnv).not.toThrow();
 
     const security = fromEnv();
-    // $FlowFixMe, yes we know pfx might not be defined
     expect(security.pfx).toBeDefined();
     expect(security.passphrase).toBeDefined();
   });
@@ -74,9 +73,7 @@ describe('fromEnv', () => {
       expect(fromEnv).not.toThrow();
 
       const security = fromEnv();
-      // $FlowFixMe, yes we know cert might not be defined
       expect(security.cert).toBeDefined();
-      // $FlowFixMe, yes we know key might not be defined
       expect(security.key).toBeDefined();
     });
   });
