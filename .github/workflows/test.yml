@@ -54,10 +54,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-b2b-xsd
 
-      - run: yarn
-      - run: yarn typecheck
-      - run: yarn build
-      - run: yarn downloadWSDL
-      - run: ls -l
-      - run: ls -l b2b-xsd/
-      - run: yarn test:ci
+      - name: 'Install deps'
+        run: yarn
+
+      - name: 'TypeScript check'
+        run: yarn typecheck
+
+      - name: 'Build'
+        run: yarn build
+
+      - name: 'Download B2B WSDL'
+        run: yarn downloadWSDL
+
+      - name: 'Run test suite'
+        run: yarn test:ci
+
+      - name: 'Upload coverage'
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./junit.xml # optional
+          fail_ci_if_error: true
