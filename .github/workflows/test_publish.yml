@@ -1,4 +1,4 @@
-name: Test & publish
+name: Build, test, publish
 
 env:
   CI: true
@@ -79,12 +79,24 @@ jobs:
         with:
           fail_ci_if_error: true
 
-  release:
+      - name: Save repo for publication
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v1
+        with:
+          name: build_artifact
+          path: '.'
+
+  # Publish package to npm
+  deploy-packages:
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     needs: test
-    if: contains(github.ref, 'release')
     steps:
-      - name: Publish new version
-        run: yarn publish
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v1
+        with:
+          name: build_artifact
+      - name: deploy packages
+        run: yarn publish --non-interactive
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
