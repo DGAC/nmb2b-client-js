@@ -7,7 +7,7 @@ env:
   B2B_XSD_REMOTE_URL: https://wsdl.b2B-proxy.4me.im/23.5.0.tar.gz
   B2B_API_KEY_ID: ${{ secrets.B2B_API_KEY_ID }}
   B2B_API_SECRET_KEY: ${{ secrets.B2B_API_SECRET_KEY }}
-  REAL_B2B_CONNECTIONS: true
+  # REAL_B2B_CONNECTIONS: true
 
 on:
   push:
@@ -82,15 +82,15 @@ jobs:
           fail_ci_if_error: true
 
       - name: Save repo for publication
-        if: github.repository == 'dgac/nmb2b-client-js'
+        if: github.repository == 'DGAC/nmb2b-client-js'
         uses: actions/upload-artifact@v1
         with:
           name: build_artifact
-          path: '.'
+          path: 'dist'
 
   # Publish package to npm
   deploy-packages:
-    if: github.repository == 'dgac/nmb2b-client-js' && startsWith(github.ref, 'refs/tags/v')
+    if: github.repository == 'DGAC/nmb2b-client-js' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     needs: test
     steps:
