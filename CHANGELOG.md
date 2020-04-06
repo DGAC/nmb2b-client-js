@@ -1,3 +1,7 @@
+# v0.4.4 (2020-04-06)
+
+- Fix Counts typing
+
 # v0.4.3 (2020-04-06)
 
 - Fix OTMVThreshold deserializer

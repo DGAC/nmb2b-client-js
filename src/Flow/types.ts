@@ -247,10 +247,10 @@ export type FlowRoleSelection =
 export interface Counts {
   totalCounts: CountsValue;
   flowCounts?: NMMap<FlowId, CountsValue>;
-  subTotalCounts: NMMap<SubTotalsTrafficCountsType, CountsValue>;
+  subTotalsCounts: NMMap<SubTotalsTrafficCountsType, CountsValue>;
 }
 
-export type CountsValue = NMInt;
+export type CountsValue = number;
 export type SubTotalsTrafficCountsType =
   | 'ATC_ACTIVATED'
   | 'IFPL'
