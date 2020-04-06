@@ -502,10 +502,12 @@ export interface OTMVPlanRetrievalRequest
   otmvsWithDuration: NMSet<OTMVWithDuration>;
 }
 
-type OTMVPlans = NMMap<
-  TrafficVolumeId,
-  Map<DurationHourMinute, OTMVPlanForDuration>
->;
+type OTMVPlans = TacticalConfigurationPlan & {
+  tvsOTMVs: NMMap<
+    TrafficVolumeId,
+    NMMap<DurationHourMinute, OTMVPlanForDuration>
+  >;
+};
 
 interface OTMVPlanForDuration {
   nmSchedule: NMSet<PlannedOTMV>;
