@@ -1,4 +1,4 @@
-# Master
+# v0.4.3 (2020-04-06)
 
 - Fix OTMVThreshold deserializer
 
