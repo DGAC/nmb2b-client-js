@@ -1,4 +1,4 @@
-# Master
+# v0.4.2 (2020-04-06)
 
 - Fix OTMVPlans typing
 
