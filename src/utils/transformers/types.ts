@@ -89,4 +89,8 @@ export const types = createSerDe({
         .format(timeFormats.timeFormatWithSeconds),
     output: outputBase.date,
   },
+  OTMVThreshold: {
+    input: null,
+    output: outputBase.integer,
+  },
 });
