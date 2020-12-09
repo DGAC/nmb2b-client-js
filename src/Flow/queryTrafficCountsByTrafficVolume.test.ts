@@ -39,7 +39,7 @@ describe('queryTrafficCountsByTrafficVolume', () => {
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficTypes: { item: ['LOAD'] },
-        computeSubTotals: false,
+        computeSubTotals: true,
         countsInterval: {
           duration: 20 * 60,
           step: 20 * 60,
@@ -66,13 +66,19 @@ describe('queryTrafficCountsByTrafficVolume', () => {
           },
           value: {
             item: expect.arrayContaining([
-              // expect.objectContaining({
-              //   key: 'DEMAND',
-              //   value: { totalCounts: expect.any(Number) },
-              // }),
               expect.objectContaining({
                 key: 'LOAD',
-                value: { totalCounts: expect.any(Number) },
+                value: {
+                  totalCounts: expect.any(Number),
+                  subTotalsCounts: {
+                    item: expect.arrayContaining([
+                      expect.objectContaining({
+                        key: expect.any(String),
+                        value: expect.any(Number),
+                      }),
+                    ]),
+                  },
+                },
               }),
               // expect.objectContaining({
               //   key: 'REGULATED_DEMAND',
