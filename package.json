@@ -51,7 +51,7 @@
     "uuid": "^7.0.2"
   },
   "dependencies": {
-    "@types/bluebird": "^3.5.27",
+    "@types/sax": "^1.2.1",
     "debug": "^3.0.0 || ^4.0.0",
     "invariant": "^2.2.4",
     "mkdirp": "^1.0.3",
