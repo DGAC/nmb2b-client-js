@@ -49,6 +49,25 @@ export interface LastUpdate {
   airNavigationUnitId?: AirNavigationUnitId;
 }
 
+export interface Position {
+  latitude: Latitude;
+  longitude: Longitude;
+}
+
+export interface Latitude {
+  angle: string;
+  side: LatitudeSide;
+}
+
+export type LatitudeSide = string;
+
+export interface Longitude {
+  angle: string;
+  side: LongitudeSide;
+}
+
+export type LongitudeSide = string;
+
 export type DatasetType = 'FORECAST' | 'OPERATIONAL' | 'SIMULATION';
 export type SimulationId = string; // ANY{1,100}
 export interface Dataset {

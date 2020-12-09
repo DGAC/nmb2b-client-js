@@ -1,3 +1,7 @@
+# Master
+
+- Fix TS error with TS >v4.0
+
 # v0.4.4 (2020-04-06)
 
 - Fix Counts typing

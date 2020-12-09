@@ -51,6 +51,7 @@ import {
   Bearing,
   DistanceNM,
   DateYearMonthDayPeriod,
+  Position,
 } from '../Common/types';
 
 export interface AUPChain {

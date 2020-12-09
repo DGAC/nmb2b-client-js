@@ -84,6 +84,7 @@ import {
   Reply,
   BooleanString,
   NMSet,
+  Position as CommonPosition,
 } from '../Common/types';
 
 import {
@@ -681,7 +682,7 @@ export interface FlightRestriction {
   flightPlanProcessing: FlightPlanProcessing;
   restrictionId: RestrictionId;
   event: EntryExit;
-  position: Position;
+  position: CommonPosition;
   flightLevel: FlightLevel;
 }
 
@@ -744,6 +745,14 @@ export interface FourDPosition {
   position: Position;
   level: FlightLevel;
 }
+
+export interface Position {
+  latitude?: Latitude;
+  longitude?: Longitude;
+}
+
+export type Latitude = number;
+export type Longitude = number;
 
 export interface ActualTimeAtTarget {
   estimatedActualTimeAtTarget: DateTimeSecond;
