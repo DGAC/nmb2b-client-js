@@ -1,5 +1,6 @@
 # Master
 
+- soap v0.35.0
 - Fix TS error with TS >v4.0
 
 # v0.4.4 (2020-04-06)
