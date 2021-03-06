@@ -29,7 +29,13 @@ describe('queryHotspots', () => {
 
       !process.env.CI && console.log(inspect(res, { depth: null }));
     } catch (err) {
+      if (err.status === 'NOT_AUTHORISED') {
+        console.warn('Test cancelled, NOT_AUTHORIZED');
+        return;
+      }
+
       console.log(inspect(err, { depth: null }));
+
       throw err;
     }
   });
