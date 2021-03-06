@@ -82,6 +82,7 @@ jobs:
 
       - name: 'Upload coverage'
         uses: codecov/codecov-action@v1
+        if: env.REAL_B2B_CONNECTIONS == '1'
         with:
           fail_ci_if_error: true
 
