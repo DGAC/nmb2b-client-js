@@ -24,6 +24,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '14.x' && secrets.B2B_API_KEY_ID && '1' }}
+
     strategy:
       matrix:
         node-version:
