@@ -50,13 +50,13 @@
   },
   "dependencies": {
     "@types/sax": "^1.2.1",
+    "axios": "^0.21.1",
     "debug": "^3.0.0 || ^4.0.0",
     "invariant": "^2.2.4",
     "mkdirp": "^1.0.3",
     "moment": "^2.24.0",
     "proper-lockfile": "^4.1.1",
     "ramda": "^0.27.0",
-    "request": "^2.88.0",
     "soap": "^0.42.0",
     "tar": "^6.1.11"
   }

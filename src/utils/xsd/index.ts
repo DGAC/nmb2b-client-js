@@ -1,9 +1,4 @@
-import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
-import { Security } from '../../security';
-import request from 'request';
-import zlib from 'zlib';
-import tar from 'tar';
 import path from 'path';
 import fs from 'fs';
 import { promisify } from 'util';
