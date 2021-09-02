@@ -1,4 +1,4 @@
-import request from 'request';
+import axios, { AxiosError } from 'axios';
 import { fromEnv } from '../../security';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -9,6 +9,7 @@ import { getEndpoint } from '../../config';
 import { Security } from '../../security';
 import d from '../debug';
 const debug = d('wsdl-downloader');
+import { createAxiosConfig } from './createAxiosConfig';
 
 const makeQuery = ({ version }: { version: string }) => `
 <soap:Envelope
@@ -45,37 +46,18 @@ export async function requestFilename({
     );
   }
 
-  const options = { agentOptions: security };
-
-  return new Promise((resolve, reject) => {
-    request.post(
-      {
-        ...options,
-        timeout: 15 * 1000,
-        url: getEndpoint({ flavour }),
-        body: makeQuery({ version: B2B_VERSION }),
-      },
-      (e, r, body) => {
-        if (e) {
-          return reject(e);
-        }
-
-        if (r.statusCode !== 200) {
-          return reject(r);
-        }
-
-        debug(`B2B Reponse body is:\n${body}`);
-        const matches = body.match(/<id>(.+)<\/id>/);
-
-        if (!matches || !matches[1]) {
-          reject(
-            new Error(`Could not extract WSDL tarball file from B2B response`),
-          );
-          return;
-        }
-
-        resolve(matches[1]);
-      },
-    );
+  const res = await axios({
+    url: getEndpoint({ flavour }),
+    method: 'POST',
+    data: makeQuery({ version: B2B_VERSION }),
+    ...createAxiosConfig({ security }),
   });
+
+  const matches = res.data.match(/<id>(.+)<\/id>/);
+
+  if (!matches || !matches[1]) {
+    throw new Error(`Could not extract WSDL tarball file from B2B response`);
+  }
+
+  return matches[1];
 }
