@@ -2,7 +2,7 @@ name: Build, test, publish
 
 env:
   CI: true
-  B2B_FLAVOUR: PREOPS
+  B2B_FLAVOUR: OPS
   B2B_ENDPOINT: https://b2b-proxy.4me.im/
   B2B_XSD_REMOTE_URL: https://wsdl.b2B-proxy.4me.im/23.5.0.tar.gz
   B2B_API_KEY_ID: ${{ secrets.B2B_API_KEY_ID }}
@@ -25,14 +25,15 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '14.x' && secrets.B2B_API_KEY_ID && '1' || '' }}
+      # This will enable real b2b connections on node 16 and if secrets.B2B_API_KEY_ID is set
+      REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '16.x' && secrets.B2B_API_KEY_ID && '1' || '' }}
 
     strategy:
       matrix:
         node-version:
-          - 10.x
           - 12.x
           - 14.x
+          - 16.x
 
     steps:
       - uses: actions/checkout@v2
