@@ -76,7 +76,7 @@ export function prepareSecurity(config: Config): ISecurity {
   } else if ('cert' in security) {
     debug('Using PEM certificates');
     const { key, cert, passphrase } = security;
-    return new (ClientSSLSecurity as any)(
+    return new ClientSSLSecurity(
       key,
       cert,
       undefined,
