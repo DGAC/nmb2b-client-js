@@ -13,7 +13,7 @@ import {
 } from '.';
 import { Config } from './config';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 describe('Main API', () => {
   test.only('makeB2BClient', async () => {

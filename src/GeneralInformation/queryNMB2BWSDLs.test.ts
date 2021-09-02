@@ -4,7 +4,7 @@ import moment from 'moment';
 // @ts-ignore
 import b2bOptions from '../../tests/options';
 import { GeneralInformationService } from '.';
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
+jest.setTimeout(60000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip

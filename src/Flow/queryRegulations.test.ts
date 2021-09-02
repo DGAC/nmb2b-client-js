@@ -3,7 +3,7 @@ import { makeFlowClient } from '..';
 import moment from 'moment';
 // @ts-ignore
 import b2bOptions from '../../tests/options';
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 import { RegulationListReply } from './queryRegulations';
 import { FlowService } from '.';

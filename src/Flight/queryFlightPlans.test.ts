@@ -6,7 +6,7 @@ import b2bOptions from '../../tests/options';
 import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlightOrFlightPlan as B2BFlight } from './types';
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip

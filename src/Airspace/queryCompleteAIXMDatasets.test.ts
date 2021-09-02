@@ -6,7 +6,7 @@ import { inspect } from 'util';
 import moment from 'moment';
 import { AirspaceService } from '.';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip

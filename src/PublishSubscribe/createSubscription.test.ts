@@ -4,7 +4,7 @@ import moment from 'moment';
 // @ts-ignore
 import b2bOptions from '../../tests/options';
 import { PublishSubscribeService } from '.';
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip
@@ -15,7 +15,7 @@ beforeAll(async () => {
   PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
 });
 
-describe('createSubscriptions', () => {
+describe.skip('createSubscriptions', () => {
   afterAll(async () => {
     const res = await PublishSubscribe.listSubscriptions();
 
@@ -35,7 +35,7 @@ describe('createSubscriptions', () => {
       .map(({ uuid }: any) => uuid);
 
     await Promise.all(
-      toDelete.map(uuid => PublishSubscribe.deleteSubscription({ uuid })),
+      toDelete.map((uuid) => PublishSubscribe.deleteSubscription({ uuid })),
     );
   });
 

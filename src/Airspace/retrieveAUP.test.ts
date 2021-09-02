@@ -7,7 +7,7 @@ import { AirspaceService } from '.';
 import { AUPSummary } from './types';
 import * as R from 'ramda';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip
@@ -56,7 +56,7 @@ describe('retrieveAUP', () => {
 
     expect(res.data.aup).toBeDefined();
     expect(res.data.aup.summary).toBeDefined();
-    console.log(inspect(res.data.aup.aupManualEntries, { depth: null }));
+    // console.log(inspect(res.data.aup.aupManualEntries, { depth: null }));
     expect(res.data.aup.aupManualEntries).toBeDefined();
   });
 });

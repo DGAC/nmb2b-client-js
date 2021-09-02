@@ -5,7 +5,7 @@ import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan';
 import { FlowService } from '.';
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip
