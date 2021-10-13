@@ -16,7 +16,7 @@ import lockfile from 'proper-lockfile';
 const rimraf = promisify(rimrafCb);
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${uuid.v4()}`);
-const delay = (d: number) => new Promise(resolve => setTimeout(resolve, d));
+const delay = (d: number) => new Promise((resolve) => setTimeout(resolve, d));
 
 beforeEach(async () => {
   await mkdirp(OUTPUT_DIR);
@@ -34,6 +34,7 @@ test('should prevent concurrent downloads', async () => {
   const scope = nock(getFileUrl(filePath, { flavour }))
     .get(/.*/)
     .once()
+    .delayBody(2000)
     .reply(200, fs.readFileSync(TEST_FILE));
 
   const soap = nock(getFileUrl(filePath, { flavour }))
@@ -71,8 +72,8 @@ test('should prevent concurrent downloads', async () => {
       flavour,
       XSD_PATH: OUTPUT_DIR,
     }),
-    // We add a 10 ms delay to prevent exact concurrency
-    delay(500).then(() =>
+    // We add a delay to prevent exact concurrency
+    delay(50).then(() =>
       download({
         security: undefined as any,
         flavour,
