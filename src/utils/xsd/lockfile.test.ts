@@ -11,12 +11,12 @@ import { createDir as mkdirp } from '../fs';
 import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { download } from './index';
-import lockfile from 'proper-lockfile';
 
 const rimraf = promisify(rimrafCb);
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${uuid.v4()}`);
-const delay = (d: number) => new Promise(resolve => setTimeout(resolve, d));
+
+const delay = (d: number) => new Promise((resolve) => setTimeout(resolve, d));
 
 beforeEach(async () => {
   await mkdirp(OUTPUT_DIR);
@@ -31,14 +31,14 @@ test('should prevent concurrent downloads', async () => {
   const flavour = 'PREOPS';
   const filePath = 'test.tar.gz';
 
-  const scope = nock(getFileUrl(filePath, { flavour }))
-    .get(/.*/)
+  const scope = nock('https://www.b2b.preops.nm.eurocontrol.int')
+    .get(
+      '/FILE_PREOPS/gateway/spec/b2b_publications/25.0.0/B2B_WSDL_XSD.22.5.0.3.74.tar.gz',
+    )
     .once()
-    .reply(200, fs.readFileSync(TEST_FILE));
-
-  const soap = nock(getFileUrl(filePath, { flavour }))
-    .post(/.+/)
-    .once()
+    .delayBody(1000)
+    .reply(200, fs.readFileSync(TEST_FILE))
+    .post('/B2B_PREOPS/gateway/spec/25.0.0')
     .reply(
       200,
       `
@@ -71,7 +71,7 @@ test('should prevent concurrent downloads', async () => {
       flavour,
       XSD_PATH: OUTPUT_DIR,
     }),
-    // We add a 10 ms delay to prevent exact concurrency
+    // We add a delay to prevent exact concurrency
     delay(500).then(() =>
       download({
         security: undefined as any,

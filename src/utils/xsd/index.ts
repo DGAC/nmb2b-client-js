@@ -46,6 +46,8 @@ export async function download(config: Config): Promise<void> {
 
   const fileName = await requestFilename(config);
 
+  console.log(fileName);
+
   debug(`Downloading ${fileName}`);
 
   await downloadFile(fileName, config);
