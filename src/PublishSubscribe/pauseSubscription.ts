@@ -1,15 +1,12 @@
 import { PublishSubscribeClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
-import { Reply } from '../Common/types';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
+import type { SubscriptionPauseRequest, SubscriptionPauseReply } from './types';
 
-interface Values {
-  uuid: string;
-}
-
-type Result = Reply;
+export type Values = SubscriptionPauseRequest;
+export type Result = SubscriptionPauseReply;
 
 export type Resolver = (
   values?: Values,
@@ -19,8 +16,9 @@ export type Resolver = (
 export default function preparePauseSubscription(
   client: PublishSubscribeClient,
 ): Resolver {
-  const schema = client.describe().SubscriptionManagementService
-    .SubscriptionManagementPort.pauseSubscription.input;
+  const schema =
+    client.describe().SubscriptionManagementService.SubscriptionManagementPort
+      .pauseSubscription.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({

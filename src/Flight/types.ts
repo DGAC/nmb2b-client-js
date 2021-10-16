@@ -1,5 +1,5 @@
 export type IFPLId = string; // UALPHA{2}DIGIT{8}
-export type FlightDataset = 'flight' | 'flightPlan';
+export type FlightDataset = 'flight' | 'flightPlan' | 'flightPlanHistory';
 export type FlightIdentificationInput = { id: IFPLId } | { keys: FlightKeys };
 export interface FlightIdentificationOutput {
   id?: IFPLId;
@@ -17,6 +17,7 @@ export type AircraftOperatorICAOId = string; // ALPHA{3}
 export type AircraftIATAId = string; // (UALPHA|DIGIT){2}(UALPHA|DIGIT|*){0,1}DIGIT{3,4}UALPHA{0,1}
 
 export type FlightTrend = 'CLIMB' | 'CRUISE' | 'DESCENT' | 'NONE';
+
 export type FlightState =
   | 'ATC_ACTIVATED'
   | 'CANCELLED'
@@ -29,6 +30,7 @@ export type FlightState =
   | 'PLANNED_SLOT_ALLOCATED_REROUTED'
   | 'TACT_ACTIVATED'
   | 'TERMINATED';
+
 export type ATFMMessageType =
   | 'DES'
   | 'ERR'
@@ -50,6 +52,7 @@ export type ATFMMessageType =
   | 'SWM'
   | 'UNK';
 
+import { Duration } from 'moment';
 import {
   AerodromeICAOId,
   FlightLevel,
@@ -65,6 +68,11 @@ import {
   AirspaceId,
   AirspaceType,
   TrafficVolumeId,
+  RunwayId,
+  PublishedPointId,
+  AerodromeOrPublishedPointId,
+  NonPublishedPoint,
+  FIRICAOId,
 } from '../Airspace/types';
 
 import {
@@ -82,9 +90,10 @@ import {
   DateTimeMinutePeriod,
   Dataset,
   Reply,
-  BooleanString,
   NMSet,
   Position as CommonPosition,
+  WeightKg,
+  FlightLevelM,
 } from '../Common/types';
 
 import {
@@ -99,6 +108,7 @@ import {
   CountsCalculationType,
   FlowId,
   MeasureId,
+  TrafficVolumeScenarios,
 } from '../Flow/types';
 
 export interface FlightKeys {
@@ -119,125 +129,156 @@ export interface TimeAndModel {
 export type TrafficType = 'DEMAND' | 'LOAD' | 'REGULATED_DEMAND';
 
 export type FlightField =
-  | 'divertedAerodromeOfDestination'
-  | 'readyEstimatedOffBlockTime'
-  | 'cdmEstimatedOffBlockTime'
-  | 'aircraftType'
-  | 'estimatedTakeOffTime'
-  | 'calculatedTakeOffTime'
+  | 'actualOffBlockTime'
   | 'actualTakeOffTime'
-  | 'ctotShiftAlreadyAppliedByTower'
-  | 'taxiTime'
-  | 'currentlyUsedTaxiTime'
-  | 'revisionTimes'
-  | 'estimatedTimeOfArrival'
-  | 'calculatedTimeOfArrival'
   | 'actualTimeOfArrival'
-  | 'requestedFlightLevel'
+  | 'aircraftAddress'
+  | 'aircraftOperator'
+  | 'aircraftType'
+  | 'alternateAerodromes'
+  | 'apiSubmissionRules'
+  | 'applicableScenarios'
+  | 'arrivalInformation'
+  | 'atfcmMeasureLocations'
+  | 'avoidedRegulations'
+  | 'calculatedOffBlockTime'
+  | 'calculatedTakeOffTime'
+  | 'calculatedTimeOfArrival'
+  | 'caughtInHotspots'
+  | 'ccamsSSRCode'
+  | 'cdm'
+  | 'cdmEstimatedOffBlockTime'
+  | 'cfmuFType'
+  | 'compareWithOtherTrafficType'
+  | 'confirmedCTFM'
+  | 'ctfmAirspaceProfile'
+  | 'ctfmPointProfile'
+  | 'ctfmRequestedFLevels'
+  | 'ctfmRestrictionProfile'
+  | 'ctotLimitReason'
+  | 'ctotShiftAlreadyAppliedByTower'
+  | 'currentDepartureTaxiTimeAndProcedure'
+  | 'defaultReroutingRequestedFLevel'
+  | 'defaultReroutingRequestedSpeed'
+  | 'delay'
+  | 'delayCharacteristics'
+  | 'departureTolerance'
+  | 'divertedAerodromeOfDestination'
+  | 'equipmentCapabilityAndStatus'
+  | 'estimatedElapsedTime'
+  | 'estimatedTakeOffTime'
+  | 'estimatedTimeOfArrival'
+  | 'excludedRegulations'
+  | 'exclusionFromRegulations'
+  | 'exemptedFromRegulations'
+  | 'famStatus'
+  | 'filedRegistrationMark'
+  | 'filingRule'
+  | 'fCriticality'
+  | 'fDataVersionNr'
+  | 'fHistory'
+  | 'fLevelAtReferenceLocationEntry'
+  | 'fLevelAtReferenceLocationExit'
+  | 'fState'
+  | 'ftfmAirspaceProfile'
+  | 'ftfmPointProfile'
+  | 'ftfmRequestedFLevels'
+  | 'ftfmRestrictionProfileLevel'
+  | 'fuelConsumptionIndicator'
+  | 'hasBeenForced'
+  | 'hasOtherRegulations'
+  | 'highestModelAirspaceProfile'
+  | 'highestModelPointProfile'
+  | 'highestModelRestrictionProfile'
+  | 'hotspots'
+  | 'icaoRoute'
+  | 'initialFPLMessageOriginator'
+  | 'isProposalF'
+  | 'lastATFMMessageOriginator'
+  | 'lastATFMMessageReceivedOrSent'
+  | 'lastATFMMessageType'
+  | 'lastFPLMessageOriginatorLevel'
+  | 'lastKnownPosition'
+  | 'lateFiler'
+  | 'lateUpdater'
+  | 'mcdmInfo'
+  | 'minimumRequestedRVR'
+  | 'mostPenalisingRegulation'
+  | 'mostPenalisingRegulationCause'
+  | 'newRouteMinShiftDelayImprovement'
+  | 'oceanicReroute'
+  | 'operatingAircraftOperator'
+  | 'operationalLog'
+  | 'profileValidity'
+  | 'proposalInformation'
+  | 'readyEstimatedOffBlockTime'
+  | 'readyStatus'
+  | 'regulationLocations'
+  | 'requestedFLevel'
+  | 'requestedInitialFLevel'
+  | 'requestedInitialSpeed'
+  | 'reroutable'
+  | 'reroutingIndicator'
+  | 'reroutingOpportunitiesExist'
+  | 'revisionTimes'
+  | 'routeChargeIndicator'
+  | 'routeLength'
+  | 'rtfmAirspaceProfile'
+  | 'rtfmPointProfile'
+  | 'rtfmRequestedFLevelsLevel'
+  | 'rtfmRestrictionProfile'
+  | 'runwayVisualRange'
+  | 'slotIssued'
+  | 'slotSwapCandidateList'
+  | 'slotSwapCounter'
+  | 'slotZone'
+  | 'suspensionInfo'
+  | 'suspensionStatus'
+  | 'targetTimeOverFix'
+  | 'taxiTime'
   | 'timeAtReferenceLocationEntry'
   | 'timeAtReferenceLocationExit'
-  | 'flightLevelAtReferenceLocationEntry'
-  | 'flightLevelAtReferenceLocationExit'
   | 'trendAtReferenceLocationEntry'
   | 'trendAtReferenceLocationExit'
   | 'trendAtReferenceLocationMiddle'
-  | 'lateFiler'
-  | 'lateUpdater'
-  | 'suspensionStatus'
-  | 'suspensionResponseBy'
-  | 'exclusionFromRegulations'
-  | 'famStatus'
-  | 'readyStatus'
-  | 'aircraftOperator'
-  | 'operatingAircraftOperator'
-  | 'reroutingIndicator'
-  | 'newRouteMinShiftDelayImprovement'
-  | 'reroutable'
-  | 'reroutingOpportunitiesExist'
-  | 'cdm'
-  | 'slotIssued'
-  | 'slotImprovementProposal'
-  | 'exemptedFromRegulations'
-  | 'delay'
-  | 'delayCharacteristics'
-  | 'mostPenalisingRegulation'
-  | 'hasOtherRegulations'
-  | 'regulationLocations'
-  | 'atfcmMeasureLocations'
-  | 'lastATFMMessageType'
-  | 'lastATFMMessageReceivedOrSent'
-  | 'runwayVisualRange'
-  | 'confirmedCTFM'
-  | 'requestedInitialFlightLevel'
-  | 'requestedInitialSpeed'
-  | 'estimatedElapsedTime'
-  | 'filingRule'
-  | 'initialFPLMessageOriginator'
-  | 'lastFPLMessageOriginator'
-  | 'icaoRoute'
-  | 'routeLength'
-  | 'reroutingReference'
-  | 'defaultReroutingRequestedFlightLevel'
-  | 'defaultReroutingRequestedSpeed'
-  | 'departureTolerance'
-  | 'mostPenalisingRegulationCause'
-  | 'lastATFMMessageOriginator'
-  | 'ftfmPointProfile'
-  | 'rtfmPointProfile'
-  | 'ctfmPointProfile'
-  | 'ftfmAirspaceProfile'
-  | 'rtfmAirspaceProfile'
-  | 'ctfmAirspaceProfile'
-  | 'ftfmRequestedFlightLevels'
-  | 'rtfmRequestedFlightLevels'
-  | 'ctfmRequestedFlightLevels'
-  | 'flightHistory'
-  | 'operationalLog'
-  | 'equipmentCapabilityAndStatus'
-  | 'ftfmRestrictionProfile'
-  | 'rtfmRestrictionProfile'
-  | 'ctfmRestrictionProfile'
-  | 'cfmuFlightType'
-  | 'ccamsSSRCode'
-  | 'filedRegistrationMark'
-  | 'isProposalFlight'
-  | 'proposalExists'
-  | 'hasBeenForced'
-  | 'caughtInHotspots'
-  | 'hotspots'
-  | 'mcdmInfo'
+  | 'turnFForLocation'
+  | 'wakeTurbulenceCategory'
   | 'worstLoadStateAtReferenceLocation'
-  | 'compareWithOtherTrafficType'
-  | 'ctotLimitReason'
-  | 'profileValidity'
-  | 'targetTimeOverFix'
-  | 'flightState'
-  | 'lastKnownPosition'
-  | 'highestModelPointProfile'
-  | 'highestModelAirspaceProfile'
-  | 'highestModelRestrictionProfile'
-  | 'slotSwapCounter'
-  | 'slotSwapCandidateList'
-  | 'aircraftAddress'
-  | 'arrivalInformation'
-  | 'slotZone'
-  | 'flightDataVersionNr'
-  | 'applicableScenarios'
-  | 'apiSubmissionRules'
-  | 'avoidedRegulations'
-  | 'routeChargeIndicator'
-  | 'fuelConsumptionIndicator'
-  | 'excludedRegulations';
+  | 'yoyoFForLocation';
 
 export type FlightExchangeModel = 'FIXM' | 'NM_B2B';
 
-export type FlightPlanOutput =
-  | { structured: StructuredFlightPlan }
-  | { fixm_v4_1: FIXMFlight };
+export type FlightPlanOutput = { structured: StructuredFlightPlan };
 
 export interface BasicTrajectoryData {
-  takeOffWeight?: unknown;
+  takeOffWeight?: WeightKg;
+  topOfClimb?: Array<Relative4DPoint>;
+  topOfDescent?: Array<Relative4DPoint>;
+  bottomOfClimb?: Array<Relative4DPoint>;
+  bottomOfDescent?: Array<Relative4DPoint>;
+  distanceAtLocationInfo?: DistanceAtLocation;
 }
+
+export type DistanceAtLocation = {
+  adesDAL?: AerodromeDAL;
+  dalPoints?: Array<PointDAL>;
+};
+
+export type PointDAL = {
+  point: ICAOPoint;
+  cumulativeDistance: DistanceM;
+};
+
+export type AerodromeDAL = {
+  aerodrome: AerodromeICAOId;
+  cumulativeDistance: DistanceM;
+};
+
+export type Relative4DPoint = {
+  cumulativeDistance: DistanceM;
+  altitude: FlightLevelM;
+  elapsedTime: Duration;
+};
 
 export interface DepartureData {
   taxiTime: DurationMinute;
@@ -250,13 +291,27 @@ export interface StructuredFlightPlan {
   departureData?: DepartureData;
 }
 
-export type FlightPlanHistory = object;
+export type FlightPlanHistory = {
+  infos?: Array<FlightPlanHistoryInfo>;
+};
+
+export type FlightPlanHistoryInfo = {
+  timeStamp?: DateTimeSecond;
+  checkPoint?: string;
+  mode?: string;
+  msgIn?: string;
+  msgOut?: string;
+  addresses?: Array<string>;
+  detail?: string;
+};
 export interface Flight {
   flightId: FlightIdentificationOutput;
   divertedAerodromeOfDestination?: AerodromeICAOId;
   aircraftType?: AircraftTypeICAOId;
   readyEstimatedOffBlockTime?: DateTimeMinute;
   cdmEstimatedOffBlockTime?: DateTimeMinute;
+  calculatedOffBlockTime?: DateTimeMinute;
+  actualOffBlockTime?: DateTimeMinute;
   revisionTimes?: {
     timeToInsertInSequence?: DurationHourMinute;
     timeToRemoveFromSequence?: DurationHourMinute;
@@ -267,14 +322,14 @@ export interface Flight {
   ctotShiftAlreadyAppliedByTower?: ShiftHourMinute;
   requestedFlightLevel?: FlightLevel;
   taxiTime?: DurationHourMinute;
-  currentlyUsedTaxiTime?: DurationHourMinuteSecond;
+  currentDepartureTaxiTimeAndProcedure?: TaxiTimeAndProcedure;
   estimatedTimeOfArrival?: DateTimeMinute;
   calculatedTimeOfArrival?: DateTimeMinute;
   actualTimeOfArrival?: DateTimeMinute;
-  lateFilter?: BooleanString;
-  lateUpdater?: BooleanString;
+  lateFilter?: boolean;
+  lateUpdater?: boolean;
   suspensionStatus?: SuspensionStatus;
-  suspensionResponseBy?: DateTimeMinute;
+  suspensionInfo?: string;
   famStatus?: FAMStatus;
   readyStatus?: ReadyStatus;
   aircraftOperator?: AircraftOperatorICAOId;
@@ -282,10 +337,10 @@ export interface Flight {
   reroutingIndicator?: ReroutingIndicator;
   newRouteMinShiftDelayImprovement?: DurationHourMinute;
   reroutable?: 'CANNOT_BE_REROUTED' | 'TRY_ALLOWED' | 'TRY_AND_APPLY_ALLOWED';
-  reroutingOpportunitiesExist?: BooleanString;
-  cdm: CDM;
-  slotIssued?: BooleanString;
-  // slotImprovementProposal: SlotImprovementProposal,
+  reroutingOpportunitiesExist?: boolean;
+  cdm?: CDM;
+  slotIssued?: boolean;
+  proposalInformation?: ProposalInformation;
   timeAtReferenceLocationEntry?: TimeAndModel;
   timeAdReferenceLocationExit?: TimeAndModel;
   flightLevelAtReferenceLocationEntry?: FlightLevel;
@@ -293,16 +348,17 @@ export interface Flight {
   trendAtReferenceLocationEntry?: FlightTrend;
   trendAtReferenceLocationExit?: FlightTrend;
   trendAtReferenceLocationMiddle?: FlightTrend;
-  exemptedFromRegulations?: BooleanString;
+  exemptedFromRegulations?: boolean;
   delay?: DurationHourMinute;
   delayCharacteristics?: 'ADJUSTED_TO_CLOCK' | 'EXCEEDS_DELAY_CONFIRMATION';
   mostPenalisingRegulation?: RegulationId;
-  hasOtherRegulations?: BooleanString;
+  hasOtherRegulations?: boolean;
   regulationLocations?: FlightRegulationLocation[];
   atfcmMeasureLocations?: FlightAtfcmMeasureLocation[];
   lastATFMMessageType?: ATFMMessageType;
   lastATFMMessageReceivedOrSent?: ReceivedOrSent;
   runwayVisualRange?: DistanceM;
+  minimumRequestedRVR?: DistanceM;
   confirmedCTFM?: DistanceNM;
   exclusionFromRegulations?: ExclusionFromRegulations;
   requestedInitialFlightLevel?: FlightLevel;
@@ -316,7 +372,6 @@ export interface Flight {
   lastFPLMessageOriginator?: MessageOriginator;
   icaoRoute?: string;
   routeLength?: DistanceNM;
-  reroutingReference?: ReroutingReference;
   defaultReroutingRequestedFlightLevel?: FlightLevel;
   defaultReroutingRequestedSpeed?: AirSpeed;
   departureTolerance?: DepartureTolerance;
@@ -340,9 +395,9 @@ export interface Flight {
   cmfuFlightType?: CfmuFlightType;
   ccamsSSRCode?: SSRCode;
   filedRegistrationMark?: AircraftRegistrationMark;
-  isProposalFlight?: BooleanString;
-  proposalExists?: BooleanString;
-  hasBeenForced?: BooleanString;
+  isProposalFlight?: boolean;
+  proposalExists?: boolean;
+  hasBeenForced?: boolean;
   caughtInHotspots?: number;
   hotspots?: FlightHotspotLocation[];
   mcdmInfo?: FlightMCDMInfo;
@@ -366,19 +421,144 @@ export interface Flight {
     swapDecideByTime: DateTimeMinute;
   }>;
   aircraftAddress?: ICAOAircraftAddress;
-  arrivalInformation?: unknown;
+  arrivalInformation?: ArrivalInformation;
   slotZone?: {
     // SlotZone,
     beforeCTO: DurationMinute;
     afterCTO: DurationMinute;
   };
   flightDataVersionNr?: number; // FlightDataVersionNumber
+  applicableScenarios?: TrafficVolumeScenarios[];
+  apiSubmissionRules?: APISubmissionRules; // TODO
+  avoidedRegulations?: NMSet<RegulationId>;
+  routeChargeIndicator?: number;
+  fuelConsumptionIndicator?: number;
   excludedRegulations?: NMSet<RegulationId>;
+  yoyoFlightForLocation?: YoYoFlightForLocation;
+  turnFlightForLocation?: TurnFlightForLocation;
+  wakeTurbulenceCategory?: WakeTurbulenceCategory;
+  alternateAerodromes?: AerodromeICAOId[];
+  flightCriticality?: FlightCriticalityIndicator;
+  oceanicRoute?: boolean;
 }
+
+export type APISubmissionRules = {
+  latestSubmissionTargetTakeOffAPI?: DateTimeMinute;
+  earliestSubmissionTargetTimeOverAPI?: DateTimeMinute;
+};
+
+export type WakeTurbulenceCategory = 'HEAVY' | 'LIGHT' | 'MEDIUM' | 'SUPER';
+
+export type FlightCriticalityIndicator = {
+  kind: FlightCriticalityKind;
+  comment?: string;
+};
+
+export type FlightCriticalityKind =
+  | 'CRITICAL_DUE_TO_AIRFRAME_UTILISATION'
+  | 'CRITICAL_DUE_TO_AIRPORT_CLOSURE'
+  | 'CRITICAL_DUE_TO_CREW_TIME'
+  | 'CRITICAL_DUE_TO_NOISE_ABATEMENT'
+  | 'CRITICAL_DUE_TO_OTHER_REASONS'
+  | 'CRITICAL_DUE_TO_PASSENGER_CONNECTIONS'
+  | 'CRITICAL_DUE_TO_PASSENGER_DELAY_COMPENSATION'
+  | 'CRITICAL_DUE_TO_TURNAROUND_CRITICAL';
+
+export type TurnFlightForLocation = {
+  ftfmTurn: TurnFlightForLocationKind;
+  locationModelTurnKind: TurnFlightForLocationKind;
+};
+
+export type TurnFlightForLocationKind =
+  | 'CRITICAL_ELSEWHERE'
+  | 'CRITICAL_INSIDE'
+  | 'CRITICAL_SHARP_TURN'
+  | 'NON_CRITICAL_ELSEWHERE'
+  | 'NON_CRITICAL_INSIDE'
+  | 'NON_CRITICAL_SHARP_TURN'
+  | 'NO_SHARP_TURN';
+
+export type YoYoFlightForLocation = {
+  ftfmYoYo: YoYoFlightForLocationKind;
+  locationModelYoYoKind: YoYoFlightForLocationKind;
+};
+
+export type YoYoFlightForLocationKind =
+  | 'CRITICAL_COMPLETELY_INSIDE'
+  | 'CRITICAL_ELSEWHERE'
+  | 'CRITICAL_ENDS_INSIDE'
+  | 'CRITICAL_STARTS_INSIDE'
+  | 'CRITICAL_YOYO'
+  | 'LOCATION_INSIDE_CRITICAL'
+  | 'LOCATION_INSIDE_NON_CRITICAL'
+  | 'NON_CRITICAL_COMPLETELY_INSIDE'
+  | 'NON_CRITICAL_ELSEWHERE'
+  | 'NON_CRITICAL_ENDS_INSIDE'
+  | 'NON_CRITICAL_STARTS_INSIDE'
+  | 'NON_CRITICAL_YOYO'
+  | 'NO_YOYO';
+
+export type ArrivalInformation = {
+  flightStatusInbound?: ATVFlightStatusInbound;
+  registrationMark?: AircraftRegistrationMark;
+  aircraftType?: AircraftTypeICAOId;
+  aicraftIATAId?: AircraftIATAId;
+  arrivalTaxiTime?: DurationHourMinute;
+  apiArrivalProcedure?: TerminalProcedure;
+  nmArrivalProcedure?: TerminalProcedure;
+  initialApproachFix?: PublishedPointId;
+  arrivalRunway?: RunwayId;
+  arrivalTerminal?: TerminalOrApronStandName;
+  arrivalApronStand?: TerminalOrApronStandName;
+  minimumTurnaroundTime?: DurationHourMinute;
+  landingTime?: DateTimeMinute;
+  scheduledInBlockTime?: DateTimeMinute;
+  inBlockTime?: DateTimeMinute;
+  airportSlotArrival?: DateTimeMinute;
+  impactSeverityIndicator?: ImpactSeverityIndicator;
+  coordinationFix?: AerodromeOrPublishedPointId;
+  targetTimeOver?: DateTimeMinute;
+  earliestTargetTimeOver?: DateTimeMinute;
+  consolidatedTargetTimeOver?: DateTimeMinute;
+  calculatedTimeOver?: DateTimeMinute;
+  regulationId?: RegulationId;
+  minCalculatedTimeOver?: DateTimeMinute;
+  maxCalculatedTimeOver?: DateTimeMinute;
+  estimatedOrActualTimeOver?: DateTimeMinute;
+};
+
+export type ImpactSeverityIndicator = 'E' | 'EI' | 'L' | 'LI' | 'LIP' | 'OT';
+
+export type ProposalInformation = {
+  proposalKink: ProposalKind;
+  responseBy: DateTimeMinute;
+  proposedCTOT?: DateTimeMinute;
+  routeId?: ReroutingRouteId;
+};
+
+export type ReroutingRouteId = {
+  routeType: ReroutingRouteType;
+  standardRouteId: StandardRouteId;
+};
+
+export type StandardRouteId = {
+  from: AerodromeICAOId;
+  to: AerodromeICAOId;
+  seqNr: number;
+};
+
+export type ReroutingRouteType = 'GENERATED' | 'STANDARD' | 'USER' | 'VERTICAL';
+
+export type ProposalKind = 'DELAY_CONF' | 'RRP' | 'RVR' | 'SIP' | 'STAM_SLOT';
 
 export type MessageOriginator =
   | { airNavigationUnitId: AirNavigationUnitId }
   | { address: NetworkAddress };
+
+export type TaxiTimeAndProcedure = {
+  taxiTime: DurationHourMinute;
+  terminalProcedure?: TerminalProcedure;
+};
 
 export type SuspensionStatus =
   | 'AIRPORT_SUSPENSION'
@@ -388,7 +568,6 @@ export type SuspensionStatus =
   | 'NOT_REPORTED_AS_AIRBORNE'
   | 'NOT_SUSPENDED'
   | 'REGULATION_CONFIRMATION'
-  | 'SIT_TIME_OUT'
   | 'SLOT_MISSED'
   | 'TRAFFIC_VOLUMES_CONDITION'
   | 'V_MANUAL_SUSPENSION';
@@ -405,18 +584,26 @@ export type FAMStatus =
   | 'WAS_SUSPENDED_BY_FAM';
 
 export interface ReadyStatus {
-  readyForImprovement?: BooleanString;
-  readyToDepart: BooleanString;
+  readyForImprovement?: boolean;
+  readyToDepart: boolean;
   revisedTaxiTime?: DurationHourMinute;
 }
 
 export interface ReroutingIndicator {
-  rerouted: BooleanString;
+  rerouted: boolean;
   reason?: ReroutingReason;
   state?: ReroutingState;
 }
 
-export type ReroutingReason = 'AO' | 'ATFM' | 'AUTO' | 'CEU';
+export type ReroutingReason =
+  | 'AO'
+  | 'ATC_PURPOSE_PROPOSAL'
+  | 'ATFCM_PURPOSE_PROPOSAL'
+  | 'ATFM_EXECUTED'
+  | 'CDR_OPPORTUNITY_PROPOSAL'
+  | 'FLIGHT_EFFICIENCY_PURPOSE_PROPOSAL'
+  | 'STAM_PURPOSE_PROPOSAL';
+
 export type ReroutingState =
   | 'EXECUTED'
   | 'NO_MATCH'
@@ -425,12 +612,11 @@ export type ReroutingState =
   | 'REVOKED'
   | 'TIMED_OUT';
 
-export type OtherAerodromeDesignation =
-  | {
-      aerodromeName?: unknown;
-      aerodromeLocation?: unknown;
-    }
-  | { firstLastRoutePoint: unknown };
+export type OtherAerodromeDesignation = {
+  aerodromeName?: string; // AerodromeName_DataType
+  aerodromeLocation?: NonPublishedPoint;
+  firstLastRoutePoint?: ICAOPoint;
+};
 
 export type Aerodrome =
   | {
@@ -439,15 +625,17 @@ export type Aerodrome =
   | { otherDesignation: OtherAerodromeDesignation };
 
 export interface AirFiledData {
-  atsUnitId?: unknown;
-  startingPoint: unknown;
-  clearedLevel: unknown;
+  atsUnitId?: AtsUnitId_DataType;
+  startingPoint: ICAOPoint;
+  clearedLevel: FlightLevel;
   estimatedTimeOver: DateTimeSecond;
 }
 
+export type AtsUnitId_DataType = string; // ANY{1,50}
+
 export interface AlternateAerodrome {
   icaoId: AerodromeICAOId;
-  nameLocationDescription: string;
+  nameLocationDescription: string; // AerodromeNameLocationDescription_DataType
 }
 
 export interface AerodromesOfDestination {
@@ -470,9 +658,8 @@ export interface AircraftIdentification {
 }
 
 export type AircraftType =
-  | AircraftTypeICAOId
-  | OtherAircraftTypeDesignation_DataType;
-
+  | { icaoId: AircraftTypeICAOId }
+  | { otherDesignation: OtherAircraftTypeDesignation_DataType };
 export interface FlightPlan {
   ifplId?: IFPLId;
   airFiledData?: AirFiledData;
@@ -485,19 +672,176 @@ export interface FlightPlan {
   numberOfAicraft?: number;
   aircraftType: AircraftType;
   totalEstimatedElapsedTime?: DurationHourMinute;
-  eetsToLocations?: object[];
-  wakeTubulenceCategory?: unknown;
-  flightType?: unknown;
-  flightRules?: unknown;
+  eetsToLocations?: EstimatedElapsedTimeAtLocation[];
+  wakeTubulenceCategory?: WakeTurbulenceCategory;
+  flightType?: FlightType;
+  flightRules?: FlightRules;
   estimatedOffBlockTime: DateTimeMinute;
   icaoRoute: string;
-  stayInformation?: Array<unknown>;
-  enrouteDelays?: Array<unknown>;
+  stayInformation?: Array<string>; // Array<StayInformation_DataType>;
+  enrouteDelays?: Array<EnrouteDelay>;
   equipmentCapabilityAndStatus?: EquipmentCapabilityAndStatus;
-  surveillanceEquipment?: unknown;
-  otherInformation?: unknown;
-  supplementaryInformation?: unknown;
+  surveillanceEquipment?: SurveillanceEquipment;
+  otherInformation?: OtherInformation;
+  supplementaryInformation?: SupplementaryInformation;
 }
+
+export type SupplementaryInformation = {
+  fuelEndurance?: DurationHourMinute;
+  numberOfPersons?: number;
+  frequencyAvailability?: Array<FrequencyOnAircraft>;
+  survivalEquipment?: Array<SurvivalEquipment>;
+  otherSurvivalEquipment?: string;
+  lifeJacketEquipment?: Array<LifeJacketEquipment>;
+  dinghiesInformation?: Dinghies;
+  aircraftCoulorAndMarkings?: string;
+  pilotInCommand?: string;
+};
+
+export type FrequencyOnAircraft = 'ELT' | 'UHF' | 'VHF';
+
+export type SurvivalEquipment = 'DESERT' | 'JUNGLE' | 'MARITIME' | 'POLAR';
+
+export type LifeJacketEquipment = 'FLUORESCEIN' | 'LIGHTS' | 'UHF' | 'VHF';
+
+export type Dinghies = {
+  numberOfDinghies?: number; // NumberOfDinghies_DataType
+  totalCapacity?: number; // TotalCapacity_DataType
+  areCovered?: boolean;
+  colour?: string; // Colour_DataType
+};
+
+export type OtherInformation = {
+  selCalCode: string;
+  nameOfOperator?: AircraftOperatorName_DataType;
+  reasonForSpecialHandling?: SpecialHandlingIndicators;
+  aircraftPerformanceData?: AircraftPerformanceCategory;
+  communicationEquipment?: string;
+  datalinkCapabilities?: DatalinkCapabilities;
+  navigationEquipment?: string;
+  performanceBasedNavigationCodes?: Array<PerformanceBasedNavigationCode>;
+  otherSurveillanceEquipments?: string;
+  replacementFlightPlanIndicator?: number;
+  runwayVisualRange?: DistanceM;
+  reclearanceInFlight?: ReclearanceInFlight;
+  otherRemarks?: Array<string>;
+};
+
+export type ReclearanceInFlight = {
+  icaoRoute: string;
+  aerodrome: AerodromeICAOId;
+};
+
+export type PerformanceBasedNavigationCode =
+  | 'BASIC_RNP_1_ALL'
+  | 'BASIC_RNP_1_DME_DME'
+  | 'BASIC_RNP_1_DME_DME_IRU'
+  | 'BASIC_RNP_1_GNSS'
+  | 'RNAV_10'
+  | 'RNAV_1_ALL'
+  | 'RNAV_1_DME_DME'
+  | 'RNAV_1_DME_DME_IRU'
+  | 'RNAV_1_GNSS'
+  | 'RNAV_2_ALL'
+  | 'RNAV_2_DME_DME'
+  | 'RNAV_2_DME_DME_IRU'
+  | 'RNAV_2_GNSS'
+  | 'RNAV_5_ALL'
+  | 'RNAV_5_DME_DME'
+  | 'RNAV_5_GNSS'
+  | 'RNAV_5_INS_OR_IRS'
+  | 'RNAV_5_LORAN_C'
+  | 'RNAV_5_VOR_DME'
+  | 'RNP_4'
+  | 'RNP_APCH'
+  | 'RNP_APCH_BARO_VNAV'
+  | 'RNP_AR_APCH_NO_RF'
+  | 'RNP_AR_APCH_RF';
+
+export type DatalinkCapabilities = {
+  value?: string; // DataLinkCapabilities_DataType
+};
+
+export type AircraftPerformanceCategory =
+  | 'CAT_A'
+  | 'CAT_B'
+  | 'CAT_C'
+  | 'CAT_D'
+  | 'CAT_E'
+  | 'CAT_H';
+
+export type SpecialHandlingIndicators = {
+  icaoSTSIndicators?: Array<ICAOSTSIndicator>;
+  eurSTSIndicators?: Array<EURSTSIndicator>;
+};
+
+export type ICAOSTSIndicator =
+  | 'ALTRV'
+  | 'ATFMX'
+  | 'FFR'
+  | 'FLTCK'
+  | 'HAZMAT'
+  | 'HEAD'
+  | 'HOSP'
+  | 'HUM'
+  | 'MARSA'
+  | 'MEDEVAC'
+  | 'NONRVSM'
+  | 'SAR'
+  | 'STATE';
+
+export type EURSTSIndicator =
+  | 'CPDLCX'
+  | 'EXM833'
+  | 'PROTECTED'
+  | 'RNAVINOP'
+  | 'RNAVX';
+
+export type AircraftOperatorName_DataType = string;
+
+export type SurveillanceEquipment = {
+  modeA?: EquipmentStatus;
+  modeAAndC?: EquipmentStatus;
+  modeS?: EquipmentStatus;
+  modeSCapabilities?: ModeSCapabilities;
+  adsb1900Out?: EquipmentStatus;
+  adsb1900OutInt?: EquipmentStatus;
+  adsbOutUAT?: EquipmentStatus;
+  adsbOutInUAT?: EquipmentStatus;
+  adsbOutVDL4?: EquipmentStatus;
+  adsbOutInVDL4?: EquipmentStatus;
+  adscFans?: EquipmentStatus;
+  adscAtn?: EquipmentStatus;
+};
+
+export type ModeSCapabilities = {
+  aircraftIdentification?: EquipmentStatus;
+  pressureAltitude?: EquipmentStatus;
+  extendedSquitterADSB?: EquipmentStatus;
+  enhancedSurveillance?: EquipmentStatus;
+};
+
+export type FlightType =
+  | 'GENERAL'
+  | 'MILITARY'
+  | 'NOT_SCHEDULED'
+  | 'OTHER'
+  | 'SCHEDULED';
+
+export type EnrouteDelay = {
+  delay?: DurationHourMinute;
+  point?: ICAOPoint;
+};
+
+export type FlightRules = 'IFR' | 'IFR_THEN_VFR' | 'VFR' | 'VFR_THEN_IFR';
+
+export type EstimatedElapsedTimeAtLocation = {
+  elapsedTime: DurationHourMinute;
+  fir?: FIRICAOId;
+  point?: ICAOPoint;
+  latitude?: Latitude;
+  longitude?: Longitude;
+};
 
 export interface CDM {
   status:
@@ -505,6 +849,7 @@ export interface CDM {
     | 'DEPARTING_FROM_CDM_AIRPORT'
     | 'DEPARTING_FROM_STANDARD_AIRPORT'
     | 'ESTIMATED'
+    | 'PREDICTED'
     | 'PRE_SEQUENCED'
     | 'TARGETED';
   AirportType: 'ADVANCED_ATC_TWR' | 'CDM' | 'STANDARD';
@@ -512,40 +857,86 @@ export interface CDM {
 }
 
 export interface CDMInfo {
-  earlyTargetTakeOffTime?: DateTimeMinute;
-  aoTargetTakeOffTime?: DateTimeMinute;
+  turnaroundTargetTakeOffTime?: DateTimeMinute;
+  earliestTargetTakeOffTime?: DateTimeMinute;
+  consolidatedTargetTakeOffTime?: DateTimeMinute;
   atcTargetTakeOffTime?: DateTimeMinute;
-  sequencedTargetTakeOffTime?: DateTimeMinute;
   taxiTime?: DurationHourMinuteSecond;
-  offBlockTimeDiscrepancy: BooleanString;
+  offBlockTimeDiscrepancy: boolean;
+  flightStatusOutbound?: ATVFlightStatusOutbound;
   departureProc?: TerminalProcedure;
-  aircraftTypeDiscrepancy: BooleanString;
-  aircraftType?: AircraftType;
-  registrationMark?: AircraftRegistrationMark;
-  registrationMarkDiscrepancy: BooleanString;
-  noSlotBefore?: DurationHourMinute;
+  departureRunway?: RunwayId; // TODO
+  departureTerminal?: TerminalOrApronStandName;
+  departureApronStand?: TerminalOrApronStandName; // TODO
+  aircraftTypeDiscrepancy: boolean;
+  aircraftType?: AircraftType; // TODO
+  aircraftTypeIATA?: AircraftTypeIATAId; // TODO
+  registrationMark?: AircraftRegistrationMark; // TODO
+  registrationMarkDiscrepancy?: boolean;
   departureStatus: DepartureStatus;
   targetOffBlockTime?: DateTimeMinute;
   targetStartupApprovalTime?: DateTimeMinute;
-  cancelReason?:
-    | 'FLIGHT_CANCEL_IN_AODB'
-    | 'FLIGHT_PLAN_INVALID'
-    | 'NO_AIRPORT_SLOT'
-    | 'OTHER'
-    | 'RETURN_TO_STAND'
-    | 'TOBT_UNKNOWN_OR_EXPIRED'
-    | 'TOT_UNKNOWN'
-    | 'TSAT_EXPIRED'
-    | 'UNDEFINED';
+  aircraftIdInbound?: AircraftICAOId;
+  ifplIdInbound?: IFPLId;
+  registrationMarkInbound?: AircraftRegistrationMark;
+  cancelReason?: ReasonForDPICancellation;
 }
+
+// (UALPHA|DIGIT){1,6}
+export type TerminalOrApronStandName = string;
+
+// (UALPHA|DIGIT){3}
+export type AircraftTypeIATAId = string;
+
+export type ReasonForDPICancellation =
+  | 'FLIGHT_CANCEL_IN_AODB'
+  | 'FLIGHT_PLAN_INVALID'
+  | 'NO_AIRPORT_SLOT'
+  | 'RETURN_TO_STAND'
+  | 'TOBT_UNKNOWN_OR_EXPIRED'
+  | 'TSAT_EXPIRED'
+  | 'UNDEFINED'
+  | 'UNDO_ADPI';
+
+export type ATVFlightStatusOutbound =
+  | 'BRC'
+  | 'BRD'
+  | 'CNX'
+  | 'DEI'
+  | 'DEP'
+  | 'INI'
+  | 'OBK'
+  | 'RDI'
+  | 'RDY'
+  | 'RET'
+  | 'RPO'
+  | 'RTN'
+  | 'SCH'
+  | 'TXD';
+
+export type ATVFlightStatusInbound =
+  | 'AIR'
+  | 'CNX'
+  | 'DBC'
+  | 'BDR'
+  | 'DIV'
+  | 'FIR'
+  | 'FNL'
+  | 'GOA'
+  | 'IBK'
+  | 'IDH'
+  | 'INI'
+  | 'SCH'
+  | 'TMA'
+  | 'TXI';
 
 export type DepartureStatus = 'OK' | 'DEICING';
 
 export interface ExclusionFromRegulations {
-  onTrafficVolume?: BooleanString;
+  onTrafficVolume?: boolean;
   count?: number;
-  all?: BooleanString;
-  hasBeenExclused: BooleanString;
+  all?: boolean;
+  hasBeenExclused: boolean;
 }
 
 export interface ReroutingReference {
@@ -555,7 +946,7 @@ export interface ReroutingReference {
 
 export interface DepartureTolerance {
   toleranceWindow: TimeHourMinutePeriod;
-  extended: BooleanString;
+  extended: boolean;
 }
 
 export interface FlightPoint {
@@ -565,17 +956,17 @@ export interface FlightPoint {
   exitTrend: FlightTrend;
   associatedRouteOrTerminalProcedure?: RouteOrTerminalProcedure;
   coveredDistance: DistanceNM;
-  isVisible: BooleanString;
+  isVisible: boolean;
   aerodrome?: AerodromeICAOId;
   point?: ICAOPoint;
-  flightPlanPoint?: BooleanString;
+  flightPlanPoint?: boolean;
 }
 
 export interface FlightAirspace {
   airspaceId: AirspaceId;
   airspaceType: AirspaceType;
   firstEntryTime: DateTimeSecond;
-  firstEntrlyFlightLevel: FlightLevel;
+  firstEntryFlightLevel: FlightLevel;
   lastExitFlightLevel: FlightLevel;
   firstEntryTrend: FlightTrend;
   middleTrend: FlightTrend;
@@ -585,7 +976,7 @@ export interface FlightAirspace {
   lastExitDistance: DistanceNM;
   occupancyDuration: DurationHourMinuteSecond;
   occupancyDistance: DistanceNM;
-  activated: BooleanString;
+  activated: boolean;
 }
 
 export interface RequestedFlightLevel {
@@ -599,8 +990,8 @@ export interface FlightEvent {
   type: FlightEventType;
   resultingState: FlightState;
   resultingOffBlockTime: DateTimeMinute;
-  efdSent: BooleanString;
-  fumSent: BooleanString;
+  efdSent: boolean;
+  fumSent: boolean;
 }
 
 export type FlightEventType = string; // TODO: disjoint union, too many to list !
@@ -721,7 +1112,9 @@ export type CTOTLimitReason =
   | 'FORCED_BY_TOWER'
   | 'LIMITED_BY_VIOLATION'
   | 'LIMITED_BY_VIOLATION_THEN_ZERO_RATE_OR_RVR'
-  | 'SLOT_EXTENSION';
+  | 'SLOT_EXTENSION'
+  | 'SLOT_TIME_NOT_LIMITED'
+  | 'WAS_FORCED_BY_NMOC';
 
 export interface ProfileValidity {
   profileValidityKind: ProfileValidityKind;
@@ -735,7 +1128,7 @@ export interface TargetTime {
   targetLevel: FlightLevel;
   aerodromeICAOId?: AerodromeICAOId;
   point?: ICAOPoint;
-  flightPlanPoint?: BooleanString;
+  flightPlanPoint?: boolean;
   coveredDistance: DistanceNM;
   actualTimeAtTarget?: ActualTimeAtTarget;
 }

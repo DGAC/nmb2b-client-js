@@ -27,6 +27,15 @@ describe('retrieveOTMVPlan', () => {
       });
 
       expect(res.data).toBeDefined();
+      expect(res.data.plans.planCutOffReached).toEqual(expect.any(Boolean));
+      expect(res.data.plans.tvsOTMVs.item.length).toEqual(1);
+      expect(res.data.plans.tvsOTMVs.item[0]).toEqual({
+        key: 'LFERMS',
+        value: {
+          item: expect.any(Array),
+        },
+      });
+
       // console.log(inspect(res.data, { depth: null }));
     } catch (err) {
       console.log(inspect(err, { depth: null }));

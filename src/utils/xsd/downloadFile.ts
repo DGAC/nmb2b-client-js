@@ -43,7 +43,6 @@ export async function downloadFile(
           resolve();
         });
     } catch (err) {
-      console.log(err);
       reject(new Error(`Unable to download WSDL: ${err.message}`));
     }
 
