@@ -1,7 +1,7 @@
-if (process.env.CI && !process.env.REAL_B2B_CONNECTIONS) {
-  console.log('Running in CI context, disabling connections to NM B2B');
-  process.exit(0);
-}
+// if (process.env.CI && !process.env.REAL_B2B_CONNECTIONS) {
+//   console.log('Running in CI context, disabling connections to NM B2B');
+//   process.exit(0);
+// }
 
 const path = require('path');
 const downloadWSDL = require('../tests/setup_hook');
