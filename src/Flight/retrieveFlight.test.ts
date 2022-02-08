@@ -29,19 +29,13 @@ describe('retrieveFlight', () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment
-          .utc()
-          .subtract(30, 'minutes')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(30, 'minutes')
-          .toDate(),
+        wef: moment.utc().subtract(30, 'minutes').toDate(),
+        unt: moment.utc().add(30, 'minutes').toDate(),
       },
       airspace: 'LFEERMS',
     });
 
-    const flights = res.data.flights.filter(f => {
+    const flights = res.data.flights.filter((f) => {
       if ('flightPlan' in f) {
         return false;
       }
@@ -69,7 +63,7 @@ describe('retrieveFlight', () => {
   });
 
   conditionalTest('query flightPlan by ifplId', async () => {
-    if (!knownFlight.ifplId) {
+    if (!knownFlight.ifplId || !knownFlight.keys) {
       return;
     }
 
@@ -80,13 +74,24 @@ describe('retrieveFlight', () => {
         },
         includeProposalFlights: false,
         flightId: {
-          id: knownFlight.ifplId,
+          keys: knownFlight.keys,
         },
-        requestedFlightDatasets: ['flightPlan'],
+        requestedFlightDatasets: ['flight'],
+        requestedFlightFields: ['ftfmPointProfile'],
         requestedDataFormat: 'NM_B2B',
       });
 
       !process.env.CI && console.log(inspect(res, { depth: null }));
+
+      expect(res.data.flight?.ftfmPointProfile).toBeDefined();
+      res.data.flight?.ftfmPointProfile?.forEach((item) => {
+        expect(item).toEqual(
+          expect.objectContaining({
+            timeOver: expect.any(Date),
+            coveredDistance: expect.any(Number),
+          }),
+        );
+      });
     } catch (err) {
       console.error(inspect(err, { depth: null }));
       throw err;

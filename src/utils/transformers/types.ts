@@ -69,25 +69,29 @@ export const types = createSerDe({
     output: outputBase.integer,
   },
   DateTimeMinute: {
-    input: (d: Date): string =>
-      moment(d)
-        .utc()
-        .format(timeFormats.timeFormat),
+    input: (d: Date): string => moment(d).utc().format(timeFormats.timeFormat),
     output: outputBase.date,
   },
   DateYearMonthDay: {
-    input: (d: Date): string =>
-      moment(d)
-        .utc()
-        .format(timeFormats.dateFormat),
+    input: (d: Date): string => moment(d).utc().format(timeFormats.dateFormat),
     output: outputBase.date,
   },
   DateTimeSecond: {
     input: (d: Date): string =>
-      moment(d)
-        .utc()
-        .format(timeFormats.timeFormatWithSeconds),
+      moment(d).utc().format(timeFormats.timeFormatWithSeconds),
     output: outputBase.date,
+  },
+  DistanceNM: {
+    input: null,
+    output: outputBase.integer,
+  },
+  DistanceM: {
+    input: null,
+    output: outputBase.integer,
+  },
+  Bearing: {
+    input: null,
+    output: outputBase.integer,
   },
   OTMVThreshold: {
     input: null,
