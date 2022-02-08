@@ -9,7 +9,7 @@
 
 Exposes a general purpose Javascript library to interact with NM B2B web services. The idea is to abstract pain points while offering an API that maps the NM B2B WS API.
 
-NM target version: **23.5.0**
+NM target version: **25.0.0**
 
 ## Simple usage example
 
