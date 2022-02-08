@@ -1,3 +1,7 @@
+# v0.5.2 (2022-02-08)
+
+- Fix multiple serialization/deserialization issues
+
 # v0.5.1 (2022-02-08)
 
 - Fix typo in typings (OTMVSustained)
