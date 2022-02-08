@@ -579,7 +579,7 @@ interface OTMVPeak {
 
 interface OTMVSustained {
   threshold: OTMVThreshold;
-  crossingOccurences: number;
+  crossingOccurrences: number;
   elapsed: DurationHourMinute;
 }
 

@@ -1,3 +1,7 @@
+# Master
+
+- Fix typo in typings (OTMVSustained)
+
 # v0.5.0 (2022-02-08)
 # v0.5.0-rc.0 (2022-02-08)
 
