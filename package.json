@@ -28,8 +28,8 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
     "@types/debug": "^4.1.4",
-    "@types/jest": "^27.0.1",
     "@types/invariant": "^2.2.35",
+    "@types/jest": "^27.0.1",
     "@types/mkdirp": "^1.0.0",
     "@types/node": "^12.0.0",
     "@types/proper-lockfile": "^4.1.1",
@@ -50,14 +50,14 @@
   },
   "dependencies": {
     "@types/sax": "^1.2.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "debug": "^3.0.0 || ^4.0.0",
     "invariant": "^2.2.4",
     "mkdirp": "^1.0.3",
     "moment": "^2.24.0",
     "proper-lockfile": "^4.1.2",
     "ramda": "^0.27.0",
-    "soap": "^0.42.0",
+    "soap": "^0.43.0",
     "tar": "^6.1.11"
   }
 }
