@@ -11,7 +11,6 @@ import { createDir as mkdirp } from '../fs';
 import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { download } from './index';
-import lockfile from 'proper-lockfile';
 
 const rimraf = promisify(rimrafCb);
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
@@ -31,15 +30,16 @@ test('should prevent concurrent downloads', async () => {
   const flavour = 'PREOPS';
   const filePath = 'test.tar.gz';
 
-  const scope = nock(getFileUrl(filePath, { flavour }))
+  const root = new URL(getFileUrl(filePath, { flavour }));
+
+  const scope = nock(root.origin)
     .get(/.*/)
     .once()
     .delayBody(2000)
     .reply(200, fs.readFileSync(TEST_FILE));
 
-  const soap = nock(getFileUrl(filePath, { flavour }))
-    .post(/.+/)
-    .once()
+  const soap = nock(root.origin)
+    .post('/B2B_PREOPS/gateway/spec/25.0.0')
     .reply(
       200,
       `
@@ -72,8 +72,9 @@ test('should prevent concurrent downloads', async () => {
       flavour,
       XSD_PATH: OUTPUT_DIR,
     }),
+
     // We add a delay to prevent exact concurrency
-    delay(50).then(() =>
+    delay(500).then(() =>
       download({
         security: undefined as any,
         flavour,
