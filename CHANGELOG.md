@@ -1,4 +1,4 @@
-# Master
+# v0.5.1 (2022-02-08)
 
 - Fix typo in typings (OTMVSustained)
 
