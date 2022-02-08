@@ -1,5 +1,6 @@
 # Master
 
+- NM B2B v25.0.0
 - Jest v27
 - soap v0.42.0
 - Replace `request` by `axios`
