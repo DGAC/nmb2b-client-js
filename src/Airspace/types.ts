@@ -192,7 +192,7 @@ export type LoadState =
   | 'UNDEFINED';
 
 export type RouteOrTerminalProcedure =
-  | { DCT: void }
+  | { DCT: null }
   | { route: RouteId }
   | { SID: TerminalProcedureIdentifier }
   | { STAR: TerminalProcedureIdentifier };
