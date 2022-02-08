@@ -15,7 +15,6 @@ import { download } from './index';
 const rimraf = promisify(rimrafCb);
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${uuid.v4()}`);
-
 const delay = (d: number) => new Promise((resolve) => setTimeout(resolve, d));
 
 beforeEach(async () => {
@@ -31,10 +30,14 @@ test('should prevent concurrent downloads', async () => {
   const flavour = 'PREOPS';
   const filePath = 'test.tar.gz';
 
-  const scope = nock('https://www.b2b.preops.nm.eurocontrol.int')
-    .get(
-      '/FILE_PREOPS/gateway/spec/b2b_publications/25.0.0/B2B_WSDL_XSD.22.5.0.3.74.tar.gz',
-    )
+  const scope = nock(getFileUrl(filePath, { flavour }))
+    .get(/.*/)
+    .once()
+    .delayBody(2000)
+    .reply(200, fs.readFileSync(TEST_FILE));
+
+  const soap = nock(getFileUrl(filePath, { flavour }))
+    .post(/.+/)
     .once()
     .delayBody(1000)
     .reply(200, fs.readFileSync(TEST_FILE))

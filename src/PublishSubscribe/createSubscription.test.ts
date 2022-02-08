@@ -15,6 +15,7 @@ beforeAll(async () => {
   PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
 });
 
+// TODO: Check this
 describe.skip('createSubscriptions', () => {
   afterAll(async () => {
     const res = await PublishSubscribe.listSubscriptions();
@@ -31,8 +32,8 @@ describe.skip('createSubscriptions', () => {
     }
 
     const toDelete: string[] = subscriptions.item
-      .filter(({ description }: any) => description === '__TEST__')
-      .map(({ uuid }: any) => uuid);
+      .filter(({ description }) => description === '__TEST__')
+      .map(({ uuid }) => uuid);
 
     await Promise.all(
       toDelete.map((uuid) => PublishSubscribe.deleteSubscription({ uuid })),

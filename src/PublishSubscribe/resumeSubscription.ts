@@ -1,15 +1,15 @@
 import { PublishSubscribeClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
-import { Reply } from '../Common/types';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
+import type {
+  SubscriptionResumeRequest,
+  SubscriptionResumeReply,
+} from './types';
 
-interface Values {
-  uuid: string;
-}
-
-type Result = Reply;
+export type Values = SubscriptionResumeRequest;
+export type Result = SubscriptionResumeReply;
 
 export type Resolver = (
   values?: Values,
@@ -19,8 +19,9 @@ export type Resolver = (
 export default function prepareResumeSubscription(
   client: PublishSubscribeClient,
 ): Resolver {
-  const schema = client.describe().SubscriptionManagementService
-    .SubscriptionManagementPort.resumeSubscription.input;
+  const schema =
+    client.describe().SubscriptionManagementService.SubscriptionManagementPort
+      .resumeSubscription.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({

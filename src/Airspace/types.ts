@@ -37,9 +37,9 @@ export type SpeedUnit =
 export type AIRACId = string; // Pattern DIGIT{4}
 export type AerodromeICAOId = string;
 export interface AIXMFile {
-  fileLength: string;
   id: string;
-  releaseTime: string;
+  fileLength: number;
+  releaseTime: DateTimeSecond;
   type: string;
 }
 
@@ -52,6 +52,8 @@ import {
   DistanceNM,
   DateYearMonthDayPeriod,
   Position,
+  DateTimeSecond,
+  DateTimeMinute,
 } from '../Common/types';
 
 export interface AUPChain {
@@ -70,19 +72,20 @@ export interface AUPSummary {
   amcId?: AirNavigationUnitId;
   aupType: AUPType;
   validityPeriod: DateTimeMinutePeriod;
+  releaseTime?: DateTimeMinute;
   aupState: AUPState;
   nilAUP: boolean;
   remark: string;
   note: Array<string | null>;
   expandedAUP: boolean;
-  lastUpdate: LastUpdate;
+  lastUpdate?: LastUpdate;
   isP3?: boolean;
 }
 
 type ADRMessageType = object; // eurocontrol.cfmu.cua.b2b.aixm.ADRMessage
 export interface AUPManualEntries {
-  cdrs: ADRMessageType;
-  rsas: ADRMessageType;
+  cdrs?: ADRMessageType;
+  rsas?: ADRMessageType;
 }
 
 export interface AUPComputedEntries {
@@ -98,12 +101,30 @@ export interface AUP {
 }
 
 export type FlightLevelUnit =
-  | 'A' // Hundreds of feet
-  | 'F' // Standard FlightLevel,
-  | 'M' // Altitude in tens of meters
-  | 'MM' // Altitude in meters
-  | 'S' // Standard metric level in tens of meters
-  | 'SS'; // Standard metric level in meters
+  /**
+   * Hundreds of feet
+   */
+  | 'A'
+  /**
+   * Standard flight level
+   */
+  | 'F'
+  /**
+   * Altitude in tens of meters
+   */
+  | 'M'
+  /**
+   * Altitude in meters
+   */
+  | 'MM'
+  /**
+   * Standard metric level in tens of meters
+   */
+  | 'S'
+  /**
+   * Standard metric level in meters
+   */
+  | 'SS';
 
 export interface FlightLevel {
   unit: FlightLevelUnit;
@@ -111,6 +132,9 @@ export interface FlightLevel {
   ground?: boolean;
   ceiling?: boolean;
 }
+
+// DIGIT{2}(UALPHA| ){0,1}
+export type RunwayId = string;
 
 export type TerminalProcedure =
   | { id: RouteId }
@@ -149,6 +173,8 @@ export type ReferenceLocation =
   | ReferenceLocationPublishedPoint
   | ReferenceLocationDBEPoint;
 
+export type FIRICAOId = string; // UALPHA{4}
+
 export type FlightPlanProcessing =
   | 'AERODROME_FLIGHT_RULE'
   | 'DCT_LIMIT'
@@ -175,6 +201,10 @@ export interface TerminalProcedureIdentifier {
   id: RouteId;
   aerodromeId: AerodromeIATAOrICAOId;
 }
+
+export type AerodromeOrPublishedPointId =
+  | { aerodrome: AerodromeICAOId }
+  | { point: PublishedPointId };
 
 export type ICAOPoint =
   | { pointId: PublishedPointId }
@@ -203,8 +233,10 @@ export type AirspaceType =
   | 'AUAG'
   | 'CDA'
   | 'CLUS'
+  | 'CRAS'
   | 'CRSA'
   | 'CS'
+  | 'ERAS'
   | 'ERSA'
   | 'ES'
   | 'FIR'

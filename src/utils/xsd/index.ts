@@ -16,6 +16,9 @@ const getWSDLPath = ({ XSD_PATH }: Config) => path.join(XSD_PATH, B2B_VERSION);
 
 async function WSDLExists(config: Config): Promise<boolean> {
   const directory = getWSDLPath(config);
+
+  debug(`Checking if directory ${directory} exists`);
+
   if (!(await dirExists(directory))) {
     return false;
   }
@@ -32,9 +35,12 @@ export async function download(config: Config): Promise<void> {
     await createDir(outputDir);
   }
 
+  debug(`Aquiring lock for folder ${outputDir}`);
   const release = await lockfile.lock(outputDir, {
     retries: 5,
   });
+
+  debug(`Lock aquired. Testing WSDL existence ...`);
 
   const hasWSDL = await WSDLExists(config);
 

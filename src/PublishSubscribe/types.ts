@@ -19,14 +19,51 @@ export type SubscriptionTopic =
   | 'FLIGHT_PLANS'
   | 'REGULATIONS';
 
-export type SubscriptionCreationRequest =
-  | SubscriptionCreationRequest_FlightData
-  | SubscriptionCreationRequest_FlightPlan
-  | SubscriptionCreationRequest_EAUP
-  | SubscriptionCreationRequest_AIXM_Datasets
-  | SubscriptionCreationRequest_ATM_INFORMATION;
+export interface SubscriptionCreationRequest {
+  topic: SubscriptionTopic;
+  description?: string;
+  messageFilter?: SubscriptionMessageFilter;
+  payloadConfiguration?: SubscriptionPayloadConfiguration;
+  queueName?: QueueName;
+}
+
+export interface SubscriptionPauseRequest {
+  uuid: UUID;
+  heartbeatEnabled?: boolean;
+}
+
+export interface SubscriptionPauseReply extends Reply {
+  data: {};
+}
+
+export interface SubscriptionResumeRequest {
+  uuid: UUID;
+}
+
+export interface SubscriptionResumeReply extends Reply {
+  data: {};
+}
+
+export interface SubscriptionDeletionRequest {
+  uuid: UUID;
+}
+
+export interface SubscriptionDeletionReply extends Reply {
+  data: {};
+}
+
+// export type SubscriptionCreationRequest =
+//   | SubscriptionCreationRequest_FlightData
+//   | SubscriptionCreationRequest_FlightPlan
+//   | SubscriptionCreationRequest_EAUP
+//   | SubscriptionCreationRequest_AIXM_Datasets
+//   | SubscriptionCreationRequest_ATM_INFORMATION;
 
 export interface SubscriptionCreationReply extends Reply {
+  data: SubscriptionCreationReplyData;
+}
+
+export interface SubscriptionCreationReplyData {
   subscription: Subscription;
 }
 
@@ -35,11 +72,12 @@ export interface SubscriptionListRequest {
 }
 
 export interface SubscriptionListReply extends Reply {
-  data: {
-    subscriptions?: NMSet<Subscription>;
-  };
+  data: SubscriptionListReplyData;
 }
 
+export interface SubscriptionListReplyData {
+  subscriptions?: NMSet<Subscription>;
+}
 export interface Subscription {
   uuid: UUID;
   release: NMRelease;
@@ -55,6 +93,7 @@ export interface Subscription {
   lastUpdateComment?: string;
   messageFilter?: SubscriptionMessageFilter;
   payloadConfiguration: SubscriptionPayloadConfiguration;
+  heartbeatEnabled: boolean;
 }
 
 export type SubscriptionState =
@@ -67,6 +106,7 @@ export type SubscriptionState =
 export type SubscriptionUpdateReason =
   | 'MAINTENANCE'
   | 'MSG_EXPIRED'
+  | 'NM_UPDATE'
   | 'USER_REQUEST';
 
 export type SubscriptionMessageFilter =

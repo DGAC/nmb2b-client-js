@@ -3,16 +3,16 @@ import { injectSendTime, responseStatusHandler } from '../utils';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
-import { Reply } from '../Common/types';
+import type {
+  SubscriptionDeletionRequest,
+  SubscriptionDeletionReply,
+} from './types';
 
-interface Values {
-  uuid: string;
-}
-
-type Result = Reply;
+export type Values = SubscriptionDeletionRequest;
+export type Result = SubscriptionDeletionReply;
 
 export type Resolver = (
-  values?: Values,
+  values?: SubscriptionDeletionRequest,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -21,8 +21,9 @@ export default function prepareDeleteSubscription(
 ): Resolver {
   // console.log(Object.keys(client));
   //
-  const schema = client.describe().SubscriptionManagementService
-    .SubscriptionManagementPort.deleteSubscription.input;
+  const schema =
+    client.describe().SubscriptionManagementService.SubscriptionManagementPort
+      .deleteSubscription.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({

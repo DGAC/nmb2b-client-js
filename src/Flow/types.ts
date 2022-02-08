@@ -33,7 +33,6 @@ import {
   Dataset,
   DateYearMonthDay,
   PlanDataId,
-  BooleanString,
   NMSet,
   NMMap,
   NMInt,
@@ -162,9 +161,11 @@ export interface TacticalConfigurationRetrievalRequest {
 }
 
 export interface SectorConfigurationPlanRetrievalReply extends Reply {
-  data: {
-    plan: SectorConfigurationPlan;
-  };
+  data: SectorConfigurationPlanRetrievalReplyData;
+}
+
+export interface SectorConfigurationPlanRetrievalReplyData {
+  plan: SectorConfigurationPlan;
 }
 
 export type KnownConfigurations = NMMap<
@@ -172,12 +173,12 @@ export type KnownConfigurations = NMMap<
   NMSet<AirspaceId>
 >;
 
-export type SectorConfigurationPlan = TacticalConfigurationPlan & {
+export interface SectorConfigurationPlan extends TacticalConfigurationPlan {
   airspace: AirspaceId;
-  knownConfigurations?: KnownConfigurations; // Map<SectorConfigurationId, Set<AirspaceId>>
+  knownConfigurations?: NMMap<SectorConfigurationId, NMSet<AirspaceId>>;
   nmSchedule?: NMSet<PlannedSectorConfigurationActivation>; // Set<PlannedSectorConfigurationActivation>
   clientSchedule?: NMSet<PlannedSectorConfigurationActivation>; // Set<PlannedSectorConfigurationActivation>
-};
+}
 
 export interface PlannedSectorConfigurationActivation {
   applicabilityPeriod: DateTimeMinutePeriod;
@@ -189,22 +190,23 @@ export interface TacticalConfigurationPlan {
   dataId: PlanDataId;
   dataset: Dataset;
   day: DateYearMonthDay;
-  planTransferred?: BooleanString;
-  planCutOffReached?: BooleanString;
+  planTransferred?: boolean;
+  planCutOffReached?: boolean;
 }
 
-export type TrafficCountsByAirspaceRequest = TrafficCountsRequest & {
+export interface TrafficCountsByAirspaceRequest extends TrafficCountsRequest {
   airspace: AirspaceId;
   calculationType: CountsCalculationType;
-};
+}
 
-export type TrafficCountsByTrafficVolumeRequest = TrafficCountsRequest & {
+export interface TrafficCountsByTrafficVolumeRequest
+  extends TrafficCountsRequest {
   trafficVolume: TrafficVolumeId;
   calculationType: CountsCalculationType;
   computeOtmvAlerts?: boolean;
   computeFlowCounts?: FlowType;
   includeInvisibleFlights?: boolean;
-};
+}
 
 export interface TrafficCountsRequest {
   dataset: Dataset;
@@ -234,10 +236,18 @@ export interface TrafficCountsReplyData {
 export interface Flow {
   id: FlowId;
   type: FlowType;
-  role: FlowRoleSelection;
+  role?: FlowRoleSelection;
+  applicableScenarios?: TrafficVolumeScenarios;
+  scenarioImpact?: ScenarioImpact;
 }
 
-export type FlowType = 'ASSOCIATED' | 'LINKED';
+export type ScenarioImpact = {
+  totalCommonFlights: CountsValue;
+  totalOtherFlights: CountsValue;
+  scenarioTrafficVolumeEntryPeriod?: DateTimeMinutePeriod;
+};
+
+export type FlowType = 'ASSOCIATED' | 'LINKED' | 'SCENARIO';
 export type FlowRoleSelection =
   | 'EXCLUDED'
   | 'EXEMPTED'
@@ -247,7 +257,7 @@ export type FlowRoleSelection =
 export interface Counts {
   totalCounts: CountsValue;
   flowCounts?: NMMap<FlowId, CountsValue>;
-  subTotalsCounts: NMMap<SubTotalsTrafficCountsType, CountsValue>;
+  subTotalsCounts?: NMMap<SubTotalsTrafficCountsType, CountsValue>;
 }
 
 export type CountsValue = number;
@@ -281,8 +291,18 @@ export interface RegulationListReply extends Reply {
   data: RegulationListReplyData;
 }
 
-export interface RegulationListReplyData {
+export interface RegulationListReplyData
+  extends RegulationOrMCDMOnlyListReplyData {
   regulations: NMSet<Regulation>;
+}
+
+export interface RegulationOrMCDMOnlyListReplyData
+  extends MeasureListReplyData {}
+
+export interface MeasureListReplyData {
+  planTransferred?: boolean;
+  planCutOffReached?: boolean;
+  dataset: Dataset;
 }
 
 export type RegulationOrMCDMOnlyListRequest = MeasureListRequest & {
@@ -297,11 +317,23 @@ export interface MeasureListRequest {
   tvSets?: NMSet<TrafficVolumeSetIdWildcard>;
 }
 
-export type Regulation = RegulationOrMCDMOnly & {
+export interface Regulation extends RegulationOrMCDMOnly {
   regulationState: RegulationState;
+}
+
+export type TrafficVolumeScenarios = {
+  solutionTrafficVolumeId: TrafficVolumeId;
+  trafficVolumeMatchingKind: ScenarioTrafficVolumeMatchingKind;
+  scenarios: NMSet<ScenarioId>;
 };
 
-export type RegulationOrMCDMOnly = {
+export type ScenarioTrafficVolumeMatchingKind =
+  | 'INDIRECT_OFFLOAD'
+  | 'OVERLAPPING_REFERENCE_LOCATION'
+  | 'SAME_REFERENCE_LOCATION'
+  | 'SAME_TRAFFIC_VOLUME';
+
+export interface RegulationOrMCDMOnly extends Measure {
   regulationId: RegulationId;
   reason?: RegulationReason;
   location?: TrafficVolumeLocation;
@@ -309,13 +341,14 @@ export type RegulationOrMCDMOnly = {
   initialConstraints?: RegulationInitialConstraint[];
   supplementaryConstraints?: RegulationSupplementaryConstraint[];
   remark?: string;
-  autolink?: BooleanString;
-  linkedRegulations: NMSet<RegulationId>;
+  autolink?: boolean;
+  linkedRegulations?: NMSet<RegulationId>;
   noDelayWindow?: DurationHourMinute;
-  updateCapacityRequired?: BooleanString;
-  updateTCActivationRequired?: BooleanString;
+  updateCapacityRequired?: boolean;
+  updateTCActivationRequired?: boolean;
   delayTVSet?: TrafficVolumeSetId;
-} & Measure;
+  delayConfirmationThreshold?: DurationHourMinute;
+}
 
 export interface Measure {
   dataId?: PlanDataId;
@@ -356,22 +389,31 @@ export interface LifeCycleEvent {
   userId: UserId;
 }
 
-export type MCDMMeasureTopic = MCDMStatefulTopic & {
+export interface MCDMMeasureTopic extends MCDMStatefulTopic {
   userCategories?: NMSet<MCDMRoleUserCategory>;
   deadlines?: MCDMDeadlines;
   flightTopics?: NMSet<MCDMFlightTopic>;
   predefinedUsersForFlightCoordinationLevel?: NMSet<MCDMUserAndRole>;
   remark?: string;
-};
+  proposalNote?: string;
+  proposalFeedback?: string;
+}
 
-export interface MCDMStatefulTopic {
+export interface MCDMStatefulTopic extends MCDMTopic {
   measureId?: MeasureId;
-  hotspotId?: HotspotId;
   state?: MCDMState;
+  hotspotId?: HotspotId;
   initiator?: AirNavigationUnitId;
   initiatorIsImplementer?: boolean;
   userRolesAndApprovalStates?: NMSet<MCDMUserRoleAndApprovalState>;
 }
+
+export interface MCDMTopic {
+  topicId: MCDMTopicId;
+  dataId?: PlanDataId;
+}
+
+export type MCDMTopicId = string;
 
 export interface MCDMRoleUserCategory {
   category: MCDMUserCategory;
@@ -385,9 +427,12 @@ export interface MCDMDeadlines {
   timeToImplement?: DateTimeMinute;
 }
 
-export interface MCDMFlightTopic {
+export interface MCDMFlightTopic extends MCDMStatefulTopic {
   flightKeys: FlightKeys;
+  ticket?: EhelpDeskTicketChoice;
 }
+
+export type EhelpDeskTicketChoice = unknown; // TODO: Implement this stuff
 
 export interface MCDMUserAndRole {
   user: AirNavigationUnitId;
@@ -451,21 +496,21 @@ export type TrafficVolumeLocation = {
 
 export interface RegulationInitialConstraint {
   constraintPeriod: DateTimeMinutePeriod;
-  normalRate: NMInt;
-  pendingRate: NMInt;
-  equipmentRate: NMInt;
+  normalRate: number;
+  pendingRate: number;
+  equipmentRate: number;
   exceptionalConstraint?: RegulationExceptionalConstraint;
 }
 
 export interface RegulationExceptionalConstraint {
   runwayVisualRange?: DistanceM;
-  fcmMandatory: BooleanString;
-  shift: BooleanString;
+  fcmMandatory: boolean;
+  shift: boolean;
 }
 
 export interface RegulationSupplementaryConstraint {
   constraintPeriod: DateTimeMinutePeriod;
-  supplementaryRate: NMInt;
+  supplementaryRate: number;
 }
 
 export interface HotspotListRequest {
@@ -486,8 +531,8 @@ export interface HotspotPlans {
   dataId: PlanDataId;
   dataset: Dataset;
   day: DateYearMonthDay;
-  planTransferred?: BooleanString;
-  planCutOffreached?: BooleanString;
+  planTransferred?: boolean;
+  planCutOffreached?: boolean;
   hotspotKind: HotspotKind;
   schedules: NMMap<TrafficVolumeId, NMMap<DurationHourMinute, NMSet<Hotspot>>>;
 }
@@ -502,15 +547,15 @@ export interface OTMVPlanRetrievalRequest
   otmvsWithDuration: NMSet<OTMVWithDuration>;
 }
 
-type OTMVPlans = TacticalConfigurationPlan & {
+export interface OTMVPlans extends TacticalConfigurationPlan {
   tvsOTMVs: NMMap<
     TrafficVolumeId,
     NMMap<DurationHourMinute, OTMVPlanForDuration>
   >;
-};
+}
 
 interface OTMVPlanForDuration {
-  nmSchedule: NMSet<PlannedOTMV>;
+  nmSchedule?: NMSet<PlannedOTMV>;
   clientSchedule: NMSet<PlannedOTMV>;
 }
 
@@ -541,9 +586,11 @@ interface OTMVSustained {
 type OTMVThreshold = number;
 
 export interface OTMVPlanRetrievalReply extends Reply {
-  data: {
-    plans: OTMVPlans;
-  };
+  data: OTMVPlanRetrievalReplyData;
+}
+
+export interface OTMVPlanRetrievalReplyData {
+  plans: OTMVPlans;
 }
 
 export interface CapacityPlanRetrievalRequest
@@ -552,9 +599,11 @@ export interface CapacityPlanRetrievalRequest
 }
 
 export interface CapacityPlanRetrievalReply extends Reply {
-  data: {
-    plans: CapacityPlans;
-  };
+  data: CapacityPlanRetrievalReplyData;
+}
+
+export interface CapacityPlanRetrievalReplyData {
+  plans: CapacityPlans;
 }
 
 export interface CapacityPlans extends TacticalConfigurationPlan {
@@ -562,7 +611,7 @@ export interface CapacityPlans extends TacticalConfigurationPlan {
 }
 
 export interface PlannedCapacities {
-  nmSchedule: NMSet<PlannedCapacity>;
+  nmSchedule?: NMSet<PlannedCapacity>;
   clientSchedule: NMSet<PlannedCapacity>;
 }
 

@@ -23,10 +23,7 @@ describe('queryCompleteAIXMDatasets', () => {
     const res = await Airspace.queryCompleteAIXMDatasets({
       queryCriteria: {
         publicationPeriod: {
-          wef: moment
-            .utc()
-            .subtract(28, 'days')
-            .toDate(),
+          wef: moment.utc().subtract(28, 'days').toDate(),
           unt: moment.utc().toDate(),
         },
       },
@@ -36,9 +33,13 @@ describe('queryCompleteAIXMDatasets', () => {
     expect(res.data.datasetSummaries.length).toBeGreaterThanOrEqual(1);
     const dataset = res.data.datasetSummaries[0];
     expect(Array.isArray(dataset.files)).toBe(true);
-    dataset.files.forEach(f => {
+    expect(dataset.files.length).toBeGreaterThan(0);
+    dataset.files.forEach((f) => {
       expect(f).toMatchObject({
         id: expect.stringMatching(/BASELINE\.zip$/),
+        fileLength: expect.any(Number),
+        releaseTime: expect.any(Date),
+        type: expect.any(String),
       });
     });
   });

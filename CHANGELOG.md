@@ -1,7 +1,7 @@
 # Master
 
 - Jest v27
-- soap v0.45.0
+- soap v0.42.0
 - Replace `request` by `axios`
 
 # v0.4.5 (2020-12-09)

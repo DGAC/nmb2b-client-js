@@ -7,11 +7,22 @@ export interface ShiftHourMinute {
   value: DurationHourMinute;
 }
 
+export type NMB2BVersion = string; // DIGIT{2}.DIGIT{1}.DIGIT{1}
+
+export interface File {
+  id: FileId;
+  type: FileType;
+  releaseTime: DateTimeSecond;
+  fileLength: number;
+}
+
+export type FileId = string; // (ALPHA|DIGIT|.|_|/){1,200}
+export type FileType = string; // ALPHA{1,50}
+
 export type AirNavigationUnitId = string; // ANY{1,12}
 export type UserId = string; // ANY{1,12}
 export type PlanDataId = string; // (O|F|S)(DIGIT){14}(UALPHA|DIGIT){0,40}
 
-export type BooleanString = 'true' | 'false';
 export type NMInt = string;
 export interface NMSet<A> {
   item: A[];
@@ -49,6 +60,10 @@ export interface LastUpdate {
   airNavigationUnitId?: AirNavigationUnitId;
 }
 
+export type WeightKg = number; // [0, 999999]
+
+export type FlightLevelM = number;
+
 export interface Position {
   latitude: Latitude;
   longitude: Longitude;
@@ -82,6 +97,7 @@ export type DistanceNM = number;
 export type Bearing = number;
 
 export type ReplyStatus =
+  | 'BANDWIDTH_QUOTAS_EXCEEDED'
   | 'CONFLICTING_UPDATE'
   | 'INTERNAL_ERROR'
   | 'INVALID_DATASET'
@@ -92,7 +108,9 @@ export type ReplyStatus =
   | 'OBJECT_NOT_FOUND'
   | 'OBJECT_OUTDATED'
   | 'OK'
-  | 'OVERLOAD'
+  | 'REQUEST_COUNT_QUOTA_EXCEEDED'
+  | 'REQUEST_OVERBOOKING_REJECTED'
+  | 'RESOURCE_OVERLOAD'
   | 'SERVICE_UNAVAILABLE'
   | 'TOO_MANY_RESULTS';
 
@@ -116,6 +134,7 @@ export interface Request {
 export type ServiceGroup =
   | 'AIRSPACE'
   | 'COMMON'
+  | 'FFICE'
   | 'FLIGHT'
   | 'FLOW'
   | 'GENERAL_INFORMATION'
