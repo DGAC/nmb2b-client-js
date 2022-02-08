@@ -24,16 +24,8 @@ describe('queryRegulations', () => {
       const res: RegulationListReply = await Flow.queryRegulations({
         dataset: { type: 'OPERATIONAL' },
         queryPeriod: {
-          wef: moment
-            .utc()
-            .subtract(10, 'hour')
-            .startOf('hour')
-            .toDate(),
-          unt: moment
-            .utc()
-            .add(10, 'hour')
-            .startOf('hour')
-            .toDate(),
+          wef: moment.utc().subtract(10, 'hour').startOf('hour').toDate(),
+          unt: moment.utc().add(10, 'hour').startOf('hour').toDate(),
         },
         requestedRegulationFields: {
           item: [
@@ -51,35 +43,26 @@ describe('queryRegulations', () => {
       expect(items).toBeDefined();
       expect(items.length).toBeGreaterThanOrEqual(1);
 
-      // console.warn(inspect(items, { depth: null }));
-      //
-      // const filteredItems = items.filter(
-      //   ({ location }) =>
-      //     location["referenceLocation-ReferenceLocationAirspace"]
-      // );
-      //
-      //
-      // console.warn(JSON.stringify(filteredItems, null, 2));
-      // const airspaces = filteredItems.map(
-      //   ({ location }) =>
-      //     location["referenceLocation-ReferenceLocationAirspace"].id
-      // );
-      //
-      // console.warn(JSON.stringify(airspaces, null, 2));
-
-      items.forEach(item => {
+      items.forEach((item) => {
         expect(item.regulationId).toBeDefined();
-        expect(item.location).toBeDefined();
+        if (!item.location) {
+          return;
+        }
 
-        if (
-          'location' in item &&
-          // @ts-ignore
-          'referenceLocation-ReferenceLocationAirspace' in item.location
-        ) {
+        const location = item.protectedLocation || item.location;
+
+        if ('referenceLocation-ReferenceLocationAirspace' in location) {
           expect(
-            item.location['referenceLocation-ReferenceLocationAirspace'],
+            location['referenceLocation-ReferenceLocationAirspace'],
           ).toMatchObject({
             type: 'AIRSPACE',
+            id: expect.any(String),
+          });
+        } else if ('referenceLocation-ReferenceLocationAerodrome' in location) {
+          expect(
+            location['referenceLocation-ReferenceLocationAerodrome'],
+          ).toMatchObject({
+            type: 'AERODROME',
             id: expect.any(String),
           });
         }

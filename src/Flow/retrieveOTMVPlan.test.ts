@@ -36,7 +36,7 @@ describe('retrieveOTMVPlan', () => {
         },
       });
 
-      // console.log(inspect(res.data, { depth: null }));
+      console.log(inspect(res.data, { depth: null }));
     } catch (err) {
       console.log(inspect(err, { depth: null }));
       throw err;
