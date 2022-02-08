@@ -30,17 +30,15 @@ test('should prevent concurrent downloads', async () => {
   const flavour = 'PREOPS';
   const filePath = 'test.tar.gz';
 
-  const scope = nock(getFileUrl(filePath, { flavour }))
+  const root = new URL(getFileUrl(filePath, { flavour }));
+
+  const scope = nock(root.origin)
     .get(/.*/)
     .once()
     .delayBody(2000)
     .reply(200, fs.readFileSync(TEST_FILE));
 
-  const soap = nock(getFileUrl(filePath, { flavour }))
-    .post(/.+/)
-    .once()
-    .delayBody(1000)
-    .reply(200, fs.readFileSync(TEST_FILE))
+  const soap = nock(root.origin)
     .post('/B2B_PREOPS/gateway/spec/25.0.0')
     .reply(
       200,
@@ -74,6 +72,7 @@ test('should prevent concurrent downloads', async () => {
       flavour,
       XSD_PATH: OUTPUT_DIR,
     }),
+
     // We add a delay to prevent exact concurrency
     delay(500).then(() =>
       download({
