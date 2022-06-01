@@ -54,6 +54,9 @@ import { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
 import retrieveCapacityPlan, {
   Resolver as RetrieveCapacityPlan,
 } from './retrieveCapacityPlan';
+import retrieveRunwayConfigurationPlan, {
+  Resolver as RetrieveRunwayConfigurationPlan,
+} from './retrieveRunwayConfigurationPlan';
 
 export interface FlowService {
   __soapClient: object;
@@ -64,19 +67,20 @@ export interface FlowService {
   queryTrafficCountsByTrafficVolume: QueryTrafficCountsByTrafficVolume;
   retrieveOTMVPlan: RetrieveOTMVPlan;
   retrieveCapacityPlan: RetrieveCapacityPlan;
+  retrieveRunwayConfigurationPlan: RetrieveRunwayConfigurationPlan;
 }
 
 export function getFlowClient(config: Config): Promise<FlowService> {
-  return createFlowServices(config).then(client => ({
+  return createFlowServices(config).then((client) => ({
     __soapClient: client,
     retrieveSectorConfigurationPlan: retrieveSectorConfigurationPlan(client),
     queryTrafficCountsByAirspace: queryTrafficCountsByAirspace(client),
     queryRegulations: queryRegulations(client),
     queryHotspots: queryHotspots(client),
-    queryTrafficCountsByTrafficVolume: queryTrafficCountsByTrafficVolume(
-      client,
-    ),
+    queryTrafficCountsByTrafficVolume:
+      queryTrafficCountsByTrafficVolume(client),
     retrieveOTMVPlan: retrieveOTMVPlan(client),
     retrieveCapacityPlan: retrieveCapacityPlan(client),
+    retrieveRunwayConfigurationPlan: retrieveRunwayConfigurationPlan(client),
   }));
 }
