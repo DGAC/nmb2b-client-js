@@ -1,3 +1,7 @@
+# v0.5.3 (2022-06-02)
+
+- Implement Flow.retrieveRunwayConfigurationPlan
+
 # v0.5.2 (2022-02-08)
 
 - Fix multiple serialization/deserialization issues
@@ -7,6 +11,7 @@
 - Fix typo in typings (OTMVSustained)
 
 # v0.5.0 (2022-02-08)
+
 # v0.5.0-rc.0 (2022-02-08)
 
 - NM B2B v25.0.0
@@ -50,7 +55,7 @@
 - Fix input options type declaration
 - Fix `@types/*` dependencies
 
-# v0.3.3 (2019-06-07) 
+# v0.3.3 (2019-06-07)
 
 - Works with a B2B proxy
 - Update dependencies
