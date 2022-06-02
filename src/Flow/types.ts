@@ -23,6 +23,7 @@ import {
   ReferenceLocationAerodromeSet,
   ReferenceLocationDBEPoint,
   ReferenceLocationPublishedPoint,
+  AerodromeICAOId,
 } from '../Airspace/types';
 
 import {
@@ -622,3 +623,48 @@ export interface PlannedCapacity {
 }
 
 export type Capacity = number;
+
+export interface RunwayConfigurationPlanRetrievalReply extends Reply {
+  data: RunwayConfigurationPlanRetrievalData;
+}
+
+export interface RunwayConfigurationPlanRetrievalData {
+  plan: RunwayConfigurationPlan;
+}
+
+export interface RunwayConfigurationPlan extends TacticalConfigurationPlan {
+  knownRunwayIds?: NMSet<RunwayId>;
+  nmSchedule?: NMSet<RunwayConfigurationPlanSchedule>;
+  clientSchedule?: NMSet<RunwayConfigurationPlanSchedule>;
+}
+
+export type RunwayId = string; // ([0-9]{2}([A-Z]|( )){0,1})
+
+export interface RunwayConfigurationPlanSchedule {
+  applicabilityPeriod: DateTimeMinutePeriod;
+  dataSource: PlanDataSource;
+  runwayConfigurations?: NMSet<RunwayConfiguration>;
+}
+
+export interface RunwayConfiguration {
+  runway?: RunwayId;
+  usage?: RunwayUsage;
+  runwayUsageDataSource?: PlanDataSource;
+  departureTaxiTime?: DurationHourMinute;
+  departureTaxiTimeDataSource?: PlanDataSource;
+  timeToInsertInSequence?: DurationHourMinute;
+  timeToInsertInSequenceDataSource?: PlanDataSource;
+  timeToRemoveFromSequence?: DurationHourMinute;
+  timeToRemoveFromSequenceDataSource?: PlanDataSource;
+  arrivalTaxiTime?: DurationHourMinute;
+  arrivalTaxiTimeDataSource?: PlanDataSource;
+}
+export interface RunwayConfigurationPlanRetrievalRequest
+  extends TacticalConfigurationRetrievalRequest {
+  aerodrome: AerodromeICAOId;
+}
+export type RunwayUsage =
+  | 'DEPARTURE'
+  | 'ARRIVAL'
+  | 'DEPARTURE_ARRIVAL'
+  | 'INACTIVE';
