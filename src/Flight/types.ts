@@ -91,6 +91,7 @@ import {
   Dataset,
   Reply,
   NMSet,
+  NMList,
   Position as CommonPosition,
   WeightKg,
   FlightLevelM,
@@ -413,7 +414,7 @@ export interface Flight {
     currentCounter: number;
     maxLimit: number;
   };
-  slotSwapCandidateList?: Array<{
+  slotSwapCandidateList?: NMList<{
     // SlotSwapCandidate,
     ifplId: IFPLId;
     subjectDeltaDelayMinutes: number;
@@ -428,8 +429,8 @@ export interface Flight {
     afterCTO: DurationMinute;
   };
   flightDataVersionNr?: number; // FlightDataVersionNumber
-  applicableScenarios?: TrafficVolumeScenarios[];
-  apiSubmissionRules?: APISubmissionRules; // TODO
+  applicableScenarios?: NMList<TrafficVolumeScenarios>;
+  apiSubmissionRules?: APISubmissionRules;
   avoidedRegulations?: NMSet<RegulationId>;
   routeChargeIndicator?: number;
   fuelConsumptionIndicator?: number;
@@ -437,7 +438,7 @@ export interface Flight {
   yoyoFlightForLocation?: YoYoFlightForLocation;
   turnFlightForLocation?: TurnFlightForLocation;
   wakeTurbulenceCategory?: WakeTurbulenceCategory;
-  alternateAerodromes?: AerodromeICAOId[];
+  alternateAerodromes?: NMList<AerodromeICAOId>;
   flightCriticality?: FlightCriticalityIndicator;
   oceanicRoute?: boolean;
 }
