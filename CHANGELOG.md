@@ -1,3 +1,7 @@
+# Master
+
+- Fix NMList TypeScript type (#97)
+
 # v0.5.3 (2022-06-02)
 
 - Implement Flow.retrieveRunwayConfigurationPlan
