@@ -27,6 +27,10 @@ export type NMInt = string;
 export interface NMSet<A> {
   item: A[];
 }
+
+export interface NMList<A> {
+  item: A[];
+}
 export interface NMMap<K, V> {
   item: Array<{
     key: K;
