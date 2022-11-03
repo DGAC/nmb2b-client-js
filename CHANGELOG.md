@@ -1,3 +1,8 @@
+# Master
+
+- Drop node 12 support (#100)
+- Add node 18 support (#100)
+
 # v0.5.4 (2022-10-17)
 
 - Fix NMList TypeScript type (#97)
