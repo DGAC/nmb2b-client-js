@@ -3,13 +3,13 @@
 //   process.exit(0);
 // }
 
-const path = require('path');
-const downloadWSDL = require('../tests/setup_hook');
-const { B2B_VERSION } = require('../dist/constants');
-const { dirExists } = require('../dist/utils/fs');
-const b2bOptions = require('../tests/options');
+import path from 'path';
+import { downloadWSDL } from '../tests/setup_hook';
+import { B2B_VERSION } from '../src/constants';
+import { dirExists } from '../src/utils/fs';
+import b2bOptions from '../tests/options';
 
-dirExists(path.join(b2bOptions.XSD_PATH, B2B_VERSION)).then(exists => {
+dirExists(path.join(b2bOptions.XSD_PATH, B2B_VERSION)).then((exists) => {
   if (exists) {
     console.log(
       `B2B XSD for version ${B2B_VERSION} already exists, do not download`,

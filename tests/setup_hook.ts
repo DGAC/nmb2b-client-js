@@ -1,14 +1,12 @@
-const dotenv = require('dotenv');
-dotenv.config();
-const { B2B_VERSION } = require('../dist/constants');
-const { requestFilename } = require('../dist/utils/xsd/filePath');
-const { downloadFile } = require('../dist/utils/xsd/downloadFile');
-const path = require('path');
-const { createDir, dirExists } = require('../dist/utils/fs');
+import 'dotenv/config';
+import { B2B_VERSION } from '../src/constants';
+import { requestFilename } from '../src/utils/xsd/filePath';
+import { downloadFile } from '../src/utils/xsd/downloadFile';
+import path from 'path';
+import { createDir, dirExists } from '../src/utils/fs';
+import b2bOptions from './options';
 
-const b2bOptions = require('./options');
-
-module.exports = async function() {
+export async function downloadWSDL() {
   console.log('Global setup !');
 
   const { flavour, security, XSD_PATH, xsdEndpoint } = b2bOptions;
@@ -20,11 +18,11 @@ module.exports = async function() {
     console.log('XSD files not found, downloading from B2B ...');
     await createDir(XSD_PATH);
     await requestFilename({ flavour, security, xsdEndpoint })
-      .then(fileName => {
+      .then((fileName) => {
         console.log(`Downloading ${fileName}`);
         return fileName;
       })
-      .then(fileName =>
+      .then((fileName) =>
         downloadFile(fileName, {
           flavour,
           security,
@@ -33,4 +31,4 @@ module.exports = async function() {
         }),
       );
   }
-};
+}

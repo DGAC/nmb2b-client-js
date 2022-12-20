@@ -1,7 +1,6 @@
 import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
@@ -24,14 +23,8 @@ describe('queryFlightsByTrafficVolume', () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment
-          .utc()
-          .subtract(2, 'hours')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(2, 'hours')
-          .toDate(),
+        wef: moment.utc().subtract(2, 'hours').toDate(),
+        unt: moment.utc().add(2, 'hours').toDate(),
       },
       trafficVolume: 'LFERMS',
     });
@@ -49,7 +42,7 @@ describe('queryFlightsByTrafficVolume', () => {
 
     expect(Array.isArray(flights)).toBe(true);
 
-    flights.forEach(flight =>
+    flights.forEach((flight) =>
       expect(flight).toMatchObject({
         flight: {
           flightId: {
