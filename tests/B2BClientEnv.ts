@@ -1,11 +1,7 @@
 // const { getClients, getSoapClients } = require('./utils');
-const NodeEnvironment = require('jest-environment-node');
+import { TestEnvironment } from 'jest-environment-node';
 
-class B2BClientEnvironment extends NodeEnvironment {
-  constructor(config) {
-    super(config);
-  }
-
+class B2BClientEnvironment extends TestEnvironment {
   async setup() {
     await super.setup();
 
@@ -25,10 +21,6 @@ class B2BClientEnvironment extends NodeEnvironment {
   async teardown() {
     await super.teardown();
   }
-
-  runScript(script) {
-    return super.runScript(script);
-  }
 }
 
-module.exports = B2BClientEnvironment;
+export default B2BClientEnvironment;

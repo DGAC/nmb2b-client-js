@@ -1,7 +1,6 @@
 import { Security } from './security';
 import { B2B_VERSION, B2BFlavour } from './constants';
 import { isConfigValid, Config, obfuscate } from './config';
-import { dirExists, createDir } from './utils/fs.js';
 import { download as downloadWSDL } from './utils/xsd';
 import d from './utils/debug';
 const debug = d();
@@ -66,7 +65,7 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
     getFlowClient(options),
     getGeneralInformationClient(options),
   ])
-    .then(res => {
+    .then((res) => {
       debug('Successfully created B2B Client');
       return res;
     })
@@ -94,7 +93,7 @@ export async function makeAirspaceClient(
 
   await downloadWSDL(options);
 
-  return getAirspaceClient(options).then(res => {
+  return getAirspaceClient(options).then((res) => {
     debug('Successfully created B2B Airspace client');
     return res;
   });
@@ -115,7 +114,7 @@ export async function makeFlightClient(
 
   await downloadWSDL(options);
 
-  return getFlightClient(options).then(res => {
+  return getFlightClient(options).then((res) => {
     debug('Successfully created B2B Flight client');
     return res;
   });
@@ -134,7 +133,7 @@ export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
 
   await downloadWSDL(options);
 
-  return getFlowClient(options).then(res => {
+  return getFlowClient(options).then((res) => {
     debug('Successfully created B2B Flow client');
     return res;
   });
@@ -155,7 +154,7 @@ export async function makeGeneralInformationClient(
 
   await downloadWSDL(options);
 
-  return getGeneralInformationClient(options).then(res => {
+  return getGeneralInformationClient(options).then((res) => {
     debug('Successfully created B2B GeneralInformation client');
     return res;
   });
@@ -176,7 +175,7 @@ export async function makePublishSubscribeClient(
 
   await downloadWSDL(options);
 
-  return getPublishSubscribeClient(options).then(res => {
+  return getPublishSubscribeClient(options).then((res) => {
     debug('Successfully created B2B PublishSubscribe client');
     return res;
   });

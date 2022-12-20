@@ -1,10 +1,8 @@
-
 import { makeB2BClient } from '..';
 import b2bOptions from '../tests/options';
 import { inspect } from 'util';
 
 async function main() {
-  // $FlowFixMe
   const clients = await makeB2BClient(b2bOptions);
 
   console.log(

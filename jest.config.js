@@ -10,5 +10,5 @@ module.exports = {
     '**/?(*.)+(spec|test).(js|ts)?(x)',
   ],
   moduleFileExtensions: ['ts', 'js'],
-  testEnvironment: './tests/B2BClientEnv.js',
+  testEnvironment: './tests/B2BClientEnv.ts',
 };
