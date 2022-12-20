@@ -31,7 +31,7 @@ describe('retrieveCapacityPlan', () => {
       expect(res.data).toBeDefined();
       // console.log(inspect(res.data, { depth: null }));
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

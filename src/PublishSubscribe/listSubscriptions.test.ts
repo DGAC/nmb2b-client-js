@@ -23,7 +23,7 @@ describe('listSubscriptions', () => {
   xtest('list subscriptions', async () => {
     const res: SubscriptionListReply = await PublishSubscribe.listSubscriptions();
 
-    console.log(inspect(res.data, { depth: null }));
+    console.log(inspect(res.data, { depth: 4 }));
 
     if (!res.data.subscriptions) {
       return;

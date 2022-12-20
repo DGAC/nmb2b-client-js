@@ -27,14 +27,8 @@ describe('queryFlightPlans', () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment
-          .utc()
-          .subtract(6, 'hours')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(6, 'hours')
-          .toDate(),
+        wef: moment.utc().subtract(6, 'hours').toDate(),
+        unt: moment.utc().add(6, 'hours').toDate(),
       },
       airspace: 'LFEERMS',
     });
@@ -43,7 +37,7 @@ describe('queryFlightPlans', () => {
       return;
     }
 
-    knownFlight = res.data.flights.find(f => {
+    knownFlight = res.data.flights.find((f) => {
       if (!('flight' in f)) {
         return false;
       }
@@ -104,7 +98,7 @@ describe('queryFlightPlans', () => {
         return;
       }
 
-      data.summaries.forEach(f => {
+      data.summaries.forEach((f) => {
         if (!('lastValidFlightPlan' in f || 'currentInvalid' in f)) {
           throw new Error(
             'queryFlightPlans: either lastValidFlightPlan or currentInvalid should exist',
@@ -131,7 +125,7 @@ describe('queryFlightPlans', () => {
         }
       });
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

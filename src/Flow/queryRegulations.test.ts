@@ -68,7 +68,7 @@ describe('queryRegulations', () => {
         }
       });
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

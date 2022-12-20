@@ -1,5 +1,6 @@
 # Master
 
+- NM 26.0.0 support (#103)
 - Update dependencies (#102)
 - Drop node 12 support (#100)
 - Add node 18 support (#100)

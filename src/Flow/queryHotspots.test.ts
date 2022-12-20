@@ -27,14 +27,14 @@ describe('queryHotspots', () => {
         hotspotKind: 'PROBLEM',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: null }));
+      !process.env.CI && console.log(inspect(res, { depth: 4 }));
     } catch (err) {
       if (err.status === 'NOT_AUTHORISED') {
         console.warn('Test cancelled, NOT_AUTHORIZED');
         return;
       }
 
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
 
       throw err;
     }

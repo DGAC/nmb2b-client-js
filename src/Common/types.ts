@@ -16,12 +16,16 @@ export interface File {
   fileLength: number;
 }
 
-export type FileId = string; // (ALPHA|DIGIT|.|_|/){1,200}
+export type Cost = number; // A positive or negative cost expressed in EUR.
+export type FileId = string; // (ALPHA|DIGIT|.|_|-|/){1,200}
 export type FileType = string; // ALPHA{1,50}
 
-export type AirNavigationUnitId = string; // ANY{1,12}
+export type AirNavigationUnitId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,12}
 export type UserId = string; // ANY{1,12}
 export type PlanDataId = string; // (O|F|S)(DIGIT){14}(UALPHA|DIGIT){0,40}
+
+// TODO: Implement proper duration (seconds) parsing
+export type SignedDurationHourMinuteSecond = string; // +hhmmss / -hhmmss
 
 export type NMInt = string;
 export interface NMSet<A> {
@@ -89,9 +93,11 @@ export type LongitudeSide = string;
 
 export type DatasetType = 'FORECAST' | 'OPERATIONAL' | 'SIMULATION';
 export type SimulationId = string; // ANY{1,100}
+export type SimulationState = 'INITIAL' | 'CURRENT';
 export interface Dataset {
   type: DatasetType;
-  simulationId?: SimulationId;
+  simulationIdentifier?: SimulationId;
+  simulationState?: SimulationState;
 }
 
 export type ReceivedOrSent = 'RECEIVED' | 'SENT' | 'UNKNOWN';
@@ -101,22 +107,23 @@ export type DistanceNM = number;
 export type Bearing = number;
 
 export type ReplyStatus =
-  | 'BANDWIDTH_QUOTAS_EXCEEDED'
-  | 'CONFLICTING_UPDATE'
-  | 'INTERNAL_ERROR'
-  | 'INVALID_DATASET'
+  | 'OK'
   | 'INVALID_INPUT'
   | 'INVALID_OUTPUT'
-  | 'NOT_AUTHORISED'
-  | 'OBJECT_EXISTS'
-  | 'OBJECT_NOT_FOUND'
-  | 'OBJECT_OUTDATED'
-  | 'OK'
-  | 'REQUEST_COUNT_QUOTA_EXCEEDED'
-  | 'REQUEST_OVERBOOKING_REJECTED'
-  | 'RESOURCE_OVERLOAD'
+  | 'INTERNAL_ERROR'
   | 'SERVICE_UNAVAILABLE'
-  | 'TOO_MANY_RESULTS';
+  | 'RESOURCE_OVERLOAD'
+  | 'REQUEST_COUNT_QUOTA_EXCEEDED'
+  | 'PARALLEL_REQUEST_COUNT_QUOTA_EXCEEDED'
+  | 'REQUEST_OVERBOOKING_REJECTED'
+  | 'BANDWIDTH_QUOTAS_EXCEEDED'
+  | 'NOT_AUTHORISED'
+  | 'OBJECT_NOT_FOUND'
+  | 'TOO_MANY_RESULTS'
+  | 'OBJECT_EXISTS'
+  | 'OBJECT_OUTDATED'
+  | 'CONFLICTING_UPDATE'
+  | 'INVALID_DATASET';
 
 export interface Reply {
   requestReceptionTime?: DateTimeSecond;
@@ -149,10 +156,24 @@ export interface B2B_Error {
   attributes?: string[];
   group: ServiceGroup;
   category: string;
-  type: string;
+  type: ErrorType;
   parameters: { [key: string]: string };
   message?: string;
 }
+
+export type ErrorType =
+  | 'UNSUPPORTED_VERSION'
+  | 'ATTRIBUTE_CANNOT_BE_NULL'
+  | 'ATTRIBUTE_MUST_BE_NULL'
+  | 'INVALID_COLLECTION_SIZE'
+  | 'INVALID_ATTRIBUTE_VALUE'
+  | 'MISSING_CHOICE_VALUE'
+  | 'CHOICE_OVERFLOW'
+  | 'REQUESTED_ATTRIBUTE_NOT_ALLOWED'
+  | 'REPLY_ATTRIBUTE_NOT_SET'
+  | 'REQUEST_COUNT_QUOTA_EXCEEDED'
+  | 'REQUEST_OVERBOOKING_ACCEPTED'
+  | 'UNKNOWN';
 
 export type UUID = string;
 export type NMRelease = string;

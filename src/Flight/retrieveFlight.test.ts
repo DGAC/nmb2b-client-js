@@ -81,7 +81,7 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: null }));
+      !process.env.CI && console.log(inspect(res, { depth: 4 }));
 
       expect(res.data.flight?.ftfmPointProfile).toBeDefined();
       res.data.flight?.ftfmPointProfile?.forEach((item) => {
@@ -93,7 +93,7 @@ describe('retrieveFlight', () => {
         );
       });
     } catch (err) {
-      console.error(inspect(err, { depth: null }));
+      console.error(inspect(err, { depth: 4 }));
       throw err;
     }
   });
@@ -117,9 +117,9 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: null }));
+      !process.env.CI && console.log(inspect(res, { depth: 4 }));
     } catch (err) {
-      console.error(inspect(err, { depth: null }));
+      console.error(inspect(err, { depth: 4 }));
       throw err;
     }
   });

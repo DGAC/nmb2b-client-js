@@ -29,9 +29,9 @@ describe('retrieveRunwayConfigurationPlan', () => {
 
         expect(res.data).toBeDefined();
         expect(res.data.plan.planCutOffReached).toEqual(expect.any(Boolean));
-      console.log(inspect(res.data, { depth: null }));
+      console.log(inspect(res.data, { depth: 4 }));
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

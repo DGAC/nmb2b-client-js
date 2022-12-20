@@ -2,7 +2,6 @@ import { inspect } from 'util';
 import { makeAirspaceClient } from '..';
 import { AirspaceService } from '.';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 
 jest.setTimeout(20000);

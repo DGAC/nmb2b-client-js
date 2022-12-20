@@ -84,7 +84,7 @@ describe('retrieveSectorConfigurationPlan', () => {
       nmSchedule.item.forEach(testSchedule);
       clientSchedule.item.forEach(testSchedule);
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

@@ -83,7 +83,7 @@ describe('queryFlightsByMeasure', () => {
 
       // !process.env.CI && console.log(inspect(res.data, { depth: null }));
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

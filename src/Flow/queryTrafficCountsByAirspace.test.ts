@@ -22,25 +22,17 @@ describe('queryTrafficCountsByAirspace', () => {
       const res = await Flow.queryTrafficCountsByAirspace({
         dataset: { type: 'OPERATIONAL' },
         trafficWindow: {
-          wef: moment
-            .utc()
-            .subtract(1, 'hour')
-            .startOf('hour')
-            .toDate(),
-          unt: moment
-            .utc()
-            .add(1, 'hour')
-            .startOf('hour')
-            .toDate(),
+          wef: moment.utc().subtract(1, 'hour').startOf('hour').toDate(),
+          unt: moment.utc().add(1, 'hour').startOf('hour').toDate(),
         },
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficTypes: { item: ['LOAD', 'DEMAND', 'REGULATED_DEMAND'] },
-        computeSubTotals: false,
         countsInterval: {
           duration: 20 * 60,
           step: 20 * 60,
         },
+        subTotalComputeMode: 'NO_SUB_TOTALS',
         airspace: 'LFEE5R',
         calculationType: 'OCCUPANCY',
       });
@@ -80,7 +72,7 @@ describe('queryTrafficCountsByAirspace', () => {
 
       counts.item.forEach(testItem);
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

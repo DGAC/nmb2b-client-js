@@ -25,21 +25,13 @@ describe('queryTrafficCountsByTrafficVolume', () => {
       const res = await Flow.queryTrafficCountsByTrafficVolume({
         dataset: { type: 'OPERATIONAL' },
         trafficWindow: {
-          wef: moment
-            .utc()
-            .subtract(1, 'hour')
-            .startOf('hour')
-            .toDate(),
-          unt: moment
-            .utc()
-            .add(1, 'hour')
-            .startOf('hour')
-            .toDate(),
+          wef: moment.utc().subtract(1, 'hour').startOf('hour').toDate(),
+          unt: moment.utc().add(1, 'hour').startOf('hour').toDate(),
         },
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficTypes: { item: ['LOAD'] },
-        computeSubTotals: true,
+        subTotalComputeMode: 'SUB_TOTALS_BY_TRAFFIC_TYPE',
         countsInterval: {
           duration: 20 * 60,
           step: 20 * 60,
@@ -70,7 +62,7 @@ describe('queryTrafficCountsByTrafficVolume', () => {
                 key: 'LOAD',
                 value: {
                   totalCounts: expect.any(Number),
-                  subTotalsCounts: {
+                  subTotalsCountsByTrafficType: {
                     item: expect.arrayContaining([
                       expect.objectContaining({
                         key: expect.any(String),
@@ -80,17 +72,13 @@ describe('queryTrafficCountsByTrafficVolume', () => {
                   },
                 },
               }),
-              // expect.objectContaining({
-              //   key: 'REGULATED_DEMAND',
-              //   value: { totalCounts: expect.any(Number) },
-              // }),
             ]),
           },
         });
 
       counts.item.forEach(testItem);
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });
