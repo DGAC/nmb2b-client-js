@@ -1,7 +1,5 @@
-import { inspect } from 'util';
 import { makeAirspaceClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { AirspaceService } from '.';
 import { AUPSummary } from './types';

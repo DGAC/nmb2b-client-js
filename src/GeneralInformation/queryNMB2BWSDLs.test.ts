@@ -1,9 +1,6 @@
-import { inspect } from 'util';
-import { makeGeneralInformationClient } from '..';
-import moment from 'moment';
-// @ts-ignore
-import b2bOptions from '../../tests/options';
 import { GeneralInformationService } from '.';
+import { makeGeneralInformationClient } from '..';
+import b2bOptions from '../../tests/options';
 jest.setTimeout(60000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__

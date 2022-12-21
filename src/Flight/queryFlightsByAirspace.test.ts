@@ -1,9 +1,6 @@
-import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 jest.setTimeout(20000);
 
@@ -24,14 +21,8 @@ describe('queryFlightsByAirspace', () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment
-          .utc()
-          .subtract(10, 'minutes')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(10, 'minutes')
-          .toDate(),
+        wef: moment.utc().subtract(10, 'minutes').toDate(),
+        unt: moment.utc().add(10, 'minutes').toDate(),
       },
       airspace: 'LFEERMS',
     });
@@ -42,7 +33,7 @@ describe('queryFlightsByAirspace', () => {
 
     expect(Array.isArray(flights)).toBe(true);
 
-    flights.forEach(flight =>
+    flights.forEach((flight) =>
       expect(flight).toMatchObject({
         flight: {
           flightId: {

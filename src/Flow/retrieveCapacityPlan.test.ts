@@ -1,7 +1,6 @@
 import { inspect } from 'util';
-import { makeFlowClient, B2BClient } from '..';
+import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
 import { FlowService } from '.';

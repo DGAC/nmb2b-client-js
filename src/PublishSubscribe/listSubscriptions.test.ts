@@ -1,12 +1,10 @@
 import { inspect } from 'util';
-import { makePublishSubscribeClient, B2BClient } from '..';
-import moment from 'moment';
-// @ts-ignore
+import { makePublishSubscribeClient } from '..';
 import b2bOptions from '../../tests/options';
 jest.setTimeout(20000);
 
-import { SubscriptionListReply } from './listSubscriptions';
 import { PublishSubscribeService } from '.';
+import { SubscriptionListReply } from './listSubscriptions';
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
   ? test.skip
@@ -21,7 +19,8 @@ describe('listSubscriptions', () => {
   test('Empty test', () => {});
 
   xtest('list subscriptions', async () => {
-    const res: SubscriptionListReply = await PublishSubscribe.listSubscriptions();
+    const res: SubscriptionListReply =
+      await PublishSubscribe.listSubscriptions();
 
     console.log(inspect(res.data, { depth: 4 }));
 

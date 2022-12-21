@@ -1,7 +1,6 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan';
 import { FlowService } from '.';
@@ -42,7 +41,7 @@ describe('retrieveSectorConfigurationPlan', () => {
 
       !process.env.CI && console.log(clientSchedule.item);
 
-      knownConfigurations.item.forEach(conf =>
+      knownConfigurations.item.forEach((conf) =>
         expect(conf).toMatchObject({
           key: expect.any(String),
           value: {
@@ -58,11 +57,11 @@ describe('retrieveSectorConfigurationPlan', () => {
 
       const keys = Array.from(map.keys());
       expect(keys.length).toBeGreaterThan(0);
-      keys.forEach(k => expect(typeof k).toBe('string'));
+      keys.forEach((k) => expect(typeof k).toBe('string'));
 
       const values = Array.from(map.values());
       expect(values.length).toBeGreaterThan(0);
-      values.forEach(v => {
+      values.forEach((v) => {
         expect(Array.isArray(v)).toBe(true);
       });
 

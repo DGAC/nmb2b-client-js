@@ -1,7 +1,6 @@
 import { inspect } from 'util';
 import { makeFlowClient, B2BClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
 import { RunwayConfigurationPlanRetrievalReply } from './types';
@@ -27,8 +26,8 @@ describe('retrieveRunwayConfigurationPlan', () => {
           aerodrome: 'LFBD',
         });
 
-        expect(res.data).toBeDefined();
-        expect(res.data.plan.planCutOffReached).toEqual(expect.any(Boolean));
+      expect(res.data).toBeDefined();
+      expect(res.data.plan.planCutOffReached).toEqual(expect.any(Boolean));
       console.log(inspect(res.data, { depth: 4 }));
     } catch (err) {
       console.log(inspect(err, { depth: 4 }));

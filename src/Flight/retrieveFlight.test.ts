@@ -1,9 +1,8 @@
 import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys, flightToFlightKeys } from './utils';
+import { flightToFlightKeys } from './utils';
 import { FlightService } from '.';
 jest.setTimeout(20000);
 

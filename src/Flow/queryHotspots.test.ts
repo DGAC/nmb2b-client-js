@@ -1,7 +1,5 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
-import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
 jest.setTimeout(20000);

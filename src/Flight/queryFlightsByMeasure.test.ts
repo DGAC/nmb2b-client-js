@@ -1,9 +1,7 @@
 import { inspect } from 'util';
 import { makeFlightClient, makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlowService } from '../Flow';
 import { Regulation } from '../Flow/types';
@@ -29,16 +27,8 @@ describe('queryFlightsByMeasure', () => {
     const res = await Flow.queryRegulations({
       dataset: { type: 'OPERATIONAL' },
       queryPeriod: {
-        wef: moment
-          .utc()
-          .subtract(2, 'hour')
-          .startOf('hour')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(10, 'hour')
-          .startOf('hour')
-          .toDate(),
+        wef: moment.utc().subtract(2, 'hour').startOf('hour').toDate(),
+        unt: moment.utc().add(10, 'hour').startOf('hour').toDate(),
       },
       requestedRegulationFields: {
         item: ['applicability', 'location', 'reason'],
