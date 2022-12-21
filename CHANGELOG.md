@@ -3,6 +3,8 @@
 - Update dependencies (#102)
 - Drop node 12 support (#100)
 - Add node 18 support (#100)
+- Add updateCapacityPlan
+- Add updateOTMVPlan
 
 # v0.5.4 (2022-10-17)
 

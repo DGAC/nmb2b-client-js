@@ -23,6 +23,7 @@ describe('queryNMB2BWSDLs', () => {
       });
       console.log('result = ', JSON.stringify(res, null, 2));
       !process.env.CI && console.dir(res, { depth: null });
+      expect(res.data).toBeDefined();
     } catch (err) {
       // console.error(inspect(err, { depth: null }));
       throw err;
