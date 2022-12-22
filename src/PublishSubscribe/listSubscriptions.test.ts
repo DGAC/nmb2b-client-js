@@ -16,7 +16,7 @@ beforeAll(async () => {
 });
 
 describe('listSubscriptions', () => {
-  test('List subscriptions', async () => {
+  test.skip('List subscriptions', async () => {
     const res: SubscriptionListReply =
       await PublishSubscribe.listSubscriptions();
 
