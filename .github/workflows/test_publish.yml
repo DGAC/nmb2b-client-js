@@ -36,7 +36,7 @@ jobs:
           - 18.x
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -47,7 +47,7 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: '[GH Cache] yarn'
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -59,7 +59,7 @@ jobs:
         run: mkdir b2b-xsd && touch b2b-xsd/.ghcache
 
       - name: '[GH Cache] B2B XSD'
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: 'b2b-xsd'
           key: ${{ runner.os }}-b2b-xsd-${{ hashFiles('**/b2b-xsd/**')}}
@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -103,8 +103,8 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: '[GH Cache] yarn'
-        uses: actions/cache@v1
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        uses: actions/cache@v3
+        id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
