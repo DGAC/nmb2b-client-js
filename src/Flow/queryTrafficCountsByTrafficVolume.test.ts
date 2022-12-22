@@ -40,16 +40,12 @@ describe('queryTrafficCountsByTrafficVolume', () => {
       });
 
       expect(res.data.counts).toBeDefined();
+
       const { counts } = res.data;
-      if (!counts) {
-        // Should never happen;
-        return;
-      }
+      expect(Array.isArray(counts?.item)).toBe(true);
+      expect(counts?.item.length).toBe(6);
 
-      expect(Array.isArray(counts.item)).toBe(true);
-      expect(counts.item.length).toBe(6);
-
-      const testItem = (item: any) =>
+      for (const item of counts?.item ?? []) {
         expect(item).toMatchObject({
           key: {
             wef: expect.any(Date),
@@ -74,8 +70,7 @@ describe('queryTrafficCountsByTrafficVolume', () => {
             ]),
           },
         });
-
-      counts.item.forEach(testItem);
+      }
     } catch (err) {
       console.log(inspect(err, { depth: 4 }));
       throw err;

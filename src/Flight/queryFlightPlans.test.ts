@@ -97,7 +97,7 @@ describe('queryFlightPlans', () => {
         return;
       }
 
-      data.summaries.forEach((f) => {
+      for (const f of data.summaries) {
         if (!('lastValidFlightPlan' in f || 'currentInvalid' in f)) {
           throw new Error(
             'queryFlightPlans: either lastValidFlightPlan or currentInvalid should exist',
@@ -122,7 +122,7 @@ describe('queryFlightPlans', () => {
             'Query returned a flight with a currentInvalid property',
           );
         }
-      });
+      }
     } catch (err) {
       console.log(inspect(err, { depth: 4 }));
       throw err;

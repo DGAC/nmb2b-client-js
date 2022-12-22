@@ -18,8 +18,6 @@ describe('queryNMB2BWSDLs', () => {
       const res = await GeneralInformation.queryNMB2BWSDLs({
         version: '26.0.0',
       });
-      console.log('result = ', JSON.stringify(res, null, 2));
-      !process.env.CI && console.dir(res, { depth: 4 });
     } catch (err) {
       // console.error(inspect(err, { depth: null }));
       throw err;

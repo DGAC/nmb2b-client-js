@@ -35,7 +35,21 @@ describe('retrieveOTMVPlan', () => {
         },
       });
 
-      console.log(inspect(res.data, { depth: 4 }));
+      for (const otmvPlan of res.data.plans.tvsOTMVs.item[0].value.item) {
+        expect(otmvPlan).toEqual({
+          key: expect.any(Number),
+          value: {
+            nmSchedule: expect.any(Object),
+            clientSchedule: expect.any(Object),
+          },
+        });
+      }
+
+      console.log(
+        inspect(res.data.plans.tvsOTMVs.item[0].value.item[0].value, {
+          depth: 4,
+        }),
+      );
     } catch (err) {
       console.log(inspect(err, { depth: 4 }));
       throw err;

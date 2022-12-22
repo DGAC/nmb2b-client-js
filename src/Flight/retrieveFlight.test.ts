@@ -80,8 +80,6 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: 4 }));
-
       expect(res.data.flight?.ftfmPointProfile).toBeDefined();
       res.data.flight?.ftfmPointProfile?.forEach((item) => {
         expect(item).toEqual(
@@ -116,7 +114,19 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: 4 }));
+      const flight = res.data?.flight;
+      expect(flight).toBeDefined();
+      expect(flight?.flightId.id).toEqual(
+        expect.stringMatching(/^A(A|T)[0-9]{8}$/),
+      );
+
+      if (flight?.delay !== undefined) {
+        expect(flight?.delay).toBeGreaterThanOrEqual(0);
+      }
+
+      expect(flight?.aircraftType).toEqual(
+        expect.stringMatching(/^[A-Z0-9]{4}$/),
+      );
     } catch (err) {
       console.error(inspect(err, { depth: 4 }));
       throw err;

@@ -42,7 +42,7 @@ describe('queryRegulations', () => {
       expect(items).toBeDefined();
       expect(items.length).toBeGreaterThanOrEqual(1);
 
-      items.forEach((item) => {
+      for (const item of items) {
         expect(item.regulationId).toBeDefined();
         if (!item.location) {
           return;
@@ -65,7 +65,7 @@ describe('queryRegulations', () => {
             id: expect.any(String),
           });
         }
-      });
+      }
     } catch (err) {
       console.log(inspect(err, { depth: 4 }));
       throw err;

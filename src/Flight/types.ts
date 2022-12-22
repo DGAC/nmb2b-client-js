@@ -1302,13 +1302,16 @@ export interface FlightListReplyData {
   flights: FlightOrFlightPlan[];
 }
 
-export interface FlightListByLocationReplyData {
+export interface FlightListByLocationReplyData extends FlightListReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
 }
 
 export interface FlightListByAirspaceReply extends Reply {
-  data: FlightListByLocationReplyData & FlightListReplyData;
+  data: FlightListByAirspaceReplyData;
 }
+
+export interface FlightListByAirspaceReplyData
+  extends FlightListByLocationReplyData {}
 
 export interface FlightPlanListRequest {
   aircraftId?: string;
@@ -1351,8 +1354,11 @@ export interface FlightListByTrafficVolumeRequest
 }
 
 export interface FlightListByTrafficVolumeReply extends Reply {
-  data: FlightListReplyData;
+  data: FlightListByTrafficVolumeReplyData;
 }
+
+export interface FlightListByTrafficVolumeReplyData
+  extends FlightListByLocationReplyData {}
 
 export interface FlightListByMeasureRequest
   extends FlightListByLocationRequest {
@@ -1365,5 +1371,8 @@ export type FlightListByMeasureMode =
   | 'CONCERNED_BY_MEASURE';
 
 export interface FlightListByMeasureReply extends Reply {
-  data: FlightListByLocationReplyData;
+  data: FlightListByMeasureReplyData;
 }
+
+export interface FlightListByMeasureReplyData
+  extends FlightListByLocationReplyData {}

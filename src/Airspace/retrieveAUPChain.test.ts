@@ -1,4 +1,3 @@
-import { inspect } from 'util';
 import { makeAirspaceClient } from '..';
 import { AirspaceService } from '.';
 import moment from 'moment';
@@ -22,8 +21,6 @@ describe('retrieveAUPChain', () => {
       chainDate: moment.utc().toDate(),
     });
 
-    if (res.data) {
-      expect(Array.isArray(res.data.chains)).toBe(true);
-    }
+    expect(Array.isArray(res.data.chains)).toBe(true);
   });
 });

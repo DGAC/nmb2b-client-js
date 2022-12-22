@@ -17,15 +17,17 @@ beforeAll(async () => {
 
 describe('queryFlightsByTrafficVolume', () => {
   conditionalTest('query in LFERMS', async () => {
+    const trafficWindow = {
+      wef: moment.utc().subtract(2, 'hours').toDate(),
+      unt: moment.utc().add(2, 'hours').toDate(),
+    };
+
     const res = await Flight.queryFlightsByTrafficVolume({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
       includeForecastFlights: false,
       trafficType: 'LOAD',
-      trafficWindow: {
-        wef: moment.utc().subtract(2, 'hours').toDate(),
-        unt: moment.utc().add(2, 'hours').toDate(),
-      },
+      trafficWindow,
       trafficVolume: 'LFERMS',
     });
 
@@ -36,13 +38,26 @@ describe('queryFlightsByTrafficVolume', () => {
       console.warn('No flights returned in the query');
       return;
     }
-    const {
-      data: { flights },
-    } = res;
+    /**
+     * Here, we ensure the returned traffic window matches the supplied
+     * traffic window, with a 60s precision.
+     */
+    expect(
+      Math.abs(
+        res.data.effectiveTrafficWindow.wef.getTime() -
+          trafficWindow.wef.getTime(),
+      ),
+    ).toBeLessThan(60 * 1000);
 
-    expect(Array.isArray(flights)).toBe(true);
+    expect(
+      Math.abs(
+        res.data.effectiveTrafficWindow.unt.getTime() -
+          trafficWindow.unt.getTime(),
+      ),
+    ).toBeLessThan(60 * 1000);
 
-    flights.forEach((flight) =>
+    expect(res.data?.flights).toEqual(expect.any(Array));
+    for (const flight of res.data?.flights) {
       expect(flight).toMatchObject({
         flight: {
           flightId: {
@@ -55,7 +70,7 @@ describe('queryFlightsByTrafficVolume', () => {
             },
           },
         },
-      }),
-    );
+      });
+    }
   });
 });

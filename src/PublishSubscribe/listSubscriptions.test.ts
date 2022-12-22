@@ -16,15 +16,14 @@ beforeAll(async () => {
 });
 
 describe('listSubscriptions', () => {
-  test('Empty test', () => {});
-
-  xtest('list subscriptions', async () => {
+  test.skip('List subscriptions', async () => {
     const res: SubscriptionListReply =
       await PublishSubscribe.listSubscriptions();
 
     console.log(inspect(res.data, { depth: 4 }));
 
     if (!res.data.subscriptions) {
+      console.warn;
       return;
     }
 

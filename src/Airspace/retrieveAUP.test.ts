@@ -36,8 +36,6 @@ describe('retrieveAUP', () => {
         R.reverse,
         R.sortBy(({ lastUpdate }) => lastUpdate.timestamp),
       )(res.data.chains[0].aups);
-
-      console.log(AUPSummaries);
     }
   });
 
