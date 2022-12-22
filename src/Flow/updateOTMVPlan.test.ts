@@ -28,77 +28,79 @@ describe('updateOTMVPlan', () => {
           item: [
             {
               trafficVolume: 'LFERMS',
-              otvmDuration: 11,
+              otmvDuration: 11 * 60,
             },
           ],
         },
       });
-      if (plan.data == undefined) {
-        fail('OTMVPlanRetrievalRequest has failed in the updateOTMVPlan');
+
+      expect(plan.data).toBeDefined();
+
+      if (b2bOptions.flavour !== 'PREOPS') {
+        console.warn('B2B_FLAVOUR is not PREOPS, skipping test');
+        return;
       }
-      if (b2bOptions.flavour == 'PREOPS') {
-        const hPlus10Min: moment.Moment = moment.utc().add(10, 'minute');
-        const res: OTMVPlanUpdateResult = await Flow.updateOTMVPlan({
-          plans: {
-            dataId: plan.data.plans.dataId,
-            dataset: { type: 'OPERATIONAL' },
-            day: moment.utc().toDate(),
-            tvsOTMVs: {
-              item: [
-                {
-                  key: 'LFERMS',
-                  value: {
-                    item: [
-                      {
-                        key: 11,
-                        value: {
-                          clientSchedule: {
-                            item: [
-                              {
-                                applicabilityPeriod: {
-                                  wef: moment.utc().startOf('day').toDate(), //.format('YYYY-MM-DD HH:mm'),//.toDate(),
-                                  unt: hPlus10Min.toDate(),
-                                },
-                                dataSource: 'AIRSPACE',
+
+      const hPlus10Min: moment.Moment = moment.utc().add(10, 'minute');
+      const res: OTMVPlanUpdateResult = await Flow.updateOTMVPlan({
+        plans: {
+          dataId: plan.data.plans.dataId,
+          dataset: { type: 'OPERATIONAL' },
+          day: moment.utc().toDate(),
+          tvsOTMVs: {
+            item: [
+              {
+                key: 'LFERMS',
+                value: {
+                  item: [
+                    {
+                      key: 11 * 60,
+                      value: {
+                        clientSchedule: {
+                          item: [
+                            {
+                              applicabilityPeriod: {
+                                wef: moment.utc().startOf('day').toDate(), //.format('YYYY-MM-DD HH:mm'),//.toDate(),
+                                unt: hPlus10Min.toDate(),
                               },
-                              {
-                                applicabilityPeriod: {
-                                  wef: hPlus10Min.toDate(),
-                                  unt: moment
-                                    .utc()
-                                    .add(1, 'day')
-                                    .startOf('day')
-                                    .toDate(),
-                                },
-                                dataSource: 'TACTICAL',
-                                otmv: {
-                                  trafficVolume: 'LFERMS',
-                                  otmvDuration: 11,
-                                  peak: {
-                                    threshold: 8,
-                                  },
-                                  sustained: {
-                                    threshold: 5,
-                                    crossingOccurrences: 99,
-                                    elapsed: 139,
-                                  },
-                                }
+                              dataSource: 'AIRSPACE',
+                            },
+                            {
+                              applicabilityPeriod: {
+                                wef: hPlus10Min.toDate(),
+                                unt: moment
+                                  .utc()
+                                  .add(1, 'day')
+                                  .startOf('day')
+                                  .toDate(),
                               },
-                            ],
-                          },
+                              dataSource: 'TACTICAL',
+                              otmv: {
+                                trafficVolume: 'LFERMS',
+                                otmvDuration: 11 * 60,
+                                peak: {
+                                  threshold: 8,
+                                },
+                                sustained: {
+                                  threshold: 5,
+                                  crossingOccurrences: 99,
+                                  elapsed: 139 * 60,
+                                },
+                              },
+                            },
+                          ],
                         },
                       },
-                    ],
-                  },
+                    },
+                  ],
                 },
-              ],
-            },
+              },
+            ],
           },
-        });
-        expect(res.data).toBeDefined();
-      } else {
-        fail('You must be in PREOPS to test the updateOTMVPlan');
-      }
+        },
+      });
+
+      expect(res.data).toBeDefined();
 
       // console.log(inspect(res.data, { depth: null }));
     } catch (err) {

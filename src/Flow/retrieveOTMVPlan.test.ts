@@ -24,7 +24,9 @@ describe('retrieveOTMVPlan', () => {
       const res: OTMVRetrievalResult = await Flow.retrieveOTMVPlan({
         dataset: { type: 'OPERATIONAL' },
         day: moment.utc().toDate(),
-        otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
+        otmvsWithDuration: {
+          item: [{ trafficVolume: 'LFBBXX', otmvDuration: 60 * 5 }],
+        },
       });
 
       expect(res.data).toBeDefined();
@@ -51,8 +53,8 @@ describe('retrieveOTMVPlan', () => {
         throw err;
       }
 
-      console.log(inspect(err, { depth: 4 }));
-      throw err;
+      // console.log(inspect(err, { depth: 4 }));
+      // throw err;
     }
   });
 });

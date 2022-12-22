@@ -16,8 +16,10 @@ export type Resolver = (
 ) => Promise<Result>;
 
 export default function prepareRetrieveOTMVPlan(client: FlowClient): Resolver {
-  const schema = client.describe().TacticalUpdatesService.TacticalUpdatesPort
-    .retrieveOTMVPlan.input;
+  const schema =
+    client.describe().TacticalUpdatesService.TacticalUpdatesPort
+      .retrieveOTMVPlan.input;
+
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({

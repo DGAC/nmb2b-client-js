@@ -52,12 +52,12 @@ import { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCou
 import retrieveOTMVPlan from './retrieveOTMVPlan';
 import { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
 import updateOTMVPlan from './updateOTMVPlan';
-import {Resolver as UpdateOTMVPlan} from './updateOTMVPlan';
+import { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
 import retrieveCapacityPlan, {
   Resolver as RetrieveCapacityPlan,
 } from './retrieveCapacityPlan';
 import updateCapacityPlan from './updateCapacityPlan';
-import {Resolver as UpdateCapacityPlan} from './updateCapacityPlan';
+import { Resolver as UpdateCapacityPlan } from './updateCapacityPlan';
 import retrieveRunwayConfigurationPlan, {
   Resolver as RetrieveRunwayConfigurationPlan,
 } from './retrieveRunwayConfigurationPlan';

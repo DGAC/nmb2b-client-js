@@ -614,7 +614,7 @@ export interface HotspotPlans {
 
 export interface OTMVWithDuration {
   trafficVolume: TrafficVolumeId;
-  otvmDuration?: DurationHourMinute;
+  otmvDuration?: DurationHourMinute;
 }
 
 export interface OTMVPlanRetrievalRequest
