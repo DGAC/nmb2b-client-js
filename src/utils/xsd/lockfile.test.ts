@@ -39,7 +39,7 @@ test('should prevent concurrent downloads', async () => {
     .reply(200, fs.readFileSync(TEST_FILE));
 
   const soap = nock(root.origin)
-    .post('/B2B_PREOPS/gateway/spec/25.0.0')
+    .post('/B2B_PREOPS/gateway/spec/26.0.0')
     .reply(
       200,
       `

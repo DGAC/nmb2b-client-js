@@ -1,9 +1,6 @@
-import { inspect } from 'util';
-import { makePublishSubscribeClient } from '..';
-import moment from 'moment';
-// @ts-ignore
-import b2bOptions from '../../tests/options';
 import { PublishSubscribeService } from '.';
+import { makePublishSubscribeClient } from '..';
+import b2bOptions from '../../tests/options';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__

@@ -1,9 +1,9 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -22,39 +22,27 @@ describe('queryTrafficCountsByAirspace', () => {
       const res = await Flow.queryTrafficCountsByAirspace({
         dataset: { type: 'OPERATIONAL' },
         trafficWindow: {
-          wef: moment
-            .utc()
-            .subtract(1, 'hour')
-            .startOf('hour')
-            .toDate(),
-          unt: moment
-            .utc()
-            .add(1, 'hour')
-            .startOf('hour')
-            .toDate(),
+          wef: moment.utc().subtract(1, 'hour').startOf('hour').toDate(),
+          unt: moment.utc().add(1, 'hour').startOf('hour').toDate(),
         },
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficTypes: { item: ['LOAD', 'DEMAND', 'REGULATED_DEMAND'] },
-        computeSubTotals: false,
         countsInterval: {
           duration: 20 * 60,
           step: 20 * 60,
         },
+        subTotalComputeMode: 'NO_SUB_TOTALS',
         airspace: 'LFEE5R',
         calculationType: 'OCCUPANCY',
       });
 
       expect(res.data.counts).toBeDefined();
       const { counts } = res.data;
-      if (!counts) {
-        // should never happen
-        return;
-      }
-      expect(Array.isArray(counts.item)).toBe(true);
-      expect(counts.item.length).toBe(6);
+      expect(Array.isArray(counts?.item)).toBe(true);
+      expect(counts?.item.length).toBe(6);
 
-      const testItem = (item: any) =>
+      for (const item of counts?.item ?? []) {
         expect(item).toMatchObject({
           key: {
             wef: expect.any(Date),
@@ -77,10 +65,13 @@ describe('queryTrafficCountsByAirspace', () => {
             ]),
           },
         });
-
-      counts.item.forEach(testItem);
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

@@ -1,12 +1,12 @@
+import { expect, test } from '@jest/globals';
 import { inspect } from 'util';
 import { makeFlightClient, makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlowService } from '../Flow';
 import { Regulation } from '../Flow/types';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -29,16 +29,8 @@ describe('queryFlightsByMeasure', () => {
     const res = await Flow.queryRegulations({
       dataset: { type: 'OPERATIONAL' },
       queryPeriod: {
-        wef: moment
-          .utc()
-          .subtract(2, 'hour')
-          .startOf('hour')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(10, 'hour')
-          .startOf('hour')
-          .toDate(),
+        wef: moment.utc().subtract(2, 'hour').startOf('hour').toDate(),
+        unt: moment.utc().add(10, 'hour').startOf('hour').toDate(),
       },
       requestedRegulationFields: {
         item: ['applicability', 'location', 'reason'],
@@ -63,7 +55,6 @@ describe('queryFlightsByMeasure', () => {
     // console.log(inspect(measure, { depth: null }));
   });
 
-  // Not authorised with current certificate in OPS
   conditionalTest('query in regulation', async () => {
     if (!measure || !measure.regulationId || !measure.applicability) {
       console.warn('No measure was found, cannot query flights by measure');
@@ -81,9 +72,29 @@ describe('queryFlightsByMeasure', () => {
         mode: 'CONCERNED_BY_MEASURE',
       });
 
-      // !process.env.CI && console.log(inspect(res.data, { depth: null }));
+      expect(res.data.effectiveTrafficWindow).toEqual(measure.applicability);
+      expect(res.data?.flights).toEqual(expect.any(Array));
+      for (const flight of res.data?.flights) {
+        expect(flight).toMatchObject({
+          flight: {
+            flightId: {
+              id: expect.any(String),
+              keys: {
+                aircraftId: expect.any(String),
+                aerodromeOfDeparture: expect.stringMatching(/^[A-Z]{4}$/),
+                aerodromeOfDestination: expect.stringMatching(/^[A-Z]{4}$/),
+                estimatedOffBlockTime: expect.any(Date),
+              },
+            },
+          },
+        });
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

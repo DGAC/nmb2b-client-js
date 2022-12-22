@@ -1,8 +1,8 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 import { RegulationListReply } from './queryRegulations';
@@ -43,7 +43,7 @@ describe('queryRegulations', () => {
       expect(items).toBeDefined();
       expect(items.length).toBeGreaterThanOrEqual(1);
 
-      items.forEach((item) => {
+      for (const item of items) {
         expect(item.regulationId).toBeDefined();
         if (!item.location) {
           return;
@@ -66,9 +66,13 @@ describe('queryRegulations', () => {
             id: expect.any(String),
           });
         }
-      });
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

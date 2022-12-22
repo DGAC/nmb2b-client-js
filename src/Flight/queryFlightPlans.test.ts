@@ -1,11 +1,11 @@
 import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlightOrFlightPlan as B2BFlight } from './types';
+import { JestAssertionError } from 'expect';
+
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -27,14 +27,8 @@ describe('queryFlightPlans', () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment
-          .utc()
-          .subtract(6, 'hours')
-          .toDate(),
-        unt: moment
-          .utc()
-          .add(6, 'hours')
-          .toDate(),
+        wef: moment.utc().subtract(6, 'hours').toDate(),
+        unt: moment.utc().add(6, 'hours').toDate(),
       },
       airspace: 'LFEERMS',
     });
@@ -43,7 +37,7 @@ describe('queryFlightPlans', () => {
       return;
     }
 
-    knownFlight = res.data.flights.find(f => {
+    knownFlight = res.data.flights.find((f) => {
       if (!('flight' in f)) {
         return false;
       }
@@ -51,9 +45,7 @@ describe('queryFlightPlans', () => {
       const { flight } = f;
 
       if (
-        flight &&
-        flight.flightId &&
-        flight.flightId.keys &&
+        flight.flightId?.keys?.aircraftId &&
         /(AFR)|(BAW)|(MON)|(EZY)|(RYR)/i.test(flight.flightId.keys.aircraftId)
       ) {
         return true;
@@ -104,7 +96,7 @@ describe('queryFlightPlans', () => {
         return;
       }
 
-      data.summaries.forEach(f => {
+      for (const f of data.summaries) {
         if (!('lastValidFlightPlan' in f || 'currentInvalid' in f)) {
           throw new Error(
             'queryFlightPlans: either lastValidFlightPlan or currentInvalid should exist',
@@ -129,9 +121,13 @@ describe('queryFlightPlans', () => {
             'Query returned a flight with a currentInvalid property',
           );
         }
-      });
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

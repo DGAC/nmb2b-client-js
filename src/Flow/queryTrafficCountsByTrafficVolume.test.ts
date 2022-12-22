@@ -1,9 +1,9 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -25,21 +25,13 @@ describe('queryTrafficCountsByTrafficVolume', () => {
       const res = await Flow.queryTrafficCountsByTrafficVolume({
         dataset: { type: 'OPERATIONAL' },
         trafficWindow: {
-          wef: moment
-            .utc()
-            .subtract(1, 'hour')
-            .startOf('hour')
-            .toDate(),
-          unt: moment
-            .utc()
-            .add(1, 'hour')
-            .startOf('hour')
-            .toDate(),
+          wef: moment.utc().subtract(1, 'hour').startOf('hour').toDate(),
+          unt: moment.utc().add(1, 'hour').startOf('hour').toDate(),
         },
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficTypes: { item: ['LOAD'] },
-        computeSubTotals: true,
+        subTotalComputeMode: 'SUB_TOTALS_BY_TRAFFIC_TYPE',
         countsInterval: {
           duration: 20 * 60,
           step: 20 * 60,
@@ -49,16 +41,12 @@ describe('queryTrafficCountsByTrafficVolume', () => {
       });
 
       expect(res.data.counts).toBeDefined();
+
       const { counts } = res.data;
-      if (!counts) {
-        // Should never happen;
-        return;
-      }
+      expect(Array.isArray(counts?.item)).toBe(true);
+      expect(counts?.item.length).toBe(6);
 
-      expect(Array.isArray(counts.item)).toBe(true);
-      expect(counts.item.length).toBe(6);
-
-      const testItem = (item: any) =>
+      for (const item of counts?.item ?? []) {
         expect(item).toMatchObject({
           key: {
             wef: expect.any(Date),
@@ -70,7 +58,7 @@ describe('queryTrafficCountsByTrafficVolume', () => {
                 key: 'LOAD',
                 value: {
                   totalCounts: expect.any(Number),
-                  subTotalsCounts: {
+                  subTotalsCountsByTrafficType: {
                     item: expect.arrayContaining([
                       expect.objectContaining({
                         key: expect.any(String),
@@ -80,17 +68,16 @@ describe('queryTrafficCountsByTrafficVolume', () => {
                   },
                 },
               }),
-              // expect.objectContaining({
-              //   key: 'REGULATED_DEMAND',
-              //   value: { totalCounts: expect.any(Number) },
-              // }),
             ]),
           },
         });
-
-      counts.item.forEach(testItem);
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

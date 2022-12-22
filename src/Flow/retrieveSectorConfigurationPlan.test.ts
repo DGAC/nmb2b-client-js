@@ -1,10 +1,10 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -40,31 +40,29 @@ describe('retrieveSectorConfigurationPlan', () => {
       expect(Array.isArray(clientSchedule.item)).toBe(true);
       expect(Array.isArray(knownConfigurations.item)).toBe(true);
 
-      !process.env.CI && console.log(clientSchedule.item);
-
-      knownConfigurations.item.forEach(conf =>
+      for (const conf of knownConfigurations.item) {
         expect(conf).toMatchObject({
           key: expect.any(String),
           value: {
             item: expect.anything(),
           },
-        }),
-      );
+        });
+      }
 
       // Test that we can generate a valid map
       const map = knownConfigurationsToMap(res.data.plan.knownConfigurations);
 
-      !process.env.CI && console.log(map);
-
       const keys = Array.from(map.keys());
       expect(keys.length).toBeGreaterThan(0);
-      keys.forEach(k => expect(typeof k).toBe('string'));
+      for (const k of keys) {
+        expect(k).toEqual(expect.any(String));
+      }
 
       const values = Array.from(map.values());
       expect(values.length).toBeGreaterThan(0);
-      values.forEach(v => {
+      for (const v of values) {
         expect(Array.isArray(v)).toBe(true);
-      });
+      }
 
       const testSchedule = (conf: any) => {
         expect(conf).toMatchObject({
@@ -81,10 +79,19 @@ describe('retrieveSectorConfigurationPlan', () => {
         }
       };
 
-      nmSchedule.item.forEach(testSchedule);
-      clientSchedule.item.forEach(testSchedule);
+      for (const conf of nmSchedule.item) {
+        testSchedule(conf);
+      }
+
+      for (const conf of clientSchedule.item) {
+        testSchedule(conf);
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

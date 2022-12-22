@@ -1,7 +1,5 @@
-import { inspect } from 'util';
 import { makeAirspaceClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { AirspaceService } from '.';
 import { AUPSummary } from './types';
@@ -38,8 +36,6 @@ describe('retrieveAUP', () => {
         R.reverse,
         R.sortBy(({ lastUpdate }) => lastUpdate.timestamp),
       )(res.data.chains[0].aups);
-
-      console.log(AUPSummaries);
     }
   });
 

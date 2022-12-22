@@ -1,10 +1,10 @@
 import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys, flightToFlightKeys } from './utils';
 import { FlightService } from '.';
+import { JestAssertionError } from 'expect';
+import { FlightKeys } from './types';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -19,7 +19,7 @@ beforeAll(async () => {
 describe('retrieveFlight', () => {
   let knownFlight: {
     ifplId: string;
-    keys: ReturnType<typeof flightToFlightKeys>;
+    keys: FlightKeys;
   };
 
   beforeAll(async () => {
@@ -56,9 +56,14 @@ describe('retrieveFlight', () => {
       return;
     }
 
+    if (!flight.flight.flightId.keys) {
+      console.error('Flight has no flight keys, test aborted');
+      return;
+    }
+
     knownFlight = {
       ifplId: flight.flight.flightId.id,
-      keys: flightToFlightKeys(flight.flight),
+      keys: flight.flight.flightId.keys,
     };
   });
 
@@ -81,8 +86,6 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: null }));
-
       expect(res.data.flight?.ftfmPointProfile).toBeDefined();
       res.data.flight?.ftfmPointProfile?.forEach((item) => {
         expect(item).toEqual(
@@ -93,7 +96,7 @@ describe('retrieveFlight', () => {
         );
       });
     } catch (err) {
-      console.error(inspect(err, { depth: null }));
+      console.error(inspect(err, { depth: 4 }));
       throw err;
     }
   });
@@ -117,9 +120,25 @@ describe('retrieveFlight', () => {
         requestedDataFormat: 'NM_B2B',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: null }));
+      const flight = res.data?.flight;
+      expect(flight).toBeDefined();
+      expect(flight?.flightId.id).toEqual(
+        expect.stringMatching(/^A(A|T)[0-9]{8}$/),
+      );
+
+      if (flight?.delay !== undefined) {
+        expect(flight?.delay).toBeGreaterThanOrEqual(0);
+      }
+
+      expect(flight?.aircraftType).toEqual(
+        expect.stringMatching(/^[A-Z0-9]{4}$/),
+      );
     } catch (err) {
-      console.error(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.error(inspect(err, { depth: 4 }));
       throw err;
     }
   });
