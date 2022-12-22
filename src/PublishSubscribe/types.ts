@@ -12,12 +12,84 @@ import {
 
 export type QueueName = string; // ANY{1,200}
 export type SubscriptionTopic =
-  | 'AIXM_DATASETS'
+  /**
+   * Notification about newly published AIMs (ATM Information Messages).
+   *
+   * The message type associated with this topic is the AIMMessage. This type of message is non-filterable and non-customizable.
+   */
   | 'ATM_INFORMATION'
+  /**
+   * Notification about the publication of new Complete and Incremental Airspace Datasets.
+   *
+   * The message type associated with this topic is the AirspaceDataMessage.
+   *
+   * The AirspaceDataMessage is filterable but non-customizable (see AirspaceDataMessageFilter).
+   */
+  | 'AIRSPACE_DATA'
+  /**
+   * Notification about changes to ATFCM Regulations.
+   *
+   * The message type associated with this topic is the RegulationMessage.
+   *
+   * The RegulationMessage is both filterable and customizable (see RegulationMessageFilter and RegulationPayloadConfiguration).
+   *
+   * For this subscription topic the message customization (RegulationPayloadConfiguration) is mandatory.
+   */
+  | 'REGULATIONS'
+  /**
+   * Notification about the publication of EAUPs and EUUPs.
+   *
+   * The message type associated with this topic is the EAUPMessage.
+   *
+   * The EAUPMessage is not filterable but it is customizable (see EAUPPayloadConfiguration).
+   */
   | 'EAUP'
-  | 'FLIGHT_DATA'
+  /**
+   * Notification about changes to flight plans.
+   *
+   * The message type associated with this topic is the FlightPlanMessage.
+   *
+   * The FlightPlanMessage is filterable but non-customizable (see `FlightPlanMessageFilter`).
+   *
+   * For this subscription topic the message filter (FlightPlanMessageFilter) is mandatory.
+   */
   | 'FLIGHT_PLANS'
-  | 'REGULATIONS';
+  /**
+   * Notification about flight updates (e.g. trajectory, times, status, etc).
+   *
+   * The message type associated with this topic is the FlightDataMessage.
+   *
+   * The FlightDataMessage is both filterable and customizable (see FlightDataMessageFilter and FlightDataPayloadConfiguration).
+   *
+   * For this subscription topic the message filter (FlightDataMessageFilter) is mandatory.
+   */
+  | 'FLIGHT_DATA'
+  /**
+   * Notification about automatic and manual processing of ATS messages (e.g. FPL, CHG, DLA, etc) that have been submitted to IFPS (via AFTN/SITA networks or via the equivalent B2B web services).
+   *
+   * The message type associated with this topic is the FlightFilingResultMessage.
+   *
+   * The FlightFilingResultMessage is filterable but non-customizable (see FlightFilingResultMessageFilter).
+   */
+  | 'FLIGHT_FILING_RESULT'
+  /**
+   * Notification about changes to flight plans.
+   *
+   * The message type associated with this topic is the FficeFlightFilingMessage.
+   *
+   * The FficeFlightFilingMessage is filterable but non-customizable (see FficeFlightFilingMessageFilter).
+   *
+   * For this subscription topic the message filter (FficeFlightFilingMessageFilter) is mandatory.
+   */
+  | 'FFICE_FLIGHT_FILING'
+  /**
+   * Notification about MCDM-specific topics (e.g. MCDMMeasureTopic, standalone or non-standalone MCDMFlightTopic).
+   *
+   * The message type associated with this subscription topic is the MCDMMessage.
+   *
+   * The MCDMMessage is filterable and customizable (see MCDMMessageFilter and MCDMPayloadConfiguration).
+   */
+  | 'MCDM';
 
 export interface SubscriptionCreationRequest {
   topic: SubscriptionTopic;
@@ -104,10 +176,11 @@ export type SubscriptionState =
   | 'SUSPENDED_PAUSED';
 
 export type SubscriptionUpdateReason =
-  | 'MAINTENANCE'
+  | 'USER_REQUEST'
   | 'MSG_EXPIRED'
+  | 'MAINTENANCE'
   | 'NM_UPDATE'
-  | 'USER_REQUEST';
+  | 'QUEUE_OVERFLOW';
 
 export type SubscriptionMessageFilter =
   | AIXMDatasetMessageFilter
@@ -249,4 +322,5 @@ export type PSFlightField =
   | 'highestModelPointProfile'
   | 'highestModelAirspaceProfile'
   | 'aircraftAddress'
-  | 'flightDataVersionNr';
+  | 'flightDataVersionNr'
+  | 'bestReroutingIndicator';

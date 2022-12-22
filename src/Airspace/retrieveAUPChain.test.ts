@@ -1,8 +1,6 @@
-import { inspect } from 'util';
 import { makeAirspaceClient } from '..';
 import { AirspaceService } from '.';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 
 jest.setTimeout(20000);
@@ -23,8 +21,6 @@ describe('retrieveAUPChain', () => {
       chainDate: moment.utc().toDate(),
     });
 
-    if (res.data) {
-      expect(Array.isArray(res.data.chains)).toBe(true);
-    }
+    expect(Array.isArray(res.data.chains)).toBe(true);
   });
 });

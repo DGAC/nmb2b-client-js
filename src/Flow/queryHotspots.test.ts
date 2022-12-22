@@ -1,9 +1,8 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
-import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -27,14 +26,18 @@ describe('queryHotspots', () => {
         hotspotKind: 'PROBLEM',
       });
 
-      !process.env.CI && console.log(inspect(res, { depth: null }));
+      // TODO: Write proper test
     } catch (err) {
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
       if (err.status === 'NOT_AUTHORISED') {
         console.warn('Test cancelled, NOT_AUTHORIZED');
         return;
       }
 
-      console.log(inspect(err, { depth: null }));
+      console.log(inspect(err, { depth: 4 }));
 
       throw err;
     }

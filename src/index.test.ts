@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-// @ts-ignore
+
 import b2bOptions from '../tests/options';
 import {
   makeB2BClient,
@@ -32,7 +32,7 @@ describe('Main API', () => {
     makeFlightClient,
     makeGeneralInformationClient,
     makePublishSubscribeClient,
-  ])('%p', async fn => {
+  ])('%p', async (fn) => {
     const res = await fn(b2bOptions);
     expect(res).toBeDefined();
   });

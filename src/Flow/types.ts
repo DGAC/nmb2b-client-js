@@ -1,10 +1,9 @@
-export type ReroutingId = string; // (UALPHA|DIGIT|*){1,8}
+export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
 export type RegulationId = string; // UALPHA(UALPHA|DIGIT){0,5}DIGIT{2}UALPHA{0,1}
 export type MeasureId =
   | { REGULATION: RegulationId }
-  | { REROUTING: ReroutingId }
-  | { MCDM_ONLY: RegulationId };
-export type FlowId = string; // TEXT{1,8}
+  | { REROUTING: ReroutingId };
+export type FlowId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
 export type ScenarioId = string;
 export type SectorConfigurationId = string; // (UALPHA|DIGIT|.){1,6}
 export type PlanDataSource = 'AIRSPACE' | 'MEASURE' | 'NO_DATA' | 'TACTICAL';
@@ -44,7 +43,7 @@ import {
   DateTimeMinute,
 } from '../Common/types';
 
-import { TrafficType, FlightKeys } from '../Flight/types';
+import { TrafficType, FlightKeys, IFPLId } from '../Flight/types';
 
 export interface FlightRegulationLocation {
   regulationId: RegulationId;
@@ -100,11 +99,11 @@ export interface HotspotId {
 }
 
 export interface FlightMCDMInfo {
-  firstAssociatedMCDMMeasure: MeasureId;
+  leastAdvancedMCDMMeasure: MeasureId;
   nrAssociatedMCDMRegulations: number;
   nrAssociatedMCDMReroutings: number;
   nrAssociatedMCDMOnlyMeasures: number;
-  worstMCDMState: MCDMState;
+  leastAdvancedMCDMState: MCDMState;
 }
 
 export type MCDMState =
@@ -219,9 +218,24 @@ export interface TrafficCountsRequest {
   includeProposalFlights: boolean;
   includeForecastFlights: boolean;
   trafficTypes: NMSet<TrafficType>;
-  computeSubTotals: boolean;
+  // computeSubTotals: boolean;
+  subTotalComputeMode: CountSubTotalComputeMode;
   countsInterval: CountsInterval;
 }
+
+export type CountSubTotalComputeMode =
+  /**
+   * Do not compute flight count sub-totals.
+   */
+  | 'NO_SUB_TOTALS'
+  /**
+   * Compute flight count sub-totals by traffic type (see Counts.subTotalsCountsByTrafficType).
+   */
+  | 'SUB_TOTALS_BY_TRAFFIC_TYPE'
+  /**
+   * Compute flight count sub-totals by regulation details (see Counts.subTotalsCountsByRegulationDetails).
+   */
+  | 'SUB_TOTALS_BY_REGULATION_DETAILS';
 
 export interface TrafficCountsByAirspaceReply extends Reply {
   data: TrafficCountsReplyData;
@@ -262,18 +276,73 @@ export type FlowRoleSelection =
 export interface Counts {
   totalCounts: CountsValue;
   flowCounts?: NMMap<FlowId, CountsValue>;
-  subTotalsCounts?: NMMap<SubTotalsTrafficCountsType, CountsValue>;
+  subTotalsCountsByTrafficType?: NMMap<SubTotalsTrafficCountsType, CountsValue>;
+  subTotalsCountsByRegulationDetails?: NMMap<
+    SubTotalsRegulationDetailedType,
+    CountsValue
+  >;
 }
 
 export type CountsValue = number;
 export type SubTotalsTrafficCountsType =
-  | 'ATC_ACTIVATED'
-  | 'IFPL'
+  /**
+   * Predicted flights that are not suspended
+   */
   | 'PFD'
-  | 'RPL'
+  /**
+   * Flights created from a flight plan filed to IFPS that are not suspended, nor ATC_ACTIVATED, nor TACT_ACTIVATED_WITH_FSA, nor TACT_ACTIVATED_WITHOUT_FSA.
+   */
+  | 'IFPL'
+  /**
+   * Suspended Flights. Note that suspended flights are not considered part of the TrafficType.LOAD.
+   */
   | 'SUSPENDED'
-  | 'TACT_ACTIVATED_WITHOUT_FSA'
-  | 'TACT_ACTIVATED_WITH_FSA';
+  /**
+   * ATC activated flights. Note that this also includes terminated flights that were ATC activated.
+   */
+  | 'ATC_ACTIVATED'
+  /**
+   * TACT activated with FSA message expected (but not yet received). Note that this also includes terminated flights that were TACT_ACTIVATED_WITH_FSA.
+   */
+  | 'TACT_ACTIVATED_WITH_FSA'
+  /**
+   * TACT activated with no FSA message expected. Note that this also includes terminated flights that were TACT_ACTIVATED_WITHOUT_FSA.
+   */
+  | 'TACT_ACTIVATED_WITHOUT_FSA';
+
+export type SubTotalsRegulationDetailedType =
+  /**
+   * The count of not yet airborne delayed (delay > 0) flights of which most penalising regulation is the target regulation.
+   */
+  | 'DELAYED_FLIGHTS_NOT_YET_AIRBORNE'
+  /**
+   * The count of airborne delayed (delay > 0) flights of which most penalising regulation is the target regulation.
+   */
+  | 'DELAYED_FLIGHTS_ALREADY_AIRBORNE'
+  /**
+   * The count of not yet airborne zero (0) delay flights of which most penalising regulation is the target regulation or any other regulation.
+   */
+  | 'ZERO_DELAY_FLIGHTS_NOT_YET_AIRBONE'
+  /**
+   * The count of airborne zero (0) delay flights of which most penalising regulation is the target regulation or any other regulation.
+   */
+  | 'ZERO_DELAY_FLIGHTS_ALREADY_AIRBORNE'
+  /**
+   * The count of not yet airborne flights with no most penalising regulation that are regulatable. These flights are typically in the extended periods around the regulation (or when showing the display when newly creating regulations).
+   */
+  | 'NOT_REGULATED_BUT_REGULATABLE_FLIGHTS'
+  /**
+   * The count of airborne flights with no most penalising regulation or, any exempted/excluded (airborne or not) flights with no most penalising regulation or of which most penalising regulation is the target regulation or any other regulation.
+   */
+  | 'NOT_REGULATED_AIRBORNE_OR_EXEMPTED_FLIGHTS'
+  /**
+   * The count of not yet airborne delayed (delay > 0) flights of which most penalising regulation is not the target regulation, excluding target regulation exempted flights.
+   */
+  | 'OTHER_MPR_DELAYED_FLIGHTS_NOT_YET_AIRBORNE'
+  /**
+   * The count of airborne delayed (delay > 0) flights of which most penalising regulation is not the target regulation, excluding target regulation exempted flights.
+   */
+  | 'OTHER_MPR_DELAYED_FLIGHTS_ALREADY_AIRBORNE';
 
 export interface OtmvAlert {
   period: DateTimeMinutePeriod;
@@ -434,6 +503,7 @@ export interface MCDMDeadlines {
 
 export interface MCDMFlightTopic extends MCDMStatefulTopic {
   flightKeys: FlightKeys;
+  ifplId?: IFPLId;
   ticket?: EhelpDeskTicketChoice;
 }
 
@@ -447,11 +517,11 @@ export interface MCDMUserAndRole {
 export type MCDMCoordinationLevel = 'FLIGHT' | 'MEASURE';
 
 export type MCDMUserCategory =
-  | 'ADJACENT_FMP'
-  | 'AIRCRAFT_OPERATOR'
+  | 'IMPACTED_FMP'
   | 'ALL_FMP'
-  | 'NMOC'
-  | 'TOWER';
+  | 'TOWER'
+  | 'AIRCRAFT_OPERATOR'
+  | 'NMOC';
 
 export interface MCDMUserRoleAndApprovalState {
   user: AirNavigationUnitId;

@@ -3,13 +3,13 @@ export type PublishedPointId = string; // (UALPHA|DIGIT){1,5}
 export type AerodromeSetId = string; // ANY{1,8}
 export type AirspaceId = string; // ANY{1,12}
 export type DBEPointId = string; // (UALPHA|DIGIT|*){1,5}
-export type RestrictionId = string; // (UALPHA|DIGIT){1,10}
-export type TrafficVolumeId = string; // (ALPHA|DIGIT){1,8}
+export type RestrictionId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,10}
+export type TrafficVolumeId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
 export type AerodromeIATAId = string; // UALPHA{3}
 export type AerodromeIATAOrICAOId = string; // UALPHA{3,4}
-export type TrafficVolumeSetId = string;
-export type TrafficVolumeIdWildcard = string;
-export type TrafficVolumeSetIdWildcard = string;
+export type TrafficVolumeSetId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
+export type TrafficVolumeIdWildcard = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER|*){1,8}
+export type TrafficVolumeSetIdWildcard = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER|*){1,8}
 
 export type AiracIdentifier =
   | {

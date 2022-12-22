@@ -7,7 +7,7 @@ export interface FlightIdentificationOutput {
 }
 export type AircraftICAOId = string; // (ALPHA|DIGIT){2,7}
 export type ExtendedAircraftICAOId = string; // (ALPHA|DIGIT|$|#){2,7}
-export type AircraftRegistrationMark = string; // (ALPHA|DIGIT|'|+|=|?|.|/|:| ){1,50}
+export type AircraftRegistrationMark = string; // (ALPHA|DIGIT|SPECIAL_CHARACTER){1,50}
 export type ICAOAircraftAddress = string; // HEXA{6}
 export type SSRCode = string; // DIGIT{4}
 export type SSRMode = 'A'; // Mode A only
@@ -95,6 +95,8 @@ import {
   Position as CommonPosition,
   WeightKg,
   FlightLevelM,
+  Cost,
+  SignedDurationHourMinuteSecond,
 } from '../Common/types';
 
 import {
@@ -110,6 +112,7 @@ import {
   FlowId,
   MeasureId,
   TrafficVolumeScenarios,
+  Flow,
 } from '../Flow/types';
 
 export interface FlightKeys {
@@ -124,128 +127,129 @@ export interface FlightKeys {
 
 export interface TimeAndModel {
   model: TrafficType;
-  time: DateTimeMinute;
+  dateTime: DateTimeSecond;
 }
 
 export type TrafficType = 'DEMAND' | 'LOAD' | 'REGULATED_DEMAND';
 
 export type FlightField =
-  | 'actualOffBlockTime'
-  | 'actualTakeOffTime'
-  | 'actualTimeOfArrival'
-  | 'aircraftAddress'
-  | 'aircraftOperator'
-  | 'aircraftType'
-  | 'alternateAerodromes'
-  | 'apiSubmissionRules'
-  | 'applicableScenarios'
-  | 'arrivalInformation'
-  | 'atfcmMeasureLocations'
-  | 'avoidedRegulations'
-  | 'calculatedOffBlockTime'
-  | 'calculatedTakeOffTime'
-  | 'calculatedTimeOfArrival'
-  | 'caughtInHotspots'
-  | 'ccamsSSRCode'
-  | 'cdm'
-  | 'cdmEstimatedOffBlockTime'
-  | 'cfmuFType'
-  | 'compareWithOtherTrafficType'
-  | 'confirmedCTFM'
-  | 'ctfmAirspaceProfile'
-  | 'ctfmPointProfile'
-  | 'ctfmRequestedFLevels'
-  | 'ctfmRestrictionProfile'
-  | 'ctotLimitReason'
-  | 'ctotShiftAlreadyAppliedByTower'
-  | 'currentDepartureTaxiTimeAndProcedure'
-  | 'defaultReroutingRequestedFLevel'
-  | 'defaultReroutingRequestedSpeed'
-  | 'delay'
-  | 'delayCharacteristics'
-  | 'departureTolerance'
   | 'divertedAerodromeOfDestination'
-  | 'equipmentCapabilityAndStatus'
-  | 'estimatedElapsedTime'
-  | 'estimatedTakeOffTime'
-  | 'estimatedTimeOfArrival'
-  | 'excludedRegulations'
-  | 'exclusionFromRegulations'
-  | 'exemptedFromRegulations'
-  | 'famStatus'
-  | 'filedRegistrationMark'
-  | 'filingRule'
-  | 'fCriticality'
-  | 'fDataVersionNr'
-  | 'fHistory'
-  | 'fLevelAtReferenceLocationEntry'
-  | 'fLevelAtReferenceLocationExit'
-  | 'fState'
-  | 'ftfmAirspaceProfile'
-  | 'ftfmPointProfile'
-  | 'ftfmRequestedFLevels'
-  | 'ftfmRestrictionProfileLevel'
-  | 'fuelConsumptionIndicator'
-  | 'hasBeenForced'
-  | 'hasOtherRegulations'
-  | 'highestModelAirspaceProfile'
-  | 'highestModelPointProfile'
-  | 'highestModelRestrictionProfile'
-  | 'hotspots'
-  | 'icaoRoute'
-  | 'initialFPLMessageOriginator'
-  | 'isProposalF'
-  | 'lastATFMMessageOriginator'
-  | 'lastATFMMessageReceivedOrSent'
-  | 'lastATFMMessageType'
-  | 'lastFPLMessageOriginatorLevel'
-  | 'lastKnownPosition'
-  | 'lateFiler'
-  | 'lateUpdater'
-  | 'mcdmInfo'
-  | 'minimumRequestedRVR'
-  | 'mostPenalisingRegulation'
-  | 'mostPenalisingRegulationCause'
-  | 'newRouteMinShiftDelayImprovement'
-  | 'oceanicReroute'
-  | 'operatingAircraftOperator'
-  | 'operationalLog'
-  | 'profileValidity'
-  | 'proposalInformation'
   | 'readyEstimatedOffBlockTime'
-  | 'readyStatus'
-  | 'regulationLocations'
-  | 'requestedFLevel'
-  | 'requestedInitialFLevel'
-  | 'requestedInitialSpeed'
-  | 'reroutable'
-  | 'reroutingIndicator'
-  | 'reroutingOpportunitiesExist'
-  | 'revisionTimes'
-  | 'routeChargeIndicator'
-  | 'routeLength'
-  | 'rtfmAirspaceProfile'
-  | 'rtfmPointProfile'
-  | 'rtfmRequestedFLevelsLevel'
-  | 'rtfmRestrictionProfile'
-  | 'runwayVisualRange'
-  | 'slotIssued'
-  | 'slotSwapCandidateList'
-  | 'slotSwapCounter'
-  | 'slotZone'
-  | 'suspensionInfo'
-  | 'suspensionStatus'
-  | 'targetTimeOverFix'
+  | 'cdmEstimatedOffBlockTime'
+  | 'calculatedOffBlockTime'
+  | 'actualOffBlockTime'
+  | 'aircraftType'
+  | 'estimatedTakeOffTime'
+  | 'calculatedTakeOffTime'
+  | 'actualTakeOffTime'
+  | 'ctotShiftAlreadyAppliedByTower'
   | 'taxiTime'
+  | 'currentDepartureTaxiTimeAndProcedure'
+  | 'revisionTimes'
+  | 'estimatedTimeOfArrival'
+  | 'calculatedTimeOfArrival'
+  | 'actualTimeOfArrival'
+  | 'requestedFlightLevel'
   | 'timeAtReferenceLocationEntry'
   | 'timeAtReferenceLocationExit'
+  | 'flightLevelAtReferenceLocationEntry'
+  | 'flightLevelAtReferenceLocationExit'
   | 'trendAtReferenceLocationEntry'
   | 'trendAtReferenceLocationExit'
   | 'trendAtReferenceLocationMiddle'
-  | 'turnFForLocation'
-  | 'wakeTurbulenceCategory'
+  | 'lateFiler'
+  | 'lateUpdater'
+  | 'suspensionStatus'
+  | 'suspensionInfo'
+  | 'exclusionFromRegulations'
+  | 'famStatus'
+  | 'readyStatus'
+  | 'aircraftOperator'
+  | 'operatingAircraftOperator'
+  | 'reroutingIndicator'
+  | 'newRouteMinShiftDelayImprovement'
+  | 'reroutable'
+  | 'cdm'
+  | 'slotIssued'
+  | 'proposalInformation'
+  | 'bestReroutingIndicator'
+  | 'exemptedFromRegulations'
+  | 'delay'
+  | 'delayCharacteristics'
+  | 'mostPenalisingRegulation'
+  | 'hasOtherRegulations'
+  | 'regulationLocations'
+  | 'atfcmMeasureLocations'
+  | 'lastATFMMessageType'
+  | 'lastATFMMessageReceivedOrSent'
+  | 'runwayVisualRange'
+  | 'confirmedCTFM'
+  | 'requestedInitialFlightLevel'
+  | 'requestedInitialSpeed'
+  | 'estimatedElapsedTime'
+  | 'filingRule'
+  | 'initialFPLMessageOriginator'
+  | 'lastFPLMessageOriginator'
+  | 'icaoRoute'
+  | 'routeLength'
+  | 'defaultReroutingRequestedFlightLevel'
+  | 'defaultReroutingRequestedSpeed'
+  | 'departureTolerance'
+  | 'mostPenalisingRegulationCause'
+  | 'lastATFMMessageOriginator'
+  | 'ftfmPointProfile'
+  | 'rtfmPointProfile'
+  | 'ctfmPointProfile'
+  | 'ftfmAirspaceProfile'
+  | 'rtfmAirspaceProfile'
+  | 'ctfmAirspaceProfile'
+  | 'ftfmRequestedFlightLevels'
+  | 'rtfmRequestedFlightLevels'
+  | 'ctfmRequestedFlightLevels'
+  | 'flightHistory'
+  | 'operationalLog'
+  | 'equipmentCapabilityAndStatus'
+  | 'ftfmRestrictionProfile'
+  | 'rtfmRestrictionProfile'
+  | 'ctfmRestrictionProfile'
+  | 'cfmuFlightType'
+  | 'ccamsSSRCode'
+  | 'filedRegistrationMark'
+  | 'isProposalFlight'
+  | 'hasBeenForced'
+  | 'caughtInHotspots'
+  | 'hotspots'
+  | 'mcdmInfo'
   | 'worstLoadStateAtReferenceLocation'
-  | 'yoyoFForLocation';
+  | 'compareWithOtherTrafficType'
+  | 'ctotLimitReason'
+  | 'profileValidity'
+  | 'targetTimeOverFix'
+  | 'flightState'
+  | 'lastKnownPosition'
+  | 'highestModelPointProfile'
+  | 'highestModelAirspaceProfile'
+  | 'highestModelRestrictionProfile'
+  | 'slotSwapCounter'
+  | 'slotSwapCandidateList'
+  | 'aircraftAddress'
+  | 'arrivalInformation'
+  | 'slotZone'
+  | 'flightDataVersionNr'
+  | 'applicableScenarios'
+  | 'apiSubmissionRules'
+  | 'avoidedRegulations'
+  | 'routeChargeIndicator'
+  | 'fuelConsumptionIndicator'
+  | 'excludedRegulations'
+  | 'yoyoFlightForLocation'
+  | 'turnFlightForLocation'
+  | 'minimumRequestedRVR'
+  | 'wakeTurbulenceCategory'
+  | 'alternateAerodromes'
+  | 'flightCriticality'
+  | 'oceanicReroute'
+  | 'visibility';
 
 export type FlightExchangeModel = 'FIXM' | 'NM_B2B';
 
@@ -338,7 +342,6 @@ export interface Flight {
   reroutingIndicator?: ReroutingIndicator;
   newRouteMinShiftDelayImprovement?: DurationHourMinute;
   reroutable?: 'CANNOT_BE_REROUTED' | 'TRY_ALLOWED' | 'TRY_AND_APPLY_ALLOWED';
-  reroutingOpportunitiesExist?: boolean;
   cdm?: CDM;
   slotIssued?: boolean;
   proposalInformation?: ProposalInformation;
@@ -349,6 +352,7 @@ export interface Flight {
   trendAtReferenceLocationEntry?: FlightTrend;
   trendAtReferenceLocationExit?: FlightTrend;
   trendAtReferenceLocationMiddle?: FlightTrend;
+  bestReroutingIndicator?: GroupReroutingSummary;
   exemptedFromRegulations?: boolean;
   delay?: DurationHourMinute;
   delayCharacteristics?: 'ADJUSTED_TO_CLOCK' | 'EXCEEDS_DELAY_CONFIRMATION';
@@ -387,6 +391,9 @@ export interface Flight {
   ftfmRequestedFlightLevels?: RequestedFlightLevel[];
   rtfmRequestedFlightLevels?: RequestedFlightLevel[];
   ctfmRequestedFlightLevels?: RequestedFlightLevel[];
+  ftfmTrafficVolumeProfile?: FlightTrafficVolume[];
+  rtfmTrafficVolumeProfile?: FlightTrafficVolume[];
+  ctfmTrafficVolumeProfile?: FlightTrafficVolume[];
   flightHistory?: FlightEvent[];
   operationalLog?: FlightOperationalLogEntry[];
   equipmentCapabilityAndStatus?: EquipmentCapabilityAndStatus;
@@ -441,7 +448,32 @@ export interface Flight {
   alternateAerodromes?: NMList<AerodromeICAOId>;
   flightCriticality?: FlightCriticalityIndicator;
   oceanicRoute?: boolean;
+  visibility?: FlightVisibility;
 }
+
+export type FlightTrafficVolume = {
+  trafficVolumeId: TrafficVolumeId;
+  entryTime: DateTimeSecond;
+  entryFlightLevel?: FlightLevel;
+  entryTrend: FlightTrend;
+  middleTrend: FlightTrend;
+  exitTime: DateTimeSecond;
+  exitFlightLevel?: FlightLevel;
+  exitTrend: FlightTrend;
+  activated: boolean;
+  exempted: boolean;
+  flows: NMList<Flow>;
+};
+
+export type FlightVisibility =
+  | 'NO_VISIBILITY'
+  | 'VISIBLE'
+  | 'INVISIBLE'
+  | 'INVISIBLE_BEFORE_VISIBLE'
+  | 'VISIBLE_AFTER_INVISIBLE'
+  | 'VISIBLE_BEFORE_INVISIBLE'
+  | 'VISIBLE_BETWEEN_INVISIBLE'
+  | 'VISIBLE_WITH_SKIPOUT';
 
 export type APISubmissionRules = {
   latestSubmissionTargetTakeOffAPI?: DateTimeMinute;
@@ -454,6 +486,19 @@ export type FlightCriticalityIndicator = {
   kind: FlightCriticalityKind;
   comment?: string;
 };
+
+export type GroupReroutingSummary = {
+  groupReroutingIndicator: GroupReroutingIndicator;
+  deltaCost: Cost;
+  deltaDelay?: SignedDurationHourMinuteSecond;
+};
+
+export type GroupReroutingIndicator =
+  | 'NO_REROUTING'
+  | 'UNINTERESTING'
+  | 'INTERESTING'
+  | 'OPPORTUNITY'
+  | 'EXECUTED';
 
 export type FlightCriticalityKind =
   | 'CRITICAL_DUE_TO_AIRFRAME_UTILISATION'
@@ -558,8 +603,16 @@ export type MessageOriginator =
 
 export type TaxiTimeAndProcedure = {
   taxiTime: DurationHourMinute;
+  taxiTimeSource: TaxiTimeSource;
   terminalProcedure?: TerminalProcedure;
 };
+
+export type TaxiTimeSource =
+  | 'ENV' // CACD
+  | 'FPL' // Flight Plan
+  | 'RWY' // Runway Tactical Update
+  | 'REA' // Ready Message Minimum Lineup
+  | 'CDM'; // DPI
 
 export type SuspensionStatus =
   | 'AIRPORT_SUSPENSION'
@@ -709,7 +762,7 @@ export type Dinghies = {
   numberOfDinghies?: number; // NumberOfDinghies_DataType
   totalCapacity?: number; // TotalCapacity_DataType
   areCovered?: boolean;
-  colour?: string; // Colour_DataType
+  colour?: string; // Colour_DataType // TEXT{1,51}
 };
 
 export type OtherInformation = {
@@ -1080,13 +1133,30 @@ export interface FlightRestriction {
 
 export type EntryExit = 'ENTRY' | 'EXIT';
 export type CfmuFlightType =
-  | 'ACT'
-  | 'IFPL'
+  /**
+   * Mini-flight created for the usage of CCAMS when the flight is unknown to NM.
+   */
   | 'MFD'
-  | 'PREDICTED_FLIGHT'
-  | 'RPL'
+  /**
+   * Flight created from a flight plan filed to IFPS.
+   */
+  | 'IFPL'
+  /**
+   * Flight is ATC activated.
+   */
+  | 'ACT'
+  /**
+   * Flight activated by NM.
+   */
   | 'TACT_ACTIVATED'
-  | 'TERMINATED';
+  /**
+   * Flight is terminated.
+   */
+  | 'TERMINATED'
+  /**
+   * Predicted flight data.
+   */
+  | 'PREDICTED_FLIGHT';
 
 export type LoadStateAtReferenceLocation =
   | { ENTRY: LoadState }
@@ -1232,13 +1302,16 @@ export interface FlightListReplyData {
   flights: FlightOrFlightPlan[];
 }
 
-export interface FlightListByLocationReplyData {
+export interface FlightListByLocationReplyData extends FlightListReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
 }
 
 export interface FlightListByAirspaceReply extends Reply {
-  data: FlightListByLocationReplyData & FlightListReplyData;
+  data: FlightListByAirspaceReplyData;
 }
+
+export interface FlightListByAirspaceReplyData
+  extends FlightListByLocationReplyData {}
 
 export interface FlightPlanListRequest {
   aircraftId?: string;
@@ -1281,8 +1354,11 @@ export interface FlightListByTrafficVolumeRequest
 }
 
 export interface FlightListByTrafficVolumeReply extends Reply {
-  data: FlightListReplyData;
+  data: FlightListByTrafficVolumeReplyData;
 }
+
+export interface FlightListByTrafficVolumeReplyData
+  extends FlightListByLocationReplyData {}
 
 export interface FlightListByMeasureRequest
   extends FlightListByLocationRequest {
@@ -1295,5 +1371,8 @@ export type FlightListByMeasureMode =
   | 'CONCERNED_BY_MEASURE';
 
 export interface FlightListByMeasureReply extends Reply {
-  data: FlightListByLocationReplyData;
+  data: FlightListByMeasureReplyData;
 }
+
+export interface FlightListByMeasureReplyData
+  extends FlightListByLocationReplyData {}

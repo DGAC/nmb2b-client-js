@@ -1,10 +1,11 @@
 import { inspect } from 'util';
-import { makeFlowClient, B2BClient } from '..';
+import { makeFlowClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { Result as OTMVRetrievalResult } from './retrieveOTMVPlan';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
+
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -36,9 +37,21 @@ describe('retrieveOTMVPlan', () => {
         },
       });
 
-      console.log(inspect(res.data, { depth: null }));
+      for (const otmvPlan of res.data.plans.tvsOTMVs.item[0].value.item) {
+        expect(otmvPlan).toEqual({
+          key: expect.any(Number),
+          value: {
+            nmSchedule: expect.any(Object),
+            clientSchedule: expect.any(Object),
+          },
+        });
+      }
     } catch (err) {
-      console.log(inspect(err, { depth: null }));
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
+      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });
