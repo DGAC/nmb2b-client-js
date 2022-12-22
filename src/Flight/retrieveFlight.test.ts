@@ -2,9 +2,9 @@ import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { flightToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { JestAssertionError } from 'expect';
+import { FlightKeys } from './types';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -19,7 +19,7 @@ beforeAll(async () => {
 describe('retrieveFlight', () => {
   let knownFlight: {
     ifplId: string;
-    keys: ReturnType<typeof flightToFlightKeys>;
+    keys: FlightKeys;
   };
 
   beforeAll(async () => {
@@ -56,9 +56,14 @@ describe('retrieveFlight', () => {
       return;
     }
 
+    if (!flight.flight.flightId.keys) {
+      console.error('Flight has no flight keys, test aborted');
+      return;
+    }
+
     knownFlight = {
       ifplId: flight.flight.flightId.id,
-      keys: flightToFlightKeys(flight.flight),
+      keys: flight.flight.flightId.keys,
     };
   });
 

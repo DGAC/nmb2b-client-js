@@ -2,7 +2,6 @@ import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlightOrFlightPlan as B2BFlight } from './types';
 import { JestAssertionError } from 'expect';
@@ -46,9 +45,7 @@ describe('queryFlightPlans', () => {
       const { flight } = f;
 
       if (
-        flight &&
-        flight.flightId &&
-        flight.flightId.keys &&
+        flight.flightId?.keys?.aircraftId &&
         /(AFR)|(BAW)|(MON)|(EZY)|(RYR)/i.test(flight.flightId.keys.aircraftId)
       ) {
         return true;
