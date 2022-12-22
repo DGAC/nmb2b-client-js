@@ -16,14 +16,14 @@ beforeAll(async () => {
 });
 
 describe('listSubscriptions', () => {
-  test.skip('List subscriptions', async () => {
+  test('List subscriptions', async () => {
     const res: SubscriptionListReply =
       await PublishSubscribe.listSubscriptions();
 
-    console.log(inspect(res.data, { depth: 4 }));
+    // console.log(inspect(res.data, { depth: 4 }));
 
     if (!res.data.subscriptions) {
-      console.warn;
+      console.warn('No subscriptions attached to this certificate');
       return;
     }
 
