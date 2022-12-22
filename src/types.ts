@@ -65,7 +65,7 @@ export {
 export {
   CapacityPlanRetrievalRequest,
   CapacityPlanRetrievalReply,
-} from './FLow/retrieveCapacityPlan';
+} from './Flow/retrieveCapacityPlan';
 
 export {
   CapacityPlanUpdateRequest,
