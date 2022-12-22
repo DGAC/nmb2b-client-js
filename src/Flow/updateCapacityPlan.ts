@@ -31,7 +31,7 @@ export default function prepareUpdateCapacityPlan(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
-        console.log(JSON.stringify(serializer(injectSendTime(values))));
+        // console.log(JSON.stringify(serializer(injectSendTime(values))));
 
         client.updateCapacityPlan(
           serializer(injectSendTime(values)),
