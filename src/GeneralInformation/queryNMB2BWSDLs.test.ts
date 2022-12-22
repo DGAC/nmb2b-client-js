@@ -14,13 +14,12 @@ beforeAll(async () => {
 
 describe('queryNMB2BWSDLs', () => {
   conditionalTest('Version 26.0.0', async () => {
-    try {
-      const res = await GeneralInformation.queryNMB2BWSDLs({
-        version: '26.0.0',
-      });
-    } catch (err) {
-      // console.error(inspect(err, { depth: null }));
-      throw err;
-    }
+    const res = await GeneralInformation.queryNMB2BWSDLs({
+      version: '26.0.0',
+    });
+
+    expect(res.data).toBeDefined();
+    expect(res.data.file).toBeDefined();
+    expect(res.data.file.id).toBeDefined();
   });
 });

@@ -6,7 +6,7 @@ import b2bOptions from '../../tests/options';
 import { FlightService } from '.';
 import { FlowService } from '../Flow';
 import { Regulation } from '../Flow/types';
-import './utils/test-matchers';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -90,6 +90,10 @@ describe('queryFlightsByMeasure', () => {
         });
       }
     } catch (err) {
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
       console.log(inspect(err, { depth: 4 }));
       throw err;
     }

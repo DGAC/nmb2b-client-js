@@ -5,6 +5,8 @@ import b2bOptions from '../../tests/options';
 import { flightPlanToFlightKeys } from './utils';
 import { FlightService } from '.';
 import { FlightOrFlightPlan as B2BFlight } from './types';
+import { JestAssertionError } from 'expect';
+
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -124,6 +126,10 @@ describe('queryFlightPlans', () => {
         }
       }
     } catch (err) {
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
       console.log(inspect(err, { depth: 4 }));
       throw err;
     }

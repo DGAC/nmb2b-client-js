@@ -2,6 +2,7 @@ import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -27,6 +28,10 @@ describe('queryHotspots', () => {
 
       // TODO: Write proper test
     } catch (err) {
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
       if (err.status === 'NOT_AUTHORISED') {
         console.warn('Test cancelled, NOT_AUTHORIZED');
         return;

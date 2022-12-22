@@ -3,6 +3,7 @@ import { makeFlowClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
+import { JestAssertionError } from 'expect';
 jest.setTimeout(20000);
 
 const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
@@ -72,6 +73,10 @@ describe('queryTrafficCountsByTrafficVolume', () => {
         });
       }
     } catch (err) {
+      if (err instanceof JestAssertionError) {
+        throw err;
+      }
+
       console.log(inspect(err, { depth: 4 }));
       throw err;
     }
