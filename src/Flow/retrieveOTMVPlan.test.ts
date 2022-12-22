@@ -46,12 +46,6 @@ describe('retrieveOTMVPlan', () => {
           },
         });
       }
-
-      console.log(
-        inspect(res.data.plans.tvsOTMVs.item[0].value.item[0].value, {
-          depth: 4,
-        }),
-      );
     } catch (err) {
       if (err instanceof JestAssertionError) {
         throw err;
