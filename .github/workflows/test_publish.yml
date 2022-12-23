@@ -2,7 +2,7 @@ name: Build, test, publish
 
 env:
   CI: true
-  B2B_FLAVOUR: OPS
+  B2B_FLAVOUR: PREOPS
   B2B_ENDPOINT: https://b2b-proxy.4me.im/
   B2B_XSD_REMOTE_URL: https://wsdl.b2B-proxy.4me.im/26.0.0.tar.gz
   B2B_API_KEY_ID: ${{ secrets.B2B_API_KEY_ID }}
