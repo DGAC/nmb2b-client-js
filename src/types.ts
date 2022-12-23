@@ -63,6 +63,16 @@ export {
 } from './Flow/queryTrafficCountsByTrafficVolume';
 
 export {
+  CapacityPlanRetrievalRequest,
+  CapacityPlanRetrievalReply,
+} from './Flow/retrieveCapacityPlan';
+
+export {
+  CapacityPlanUpdateRequest,
+  CapacityPlanUpdateReply,
+} from './Flow/updateCapacityPlan';
+
+export {
   OTMVPlanRetrievalRequest,
   OTMVPlanRetrievalReply,
 } from './Flow/retrieveOTMVPlan';

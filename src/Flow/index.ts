@@ -51,9 +51,13 @@ import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolu
 import { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume';
 import retrieveOTMVPlan from './retrieveOTMVPlan';
 import { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
+import updateOTMVPlan from './updateOTMVPlan';
+import { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
 import retrieveCapacityPlan, {
   Resolver as RetrieveCapacityPlan,
 } from './retrieveCapacityPlan';
+import updateCapacityPlan from './updateCapacityPlan';
+import { Resolver as UpdateCapacityPlan } from './updateCapacityPlan';
 import retrieveRunwayConfigurationPlan, {
   Resolver as RetrieveRunwayConfigurationPlan,
 } from './retrieveRunwayConfigurationPlan';
@@ -66,7 +70,9 @@ export interface FlowService {
   queryHotspots: QueryHotspots;
   queryTrafficCountsByTrafficVolume: QueryTrafficCountsByTrafficVolume;
   retrieveOTMVPlan: RetrieveOTMVPlan;
+  updateOTMVPlan: UpdateOTMVPlan;
   retrieveCapacityPlan: RetrieveCapacityPlan;
+  updateCapacityPlan: UpdateCapacityPlan;
   retrieveRunwayConfigurationPlan: RetrieveRunwayConfigurationPlan;
 }
 
@@ -80,7 +86,9 @@ export function getFlowClient(config: Config): Promise<FlowService> {
     queryTrafficCountsByTrafficVolume:
       queryTrafficCountsByTrafficVolume(client),
     retrieveOTMVPlan: retrieveOTMVPlan(client),
+    updateOTMVPlan: updateOTMVPlan(client),
     retrieveCapacityPlan: retrieveCapacityPlan(client),
+    updateCapacityPlan: updateCapacityPlan(client),
     retrieveRunwayConfigurationPlan: retrieveRunwayConfigurationPlan(client),
   }));
 }

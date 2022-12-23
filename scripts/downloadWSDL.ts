@@ -9,11 +9,18 @@ import { B2B_VERSION } from '../src/constants';
 import { dirExists } from '../src/utils/fs';
 import b2bOptions from '../tests/options';
 
+console.log('Looking for XSD files ...');
+
 dirExists(path.join(b2bOptions.XSD_PATH, B2B_VERSION)).then((exists) => {
   if (exists) {
     console.log(
       `B2B XSD for version ${B2B_VERSION} already exists, do not download`,
     );
+    return;
+  }
+
+  if (process.env.CI && !process.env.REAL_B2B_CONNECTIONS) {
+    console.log(`CI detected, no real B2B connection, disable XSD download`);
     return;
   }
 

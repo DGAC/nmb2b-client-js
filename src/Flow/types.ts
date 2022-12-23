@@ -180,6 +180,10 @@ export interface SectorConfigurationPlan extends TacticalConfigurationPlan {
   clientSchedule?: NMSet<PlannedSectorConfigurationActivation>; // Set<PlannedSectorConfigurationActivation>
 }
 
+export interface CapacityPlans extends TacticalConfigurationPlan {
+  tvCapacities: NMMap<TrafficVolumeId, PlannedCapacities>;
+}
+
 export interface PlannedSectorConfigurationActivation {
   applicabilityPeriod: DateTimeMinutePeriod;
   dataSource: PlanDataSource;
@@ -610,7 +614,7 @@ export interface HotspotPlans {
 
 export interface OTMVWithDuration {
   trafficVolume: TrafficVolumeId;
-  otvmDuration?: DurationHourMinute;
+  otmvDuration?: DurationHourMinute;
 }
 
 export interface OTMVPlanRetrievalRequest
@@ -664,6 +668,18 @@ export interface OTMVPlanRetrievalReplyData {
   plans: OTMVPlans;
 }
 
+export interface OTMVPlanUpdateRequest {
+  plans: OTMVPlans;
+}
+
+export interface OTMVPlanUpdateReply extends Reply {
+  data: OTMVPlanUpdateReplyData;
+}
+
+export interface OTMVPlanUpdateReplyData {
+  plans: OTMVPlans;
+}
+
 export interface CapacityPlanRetrievalRequest
   extends TacticalConfigurationRetrievalRequest {
   trafficVolumes: NMSet<TrafficVolumeId>;
@@ -693,6 +709,18 @@ export interface PlannedCapacity {
 }
 
 export type Capacity = number;
+
+export interface CapacityPlanUpdateRequest {
+  plans: CapacityPlans;
+}
+
+export interface CapacityPlanUpdateReply extends Reply {
+  data: CapacityPlanUpdateReplyData;
+}
+
+export interface CapacityPlanUpdateReplyData {
+  plans: CapacityPlans;
+}
 
 export interface RunwayConfigurationPlanRetrievalReply extends Reply {
   data: RunwayConfigurationPlanRetrievalData;

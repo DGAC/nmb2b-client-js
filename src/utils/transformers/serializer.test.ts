@@ -1,7 +1,8 @@
 /**
  * @jest-environment node
  */
-import { reorderKeys } from './serializer';
+import { reorderKeys, prepareSerializer } from './serializer';
+import moment from 'moment';
 
 describe('reorderKeys', () => {
   const testCases = [
@@ -82,4 +83,103 @@ describe('reorderKeys', () => {
       );
     },
   );
+});
+
+describe('schema with array', () => {
+  const schema = {
+    foo: 'DateTimeMinute|xs:string|pattern',
+    'item[]': {
+      wef: 'DateTimeMinute|xs:string|pattern',
+      unt: 'DateTimeMinute|xs:string|pattern',
+    },
+  };
+
+  test('should prepare a correct serializer', () => {
+    const serialize = prepareSerializer<any>(schema);
+    const serialized = serialize({
+      foo: new Date(),
+      bar: 'bar',
+      item: [
+        {
+          wef: new Date(),
+          unt: new Date(),
+        },
+      ],
+    });
+
+    expect(serialized.bar).not.toBeDefined();
+    expect(serialized).toEqual({
+      foo: expect.stringMatching(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/),
+      item: [
+        {
+          wef: expect.stringMatching(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/),
+          unt: expect.stringMatching(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/),
+        },
+      ],
+    });
+  });
+});
+
+describe('retrieveOTMVPlan', () => {
+  const schema = {
+    endUserId: 'xs:string|pattern',
+    sendTime: 'DateTimeSecond|xs:string|pattern',
+    dataset: {
+      type: 'DatasetType|xs:string|FORECAST,OPERATIONAL,SIMULATION',
+      simulationIdentifier: {
+        simulationType:
+          'SimulationType|xs:string|STANDALONE_SIMEX,NMOC_MANAGED_SIMULATION,USER_MANAGED_SIMULATION',
+        simulationId: 'SimulationId|xs:string|pattern',
+        targetNSAlias: 'common',
+        targetNamespace: 'eurocontrol/cfmu/b2b/CommonServices',
+      },
+      simulationState: {
+        targetNSAlias: 'common',
+        targetNamespace: 'eurocontrol/cfmu/b2b/CommonServices',
+      },
+      targetNSAlias: 'common',
+      targetNamespace: 'eurocontrol/cfmu/b2b/CommonServices',
+    },
+    day: 'DateYearMonthDay|xs:string|pattern',
+    otmvsWithDuration: {
+      'item[]': {
+        trafficVolume: 'TrafficVolumeId|xs:string|pattern',
+        otmvDuration: 'DurationHourMinute|xs:string|pattern',
+        targetNSAlias: 'flow',
+        targetNamespace: 'eurocontrol/cfmu/b2b/FlowServices',
+      },
+    },
+    targetNSAlias: 'flow',
+    targetNamespace: 'eurocontrol/cfmu/b2b/FlowServices',
+  };
+
+  test('should serialize otmvDuration properly', () => {
+    const serialize = prepareSerializer(schema);
+    const now = new Date();
+
+    const prepared = serialize({
+      dataset: { type: 'OPERATIONAL' },
+      day: now,
+      otmvsWithDuration: {
+        item: [{ trafficVolume: 'LFBBDX', otmvDuration: 60 * 5 }],
+      },
+    });
+
+    expect(prepared).toEqual(
+      expect.objectContaining({
+        dataset: {
+          type: 'OPERATIONAL',
+        },
+        day: moment.utc(now).format('YYYY-MM-DD'),
+        otmvsWithDuration: {
+          item: [
+            {
+              trafficVolume: 'LFBBDX',
+              otmvDuration: '0005',
+            },
+          ],
+        },
+      }),
+    );
+  });
 });
