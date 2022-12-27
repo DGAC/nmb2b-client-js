@@ -41,7 +41,7 @@ describe('retrieveAUP', () => {
 
   conditionalTest('AUP Retrieval', async () => {
     if (AUPSummaries.length === 0) {
-      console.error('AUPChainRetrieval did not yield any AUP id');
+      console.warn('AUPChainRetrieval did not yield any AUP id');
       return;
     }
 
