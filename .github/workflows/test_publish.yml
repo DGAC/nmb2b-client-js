@@ -31,29 +31,17 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
-          - 16.x
-          - 18.x
+          - 14
+          - 16
+          - 18
 
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: '[GH Cache] yarn'
-        uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+          cache: 'yarn'
 
       - name: 'Create b2b-xsd folder'
         run: mkdir b2b-xsd && touch b2b-xsd/.ghcache
@@ -67,7 +55,7 @@ jobs:
             ${{ runner.os }}-b2b-xsd
 
       - name: 'Install deps'
-        run: yarn
+        run: yarn install --frozen-lockfile
 
       - name: 'TypeScript check'
         run: yarn typecheck
@@ -95,24 +83,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: '[GH Cache] yarn'
-        uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+          cache: 'yarn'
 
       - name: Install deps
-        run: yarn
+        run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn build
