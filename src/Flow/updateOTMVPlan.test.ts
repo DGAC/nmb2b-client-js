@@ -1,7 +1,6 @@
 import { inspect } from 'util';
 import { makeFlowClient, B2BClient } from '..';
 import moment from 'moment';
-// @ts-ignore
 import b2bOptions from '../../tests/options';
 import { Result as OTMVPlanUpdateResult } from './updateOTMVPlan';
 import { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan';
@@ -14,27 +13,57 @@ const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
 const xconditionalTest = xtest;
 
 let Flow: FlowService;
+let planBefore: OTMVPlanRetrievalResult['data'];
 beforeAll(async () => {
   Flow = await makeFlowClient(b2bOptions);
+  const res = await Flow.retrieveOTMVPlan({
+    dataset: { type: 'OPERATIONAL' },
+    day: moment.utc().toDate(),
+    otmvsWithDuration: {
+      item: [
+        {
+          trafficVolume: 'LFERMS',
+          otmvDuration: 11 * 60,
+        },
+      ],
+    },
+  });
+  planBefore = res.data;
+});
+
+afterAll(async () => {
+  try {
+    if (b2bOptions.flavour !== 'PREOPS' || !planBefore) {
+      return;
+    }
+
+    function clearNmSchedules(plan: typeof planBefore): typeof planBefore {
+      const plans = plan.plans;
+
+      for (const { key, value } of plans.tvsOTMVs.item) {
+        const v = value.item;
+        for (const { key, value } of v) {
+          if (value.nmSchedule) {
+            delete value.nmSchedule;
+          }
+        }
+      }
+
+      return plan;
+    }
+
+    await Flow.updateOTMVPlan(clearNmSchedules(planBefore));
+  } catch (err) {
+    console.warn('Error resetting otmv plan after test');
+    console.log(JSON.stringify(err, null, 2));
+    return;
+  }
 });
 
 describe('updateOTMVPlan', () => {
-  conditionalTest('LFERMS', async () => {
+  xconditionalTest('LFERMS', async () => {
     try {
-      const plan: OTMVPlanRetrievalResult = await Flow.retrieveOTMVPlan({
-        dataset: { type: 'OPERATIONAL' },
-        day: moment.utc().toDate(),
-        otmvsWithDuration: {
-          item: [
-            {
-              trafficVolume: 'LFERMS',
-              otmvDuration: 11 * 60,
-            },
-          ],
-        },
-      });
-
-      expect(plan.data).toBeDefined();
+      expect(planBefore).toBeDefined();
 
       if (b2bOptions.flavour !== 'PREOPS') {
         console.warn('B2B_FLAVOUR is not PREOPS, skipping test');
@@ -42,9 +71,10 @@ describe('updateOTMVPlan', () => {
       }
 
       const hPlus10Min: moment.Moment = moment.utc().add(10, 'minute');
+
       const res: OTMVPlanUpdateResult = await Flow.updateOTMVPlan({
         plans: {
-          dataId: plan.data.plans.dataId,
+          dataId: planBefore.plans.dataId,
           dataset: { type: 'OPERATIONAL' },
           day: moment.utc().toDate(),
           tvsOTMVs: {

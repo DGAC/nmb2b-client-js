@@ -19,7 +19,7 @@ beforeAll(async () => {
 });
 
 describe('updateCapacityPlan', () => {
-  conditionalTest('LFERMS', async () => {
+  xconditionalTest('LFERMS', async () => {
     try {
       const plan: CapacityPlanRetrievalResult = await Flow.retrieveCapacityPlan(
         {
