@@ -57,16 +57,32 @@ describe('queryFlightsByTrafficVolume', () => {
 
     expect(res.data?.flights).toEqual(expect.any(Array));
     for (const flight of res.data?.flights) {
+      if (!('flight' in flight)) {
+        continue;
+      }
+
+      const flightKeysMatcher: Record<string, any> = {
+        aircraftId: expect.any(String),
+        nonICAOAerodromeOfDeparture: expect.any(Boolean),
+        nonICAOAerodromeOfDestination: expect.any(Boolean),
+        estimatedOffBlockTime: expect.any(Date),
+      };
+
+      if (!flight.flight.flightId?.keys?.nonICAOAerodromeOfDeparture) {
+        flightKeysMatcher.aerodromeOfDeparture =
+          expect.stringMatching(/^[A-Z]{4}$/);
+      }
+
+      if (!flight.flight.flightId?.keys?.nonICAOAerodromeOfDestination) {
+        flightKeysMatcher.aerodromeOfDestination =
+          expect.stringMatching(/^[A-Z]{4}$/);
+      }
+
       expect(flight).toMatchObject({
         flight: {
           flightId: {
             id: expect.any(String),
-            keys: {
-              aircraftId: expect.any(String),
-              aerodromeOfDeparture: expect.stringMatching(/^[A-Z]{4}$/),
-              aerodromeOfDestination: expect.stringMatching(/^[A-Z]{4}$/),
-              estimatedOffBlockTime: expect.any(Date),
-            },
+            keys: flightKeysMatcher,
           },
         },
       });
