@@ -12,7 +12,7 @@ console.log('Building CommonJS modules ...');
 
 exec(
   `babel src -d dist --extensions '.js,.ts' --ignore ${IGNORE.map(
-    s => `'${s}'`,
+    (s) => `'${s}'`,
   ).join(',')}`,
   {
     BABEL_ENV: 'cjs',
@@ -21,4 +21,4 @@ exec(
 
 console.log('Building TS declarations');
 
-exec(`tsc --emitDeclarationOnly`);
+exec(`tsc --project tsconfig.build.json --emitDeclarationOnly`);

@@ -1,3 +1,7 @@
+# Master
+
+- Fix type declaration generation
+
 # v0.6.0 (2023-01-01)
 
 - NM 26.0.0 support (#103)
