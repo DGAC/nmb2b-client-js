@@ -1,3 +1,7 @@
+# Master
+
+- Fix `RunwayConfiguration` typing (#106)
+
 # v0.6.1 (2023-06-01)
 
 - Fix type declaration generation

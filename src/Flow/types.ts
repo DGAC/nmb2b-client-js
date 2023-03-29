@@ -745,17 +745,17 @@ export interface RunwayConfigurationPlanSchedule {
 }
 
 export interface RunwayConfiguration {
-  runway?: RunwayId;
+  runway: RunwayId;
   usage?: RunwayUsage;
-  runwayUsageDataSource?: PlanDataSource;
+  runwayUsageDataSource: PlanDataSource;
   departureTaxiTime?: DurationHourMinute;
-  departureTaxiTimeDataSource?: PlanDataSource;
+  departureTaxiTimeDataSource: PlanDataSource;
   timeToInsertInSequence?: DurationHourMinute;
-  timeToInsertInSequenceDataSource?: PlanDataSource;
+  timeToInsertInSequenceDataSource: PlanDataSource;
   timeToRemoveFromSequence?: DurationHourMinute;
-  timeToRemoveFromSequenceDataSource?: PlanDataSource;
+  timeToRemoveFromSequenceDataSource: PlanDataSource;
   arrivalTaxiTime?: DurationHourMinute;
-  arrivalTaxiTimeDataSource?: PlanDataSource;
+  arrivalTaxiTimeDataSource: PlanDataSource;
 }
 export interface RunwayConfigurationPlanRetrievalRequest
   extends TacticalConfigurationRetrievalRequest {

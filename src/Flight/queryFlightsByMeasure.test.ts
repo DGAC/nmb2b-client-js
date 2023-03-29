@@ -48,9 +48,11 @@ describe('queryFlightsByMeasure', () => {
         item.location['referenceLocation-ReferenceLocationAirspace'].id,
       );
 
-    measure = res.data.regulations?.item?.filter(
-      hasAirspaceMatching(/LF/),
-    )?.[0];
+    if (!res.data.regulations?.item || !res.data.regulations?.item.length) {
+      return;
+    }
+
+    measure = res.data.regulations.item[0];
 
     // console.log(inspect(measure, { depth: null }));
   });
