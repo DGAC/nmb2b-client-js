@@ -37,6 +37,11 @@ describe('queryHotspots', () => {
         return;
       }
 
+      if (err.status === 'SERVICE_UNAVAILABLE') {
+        console.warn('Test cancelled, SERVICE_UNAVAILABLE');
+        return;
+      }
+
       console.log(inspect(err, { depth: 4 }));
 
       throw err;
