@@ -1,19 +1,13 @@
 import { GeneralInformationService } from '.';
 import { makeGeneralInformationClient } from '..';
 import b2bOptions from '../../tests/options';
-jest.setTimeout(60000);
+import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { describe, test, expect } from 'vitest';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
+describe('queryNMB2BWSDLs', async () => {
+  const GeneralInformation = await makeGeneralInformationClient(b2bOptions);
 
-let GeneralInformation: GeneralInformationService;
-beforeAll(async () => {
-  GeneralInformation = await makeGeneralInformationClient(b2bOptions);
-});
-
-describe('queryNMB2BWSDLs', () => {
-  conditionalTest('Version 26.0.0', async () => {
+  test.runIf(shouldUseRealB2BConnection)('Version 26.0.0', async () => {
     const res = await GeneralInformation.queryNMB2BWSDLs({
       version: '26.0.0',
     });

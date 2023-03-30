@@ -1,21 +1,11 @@
-import { inspect } from 'util';
+import { describe, expect, test } from 'vitest';
 import { makePublishSubscribeClient } from '..';
 import b2bOptions from '../../tests/options';
-jest.setTimeout(20000);
-
-import { PublishSubscribeService } from '.';
 import { SubscriptionListReply } from './listSubscriptions';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
+describe('listSubscriptions', async () => {
+  const PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
 
-let PublishSubscribe: PublishSubscribeService;
-beforeAll(async () => {
-  PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
-});
-
-describe('listSubscriptions', () => {
   test.skip('List subscriptions', async () => {
     const res: SubscriptionListReply =
       await PublishSubscribe.listSubscriptions();

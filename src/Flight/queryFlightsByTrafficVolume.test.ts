@@ -1,21 +1,13 @@
-import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { FlightService } from '.';
-jest.setTimeout(20000);
+import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { describe, expect, test } from 'vitest';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
+describe('queryFlightsByTrafficVolume', async () => {
+  const Flight = await makeFlightClient(b2bOptions);
 
-let Flight: FlightService;
-beforeAll(async () => {
-  Flight = await makeFlightClient(b2bOptions);
-});
-
-describe('queryFlightsByTrafficVolume', () => {
-  conditionalTest('query in LFERMS', async () => {
+  test.runIf(shouldUseRealB2BConnection)('query in LFERMS', async () => {
     const trafficWindow = {
       wef: moment.utc().subtract(2, 'hours').toDate(),
       unt: moment.utc().add(2, 'hours').toDate(),

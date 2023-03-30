@@ -4,21 +4,14 @@ import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { FlowService } from '.';
 import { RunwayConfigurationPlanRetrievalReply } from './types';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
+import { AssertionError } from 'chai';
+import { expect, test, describe } from 'vitest';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('retrieveRunwayConfigurationPlan', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('retrieveRunwayConfigurationPlan', () => {
-  conditionalTest('LFBD', async () => {
+  test.runIf(shouldUseRealB2BConnection)('LFBD', async () => {
     try {
       const res: RunwayConfigurationPlanRetrievalReply =
         await Flow.retrieveRunwayConfigurationPlan({
@@ -44,7 +37,7 @@ describe('retrieveRunwayConfigurationPlan', () => {
         },
       });
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

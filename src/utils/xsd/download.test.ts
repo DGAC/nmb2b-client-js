@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import path from 'path';
 import nock from 'nock';
 import fs from 'fs';
@@ -11,6 +8,7 @@ import { createDir as mkdirp } from '../fs';
 import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { downloadFile } from './downloadFile';
+import { beforeEach, afterEach, describe, test, expect } from 'vitest';
 
 const rimraf = promisify(rimrafCb);
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');

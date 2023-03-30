@@ -1,7 +1,3 @@
-/**
- * @jest-environment node
- */
-
 import b2bOptions from '../tests/options';
 import {
   makeB2BClient,
@@ -11,12 +7,15 @@ import {
   makeAirspaceClient,
   makePublishSubscribeClient,
 } from '.';
+
 import { Config } from './config';
 
-jest.setTimeout(20000);
+import { describe, test, expect } from 'vitest';
+
+// jest.setTimeout(20000);
 
 describe('Main API', () => {
-  test.only('makeB2BClient', async () => {
+  test('makeB2BClient', async () => {
     const b2bClient = await makeB2BClient(b2bOptions as Config);
     expect(b2bClient).toBeDefined();
     expect(b2bClient.Airspace).toBeDefined();

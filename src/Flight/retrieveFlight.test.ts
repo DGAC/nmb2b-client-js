@@ -2,21 +2,14 @@ import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { FlightService } from '.';
-import { JestAssertionError } from 'expect';
-import { FlightKeys } from './types';
-jest.setTimeout(20000);
+import type { FlightKeys } from './types';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { expect, beforeAll, test, describe } from 'vitest';
+import { AssertionError } from 'chai';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
+describe('retrieveFlight', async () => {
+  const Flight = await makeFlightClient(b2bOptions);
 
-let Flight: FlightService;
-beforeAll(async () => {
-  Flight = await makeFlightClient(b2bOptions);
-});
-
-describe('retrieveFlight', () => {
   let knownFlight: {
     ifplId: string;
     keys: FlightKeys;
@@ -67,79 +60,85 @@ describe('retrieveFlight', () => {
     };
   });
 
-  conditionalTest('query flightPlan by ifplId', async () => {
-    if (!knownFlight.ifplId || !knownFlight.keys) {
-      return;
-    }
-
-    try {
-      const res = await Flight.retrieveFlight({
-        dataset: {
-          type: 'OPERATIONAL',
-        },
-        includeProposalFlights: false,
-        flightId: {
-          keys: knownFlight.keys,
-        },
-        requestedFlightDatasets: ['flight'],
-        requestedFlightFields: ['ftfmPointProfile'],
-        requestedDataFormat: 'NM_B2B',
-      });
-
-      expect(res.data.flight?.ftfmPointProfile).toBeDefined();
-      res.data.flight?.ftfmPointProfile?.forEach((item) => {
-        expect(item).toEqual(
-          expect.objectContaining({
-            timeOver: expect.any(Date),
-            coveredDistance: expect.any(Number),
-          }),
-        );
-      });
-    } catch (err) {
-      console.error(inspect(err, { depth: 4 }));
-      throw err;
-    }
-  });
-
-  conditionalTest('query flight by flight keys', async () => {
-    if (!knownFlight.keys) {
-      return;
-    }
-
-    try {
-      const res = await Flight.retrieveFlight({
-        dataset: {
-          type: 'OPERATIONAL',
-        },
-        includeProposalFlights: false,
-        flightId: {
-          keys: knownFlight.keys,
-        },
-        requestedFlightDatasets: ['flight'],
-        requestedFlightFields: ['aircraftType', 'delay'],
-        requestedDataFormat: 'NM_B2B',
-      });
-
-      const flight = res.data?.flight;
-      expect(flight).toBeDefined();
-      expect(flight?.flightId.id).toEqual(
-        expect.stringMatching(/^A(A|T)[0-9]{8}$/),
-      );
-
-      if (flight?.delay !== undefined) {
-        expect(flight?.delay).toBeGreaterThanOrEqual(0);
+  test.runIf(shouldUseRealB2BConnection)(
+    'query flightPlan by ifplId',
+    async () => {
+      if (!knownFlight.ifplId || !knownFlight.keys) {
+        return;
       }
 
-      expect(flight?.aircraftType).toEqual(
-        expect.stringMatching(/^[A-Z0-9]{4}$/),
-      );
-    } catch (err) {
-      if (err instanceof JestAssertionError) {
+      try {
+        const res = await Flight.retrieveFlight({
+          dataset: {
+            type: 'OPERATIONAL',
+          },
+          includeProposalFlights: false,
+          flightId: {
+            keys: knownFlight.keys,
+          },
+          requestedFlightDatasets: ['flight'],
+          requestedFlightFields: ['ftfmPointProfile'],
+          requestedDataFormat: 'NM_B2B',
+        });
+
+        expect(res.data.flight?.ftfmPointProfile).toBeDefined();
+        res.data.flight?.ftfmPointProfile?.forEach((item) => {
+          expect(item).toEqual(
+            expect.objectContaining({
+              timeOver: expect.any(Date),
+              coveredDistance: expect.any(Number),
+            }),
+          );
+        });
+      } catch (err) {
+        console.error(inspect(err, { depth: 4 }));
         throw err;
       }
+    },
+  );
 
-      console.error(inspect(err, { depth: 4 }));
-      throw err;
-    }
-  });
+  test.runIf(shouldUseRealB2BConnection)(
+    'query flight by flight keys',
+    async () => {
+      if (!knownFlight.keys) {
+        return;
+      }
+
+      try {
+        const res = await Flight.retrieveFlight({
+          dataset: {
+            type: 'OPERATIONAL',
+          },
+          includeProposalFlights: false,
+          flightId: {
+            keys: knownFlight.keys,
+          },
+          requestedFlightDatasets: ['flight'],
+          requestedFlightFields: ['aircraftType', 'delay'],
+          requestedDataFormat: 'NM_B2B',
+        });
+
+        const flight = res.data?.flight;
+        expect(flight).toBeDefined();
+        expect(flight?.flightId.id).toEqual(
+          expect.stringMatching(/^A(A|T)[0-9]{8}$/),
+        );
+
+        if (flight?.delay !== undefined) {
+          expect(flight?.delay).toBeGreaterThanOrEqual(0);
+        }
+
+        expect(flight?.aircraftType).toEqual(
+          expect.stringMatching(/^[A-Z0-9]{4}$/),
+        );
+      } catch (err) {
+        if (err instanceof AssertionError) {
+          throw err;
+        }
+
+        console.error(inspect(err, { depth: 4 }));
+        throw err;
+      }
+    },
+  );
 });

@@ -1,24 +1,16 @@
-import { inspect } from 'util';
-import { makeFlowClient } from '..';
+import { AssertionError } from 'chai';
 import moment from 'moment';
+import { inspect } from 'util';
+import { describe, expect, test } from 'vitest';
+import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan';
-import { FlowService } from '.';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('retrieveSectorConfigurationPlan', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('retrieveSectorConfigurationPlan', () => {
-  conditionalTest('LFEERMS', async () => {
+  test.runIf(shouldUseRealB2BConnection)('LFEERMS', async () => {
     try {
       const res = await Flow.retrieveSectorConfigurationPlan({
         dataset: { type: 'OPERATIONAL' },
@@ -87,7 +79,7 @@ describe('retrieveSectorConfigurationPlan', () => {
         testSchedule(conf);
       }
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

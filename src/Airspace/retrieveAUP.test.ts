@@ -1,22 +1,14 @@
 import { makeAirspaceClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { AirspaceService } from '.';
 import { AUPSummary } from './types';
 import * as R from 'ramda';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { describe, beforeAll, test, expect } from 'vitest';
 
-jest.setTimeout(20000);
+describe('retrieveAUP', async () => {
+  const Airspace = await makeAirspaceClient(b2bOptions);
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-
-let Airspace: AirspaceService;
-beforeAll(async () => {
-  Airspace = await makeAirspaceClient(b2bOptions);
-});
-
-describe('retrieveAUP', () => {
   let AUPSummaries: AUPSummary[] = [];
   beforeAll(async () => {
     // Find some AUP id
@@ -39,7 +31,7 @@ describe('retrieveAUP', () => {
     }
   });
 
-  conditionalTest('AUP Retrieval', async () => {
+  test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {
     if (AUPSummaries.length === 0) {
       console.warn('AUPChainRetrieval did not yield any AUP id');
       return;

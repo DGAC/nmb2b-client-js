@@ -1,26 +1,15 @@
-import { inspect } from 'util';
-import { makeFlowClient } from '..';
+import { AssertionError } from 'chai';
 import moment from 'moment';
+import { inspect } from 'util';
+import { describe, expect, test } from 'vitest';
+import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { FlowService } from '.';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('queryTrafficCountsByTrafficVolume', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-type Diff<T, U> = T extends U ? never : T;
-type NonNullable<T> = Diff<T, null | undefined>;
-
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('queryTrafficCountsByTrafficVolume', () => {
-  conditionalTest('LFEE5R, aggregated', async () => {
+  test.runIf(shouldUseRealB2BConnection)('LFEE5R, aggregated', async () => {
     try {
       const res = await Flow.queryTrafficCountsByTrafficVolume({
         dataset: { type: 'OPERATIONAL' },
@@ -73,7 +62,7 @@ describe('queryTrafficCountsByTrafficVolume', () => {
         });
       }
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 
