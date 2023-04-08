@@ -1,5 +1,6 @@
 # Master
 
+- Implement `Airspace.retrieveEAUP` service
 - Replace `jest` by `vitest`
 - Fix `RunwayConfiguration` typing (#106)
 
