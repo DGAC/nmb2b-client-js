@@ -5,63 +5,58 @@ import b2bOptions from '../../tests/options';
 import { Result as OTMVPlanUpdateResult } from './updateOTMVPlan';
 import { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan';
 import { FlowService } from '.';
-jest.setTimeout(20000);
+import { describe, expect, beforeAll, afterAll, test } from 'vitest';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('updateOTMVPlan', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-let Flow: FlowService;
-let planBefore: OTMVPlanRetrievalResult['data'];
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-  const res = await Flow.retrieveOTMVPlan({
-    dataset: { type: 'OPERATIONAL' },
-    day: moment.utc().toDate(),
-    otmvsWithDuration: {
-      item: [
-        {
-          trafficVolume: 'LFERMS',
-          otmvDuration: 11 * 60,
-        },
-      ],
-    },
+  let planBefore: OTMVPlanRetrievalResult['data'];
+  beforeAll(async () => {
+    const res = await Flow.retrieveOTMVPlan({
+      dataset: { type: 'OPERATIONAL' },
+      day: moment.utc().toDate(),
+      otmvsWithDuration: {
+        item: [
+          {
+            trafficVolume: 'LFERMS',
+            otmvDuration: 11 * 60,
+          },
+        ],
+      },
+    });
+    planBefore = res.data;
   });
-  planBefore = res.data;
-});
 
-afterAll(async () => {
-  try {
-    if (b2bOptions.flavour !== 'PREOPS' || !planBefore) {
-      return;
-    }
-
-    function clearNmSchedules(plan: typeof planBefore): typeof planBefore {
-      const plans = plan.plans;
-
-      for (const { key, value } of plans.tvsOTMVs.item) {
-        const v = value.item;
-        for (const { key, value } of v) {
-          if (value.nmSchedule) {
-            delete value.nmSchedule;
-          }
-        }
+  afterAll(async () => {
+    try {
+      if (b2bOptions.flavour !== 'PREOPS' || !planBefore) {
+        return;
       }
 
-      return plan;
+      function clearNmSchedules(plan: typeof planBefore): typeof planBefore {
+        const plans = plan.plans;
+
+        for (const { key, value } of plans.tvsOTMVs.item) {
+          const v = value.item;
+          for (const { key, value } of v) {
+            if (value.nmSchedule) {
+              delete value.nmSchedule;
+            }
+          }
+        }
+
+        return plan;
+      }
+
+      await Flow.updateOTMVPlan(clearNmSchedules(planBefore));
+    } catch (err) {
+      console.warn('Error resetting otmv plan after test');
+      console.log(JSON.stringify(err, null, 2));
+      return;
     }
+  });
 
-    await Flow.updateOTMVPlan(clearNmSchedules(planBefore));
-  } catch (err) {
-    console.warn('Error resetting otmv plan after test');
-    console.log(JSON.stringify(err, null, 2));
-    return;
-  }
-});
-
-describe('updateOTMVPlan', () => {
-  xconditionalTest('LFERMS', async () => {
+  test.skip('LFERMS', async () => {
     try {
       expect(planBefore).toBeDefined();
 

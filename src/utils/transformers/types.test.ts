@@ -1,8 +1,5 @@
-/**
- * @jest-environment node
- */
-
 import { types } from './types';
+import { test, expect } from 'vitest';
 
 const serialization = [
   ['DurationMinute', 34 * 60, 34],

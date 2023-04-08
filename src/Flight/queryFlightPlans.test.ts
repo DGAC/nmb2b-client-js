@@ -2,22 +2,14 @@ import { inspect } from 'util';
 import { makeFlightClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { FlightService } from '.';
 import { FlightOrFlightPlan as B2BFlight } from './types';
-import { JestAssertionError } from 'expect';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { describe, beforeAll, expect, test } from 'vitest';
+import { AssertionError } from 'chai';
 
-jest.setTimeout(20000);
+describe('queryFlightPlans', async () => {
+  const Flight = await makeFlightClient(b2bOptions);
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-
-let Flight: FlightService;
-beforeAll(async () => {
-  Flight = await makeFlightClient(b2bOptions);
-});
-
-describe('queryFlightPlans', () => {
   let knownFlight: B2BFlight | undefined;
 
   beforeAll(async () => {
@@ -64,7 +56,7 @@ describe('queryFlightPlans', () => {
     }
   });
 
-  conditionalTest('query known flight', async () => {
+  test.runIf(shouldUseRealB2BConnection)('query known flight', async () => {
     try {
       if (!knownFlight || !('flight' in knownFlight)) {
         return;
@@ -123,7 +115,7 @@ describe('queryFlightPlans', () => {
         }
       }
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

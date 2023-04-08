@@ -2,30 +2,20 @@ import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { Result as OTMVRetrievalResult } from './retrieveOTMVPlan';
-import { FlowService } from '.';
-import { JestAssertionError } from 'expect';
+import { AssertionError } from 'chai';
+import { describe, test, expect } from 'vitest';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 
-jest.setTimeout(20000);
+describe('retrieveOTMVPlan', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
-
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('retrieveOTMVPlan', () => {
-  conditionalTest('LFERMS', async () => {
+  test.runIf(shouldUseRealB2BConnection)('LFERMS', async () => {
     try {
-      const res: OTMVRetrievalResult = await Flow.retrieveOTMVPlan({
+      const res = await Flow.retrieveOTMVPlan({
         dataset: { type: 'OPERATIONAL' },
         day: moment.utc().toDate(),
         otmvsWithDuration: {
-          item: [{ trafficVolume: 'LFBBXX', otmvDuration: 60 * 5 }],
+          item: [{ trafficVolume: 'LFERMS' }],
         },
       });
 
@@ -49,12 +39,12 @@ describe('retrieveOTMVPlan', () => {
         });
       }
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 
-      // console.log(inspect(err, { depth: 4 }));
-      // throw err;
+      console.log(inspect(err, { depth: 4 }));
+      throw err;
     }
   });
 });

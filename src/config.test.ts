@@ -1,8 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { getEndpoint, getFileUrl, getFileEndpoint } from './config';
+
+import { test, expect, describe } from 'vitest';
 
 describe('getEndpoint', () => {
   test('without flavour', () => {

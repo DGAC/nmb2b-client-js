@@ -1,37 +1,29 @@
-import { expect, test } from '@jest/globals';
 import { inspect } from 'util';
 import { makeFlightClient, makeFlowClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
-import { FlightService } from '.';
-import { FlowService } from '../Flow';
 import { Regulation } from '../Flow/types';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
+import { beforeAll, describe, expect, test } from 'vitest';
+import { AssertionError } from 'chai';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
+describe('queryFlightsByMeasure', async () => {
+  let measure: void | Regulation;
 
-let Flight: FlightService;
-let Flow: FlowService;
-beforeAll(async () => {
-  [Flight, Flow] = await Promise.all([
+  const [Flight, Flow] = await Promise.all([
     makeFlightClient(b2bOptions),
     makeFlowClient(b2bOptions),
   ]);
-});
 
-describe('queryFlightsByMeasure', () => {
-  let measure: void | Regulation;
+  const window = {
+    wef: moment.utc().subtract(2, 'hour').startOf('hour').toDate(),
+    unt: moment.utc().add(2, 'hour').startOf('hour').toDate(),
+  };
 
   beforeAll(async () => {
     const res = await Flow.queryRegulations({
       dataset: { type: 'OPERATIONAL' },
-      queryPeriod: {
-        wef: moment.utc().subtract(2, 'hour').startOf('hour').toDate(),
-        unt: moment.utc().add(10, 'hour').startOf('hour').toDate(),
-      },
+      queryPeriod: window,
       requestedRegulationFields: {
         item: ['applicability', 'location', 'reason'],
       },
@@ -48,16 +40,20 @@ describe('queryFlightsByMeasure', () => {
         item.location['referenceLocation-ReferenceLocationAirspace'].id,
       );
 
-    if (!res.data.regulations?.item || !res.data.regulations?.item.length) {
+    const candidates = res.data.regulations?.item?.filter(
+      hasAirspaceMatching(/^LF/),
+    );
+
+    if (!candidates?.length) {
       return;
     }
 
-    measure = res.data.regulations.item[0];
+    measure = candidates[0];
 
     // console.log(inspect(measure, { depth: null }));
   });
 
-  conditionalTest('query in regulation', async () => {
+  test.runIf(shouldUseRealB2BConnection)('query in regulation', async () => {
     if (!measure || !measure.regulationId || !measure.applicability) {
       console.warn('No measure was found, cannot query flights by measure');
       return;
@@ -92,7 +88,7 @@ describe('queryFlightsByMeasure', () => {
         });
       }
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

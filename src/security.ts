@@ -89,6 +89,13 @@ export function prepareSecurity(config: Config): ISecurity {
 
 let envSecurity: Security | undefined;
 
+/**
+ * Create a security objet from environment variables
+ *
+ * Will cache data for future use.
+ *
+ * @returns Security configuration
+ */
 export function fromEnv(): Security {
   if (envSecurity) {
     return envSecurity;
@@ -156,4 +163,11 @@ export function fromEnv(): Security {
   }
 
   throw new Error('Unsupported B2B_CERT_FORMAT, must be pfx or pem');
+}
+
+/**
+ * Convenience function to clear the cached security objet
+ */
+export function clearCache(): void {
+  envSecurity = undefined;
 }

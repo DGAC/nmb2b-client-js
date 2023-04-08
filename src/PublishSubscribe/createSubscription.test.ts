@@ -1,19 +1,13 @@
 import { PublishSubscribeService } from '.';
 import { makePublishSubscribeClient } from '..';
 import b2bOptions from '../../tests/options';
-jest.setTimeout(20000);
-
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-
-let PublishSubscribe: PublishSubscribeService;
-beforeAll(async () => {
-  PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
-});
+import { describe, test, expect, afterAll } from 'vitest';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 
 // TODO: Check this
-describe.skip('createSubscriptions', () => {
+describe.skip('createSubscriptions', async () => {
+  const PublishSubscribe = await makePublishSubscribeClient(b2bOptions);
+
   afterAll(async () => {
     const res = await PublishSubscribe.listSubscriptions();
 
@@ -37,7 +31,7 @@ describe.skip('createSubscriptions', () => {
     );
   });
 
-  conditionalTest('Empty test', () => {});
+  test.skip('Empty test', () => {});
 
   // xtest('create flight subscription', async () => {
   //   try {

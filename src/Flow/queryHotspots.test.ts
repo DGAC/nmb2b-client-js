@@ -1,23 +1,15 @@
 import { inspect } from 'util';
 import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { FlowService } from '.';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
+import { describe, test } from 'vitest';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { AssertionError } from 'chai';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('queryHotspots', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('queryHotspots', () => {
   // Not authorised with this certificate in OPS
-  conditionalTest('List all hotspots', async () => {
+  test.runIf(shouldUseRealB2BConnection)('List all hotspots', async () => {
     try {
       const res = await Flow.queryHotspots({
         dataset: { type: 'OPERATIONAL' },
@@ -28,7 +20,7 @@ describe('queryHotspots', () => {
 
       // TODO: Write proper test
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

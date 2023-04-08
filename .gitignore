@@ -13,3 +13,5 @@ junit.xml
 
 .vscode
 .vscode/*
+
+tsconfig.vitest-temp.json

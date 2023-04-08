@@ -1,25 +1,16 @@
-import { inspect } from 'util';
-import { makeFlowClient, B2BClient } from '..';
+import { AssertionError } from 'chai';
 import moment from 'moment';
+import { inspect } from 'util';
+import { describe, expect, test } from 'vitest';
+import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
 import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
-import { FlowService } from '.';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
+import { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('updateCapacityPlan', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('updateCapacityPlan', () => {
-  xconditionalTest('LFERMS', async () => {
+  test.skip('LFERMS', async () => {
     try {
       const plan: CapacityPlanRetrievalResult = await Flow.retrieveCapacityPlan(
         {
@@ -83,7 +74,7 @@ describe('updateCapacityPlan', () => {
 
       // console.log(inspect(res.data, { depth: null }));
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

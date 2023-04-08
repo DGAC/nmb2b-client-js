@@ -4,21 +4,14 @@ import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
 import { FlowService } from '.';
-import { JestAssertionError } from 'expect';
-jest.setTimeout(20000);
+import { AssertionError } from 'chai';
+import { describe, test, expect } from 'vitest';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-const xconditionalTest = xtest;
+describe('retrieveCapacityPlan', async () => {
+  const Flow = await makeFlowClient(b2bOptions);
 
-let Flow: FlowService;
-beforeAll(async () => {
-  Flow = await makeFlowClient(b2bOptions);
-});
-
-describe('retrieveCapacityPlan', () => {
-  conditionalTest('LFERMS, LFBBDX', async () => {
+  test.runIf(shouldUseRealB2BConnection)('LFERMS, LFBBDX', async () => {
     try {
       const res: CapacityPlanRetrievalResult = await Flow.retrieveCapacityPlan({
         dataset: { type: 'OPERATIONAL' },
@@ -44,7 +37,7 @@ describe('retrieveCapacityPlan', () => {
         });
       }
     } catch (err) {
-      if (err instanceof JestAssertionError) {
+      if (err instanceof AssertionError) {
         throw err;
       }
 

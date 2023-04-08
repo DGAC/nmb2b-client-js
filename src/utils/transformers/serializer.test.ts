@@ -1,8 +1,6 @@
-/**
- * @jest-environment node
- */
 import { reorderKeys, prepareSerializer } from './serializer';
 import moment from 'moment';
+import { describe, test, expect } from 'vitest';
 
 describe('reorderKeys', () => {
   const testCases = [

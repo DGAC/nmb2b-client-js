@@ -1,22 +1,13 @@
 import b2bOptions from '../../tests/options';
+import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { makeAirspaceClient } from '..';
 import moment from 'moment';
-import { AirspaceService } from '.';
+import { describe, test, expect } from 'vitest';
 
-jest.setTimeout(20000);
+describe('queryCompleteAIXMDatasets', async () => {
+  const Airspace = await makeAirspaceClient(b2bOptions);
 
-const conditionalTest = (global as any).__DISABLE_B2B_CONNECTIONS__
-  ? test.skip
-  : test;
-
-let Airspace: AirspaceService;
-
-beforeAll(async () => {
-  Airspace = await makeAirspaceClient(b2bOptions);
-});
-
-describe('queryCompleteAIXMDatasets', () => {
-  conditionalTest('Complete dataset', async () => {
+  test.runIf(shouldUseRealB2BConnection)('Complete dataset', async () => {
     const res = await Airspace.queryCompleteAIXMDatasets({
       queryCriteria: {
         publicationPeriod: {
