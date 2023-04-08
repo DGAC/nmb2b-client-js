@@ -62,6 +62,11 @@ export interface AUPChain {
   aups: AUPSummary[];
 }
 
+export interface EAUPChain {
+  chainDate: DateYearMonthDay;
+  eaups: EAUPSummary[];
+}
+
 export type AUPId = string;
 export type AUPType = 'BASELINE' | 'UPDATE';
 export type AUPState = 'DRAFT' | 'READY' | 'RELEASED';
@@ -80,6 +85,17 @@ export interface AUPSummary {
   expandedAUP: boolean;
   lastUpdate?: LastUpdate;
   isP3?: boolean;
+}
+
+export interface EAUPSummary {
+  releaseTime: DateTimeMinute;
+  validityPeriod: DateTimeMinutePeriod;
+  eaupId: EAUPIdentification;
+}
+
+export interface EAUPIdentification {
+  chainDate: DateYearMonthDay;
+  sequenceNumber: number;
 }
 
 type ADRMessageType = object; // eurocontrol.cfmu.cua.b2b.aixm.ADRMessage
