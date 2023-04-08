@@ -2,15 +2,13 @@ import path from 'path';
 import nock from 'nock';
 import fs from 'fs';
 import * as uuid from 'uuid';
-import rimrafCb from 'rimraf';
-import { promisify } from 'util';
+import rimraf from 'rimraf';
 import { createDir as mkdirp } from '../fs';
 import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { downloadFile } from './downloadFile';
 import { beforeEach, afterEach, describe, test, expect } from 'vitest';
 
-const rimraf = promisify(rimrafCb);
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${uuid.v4()}`);
 

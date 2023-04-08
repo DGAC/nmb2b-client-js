@@ -13,10 +13,11 @@ export async function dirExists(
     writable: false,
   },
 ): Promise<boolean> {
-  debug('Testing if directory %s is readable ...', path);
-  if (writable) {
-    debug('... and writable');
-  }
+  debug(
+    'Testing if directory %s is readable %s...',
+    path,
+    writable ? 'and writable ' : '',
+  );
 
   try {
     const stats: Stats = await stat(path);
