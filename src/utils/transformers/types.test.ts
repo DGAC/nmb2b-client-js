@@ -2,37 +2,53 @@ import { types } from './types';
 import { test, expect } from 'vitest';
 
 const serialization = [
-  ['DurationMinute', 34 * 60, 34],
-  ['DurationHourMinute', 34 * 60, '0034'],
-  ['DurationHourMinute', 34 * 60 + 30, '0034'],
-  ['DurationHourMinuteSecond', 2 * 3600 + 30 * 60 + 45, '023045'],
-  [
-    'DateTimeSecond',
-    new Date('2018-07-01T17:55:13-07:00'),
-    '2018-07-02 00:55:13',
-  ],
-];
+  { type: 'DurationMinute', input: 34 * 60, expected: 34 },
+  { type: 'DurationHourMinute', input: 34 * 60, expected: '0034' },
+  { type: 'DurationHourMinute', input: 34 * 60 + 30, expected: '0034' },
+  {
+    type: 'DurationHourMinuteSecond',
+    input: 2 * 3600 + 30 * 60 + 45,
+    expected: '023045',
+  },
+  {
+    type: 'DateTimeSecond',
+    input: new Date('2018-07-01T17:55:13-07:00'),
+    expected: '2018-07-02 00:55:13',
+  },
+] satisfies Array<{ type: keyof typeof types; expected: any; input: any }>;
 
-test.each(serialization as any)('%s.input(%p) => %p', (t, input, expected) => {
-  expect((types as any)[t].input(input)).toEqual(expected);
-});
+test.each(serialization)(
+  '$type .input($input) => $expected',
+  ({ type, expected, input }) => {
+    expect(types[type].input(input as any)).toEqual(expected);
+  },
+);
 
 const deserialization = [
-  ['DurationMinute', 34, 34 * 60],
-  ['DurationHourMinute', '0034', 34 * 60],
-  ['DurationHourMinute', '0210', 2 * 60 * 60 + 10 * 60],
-  ['DurationHourMinuteSecond', '023045', 2 * 3600 + 30 * 60 + 45],
-  ['CountsValue', '34', 34],
-  [
-    'DateTimeSecond',
-    '2018-07-02 00:55:13',
-    new Date('2018-07-01T17:55:13-07:00'),
-  ],
-];
+  { type: 'DurationMinute', input: 34, expected: 34 * 60 },
+  { type: 'DurationHourMinute', input: '0034', expected: 34 * 60 },
+  {
+    type: 'DurationHourMinute',
+    input: '0210',
+    expected: 2 * 60 * 60 + 10 * 60,
+  },
+  {
+    type: 'DurationHourMinuteSecond',
+    input: '023045',
+    expected: 2 * 3600 + 30 * 60 + 45,
+  },
+  { type: 'CountsValue', input: '34', expected: 34 },
+  {
+    type: 'DateTimeSecond',
+    input: '2018-07-02 00:55:13',
+    expected: new Date('2018-07-01T17:55:13-07:00'),
+  },
+] satisfies Array<{ type: keyof typeof types; input: any; expected: any }>;
 
-test.each(deserialization as any)(
-  '%s.output(%p) => %p',
-  (t, input, expected) => {
-    expect((types as any)[t].output(input)).toEqual(expected);
+test.each(deserialization)(
+  '$type .output($input) => $expected',
+  ({ type, input, expected }) => {
+    const deserializer: any = types[type].output;
+    expect(deserializer(input)).toEqual(expected);
   },
 );

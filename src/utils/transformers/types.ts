@@ -2,10 +2,10 @@ import moment from 'moment';
 import * as timeFormats from '../timeFormats';
 
 const outputBase = {
-  integer: (text: string, context: object) => {
+  integer: (text: string) => {
     return parseInt(text, 10);
   },
-  date: (text: string, context: object) => {
+  date: (text: string) => {
     const d = moment.utc(text).toDate();
     return d;
   },
@@ -18,11 +18,7 @@ interface SerDe {
   };
 }
 
-function createSerDe<T extends SerDe>(obj: T) {
-  return obj;
-}
-
-export const types = createSerDe({
+export const types = {
   FlightLevel_DataType: {
     input: null,
     output: outputBase.integer,
@@ -97,4 +93,4 @@ export const types = createSerDe({
     input: null,
     output: outputBase.integer,
   },
-});
+} satisfies SerDe;

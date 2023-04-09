@@ -1,5 +1,5 @@
 import { inspect } from 'util';
-import { makeFlowClient } from '..';
+import { makeFlowClient, NMB2BError } from '..';
 import b2bOptions from '../../tests/options';
 import { describe, test } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
@@ -20,21 +20,19 @@ describe('queryHotspots', async () => {
 
       // TODO: Write proper test
     } catch (err) {
-      if (err instanceof AssertionError) {
-        throw err;
-      }
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
 
-      if (err.status === 'NOT_AUTHORISED') {
-        console.warn('Test cancelled, NOT_AUTHORIZED');
-        return;
-      }
+        if (err.status === 'NOT_AUTHORISED') {
+          console.warn('Test cancelled, NOT_AUTHORIZED');
+          return;
+        }
 
-      if (err.status === 'SERVICE_UNAVAILABLE') {
-        console.warn('Test cancelled, SERVICE_UNAVAILABLE');
-        return;
+        if (err.status === 'SERVICE_UNAVAILABLE') {
+          console.warn('Test cancelled, SERVICE_UNAVAILABLE');
+          return;
+        }
       }
-
-      console.log(inspect(err, { depth: 4 }));
 
       throw err;
     }

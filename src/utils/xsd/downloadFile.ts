@@ -43,7 +43,8 @@ export async function downloadFile(
           resolve();
         });
     } catch (err) {
-      reject(new Error(`Unable to download WSDL: ${err.message}`));
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      reject(new Error(`Unable to download WSDL: ${message}`));
     }
 
     //   const r = request

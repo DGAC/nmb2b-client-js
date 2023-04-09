@@ -50,7 +50,8 @@ describe('downloadFile', () => {
       .get(/test.tar.gz/)
       .reply(503);
 
-    expect.assertions(1);
+    expect.assertions(2);
+
     try {
       await downloadFile(filePath, {
         security: undefined as any,
@@ -58,7 +59,8 @@ describe('downloadFile', () => {
         XSD_PATH: OUTPUT_DIR,
       });
     } catch (err) {
-      expect(err.message).toMatch(/Unable.*WSDL.*/);
+      expect(err).toBeInstanceOf(Error);
+      expect((err as Error).message).toMatch(/Unable.*WSDL.*/);
     }
   });
 });

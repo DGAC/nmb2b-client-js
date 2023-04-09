@@ -22,7 +22,7 @@ export { FlightService } from './Flight';
 export { PublishSubscribeService } from './PublishSubscribe';
 export { FlowService } from './Flow';
 export { GeneralInformationService } from './GeneralInformation';
-
+export { NMB2BError } from './utils/NMB2BError';
 export interface B2BClient {
   Airspace: AirspaceService;
   Flight: FlightService;

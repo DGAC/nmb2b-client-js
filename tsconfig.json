@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "pretty": true,
-    "strictNullChecks": true
+    "strict": true
   },
   "include": ["src/**/*", "tests/**/*"],
   "exclude": ["dist", "node_modules"]
