@@ -1,5 +1,5 @@
-import fs, { Stats } from 'fs';
-import mkdirp from 'mkdirp';
+import fs, { type Stats } from 'fs';
+import { mkdirp } from 'mkdirp';
 import { promisify } from 'util';
 import d from './debug';
 const debug = d('dir-exists');
