@@ -151,7 +151,6 @@ export type ServiceGroup =
   | 'GENERAL_INFORMATION'
   | 'PUBLISH_SUBSCRIBE';
 
-// tslint:disable-next-line
 export interface B2B_Error {
   attributes?: string[];
   group: ServiceGroup;

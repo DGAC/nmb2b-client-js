@@ -29,7 +29,6 @@ export async function dirExists(
     // Check that the directory is writable and readable
     await access(
       path,
-      // tslint:disable-next-line no-bitwise
       (writable ? fs.constants.W_OK : 0) | (readable ? fs.constants.R_OK : 0),
     );
 

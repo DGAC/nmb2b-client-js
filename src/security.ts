@@ -10,7 +10,6 @@ import {
 } from 'soap';
 import fs from 'fs';
 
-// tslint:disable-next-line
 require('tls').DEFAULT_ECDH_CURVE = 'auto';
 
 interface PfxSecurity {

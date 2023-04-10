@@ -55,7 +55,6 @@ export function getGeneralInformationClient(
     }),
     (err) => {
       // TODO: Implement a proper debug log message output
-      // tslint:disable-next-line
       console.error(err);
       return Promise.reject(err);
     },
