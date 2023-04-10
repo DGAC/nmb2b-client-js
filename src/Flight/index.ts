@@ -32,7 +32,6 @@ function createFlightServices(config: Config): Promise<FlightClient> {
       });
     } catch (err) {
       // TODO: Implement a proper debug log message output
-      // tslint:disable-next-line
       console.log(err);
       return reject(err);
     }
@@ -60,7 +59,7 @@ export interface FlightService {
 }
 
 export function getFlightClient(config: Config): Promise<FlightService> {
-  return createFlightServices(config).then(client => ({
+  return createFlightServices(config).then((client) => ({
     __soapClient: client,
     retrieveFlight: retrieveFlight(client),
     queryFlightsByAirspace: queryFlightsByAirspace(client),

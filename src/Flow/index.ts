@@ -32,7 +32,6 @@ function createFlowServices(config: Config): Promise<FlowClient> {
       });
     } catch (err) {
       // TODO: Implement a proper debug log message output
-      // tslint:disable-next-line
       console.log(err);
       return reject(err);
     }

@@ -2,7 +2,6 @@ import { makeAirspaceClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { AUPSummary } from './types';
-import * as R from 'ramda';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { describe, beforeAll, test, expect } from 'vitest';
 
@@ -14,20 +13,19 @@ describe('retrieveAUP', async () => {
     // Find some AUP id
     const res = await Airspace.retrieveAUPChain({
       amcIds: ['LFFAZAMC'],
-      chainDate: moment.utc().toDate(),
+      chainDate: moment.utc().subtract(1, 'day').toDate(),
     });
 
     if (res.data) {
-      AUPSummaries = R.compose<
-        AUPSummary[],
-        AUPSummary[],
-        AUPSummary[],
-        AUPSummary[]
-      >(
-        R.filter<AUPSummary>(({ aupState }) => aupState === 'RELEASED'),
-        R.reverse,
-        R.sortBy(({ lastUpdate }) => lastUpdate.timestamp),
-      )(res.data.chains[0].aups);
+      AUPSummaries = res.data.chains[0].aups.filter(
+        ({ aupState }) => aupState === 'RELEASED',
+      );
+
+      AUPSummaries.sort(
+        (a, b) =>
+          (a.lastUpdate?.timestamp.valueOf() ?? 0) -
+          (b.lastUpdate?.timestamp.valueOf() ?? 0),
+      );
     }
   });
 

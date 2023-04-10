@@ -1,5 +1,5 @@
-import fs, { Stats } from 'fs';
-import mkdirp from 'mkdirp';
+import fs, { type Stats } from 'fs';
+import { mkdirp } from 'mkdirp';
 import { promisify } from 'util';
 import d from './debug';
 const debug = d('dir-exists');
@@ -13,10 +13,11 @@ export async function dirExists(
     writable: false,
   },
 ): Promise<boolean> {
-  debug('Testing if directory %s is readable ...', path);
-  if (writable) {
-    debug('... and writable');
-  }
+  debug(
+    'Testing if directory %s is readable %s...',
+    path,
+    writable ? 'and writable ' : '',
+  );
 
   try {
     const stats: Stats = await stat(path);
@@ -28,7 +29,6 @@ export async function dirExists(
     // Check that the directory is writable and readable
     await access(
       path,
-      // tslint:disable-next-line no-bitwise
       (writable ? fs.constants.W_OK : 0) | (readable ? fs.constants.R_OK : 0),
     );
 

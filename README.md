@@ -24,10 +24,10 @@ https://github.com/DGAC/nmb2b-client-js-example
 
 For instance, the Flow.retrieveOTMVPlan query expects a `day` attribute with the XSD type `DateYearMonthDay`. This type is a string, representing a date in the `YYYY-MM-DD` format. This library allows you to pass a traditional JS Date object instead.
 
-```javascript
-Flow.retrieveOTMVPlan({
+```typescript
+const res = await Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONAL' },
-  day: moment.utc().toDate(),
+  day: new Date(),
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
@@ -36,16 +36,16 @@ Flow.retrieveOTMVPlan({
 
 In SOAP, key order matters.
 
-```javascript
+```typescript
 // OK
-Flow.retrieveOTMVPlan({
+await Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONAL' },
   day: moment.utc().toDate(),
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 
 // Would normally fail
-Flow.retrieveOTMVPlan({
+await const Flow.retrieveOTMVPlan({
   day: moment.utc().toDate(),
   dataset: { type: 'OPERATIONAL' },
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
@@ -58,9 +58,9 @@ The library reorder request object keys to match what's expressed in the XSD/WSD
 
 The following example will raise a type error.
 
-```javascript
+```typescript
 // Raises a type error
-Flow.retrieveOTMVPlan({
+await Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONNAL' }, // Notice the typo
   day: moment.utc().toDate(),
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
@@ -78,24 +78,44 @@ Just set a `DEBUG=@dgac/nmb2b-client*` environment variable :
 
 ## Main service
 
-```javascript
+```typescript
 import makeB2BClient from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
-makeB2BClient({ security }).then(client => {
-  client.Airspace.queryCompleteAIXMDatasets().then(() => {});
-});
+const client = await makeB2BClient({ security });
+
+const res = await client.Airspace.queryCompleteAIXMDatasets();
 ```
 
 ## Per domain service
 
-```javascript
+```typescript
 import { makeAirspaceService } from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
-makeAirspaceService({ security }).then(Airspace => {
-  Airspace.queryCompleteAIXMDatasets().then(() => {});
-});
+const Airspace = await makeAirspaceService({ security });
+
+const res = await Airspace.queryCompleteAIXMDatasets();
+```
+
+## Error handling
+
+```typescript
+import { makeAirspaceService, NMB2BError } from '@dgac/nmb2b-client';
+
+try {
+  const Airspace = await makeAirspaceService({ security });
+
+  const res = await Airspace.queryCompleteAIXMDatasets();
+} catch (err) {
+  if (err instanceof NMB2BError) {
+    if (err.status === 'OBJECT_NOT_FOUND') {
+      // ...
+    }
+  }
+
+  // ...
+}
 ```
 
 ## B2B Security
@@ -112,7 +132,7 @@ const security = {
   passphrase: 'your-passphrase',
 };
 
-makeB2BClient({ security }).then(client => {
+makeB2BClient({ security }).then((client) => {
   client.Airspace.queryCompleteAIXMDatasets().then(() => {});
 });
 ```
@@ -128,7 +148,7 @@ const security = {
   passphrase: 'your-passphrase',
 };
 
-makeB2BClient({ security }).then(client => {
+makeB2BClient({ security }).then((client) => {
   client.Airspace.queryCompleteAIXMDatasets().then(() => {});
 });
 ```

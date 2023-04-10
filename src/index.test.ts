@@ -31,7 +31,7 @@ describe('Main API', () => {
     makeFlightClient,
     makeGeneralInformationClient,
     makePublishSubscribeClient,
-  ])('%p', async (fn) => {
+  ])('%O', async (fn) => {
     const res = await fn(b2bOptions);
     expect(res).toBeDefined();
   });
