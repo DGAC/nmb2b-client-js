@@ -17,7 +17,7 @@
     "clean": "rimraf dist",
     "build": "pnpm clean && node ./scripts/build.js",
     "test": "vitest --watch=false",
-    "test:ci": "pnpm test -- --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
+    "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
     "typecheck": "tsc --noEmit"
   },
   "files": [
