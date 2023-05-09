@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": "https://github.com/DGAC/nmb2b-client-js",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -24,22 +24,22 @@
     "dist"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.4",
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
     "@babel/node": "^7.20.7",
-    "@babel/preset-env": "^7.21.4",
-    "@babel/preset-typescript": "^7.21.4",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-typescript": "^7.21.5",
     "@types/debug": "^4.1.7",
     "@types/invariant": "^2.2.35",
-    "@types/node": "^14.0.0",
-    "@types/proper-lockfile": "^4.1.1",
-    "@types/ramda": "^0.28.23",
+    "@types/node": "^16.18.27",
+    "@types/proper-lockfile": "^4.1.2",
+    "@types/ramda": "^0.28.25",
     "@types/tar": "^6.1.4",
     "@types/uuid": "^9.0.1",
     "@vitest/coverage-c8": "^0.31.0",
-    "dotenv": "^16",
-    "nock": "^13.3.0",
-    "prettier": "^2.8.7",
+    "dotenv": "^16.0.3",
+    "nock": "^13.3.1",
+    "prettier": "^2.8.8",
     "rimraf": "^4.4.1",
     "tsup": "^6.7.0",
     "typescript": "^5.0.4",
@@ -47,15 +47,15 @@
     "vitest": "^0.31.0"
   },
   "dependencies": {
-    "@types/sax": "^1.2.1",
-    "axios": "^1.0.0",
-    "debug": "^3.0.0 || ^4.0.0",
+    "@types/sax": "^1.2.4",
+    "axios": "^1.4.0",
+    "debug": "^4.3.4",
     "invariant": "^2.2.4",
-    "mkdirp": "^3.0.0",
+    "mkdirp": "^3.0.1",
     "moment": "^2.29.4",
     "proper-lockfile": "^4.1.2",
     "ramda": "~0.28.0",
     "soap": "^1.0.0",
-    "tar": "^6.1.11"
+    "tar": "^6.1.14"
   }
 }
