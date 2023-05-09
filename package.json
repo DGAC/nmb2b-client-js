@@ -35,14 +35,15 @@
     "@types/ramda": "^0.28.23",
     "@types/tar": "^6.1.4",
     "@types/uuid": "^9.0.1",
-    "@vitest/coverage-c8": "^0.29.8",
+    "@vitest/coverage-c8": "^0.31.0",
     "dotenv": "^16",
     "nock": "^13.3.0",
     "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
+    "tsup": "^6.7.0",
     "typescript": "^5.0.4",
     "uuid": "^9.0.0",
-    "vitest": "^0.29.8"
+    "vitest": "^0.31.0"
   },
   "dependencies": {
     "@types/sax": "^1.2.1",

@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: 'Create b2b-xsd folder'
         run: mkdir b2b-xsd && touch b2b-xsd/.ghcache
@@ -55,19 +55,19 @@ jobs:
             ${{ runner.os }}-b2b-xsd
 
       - name: 'Install deps'
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: 'TypeScript check'
-        run: yarn typecheck
+        run: pnpm typecheck
 
       - name: 'Build'
-        run: yarn build
+        run: pnpm build
 
       - name: 'Download B2B WSDL'
-        run: yarn downloadWSDL
+        run: pnpm downloadWSDL
 
       - name: 'Run test suite'
-        run: yarn test:ci
+        run: pnpm test:ci
 
       - name: 'Upload coverage'
         uses: codecov/codecov-action@v3
@@ -87,15 +87,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install deps
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: deploy packages
-        run: yarn publish --non-interactive
+        run: pnpm publish --non-interactive
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

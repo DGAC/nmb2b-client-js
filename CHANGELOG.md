@@ -1,5 +1,6 @@
 # Master
 
+- Switch from yarn to pnpm
 - **BREAKING** Implement `NMB2BError`, which is thrown when the B2B responds with an error
 - Update multiple dependencies
 - Implement `Airspace.retrieveEAUP` service
