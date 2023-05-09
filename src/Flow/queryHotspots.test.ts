@@ -3,7 +3,6 @@ import { makeFlowClient, NMB2BError } from '..';
 import b2bOptions from '../../tests/options';
 import { describe, test } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-import { AssertionError } from 'chai';
 
 describe('queryHotspots', async () => {
   const Flow = await makeFlowClient(b2bOptions);

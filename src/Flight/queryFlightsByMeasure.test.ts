@@ -1,10 +1,9 @@
 import { inspect } from 'util';
-import { makeFlightClient, makeFlowClient } from '..';
+import { NMB2BError, makeFlightClient, makeFlowClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { Regulation } from '../Flow/types';
 import { beforeAll, describe, expect, test } from 'vitest';
-import { AssertionError } from 'chai';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 
 describe('queryFlightsByMeasure', async () => {
@@ -88,11 +87,10 @@ describe('queryFlightsByMeasure', async () => {
         });
       }
     } catch (err) {
-      if (err instanceof AssertionError) {
-        throw err;
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
       }
 
-      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

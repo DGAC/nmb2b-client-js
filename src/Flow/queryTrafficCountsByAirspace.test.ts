@@ -1,8 +1,7 @@
-import { AssertionError } from 'chai';
 import moment from 'moment';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import { makeFlowClient } from '..';
+import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 
@@ -59,11 +58,10 @@ describe('queryTrafficCountsByAirspace', async () => {
         });
       }
     } catch (err) {
-      if (err instanceof AssertionError) {
-        throw err;
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
       }
 
-      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

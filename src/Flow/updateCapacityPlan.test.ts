@@ -1,8 +1,7 @@
-import { AssertionError } from 'chai';
 import moment from 'moment';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import { makeFlowClient } from '..';
+import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
 import { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
@@ -71,14 +70,11 @@ describe('updateCapacityPlan', async () => {
       });
 
       expect(res.data).toBeDefined();
-
-      // console.log(inspect(res.data, { depth: null }));
     } catch (err) {
-      if (err instanceof AssertionError) {
-        throw err;
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
       }
 
-      console.log(inspect(err, { depth: 5 }));
       throw err;
     }
   });

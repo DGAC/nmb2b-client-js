@@ -1,10 +1,8 @@
 import { inspect } from 'util';
-import { makeFlowClient } from '..';
+import { NMB2BError, makeFlowClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
-import { FlowService } from '.';
-import { AssertionError } from 'chai';
 import { describe, test, expect } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 
@@ -37,11 +35,10 @@ describe('retrieveCapacityPlan', async () => {
         });
       }
     } catch (err) {
-      if (err instanceof AssertionError) {
-        throw err;
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
       }
 
-      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });

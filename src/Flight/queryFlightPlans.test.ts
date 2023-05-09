@@ -1,11 +1,10 @@
 import { inspect } from 'util';
-import { makeFlightClient } from '..';
+import { NMB2BError, makeFlightClient } from '..';
 import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { FlightOrFlightPlan as B2BFlight } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { describe, beforeAll, expect, test } from 'vitest';
-import { AssertionError } from 'chai';
 
 describe('queryFlightPlans', async () => {
   const Flight = await makeFlightClient(b2bOptions);
@@ -115,11 +114,10 @@ describe('queryFlightPlans', async () => {
         }
       }
     } catch (err) {
-      if (err instanceof AssertionError) {
-        throw err;
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
       }
 
-      console.log(inspect(err, { depth: 4 }));
       throw err;
     }
   });
