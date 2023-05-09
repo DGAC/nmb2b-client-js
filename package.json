@@ -12,12 +12,12 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepack": "yarn build",
+    "prepack": "pnpm build",
     "downloadWSDL": "babel-node -x .ts ./scripts/downloadWSDL.ts",
     "clean": "rimraf dist",
-    "build": "yarn clean && node ./scripts/build.js",
+    "build": "pnpm clean && node ./scripts/build.js",
     "test": "vitest --watch=false",
-    "test:ci": "yarn test --color --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
+    "test:ci": "pnpm test -- --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
     "typecheck": "tsc --noEmit"
   },
   "files": [
