@@ -10,8 +10,6 @@ import {
 } from 'soap';
 import fs from 'fs';
 
-require('tls').DEFAULT_ECDH_CURVE = 'auto';
-
 interface PfxSecurity {
   pfx: Buffer;
   passphrase: string;

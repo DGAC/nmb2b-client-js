@@ -2,20 +2,85 @@
   "name": "@dgac/nmb2b-client",
   "version": "0.6.1",
   "description": "DGAC NM B2B Soap client",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "license": "MIT",
   "repository": "https://github.com/DGAC/nmb2b-client-js",
   "engines": {
     "node": ">=16"
   },
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json",
+    "./security": {
+      "types": "./dist/security.d.ts",
+      "import": "./dist/security.js",
+      "require": "./dist/security.cjs"
+    },
+    "./Airspace": {
+      "types": "./dist/Airspace/index.d.ts",
+      "import": "./dist/Airspace/index.js",
+      "require": "./dist/Airspace/index.cjs"
+    },
+    "./Airspace/types": {
+      "types": "./dist/Airspace/types.d.ts",
+      "import": "./dist/Airspace/types.js",
+      "require": "./dist/Airspace/types.cjs"
+    },
+    "./Flight": {
+      "types": "./dist/Flight/index.d.ts",
+      "import": "./dist/Flight/index.js",
+      "require": "./dist/Flight/index.cjs"
+    },
+    "./Flight/types": {
+      "types": "./dist/Flight/types.d.ts",
+      "import": "./dist/Flight/types.js",
+      "require": "./dist/Flight/types.cjs"
+    },
+    "./Flow": {
+      "types": "./dist/Flow/index.d.ts",
+      "import": "./dist/Flow/index.js",
+      "require": "./dist/Flow/index.cjs"
+    },
+    "./Flow/types": {
+      "types": "./dist/Flow/types.d.ts",
+      "import": "./dist/Flow/types.js",
+      "require": "./dist/Flow/types.cjs"
+    },
+    "./GeneralInformation": {
+      "types": "./dist/GeneralInformation/index.d.ts",
+      "import": "./dist/GeneralInformation/index.js",
+      "require": "./dist/GeneralInformation/index.cjs"
+    },
+    "./GeneralInformation/types": {
+      "types": "./dist/GeneralInformation/types.d.ts",
+      "import": "./dist/GeneralInformation/types.js",
+      "require": "./dist/GeneralInformation/types.cjs"
+    },
+    "./PublishSubscribe": {
+      "types": "./dist/PublishSubscribe/index.d.ts",
+      "import": "./dist/PublishSubscribe/index.js",
+      "require": "./dist/PublishSubscribe/index.cjs"
+    },
+    "./PublishSubscribe/types": {
+      "types": "./dist/PublishSubscribe/types.d.ts",
+      "import": "./dist/PublishSubscribe/types.js",
+      "require": "./dist/PublishSubscribe/types.cjs"
+    }
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepack": "pnpm build",
-    "downloadWSDL": "babel-node -x .ts ./scripts/downloadWSDL.ts",
+    "downloadWSDL": "ts-node ./scripts/downloadWSDL.ts",
     "clean": "rimraf dist",
-    "build": "pnpm clean && node ./scripts/build.js",
+    "build": "tsup",
     "test": "vitest --watch=false",
     "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
     "typecheck": "tsc --noEmit"
@@ -24,11 +89,6 @@
     "dist"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/core": "^7.21.8",
-    "@babel/node": "^7.20.7",
-    "@babel/preset-env": "^7.21.5",
-    "@babel/preset-typescript": "^7.21.5",
     "@types/debug": "^4.1.7",
     "@types/invariant": "^2.2.35",
     "@types/node": "^16.18.27",
@@ -41,6 +101,7 @@
     "nock": "^13.3.1",
     "prettier": "^2.8.8",
     "rimraf": "^4.4.1",
+    "ts-node": "^10.9.1",
     "tsup": "^6.7.0",
     "typescript": "^5.0.4",
     "uuid": "^9.0.0",
