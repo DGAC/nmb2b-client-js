@@ -4,7 +4,7 @@ import { requestFilename } from '../src/utils/xsd/filePath';
 import { downloadFile } from '../src/utils/xsd/downloadFile';
 import path from 'path';
 import { createDir, dirExists } from '../src/utils/fs';
-import b2bOptions from './options';
+import b2bOptions from './options.mjs';
 
 export async function downloadWSDL() {
   console.log('Global setup !');
