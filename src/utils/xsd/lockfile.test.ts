@@ -2,7 +2,7 @@ import path from 'path';
 import nock from 'nock';
 import fs from 'fs';
 import * as uuid from 'uuid';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import { createDir as mkdirp } from '../fs';
 import { getFileUrl, getEndpoint } from '../../config';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
