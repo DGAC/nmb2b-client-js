@@ -14,63 +14,51 @@
   "module": "dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json",
     "./security": {
-      "types": "./dist/security.d.ts",
       "import": "./dist/security.js",
       "require": "./dist/security.cjs"
     },
     "./Airspace": {
-      "types": "./dist/Airspace/index.d.ts",
       "import": "./dist/Airspace/index.js",
       "require": "./dist/Airspace/index.cjs"
     },
     "./Airspace/types": {
-      "types": "./dist/Airspace/types.d.ts",
       "import": "./dist/Airspace/types.js",
       "require": "./dist/Airspace/types.cjs"
     },
     "./Flight": {
-      "types": "./dist/Flight/index.d.ts",
       "import": "./dist/Flight/index.js",
       "require": "./dist/Flight/index.cjs"
     },
     "./Flight/types": {
-      "types": "./dist/Flight/types.d.ts",
       "import": "./dist/Flight/types.js",
       "require": "./dist/Flight/types.cjs"
     },
     "./Flow": {
-      "types": "./dist/Flow/index.d.ts",
       "import": "./dist/Flow/index.js",
       "require": "./dist/Flow/index.cjs"
     },
     "./Flow/types": {
-      "types": "./dist/Flow/types.d.ts",
       "import": "./dist/Flow/types.js",
       "require": "./dist/Flow/types.cjs"
     },
     "./GeneralInformation": {
-      "types": "./dist/GeneralInformation/index.d.ts",
       "import": "./dist/GeneralInformation/index.js",
       "require": "./dist/GeneralInformation/index.cjs"
     },
     "./GeneralInformation/types": {
-      "types": "./dist/GeneralInformation/types.d.ts",
       "import": "./dist/GeneralInformation/types.js",
       "require": "./dist/GeneralInformation/types.cjs"
     },
     "./PublishSubscribe": {
-      "types": "./dist/PublishSubscribe/index.d.ts",
       "import": "./dist/PublishSubscribe/index.js",
       "require": "./dist/PublishSubscribe/index.cjs"
     },
     "./PublishSubscribe/types": {
-      "types": "./dist/PublishSubscribe/types.d.ts",
       "import": "./dist/PublishSubscribe/types.js",
       "require": "./dist/PublishSubscribe/types.cjs"
     }
@@ -101,7 +89,7 @@
     "nock": "^13.3.1",
     "prettier": "^2.8.8",
     "rimraf": "^4.4.1",
-    "tsup": "^6.7.0",
+    "tsup": "^7.1.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
     "uuid": "^9.0.0",
