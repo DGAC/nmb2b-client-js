@@ -7,7 +7,7 @@ import path from 'path';
 import { downloadWSDL } from '../tests/setup_hook';
 import { B2B_VERSION } from '../src/constants';
 import { dirExists } from '../src/utils/fs';
-import b2bOptions from '../tests/options.mjs';
+import b2bOptions from '../tests/options';
 
 console.log('Looking for XSD files ...');
 

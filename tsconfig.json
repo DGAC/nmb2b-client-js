@@ -8,11 +8,11 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true, // Fix vite wrong type resolutions
+    "skipLibCheck": true, // Vite error
     "noImplicitAny": true,
     "pretty": true,
     "strict": true
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*", "tests"],
   "exclude": ["dist", "esm", "node_modules"]
 }
