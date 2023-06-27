@@ -2,7 +2,7 @@
 b2b-xsd
 node_modules
 dist
-es
+esm
 coverage
 yarn-error.log
 

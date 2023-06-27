@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "skipLibCheck": true, // Vite error
     "noImplicitAny": true,
     "pretty": true,
     "strict": true
   },
-  "include": ["src/**/*", "tests/**/*"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["src/**/*", "tests/**/*", "tests"],
+  "exclude": ["dist", "esm", "node_modules"]
 }

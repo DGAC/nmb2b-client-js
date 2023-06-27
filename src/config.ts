@@ -50,8 +50,9 @@ export function getEndpoint(
   const { endpoint, flavour } = config;
 
   if (flavour && flavour === 'PREOPS') {
-    return `${endpoint ||
-      B2B_ROOTS.PREOPS}/B2B_PREOPS/gateway/spec/${B2B_VERSION}`;
+    return `${
+      endpoint || B2B_ROOTS.PREOPS
+    }/B2B_PREOPS/gateway/spec/${B2B_VERSION}`;
   }
 
   return `${endpoint || B2B_ROOTS.OPS}/B2B_OPS/gateway/spec/${B2B_VERSION}`;

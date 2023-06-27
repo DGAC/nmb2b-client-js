@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import path from 'path';
-import fs from 'fs';
 import { fromEnv } from '../src/security';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = fileURLToPath(import.meta.url);
 
 const XSD_PATH = process.env.B2B_XSD_PATH || path.join(__dirname, '../b2b-xsd');
 const security = fromEnv();
