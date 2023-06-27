@@ -33,6 +33,7 @@ jobs:
         node-version:
           - 16
           - 18
+          - 20
 
     steps:
       - uses: actions/checkout@v3
