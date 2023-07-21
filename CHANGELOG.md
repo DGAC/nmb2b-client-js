@@ -1,4 +1,4 @@
-# v1.0.0-beta.2
+# v1.0.0-beta.3
 
 - Fix CI publish step
 
