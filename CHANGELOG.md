@@ -1,3 +1,7 @@
+# v1.0.0-beta.1
+
+- Fix CI publish step
+
 # v1.0.0-beta.0
 
 - **BREAKING** Move to ESM+CJS hybrid compilation with tsup, remove babel, rework module exports
