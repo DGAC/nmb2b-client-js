@@ -1,6 +1,6 @@
 {
   "name": "@dgac/nmb2b-client",
-  "version": "0.6.1",
+  "version": "1.0.0-beta.0",
   "description": "EUROCONTROL Network Manager B2B SOAP client",
   "keywords": [
     "EUROCONTROL",
