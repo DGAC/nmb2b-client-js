@@ -68,7 +68,7 @@
     "prepack": "pnpm build",
     "downloadWSDL": "tsx ./scripts/downloadWSDL.mts",
     "clean": "rimraf dist",
-    "build": "tsup",
+    "build": "tsup-node",
     "test": "vitest --watch=false",
     "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
     "typecheck": "tsc --noEmit"

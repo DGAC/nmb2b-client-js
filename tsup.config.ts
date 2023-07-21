@@ -20,7 +20,6 @@ export default defineConfig({
   target: 'node16',
   dts: true,
   outDir: 'dist',
-  skipNodeModulesBundle: true,
-  splitting: true,
+  splitting: false,
   format: ['cjs', 'esm'],
 });
