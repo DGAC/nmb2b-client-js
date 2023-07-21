@@ -134,6 +134,8 @@ jobs:
         run: pnpm build
 
       - name: deploy packages
-        run: pnpm publish
+        # --no-git-checks because we're publishing from a tag pipeline and not a branch pipeline
+        # See here: https://github.com/pnpm/pnpm/issues/5894
+        run: pnpm publish --no-git-checks
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
