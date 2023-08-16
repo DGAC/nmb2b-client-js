@@ -9,8 +9,8 @@ describe('queryFlightsByAirspace', async () => {
 
   test.runIf(shouldUseRealB2BConnection)('query in LFEERMS', async () => {
     const trafficWindow = {
-      wef: moment.utc().subtract(1, 'minutes').toDate(),
-      unt: moment.utc().add(1, 'minutes').toDate(),
+      wef: moment.utc().subtract(10, 'minutes').toDate(),
+      unt: moment.utc().add(10, 'minutes').toDate(),
     };
 
     const res = await Flight.queryFlightsByAirspace({
@@ -19,7 +19,7 @@ describe('queryFlightsByAirspace', async () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow,
-      airspace: 'LFEEE',
+      airspace: 'LFEERMS',
     });
 
     /**
