@@ -73,6 +73,7 @@ import {
   AerodromeOrPublishedPointId,
   NonPublishedPoint,
   FIRICAOId,
+  AerodromeSetId,
 } from '../Airspace/types';
 
 import {
@@ -1390,4 +1391,17 @@ export interface FlightListByAerodromeReply extends Reply {
 }
 
 export interface FlightListByAerodromeReplyData
+  extends FlightListByLocationReplyData {}
+
+export interface FlightListByAerodromeSetRequest
+  extends FlightListByLocationRequest {
+  aerodromeSet: AerodromeSetId;
+  aerodromeRole: AerodromeRole;
+}
+
+export interface FlightListByAerodromeSetReply extends Reply {
+  data: FlightListByAerodromeSetReplyData;
+}
+
+export interface FlightListByAerodromeSetReplyData
   extends FlightListByLocationReplyData {}

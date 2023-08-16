@@ -56,6 +56,9 @@ import type { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure'
 import queryFlightsByAerodrome from './queryFlightsByAerodrome';
 import type { Resolver as QueryFlightsByAerodrome } from './queryFlightsByAerodrome';
 
+import queryFlightsByAerodromeSet from './queryFlightsByAerodromeSet';
+import type { Resolver as QueryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet';
+
 export interface FlightService {
   __soapClient: object;
   retrieveFlight: RetrieveFlight;
@@ -64,6 +67,7 @@ export interface FlightService {
   queryFlightsByTrafficVolume: QueryFlightsByTrafficVolume;
   queryFlightsByMeasure: QueryFlightsByMeasure;
   queryFlightsByAerodrome: QueryFlightsByAerodrome;
+  queryFlightsByAerodromeSet: QueryFlightsByAerodromeSet;
 }
 
 export function getFlightClient(config: Config): Promise<FlightService> {
@@ -75,5 +79,6 @@ export function getFlightClient(config: Config): Promise<FlightService> {
     queryFlightsByTrafficVolume: queryFlightsByTrafficVolume(client),
     queryFlightsByMeasure: queryFlightsByMeasure(client),
     queryFlightsByAerodrome: queryFlightsByAerodrome(client),
+    queryFlightsByAerodromeSet: queryFlightsByAerodromeSet(client),
   }));
 }

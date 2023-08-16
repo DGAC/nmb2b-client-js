@@ -5,39 +5,39 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type {
-  FlightListByAerodromeRequest,
-  FlightListByAerodromeReply,
+  FlightListByAerodromeSetRequest,
+  FlightListByAerodromeSetReply,
 } from './types';
 
 export type {
-  FlightListByAerodromeRequest,
-  FlightListByAerodromeReply,
+  FlightListByAerodromeSetRequest,
+  FlightListByAerodromeSetReply,
 } from './types';
 
-type Values = FlightListByAerodromeRequest;
-type Result = FlightListByAerodromeReply;
+type Values = FlightListByAerodromeSetRequest;
+type Result = FlightListByAerodromeSetReply;
 
 export type Resolver = (
   values?: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 
-export default function prepareQueryFlightsByAerodrome(
+export default function prepareQueryFlightsByAerodromeSet(
   client: FlightClient,
 ): Resolver {
   // console.log(Object.keys(client));
   const schema =
     client.describe().FlightManagementService.FlightManagementPort
-      .queryFlightsByAerodrome.input;
+      .queryFlightsByAerodromeSet.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
     service: 'Flight',
-    query: 'queryFlightsByAerodrome',
+    query: 'queryFlightsByAerodromeSet',
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
-        client.queryFlightsByAerodrome(
+        client.queryFlightsByAerodromeSet(
           serializer(injectSendTime(values)),
           options,
           responseStatusHandler(resolve, reject),
