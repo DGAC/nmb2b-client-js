@@ -6,6 +6,7 @@ import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 
 import type { RegulationListReply } from './queryRegulations';
+import { extractReferenceLocation } from '../utils/extractReferenceLocation';
 
 describe('queryRegulations', async () => {
   const Flow = await makeFlowClient(b2bOptions);
@@ -36,26 +37,51 @@ describe('queryRegulations', async () => {
 
       for (const item of items) {
         expect(item.regulationId).toBeDefined();
-        if (!item.location) {
-          return;
+
+        const protectedLocation = extractReferenceLocation(
+          'protectedLocation',
+          item,
+        );
+
+        if (protectedLocation) {
+          switch (protectedLocation.type) {
+            case 'AIRSPACE':
+            case 'AERODROME':
+            case 'AERODROME_SET':
+            case 'DBE_POINT':
+            case 'PUBLISHED_POINT': {
+              expect(protectedLocation).toMatchObject({
+                id: expect.any(String),
+              });
+              break;
+            }
+            default: {
+              protectedLocation satisfies never;
+            }
+          }
         }
 
-        const location = item.protectedLocation || item.location;
+        const referenceLocation = extractReferenceLocation(
+          'referenceLocation',
+          item.location,
+        );
 
-        if ('referenceLocation-ReferenceLocationAirspace' in location) {
-          expect(
-            location['referenceLocation-ReferenceLocationAirspace'],
-          ).toMatchObject({
-            type: 'AIRSPACE',
-            id: expect.any(String),
-          });
-        } else if ('referenceLocation-ReferenceLocationAerodrome' in location) {
-          expect(
-            location['referenceLocation-ReferenceLocationAerodrome'],
-          ).toMatchObject({
-            type: 'AERODROME',
-            id: expect.any(String),
-          });
+        if (referenceLocation) {
+          switch (referenceLocation.type) {
+            case 'AIRSPACE':
+            case 'AERODROME':
+            case 'AERODROME_SET':
+            case 'DBE_POINT':
+            case 'PUBLISHED_POINT': {
+              expect(referenceLocation).toMatchObject({
+                id: expect.any(String),
+              });
+              break;
+            }
+            default: {
+              referenceLocation satisfies never;
+            }
+          }
         }
       }
     } catch (err) {

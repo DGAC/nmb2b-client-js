@@ -80,6 +80,9 @@ describe('retrieveFlight', async () => {
           requestedDataFormat: 'NM_B2B',
         });
 
+        console.log(res.data.flight);
+        console.log(res.data.flight?.atfcmMeasureLocations?.item);
+
         expect(res.data.flight?.ftfmPointProfile).toBeDefined();
         res.data.flight?.ftfmPointProfile?.forEach((item) => {
           expect(item).toEqual(

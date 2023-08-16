@@ -1,5 +1,5 @@
 import { AirspaceClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils';
+import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 import { SoapOptions } from '../soap';

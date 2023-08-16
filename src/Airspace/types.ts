@@ -189,6 +189,40 @@ export type ReferenceLocation =
   | ReferenceLocationPublishedPoint
   | ReferenceLocationDBEPoint;
 
+type ReferenceLocationMapper = {
+  ReferenceLocationAirspace: ReferenceLocationAirspace;
+  ReferenceLocationAerodrome: ReferenceLocationAerodrome;
+  ReferenceLocationAerodromeSet: ReferenceLocationAerodromeSet;
+  ReferenceLocationPublishedPoint: ReferenceLocationPublishedPoint;
+  ReferenceLocationDBEPoint: ReferenceLocationDBEPoint;
+};
+
+export type ReferenceLocationUnionWithPrefix<TPrefix extends string> = {
+  [TKey in keyof ReferenceLocationMapper]: {
+    [TSubKey in `${TPrefix}-${TKey}`]: ReferenceLocationMapper[TKey];
+  };
+}[keyof ReferenceLocationMapper];
+
+export type ReferenceLocationUnionWithPrefixOptional<TPrefix extends string> = {
+  [TKey in keyof ReferenceLocationMapper]: {
+    [TSubKey in `${TPrefix}-${TKey}`]?: ReferenceLocationMapper[TKey];
+  };
+}[keyof ReferenceLocationMapper];
+
+export type WithReferenceLocationOnPrefix<
+  TPrefix extends string,
+  TInput,
+> = Prettify<TInput & ReferenceLocationUnionWithPrefix<TPrefix>>;
+
+export type WithReferenceLocationOnPrefixOptional<
+  TPrefix extends string,
+  TInput,
+> = Prettify<TInput & ReferenceLocationUnionWithPrefixOptional<TPrefix>>;
+
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+
 export type FIRICAOId = string; // UALPHA{4}
 
 export type FlightPlanProcessing =

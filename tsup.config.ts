@@ -9,6 +9,7 @@ export default defineConfig({
     'src/Flow/index.ts',
     'src/GeneralInformation/index.ts',
     'src/PublishSubscribe/index.ts',
+    'src/utils/index.ts',
     'src/Airspace/types.ts',
     'src/Flight/types.ts',
     'src/Flow/types.ts',
