@@ -7,19 +7,20 @@ import { describe, test, expect } from 'vitest';
 describe('queryFlightsByAirspace', async () => {
   const Flight = await makeFlightClient(b2bOptions);
 
-  test.runIf(shouldUseRealB2BConnection)('query in LFEERMS', async () => {
+  test.runIf(shouldUseRealB2BConnection)('query in LFPG', async () => {
     const trafficWindow = {
-      wef: moment.utc().subtract(1, 'minutes').toDate(),
-      unt: moment.utc().add(1, 'minutes').toDate(),
+      wef: moment.utc().subtract(10, 'minutes').toDate(),
+      unt: moment.utc().add(10, 'minutes').toDate(),
     };
 
-    const res = await Flight.queryFlightsByAirspace({
+    const res = await Flight.queryFlightsByAerodrome({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow,
-      airspace: 'LFEEE',
+      aerodrome: 'LFPG',
+      aerodromeRole: 'BOTH',
     });
 
     /**

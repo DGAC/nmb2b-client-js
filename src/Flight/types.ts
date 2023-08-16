@@ -1376,3 +1376,18 @@ export interface FlightListByMeasureReply extends Reply {
 
 export interface FlightListByMeasureReplyData
   extends FlightListByLocationReplyData {}
+
+export interface FlightListByAerodromeRequest
+  extends FlightListByLocationRequest {
+  aerodrome: AerodromeICAOId;
+  aerodromeRole: AerodromeRole;
+}
+
+export type AerodromeRole = 'DEPARTURE' | 'ARRIVAL' | 'BOTH';
+
+export interface FlightListByAerodromeReply extends Reply {
+  data: FlightListByAerodromeReplyData;
+}
+
+export interface FlightListByAerodromeReplyData
+  extends FlightListByLocationReplyData {}

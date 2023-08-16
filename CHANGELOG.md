@@ -1,3 +1,7 @@
+# Master
+
+- Implement `Flight.queryFlightsByAerodrome`
+
 # v1.0.0-beta.3
 
 - Fix CI publish step

@@ -39,15 +39,22 @@ function createFlightServices(config: Config): Promise<FlightClient> {
 }
 
 import retrieveFlight from './retrieveFlight';
-import { Resolver as RetrieveFlight } from './retrieveFlight';
+import type { Resolver as RetrieveFlight } from './retrieveFlight';
+
 import queryFlightsByAirspace from './queryFlightsByAirspace';
-import { Resolver as QueryFlightsByAirspace } from './queryFlightsByAirspace';
+import type { Resolver as QueryFlightsByAirspace } from './queryFlightsByAirspace';
+
 import queryFlightPlans from './queryFlightPlans';
-import { Resolver as QueryFlightPlans } from './queryFlightPlans';
+import type { Resolver as QueryFlightPlans } from './queryFlightPlans';
+
 import queryFlightsByTrafficVolume from './queryFlightsByTrafficVolume';
-import { Resolver as QueryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume';
+import type { Resolver as QueryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume';
+
 import queryFlightsByMeasure from './queryFlightsByMeasure';
-import { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure';
+import type { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure';
+
+import queryFlightsByAerodrome from './queryFlightsByAerodrome';
+import type { Resolver as QueryFlightsByAerodrome } from './queryFlightsByAerodrome';
 
 export interface FlightService {
   __soapClient: object;
@@ -56,6 +63,7 @@ export interface FlightService {
   queryFlightPlans: QueryFlightPlans;
   queryFlightsByTrafficVolume: QueryFlightsByTrafficVolume;
   queryFlightsByMeasure: QueryFlightsByMeasure;
+  queryFlightsByAerodrome: QueryFlightsByAerodrome;
 }
 
 export function getFlightClient(config: Config): Promise<FlightService> {
@@ -66,5 +74,6 @@ export function getFlightClient(config: Config): Promise<FlightService> {
     queryFlightPlans: queryFlightPlans(client),
     queryFlightsByTrafficVolume: queryFlightsByTrafficVolume(client),
     queryFlightsByMeasure: queryFlightsByMeasure(client),
+    queryFlightsByAerodrome: queryFlightsByAerodrome(client),
   }));
 }
