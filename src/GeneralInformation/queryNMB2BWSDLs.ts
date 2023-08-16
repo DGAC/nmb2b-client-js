@@ -1,5 +1,5 @@
 import { GeneralInformationServiceClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils';
+import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';

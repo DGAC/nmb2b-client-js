@@ -23,6 +23,8 @@ import {
   ReferenceLocationDBEPoint,
   ReferenceLocationPublishedPoint,
   AerodromeICAOId,
+  WithReferenceLocationOnPrefix,
+  WithReferenceLocationOnPrefixOptional,
 } from '../Airspace/types';
 
 import {
@@ -43,15 +45,66 @@ import {
   DateTimeMinute,
 } from '../Common/types';
 
-import { TrafficType, FlightKeys, IFPLId } from '../Flight/types';
+import {
+  TrafficType,
+  FlightKeys,
+  IFPLId,
+  GroupReroutingIndicator,
+} from '../Flight/types';
 
-export interface FlightRegulationLocation {
-  regulationId: RegulationId;
-  referenceLocation: ReferenceLocation;
-  toConfirm: boolean;
-}
+export type FlightRegulationLocation = WithReferenceLocationOnPrefix<
+  'referenceLocation',
+  {
+    regulationId: RegulationId;
+    toConfirm: boolean;
+  }
+>;
 
-export type FlightAtfcmMeasureLocation = object;
+export type FlightAtfcmMeasureLocationCommon =
+  WithReferenceLocationOnPrefixOptional<
+    'referenceLocation',
+    {
+      measureSubType: MeasureSubType;
+      hotspotId?: HotspotId;
+      mcdmState?: MCDMState;
+    }
+  >;
+
+export type FlightAtfcmRegulationLocation = {
+  FlightAtfcmRegulationLocation: FlightAtfcmMeasureLocationCommon & {
+    regulationId: RegulationId;
+    toConfirm: boolean;
+  };
+};
+
+export type FlightAtfcmReroutingLocation = {
+  FlightAtfcmReroutingLocation: FlightAtfcmMeasureLocationCommon & {
+    reroutingId: ReroutingId;
+    reroutingApplyKind: ReroutingApplyKind;
+    groupReroutingIndicator: GroupReroutingIndicator;
+    reroutingPurpose: ReroutingPurpose;
+    requestText?: null | string;
+    originatorLatestReroutingProposalFlight: boolean;
+  };
+};
+
+export type ReroutingApplyKind =
+  | 'EXECUTE'
+  | 'FOR_INDICATION_WITHOUT_AUTOMATIC_PROPOSAL_FLIGHT'
+  | 'FOR_INDICATION_WITH_AUTOMATIC_RRP'
+  | 'FOR_INDICATION_WITH_AUTOMATIC_RRN';
+
+export type ReroutingPurpose =
+  | 'ATFCM'
+  | 'FLIGHT_EFFICIENCY'
+  | 'STAM'
+  | 'AOLO_REROUTING'
+  | 'ATC_ROUTING'
+  | 'CDR_OPPORTUNITY';
+
+export type FlightAtfcmMeasureLocation =
+  | FlightAtfcmRegulationLocation
+  | FlightAtfcmReroutingLocation;
 
 export interface RegulationCause {
   reason: RegulationReason;
@@ -391,9 +444,9 @@ export interface MeasureListRequest {
   tvSets?: NMSet<TrafficVolumeSetIdWildcard>;
 }
 
-export interface Regulation extends RegulationOrMCDMOnly {
+export type Regulation = RegulationOrMCDMOnly & {
   regulationState: RegulationState;
-}
+};
 
 export type TrafficVolumeScenarios = {
   solutionTrafficVolumeId: TrafficVolumeId;
@@ -406,12 +459,10 @@ export type ScenarioTrafficVolumeMatchingKind =
   | 'OVERLAPPING_REFERENCE_LOCATION'
   | 'SAME_REFERENCE_LOCATION'
   | 'SAME_TRAFFIC_VOLUME';
-
-export interface RegulationOrMCDMOnly extends Measure {
+interface IRegulationOrMCDMOnly extends Measure {
   regulationId: RegulationId;
   reason?: RegulationReason;
   location?: TrafficVolumeLocation;
-  protectedLocation?: ReferenceLocation;
   initialConstraints?: RegulationInitialConstraint[];
   supplementaryConstraints?: RegulationSupplementaryConstraint[];
   remark?: string;
@@ -423,6 +474,11 @@ export interface RegulationOrMCDMOnly extends Measure {
   delayTVSet?: TrafficVolumeSetId;
   delayConfirmationThreshold?: DurationHourMinute;
 }
+
+export type RegulationOrMCDMOnly = WithReferenceLocationOnPrefixOptional<
+  'protectedLocation',
+  IRegulationOrMCDMOnly
+>;
 
 export interface Measure {
   dataId?: PlanDataId;
@@ -545,29 +601,15 @@ export type MCDMApprovalState =
 
 export type LifeCycleEventType = 'CREATION' | 'DELETION' | 'UPDATE';
 
-export type TrafficVolumeLocation_ReferenceLocation =
-  | {
-      'referenceLocation-ReferenceLocationAirspace': ReferenceLocationAirspace;
-    }
-  | {
-      'referenceLocation-ReferenceLocationAerodrome': ReferenceLocationAerodrome;
-    }
-  | {
-      'referenceLocation-ReferenceLocationAerodromeSet': ReferenceLocationAerodromeSet;
-    }
-  | {
-      'referenceLocation-ReferenceLocationDBEPoint': ReferenceLocationDBEPoint;
-    }
-  | {
-      'referenceLocation-ReferenceLocationPublishedPoint': ReferenceLocationPublishedPoint;
-    };
-
-export type TrafficVolumeLocation = {
-  id: TrafficVolumeId;
-  flightLevels?: FlightLevelRange;
-  description?: string;
-  setIds?: NMSet<TrafficVolumeSetId>;
-} & TrafficVolumeLocation_ReferenceLocation;
+export type TrafficVolumeLocation = WithReferenceLocationOnPrefix<
+  'referenceLocation',
+  {
+    id: TrafficVolumeId;
+    flightLevels?: FlightLevelRange;
+    description?: string;
+    setIds?: NMSet<TrafficVolumeSetId>;
+  }
+>;
 
 export interface RegulationInitialConstraint {
   constraintPeriod: DateTimeMinutePeriod;

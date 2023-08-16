@@ -66,6 +66,10 @@
     "./PublishSubscribe/types": {
       "import": "./dist/PublishSubscribe/types.js",
       "require": "./dist/PublishSubscribe/types.cjs"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/types.cjs"
     }
   },
   "scripts": {

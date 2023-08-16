@@ -360,7 +360,7 @@ export interface Flight {
   mostPenalisingRegulation?: RegulationId;
   hasOtherRegulations?: boolean;
   regulationLocations?: FlightRegulationLocation[];
-  atfcmMeasureLocations?: FlightAtfcmMeasureLocation[];
+  atfcmMeasureLocations?: NMSet<FlightAtfcmMeasureLocation>;
   lastATFMMessageType?: ATFMMessageType;
   lastATFMMessageReceivedOrSent?: ReceivedOrSent;
   runwayVisualRange?: DistanceM;
