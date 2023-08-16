@@ -1,4 +1,4 @@
-# Master
+# v1.0.0-beta.4 (2023-08-16)
 
 - Fix types (#114), export util called `extractReferenceLocation`
 - Implement `Flight.queryFlightsByAerodrome` and `Flight.queryFlightsByAerodromeSet`
