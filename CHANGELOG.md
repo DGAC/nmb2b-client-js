@@ -1,4 +1,8 @@
-# v1.0.0-beta.3
+# Master
+
+- Implement `Flight.queryFlightsByAerodrome` and `Flight.queryFlightsByAerodromeSet`
+
+# v1.0.0-beta.3 (2023-07-21)
 
 - Fix CI publish step
 

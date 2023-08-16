@@ -73,6 +73,7 @@ import {
   AerodromeOrPublishedPointId,
   NonPublishedPoint,
   FIRICAOId,
+  AerodromeSetId,
 } from '../Airspace/types';
 
 import {
@@ -1375,4 +1376,32 @@ export interface FlightListByMeasureReply extends Reply {
 }
 
 export interface FlightListByMeasureReplyData
+  extends FlightListByLocationReplyData {}
+
+export interface FlightListByAerodromeRequest
+  extends FlightListByLocationRequest {
+  aerodrome: AerodromeICAOId;
+  aerodromeRole: AerodromeRole;
+}
+
+export type AerodromeRole = 'DEPARTURE' | 'ARRIVAL' | 'BOTH';
+
+export interface FlightListByAerodromeReply extends Reply {
+  data: FlightListByAerodromeReplyData;
+}
+
+export interface FlightListByAerodromeReplyData
+  extends FlightListByLocationReplyData {}
+
+export interface FlightListByAerodromeSetRequest
+  extends FlightListByLocationRequest {
+  aerodromeSet: AerodromeSetId;
+  aerodromeRole: AerodromeRole;
+}
+
+export interface FlightListByAerodromeSetReply extends Reply {
+  data: FlightListByAerodromeSetReplyData;
+}
+
+export interface FlightListByAerodromeSetReplyData
   extends FlightListByLocationReplyData {}
