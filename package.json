@@ -1,15 +1,15 @@
 {
-  "name": "@mariodeckers/nmb2b-client",
-  "version": "1.0.0-beta.4.1",
-  "description": "EUROCONTROL Network Manager B2B SOAP client, forked from @dgac/nmb2b-client",
+  "name": "@dgac/nmb2b-client",
+  "version": "1.0.0-beta.4",
+  "description": "EUROCONTROL Network Manager B2B SOAP client",
   "keywords": [
     "EUROCONTROL",
     "SOAP",
     "TypeScript"
   ],
-  "author": "Mario DECKERS <mariodeckers (at) outlook.com>",
+  "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "license": "MIT",
-  "repository": "https://https://github.com/mariodeckers/nmb2b-client-js",
+  "repository": "https://github.com/DGAC/nmb2b-client-js",
   "engines": {
     "node": ">=16"
   },
