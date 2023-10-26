@@ -1,4 +1,5 @@
 # Network Manager B2B Client
+forked from [DGAC/nmb2b-client-js](https://github.com/DGAC/nmb2b-client-js)
 
 ![License](https://img.shields.io/npm/l/@dgac/nmb2b-client.svg)
 ![NodeVersion](https://img.shields.io/node/v/@dgac/nmb2b-client.svg)

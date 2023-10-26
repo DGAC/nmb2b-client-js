@@ -1405,3 +1405,15 @@ export interface FlightListByAerodromeSetReply extends Reply {
 
 export interface FlightListByAerodromeSetReplyData
   extends FlightListByLocationReplyData {}
+
+export interface FlightListByAircraftOperatorRequest
+  extends FlightListByLocationRequest {
+    calculationType?: CountsCalculationType;
+}
+
+export interface FlightListByAircraftOperatorReply extends Reply {
+  data: FlightListByAircraftOperatorReplyData;
+}
+
+export interface FlightListByAircraftOperatorReplyData
+  extends FlightListByLocationReplyData {}
