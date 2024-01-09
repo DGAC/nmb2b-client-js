@@ -1,5 +1,6 @@
 # Master
 
+- NMB2B v27.0.0
 - Implement `Flight.queryFlightsByAircraftOperator`
 - Update dependencies
 - Drop Node 16 support

@@ -180,28 +180,31 @@ export interface CountsInterval {
 export type RegulationField =
   | 'applicability'
   | 'autolink'
-  | 'createdByFMP'
-  | 'dataId'
-  | 'delayConfirmationThreshold'
-  | 'delayTVSet'
-  | 'externallyEditable'
+  | 'measureCherryPicked'
+  | 'calculationType'
   | 'initialConstraints'
-  | 'lastUpdate'
+  | 'occupancyConstraints'
   | 'linkedRegulations'
   | 'location'
-  | 'mcdmRequired'
-  | 'measureCherryPicked'
-  | 'noDelayWindow'
   | 'protectedLocation'
   | 'reason'
-  | 'regulationState'
   | 'remark'
-  | 'scenarioReference'
-  | 'sourceHotspot'
-  | 'subType'
+  | 'regulationState'
   | 'supplementaryConstraints'
+  | 'lastUpdate'
+  | 'noDelayWindow'
+  | 'occupancyDuration'
   | 'updateCapacityRequired'
-  | 'updateTVActivationRequired';
+  | 'updateTVActivationRequired'
+  | 'externallyEditable'
+  | 'subType'
+  | 'delayTVSet'
+  | 'createdByFMP'
+  | 'sourceHotspot'
+  | 'mcdmRequired'
+  | 'dataId'
+  | 'scenarioReference'
+  | 'delayConfirmationThreshold';
 
 export interface SectorConfigurationPlanRetrievalRequest
   extends TacticalConfigurationRetrievalRequest {
@@ -303,6 +306,8 @@ export interface TrafficCountsReplyData {
   flows?: NMSet<Flow>;
   counts?: NMMap<DateTimeMinutePeriod, NMMap<TrafficType, Counts>>;
   otmvAlerts?: NMMap<TrafficType, NMSet<OtmvAlert>>;
+  effectiveCapacities?: NMMap<DateTimeMinutePeriod, CountsValue>;
+  effectiveOTMVs?: NMMap<DateTimeMinutePeriod, OTMVThresholds>;
 }
 
 export interface Flow {
@@ -314,8 +319,8 @@ export interface Flow {
 }
 
 export type ScenarioImpact = {
-  totalCommonFlights: CountsValue;
-  totalOtherFlights: CountsValue;
+  totalCommonFlightCount: CountsValue;
+  totalOtherFlightCount: CountsValue;
   scenarioTrafficVolumeEntryPeriod?: DateTimeMinutePeriod;
 };
 
@@ -337,6 +342,14 @@ export interface Counts {
 }
 
 export type CountsValue = number;
+
+export type OTMVThresholds = {
+  peakThreshold?: OTMVThreshold;
+  sustaintedThreshold?: OTMVThreshold;
+  sustainedElapsedDuration?: DurationHourMinute;
+  sustainedCrossingOccurences?: number;
+};
+
 export type SubTotalsTrafficCountsType =
   /**
    * Predicted flights that are not suspended
@@ -463,8 +476,10 @@ interface IRegulationOrMCDMOnly extends Measure {
   regulationId: RegulationId;
   reason?: RegulationReason;
   location?: TrafficVolumeLocation;
+  calculationType?: null | CountsCalculationType;
   initialConstraints?: RegulationInitialConstraint[];
   supplementaryConstraints?: RegulationSupplementaryConstraint[];
+  occupancyConstraints?: RegulationOccupancyConstraint[];
   remark?: string;
   autolink?: boolean;
   linkedRegulations?: NMSet<RegulationId>;
@@ -628,6 +643,13 @@ export interface RegulationExceptionalConstraint {
 export interface RegulationSupplementaryConstraint {
   constraintPeriod: DateTimeMinutePeriod;
   supplementaryRate: number;
+}
+
+export interface RegulationOccupancyConstraint {
+  constraintPeriod: DateTimeMinutePeriod;
+  occupancyRate: number;
+  peakCapacity: number;
+  pendingCapacityPercentage: number;
 }
 
 export interface HotspotListRequest {

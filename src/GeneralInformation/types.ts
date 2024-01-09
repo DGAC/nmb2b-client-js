@@ -15,3 +15,15 @@ export interface NMB2BWSDLsReplyData {
 export interface B2BInfoFile extends File {
   hasAddendaErrata?: boolean;
 }
+
+export interface UserInformationRequest {}
+
+export interface UserInformationReply extends Reply {
+  data?: UserInformationReplyData;
+}
+
+export type UserInformationReplyData = {
+  textReport: TextReport;
+};
+
+export type TextReport = string;

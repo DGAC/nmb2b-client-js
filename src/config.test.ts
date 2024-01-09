@@ -5,13 +5,13 @@ import { test, expect, describe } from 'vitest';
 describe('getEndpoint', () => {
   test('without flavour', () => {
     expect(getEndpoint()).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/26.0.0"`,
+      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/27.0.0"`,
     );
   });
 
   test('with flavour', () => {
     expect(getEndpoint({ flavour: 'OPS' })).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/26.0.0"`,
+      `"https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/27.0.0"`,
     );
   });
 });

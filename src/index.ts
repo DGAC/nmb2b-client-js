@@ -7,10 +7,7 @@ const debug = d();
 
 import { getAirspaceClient, AirspaceService } from './Airspace';
 import { getFlightClient, FlightService } from './Flight';
-import {
-  getPublishSubscribeClient,
-  PublishSubscribeService,
-} from './PublishSubscribe';
+
 import { getFlowClient, FlowService } from './Flow';
 import {
   getGeneralInformationClient,
@@ -19,7 +16,6 @@ import {
 
 export { AirspaceService } from './Airspace';
 export { FlightService } from './Flight';
-export { PublishSubscribeService } from './PublishSubscribe';
 export { FlowService } from './Flow';
 export { GeneralInformationService } from './GeneralInformation';
 export { NMB2BError } from './utils/NMB2BError';
@@ -27,7 +23,6 @@ export { NMB2BError } from './utils/NMB2BError';
 export interface B2BClient {
   Airspace: AirspaceService;
   Flight: FlightService;
-  PublishSubscribe: PublishSubscribeService;
   Flow: FlowService;
   GeneralInformation: GeneralInformationService;
 }
@@ -62,7 +57,6 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
   return Promise.all([
     getAirspaceClient(options),
     getFlightClient(options),
-    getPublishSubscribeClient(options),
     getFlowClient(options),
     getGeneralInformationClient(options),
   ])
@@ -70,10 +64,9 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
       debug('Successfully created B2B Client');
       return res;
     })
-    .then(([Airspace, Flight, PublishSubscribe, Flow, GeneralInformation]) => ({
+    .then(([Airspace, Flight, Flow, GeneralInformation]) => ({
       Airspace,
       Flight,
-      PublishSubscribe,
       Flow,
       GeneralInformation,
     }));
@@ -157,27 +150,6 @@ export async function makeGeneralInformationClient(
 
   return getGeneralInformationClient(options).then((res) => {
     debug('Successfully created B2B GeneralInformation client');
-    return res;
-  });
-}
-
-export async function makePublishSubscribeClient(
-  args: InputOptions,
-): Promise<PublishSubscribeService> {
-  const options = { ...defaults, ...args };
-  debug('Instantiating B2B PublishSubscribe client ...');
-
-  if (!isConfigValid(options)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
-
-  debug('Config is %o', obfuscate(options));
-
-  await downloadWSDL(options);
-
-  return getPublishSubscribeClient(options).then((res) => {
-    debug('Successfully created B2B PublishSubscribe client');
     return res;
   });
 }
