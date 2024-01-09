@@ -1,3 +1,9 @@
+# Master
+
+- Implement `Flight.queryFlightsByAircraftOperator`
+- Update dependencies
+- Drop Node 16 support
+
 # v1.0.0-beta.4 (2023-08-16)
 
 - Fix types (#114), export util called `extractReferenceLocation`
