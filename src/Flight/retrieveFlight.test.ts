@@ -77,7 +77,6 @@ describe('retrieveFlight', async () => {
           },
           requestedFlightDatasets: ['flight'],
           requestedFlightFields: ['ftfmPointProfile'],
-          requestedDataFormat: 'NM_B2B',
         });
 
         expect(res.data.flight?.ftfmPointProfile).toBeDefined();
@@ -114,7 +113,6 @@ describe('retrieveFlight', async () => {
           },
           requestedFlightDatasets: ['flight'],
           requestedFlightFields: ['aircraftType', 'delay'],
-          requestedDataFormat: 'NM_B2B',
         });
 
         const flight = res.data?.flight;

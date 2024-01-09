@@ -5,7 +5,6 @@ import {
   makeFlightClient,
   makeGeneralInformationClient,
   makeAirspaceClient,
-  makePublishSubscribeClient,
 } from '.';
 
 import { Config } from './config';
@@ -22,7 +21,6 @@ describe('Main API', () => {
     expect(b2bClient.Flight).toBeDefined();
     expect(b2bClient.Flow).toBeDefined();
     expect(b2bClient.GeneralInformation).toBeDefined();
-    expect(b2bClient.PublishSubscribe).toBeDefined();
   });
 
   test.each([
@@ -30,7 +28,6 @@ describe('Main API', () => {
     makeFlowClient,
     makeFlightClient,
     makeGeneralInformationClient,
-    makePublishSubscribeClient,
   ])('%O', async (fn) => {
     const res = await fn(b2bOptions);
     expect(res).toBeDefined();

@@ -1,7 +1,6 @@
 export { B2BClient } from './';
 export { AirspaceService } from './Airspace';
 export { FlightService } from './Flight';
-export { PublishSubscribeService } from './PublishSubscribe';
 export { FlowService } from './Flow';
 export { GeneralInformationService } from './GeneralInformation';
 
@@ -83,14 +82,3 @@ export {
 } from './Flow/retrieveSectorConfigurationPlan';
 
 // GeneralInformation
-
-// PublishSubscribe
-export {
-  SubscriptionCreationRequest,
-  SubscriptionCreationReply,
-} from './PublishSubscribe/createSubscription';
-
-export {
-  SubscriptionListRequest,
-  SubscriptionListReply,
-} from './PublishSubscribe/listSubscriptions';

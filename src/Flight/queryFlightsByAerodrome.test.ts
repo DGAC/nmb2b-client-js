@@ -20,7 +20,7 @@ describe('queryFlightsByAirspace', async () => {
       trafficType: 'LOAD',
       trafficWindow,
       aerodrome: 'LFPG',
-      aerodromeRole: 'BOTH',
+      aerodromeRole: 'GLOBAL',
     });
 
     /**

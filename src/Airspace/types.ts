@@ -102,6 +102,7 @@ type ADRMessageType = object; // eurocontrol.cfmu.cua.b2b.aixm.ADRMessage
 export interface AUPManualEntries {
   cdrs?: ADRMessageType;
   rsas?: ADRMessageType;
+  radRestrictionActivations?: ADRMessageType;
 }
 
 export interface AUPComputedEntries {
