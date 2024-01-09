@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   sourcemap: true,
   clean: true,
-  target: 'node16',
+  target: 'node18',
   dts: true,
   outDir: 'dist',
   splitting: false,
