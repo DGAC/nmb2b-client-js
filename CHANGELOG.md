@@ -1,5 +1,6 @@
 # Master
 
+- Fix missing pkg/config export
 - Implement `Flight.queryFlightsByAircraftOperator`
 - Update dependencies
 - Drop Node 16 support
