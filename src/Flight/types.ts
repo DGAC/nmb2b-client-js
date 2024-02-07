@@ -52,7 +52,6 @@ export type ATFMMessageType =
   | 'SWM'
   | 'UNK';
 
-import { Duration } from 'moment';
 import {
   AerodromeICAOId,
   FlightLevel,
@@ -98,6 +97,7 @@ import {
   FlightLevelM,
   Cost,
   SignedDurationHourMinuteSecond,
+  Duration,
 } from '../Common/types';
 
 import {
@@ -1408,7 +1408,7 @@ export interface FlightListByAerodromeSetReplyData
 
 export interface FlightListByAircraftOperatorRequest
   extends FlightListByLocationRequest {
-    calculationType?: CountsCalculationType;
+  calculationType?: CountsCalculationType;
 }
 
 export interface FlightListByAircraftOperatorReply extends Reply {

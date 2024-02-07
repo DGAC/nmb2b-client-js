@@ -45,6 +45,7 @@ export interface NMMap<K, V> {
 export type DurationHourMinute = number;
 export type DurationMinute = number;
 export type DurationHourMinuteSecond = number;
+export type Duration = number;
 
 export interface DateYearMonthDayPeriod {
   wef?: DateYearMonthDay;
