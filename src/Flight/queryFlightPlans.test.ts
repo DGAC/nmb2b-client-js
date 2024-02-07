@@ -12,6 +12,10 @@ describe('queryFlightPlans', async () => {
   let knownFlight: B2BFlight | undefined;
 
   beforeAll(async () => {
+    if (!shouldUseRealB2BConnection) {
+      return;
+    }
+
     const res = await Flight.queryFlightsByAirspace({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
