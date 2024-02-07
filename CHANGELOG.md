@@ -1,5 +1,6 @@
 # Master
 
+- Remove moment.js, move to `date-fns`
 - Update dependencies
 - Fix missing pkg/config export
 - Implement `Flight.queryFlightsByAircraftOperator`

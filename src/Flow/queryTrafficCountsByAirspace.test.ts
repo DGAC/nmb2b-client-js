@@ -1,9 +1,9 @@
-import moment from 'moment';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { add, startOfHour, sub } from 'date-fns';
 
 describe('queryTrafficCountsByAirspace', async () => {
   const Flow = await makeFlowClient(b2bOptions);
@@ -13,8 +13,8 @@ describe('queryTrafficCountsByAirspace', async () => {
       const res = await Flow.queryTrafficCountsByAirspace({
         dataset: { type: 'OPERATIONAL' },
         trafficWindow: {
-          wef: moment.utc().subtract(1, 'hour').startOf('hour').toDate(),
-          unt: moment.utc().add(1, 'hour').startOf('hour').toDate(),
+          wef: startOfHour(sub(new Date(), { hours: 1 })),
+          unt: startOfHour(add(new Date(), { hours: 1 })),
         },
         includeProposalFlights: false,
         includeForecastFlights: false,

@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { describe, expect, test } from 'vitest';
 import { makeAirspaceClient } from '..';
 import b2bOptions from '../../tests/options';
@@ -14,7 +13,7 @@ describe('retrieveEAUPChain', async () => {
     'EAUP Retrieval',
     async () => {
       const res = await Airspace.retrieveEAUPChain({
-        chainDate: moment.utc().toDate(),
+        chainDate: new Date(),
       });
 
       if (res.data === null) {

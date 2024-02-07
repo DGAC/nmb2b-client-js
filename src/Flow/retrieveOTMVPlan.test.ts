@@ -1,6 +1,5 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlowClient } from '..';
-import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { describe, test, expect } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
@@ -12,7 +11,7 @@ describe('retrieveOTMVPlan', async () => {
     try {
       const res = await Flow.retrieveOTMVPlan({
         dataset: { type: 'OPERATIONAL' },
-        day: moment.utc().toDate(),
+        day: new Date(),
         otmvsWithDuration: {
           item: [{ trafficVolume: 'LFERMS' }],
         },

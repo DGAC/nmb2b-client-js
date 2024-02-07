@@ -1,12 +1,11 @@
-import moment from 'moment';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-
 import type { RegulationListReply } from './queryRegulations';
 import { extractReferenceLocation } from '../utils/extractReferenceLocation';
+import { add, startOfHour, sub } from 'date-fns';
 
 describe('queryRegulations', async () => {
   const Flow = await makeFlowClient(b2bOptions);
@@ -16,8 +15,8 @@ describe('queryRegulations', async () => {
       const res: RegulationListReply = await Flow.queryRegulations({
         dataset: { type: 'OPERATIONAL' },
         queryPeriod: {
-          wef: moment.utc().subtract(10, 'hour').startOf('hour').toDate(),
-          unt: moment.utc().add(10, 'hour').startOf('hour').toDate(),
+          wef: startOfHour(sub(new Date(), { hours: 10 })),
+          unt: startOfHour(add(new Date(), { hours: 10 })),
         },
         requestedRegulationFields: {
           item: [

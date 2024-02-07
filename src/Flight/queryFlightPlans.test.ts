@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlightClient } from '..';
-import moment from 'moment';
+import { sub, add } from 'date-fns';
 import b2bOptions from '../../tests/options';
 import { FlightOrFlightPlan as B2BFlight } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
@@ -18,8 +18,8 @@ describe('queryFlightPlans', async () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment.utc().subtract(6, 'hours').toDate(),
-        unt: moment.utc().add(6, 'hours').toDate(),
+        wef: sub(new Date(), { hours: 6 }),
+        unt: add(new Date(), { hours: 6 }),
       },
       airspace: 'LFEERMS',
     });
@@ -67,14 +67,12 @@ describe('queryFlightPlans', async () => {
         airFiled: false,
         nonICAOAerodromeOfDestination: false,
         estimatedOffBlockTime: {
-          wef: moment
-            .utc(knownFlight.flight.flightId.keys?.estimatedOffBlockTime!)
-            .subtract(30, 'minutes')
-            .toDate(),
-          unt: moment
-            .utc(knownFlight.flight.flightId.keys?.estimatedOffBlockTime!)
-            .add(30, 'minutes')
-            .toDate(),
+          wef: sub(knownFlight.flight.flightId.keys?.estimatedOffBlockTime!, {
+            minutes: 30,
+          }),
+          unt: add(knownFlight.flight.flightId.keys?.estimatedOffBlockTime!, {
+            minutes: 30,
+          }),
         },
       });
 

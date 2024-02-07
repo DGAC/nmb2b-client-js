@@ -1,10 +1,10 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlightClient, makeFlowClient } from '..';
-import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { Regulation } from '../Flow/types';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { sub, add, startOfHour } from 'date-fns';
 
 describe('queryFlightsByMeasure', async () => {
   let measure: void | Regulation;
@@ -15,8 +15,8 @@ describe('queryFlightsByMeasure', async () => {
   ]);
 
   const window = {
-    wef: moment.utc().subtract(2, 'hour').startOf('hour').toDate(),
-    unt: moment.utc().add(2, 'hour').startOf('hour').toDate(),
+    wef: startOfHour(sub(new Date(), { hours: 2 })),
+    unt: startOfHour(add(new Date(), { hours: 2 })),
   };
 
   beforeAll(async () => {
