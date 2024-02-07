@@ -1,5 +1,6 @@
 # Master
 
+- Attach the current configuration to the service definition : `xxxxService.config`.
 - Remove moment.js, move to `date-fns`
 - Update dependencies
 - Fix missing pkg/config export
