@@ -1,5 +1,6 @@
 # Master
 
+- Update dependencies
 - Fix missing pkg/config export
 - Implement `Flight.queryFlightsByAircraftOperator`
 - Update dependencies
