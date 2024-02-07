@@ -1,6 +1,6 @@
 import { reorderKeys, prepareSerializer } from './serializer';
-import moment from 'moment';
 import { describe, test, expect } from 'vitest';
+import { UTCDate } from '@date-fns/utc';
 
 describe('reorderKeys', () => {
   const testCases = [
@@ -153,7 +153,7 @@ describe('retrieveOTMVPlan', () => {
 
   test('should serialize otmvDuration properly', () => {
     const serialize = prepareSerializer(schema);
-    const now = new Date();
+    const now = new Date('2024-02-07T23:30:00.000Z');
 
     const prepared = serialize({
       dataset: { type: 'OPERATIONAL' },
@@ -168,7 +168,7 @@ describe('retrieveOTMVPlan', () => {
         dataset: {
           type: 'OPERATIONAL',
         },
-        day: moment.utc(now).format('YYYY-MM-DD'),
+        day: new UTCDate(now).toISOString().slice(0, 10),
         otmvsWithDuration: {
           item: [
             {

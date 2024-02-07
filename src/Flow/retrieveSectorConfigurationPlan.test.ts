@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
@@ -13,7 +12,7 @@ describe('retrieveSectorConfigurationPlan', async () => {
     try {
       const res = await Flow.retrieveSectorConfigurationPlan({
         dataset: { type: 'OPERATIONAL' },
-        day: moment.utc().toDate(),
+        day: new Date(),
         airspace: 'LFEECTAN',
       });
 

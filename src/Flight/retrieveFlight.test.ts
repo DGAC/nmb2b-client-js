@@ -1,10 +1,10 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlightClient } from '..';
-import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import type { FlightKeys } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { expect, beforeAll, test, describe } from 'vitest';
+import { add, sub } from 'date-fns';
 
 describe('retrieveFlight', async () => {
   const Flight = await makeFlightClient(b2bOptions);
@@ -21,8 +21,8 @@ describe('retrieveFlight', async () => {
       includeForecastFlights: false,
       trafficType: 'LOAD',
       trafficWindow: {
-        wef: moment.utc().subtract(30, 'minutes').toDate(),
-        unt: moment.utc().add(30, 'minutes').toDate(),
+        wef: sub(new Date(), { minutes: 30 }),
+        unt: add(new Date(), { minutes: 30 }),
       },
       airspace: 'LFEERMS',
     });

@@ -1,11 +1,10 @@
-import { inspect } from 'util';
-import { makeFlowClient, B2BClient } from '..';
-import moment from 'moment';
+import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { Result as OTMVPlanUpdateResult } from './updateOTMVPlan';
 import { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan';
-import { FlowService } from '.';
 import { describe, expect, beforeAll, afterAll, test } from 'vitest';
+import { add, startOfDay } from 'date-fns';
+import { UTCDateMini } from '@date-fns/utc';
 
 describe('updateOTMVPlan', async () => {
   const Flow = await makeFlowClient(b2bOptions);
@@ -14,7 +13,7 @@ describe('updateOTMVPlan', async () => {
   beforeAll(async () => {
     const res = await Flow.retrieveOTMVPlan({
       dataset: { type: 'OPERATIONAL' },
-      day: moment.utc().toDate(),
+      day: new Date(),
       otmvsWithDuration: {
         item: [
           {
@@ -65,13 +64,13 @@ describe('updateOTMVPlan', async () => {
         return;
       }
 
-      const hPlus10Min: moment.Moment = moment.utc().add(10, 'minute');
+      const hPlus10Min = add(new Date(), { minutes: 10 });
 
       const res: OTMVPlanUpdateResult = await Flow.updateOTMVPlan({
         plans: {
           dataId: planBefore.plans.dataId,
           dataset: { type: 'OPERATIONAL' },
-          day: moment.utc().toDate(),
+          day: new Date(),
           tvsOTMVs: {
             item: [
               {
@@ -85,19 +84,17 @@ describe('updateOTMVPlan', async () => {
                           item: [
                             {
                               applicabilityPeriod: {
-                                wef: moment.utc().startOf('day').toDate(), //.format('YYYY-MM-DD HH:mm'),//.toDate(),
-                                unt: hPlus10Min.toDate(),
+                                wef: startOfDay(new UTCDateMini()),
+                                unt: hPlus10Min,
                               },
                               dataSource: 'AIRSPACE',
                             },
                             {
                               applicabilityPeriod: {
-                                wef: hPlus10Min.toDate(),
-                                unt: moment
-                                  .utc()
-                                  .add(1, 'day')
-                                  .startOf('day')
-                                  .toDate(),
+                                wef: hPlus10Min,
+                                unt: add(startOfDay(new UTCDateMini()), {
+                                  days: 1,
+                                }),
                               },
                               dataSource: 'TACTICAL',
                               otmv: {

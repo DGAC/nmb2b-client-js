@@ -1,16 +1,16 @@
 import { makeFlightClient } from '..';
-import moment from 'moment';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { describe, expect, test } from 'vitest';
+import { add, sub } from 'date-fns';
 
 describe('queryFlightsByTrafficVolume', async () => {
   const Flight = await makeFlightClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('query in LFERMS', async () => {
     const trafficWindow = {
-      wef: moment.utc().subtract(2, 'hours').toDate(),
-      unt: moment.utc().add(2, 'hours').toDate(),
+      wef: sub(new Date(), { hours: 2 }),
+      unt: add(new Date(), { hours: 2 }),
     };
 
     const res = await Flight.queryFlightsByTrafficVolume({
