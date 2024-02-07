@@ -12,8 +12,6 @@ import { Config } from './config';
 
 import { describe, test, expect } from 'vitest';
 
-// jest.setTimeout(20000);
-
 describe('Main API', () => {
   test('makeB2BClient', async () => {
     const b2bClient = await makeB2BClient(b2bOptions as Config);
@@ -34,5 +32,6 @@ describe('Main API', () => {
   ])('%O', async (fn) => {
     const res = await fn(b2bOptions);
     expect(res).toBeDefined();
+    expect(res.config).toEqual(b2bOptions);
   });
 });
