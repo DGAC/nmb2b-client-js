@@ -1,9 +1,7 @@
-import path from 'path';
-import { getWSDLPath } from '../constants';
-import { getEndpoint } from '../config';
-import { prepareSecurity } from '../security';
 import { createClient } from 'soap';
-import { Config } from '../config';
+import { Config, getEndpoint } from '../config';
+import { getWSDLPath } from '../constants';
+import { prepareSecurity } from '../security';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
@@ -30,19 +28,24 @@ function createPublishSubscribeServices(
   );
 }
 
-import listSubscriptions from './listSubscriptions';
-import { Resolver as ListSubscriptions } from './listSubscriptions';
-import createSubscription from './createSubscription';
-import { Resolver as CreateSubscription } from './createSubscription';
-import deleteSubscription from './deleteSubscription';
-import { Resolver as DeleteSubscription } from './deleteSubscription';
-import resumeSubscription from './resumeSubscription';
-import { Resolver as ResumeSubscription } from './resumeSubscription';
-import pauseSubscription from './pauseSubscription';
-import { Resolver as PauseSubscription } from './pauseSubscription';
+import createSubscription, {
+  Resolver as CreateSubscription,
+} from './createSubscription';
+import deleteSubscription, {
+  Resolver as DeleteSubscription,
+} from './deleteSubscription';
+import listSubscriptions, {
+  Resolver as ListSubscriptions,
+} from './listSubscriptions';
+import pauseSubscription, {
+  Resolver as PauseSubscription,
+} from './pauseSubscription';
+import resumeSubscription, {
+  Resolver as ResumeSubscription,
+} from './resumeSubscription';
+import { BaseServiceInterface } from '../Common/ServiceInterface';
 
-export interface PublishSubscribeService {
-  __soapClient: object;
+export interface PublishSubscribeService extends BaseServiceInterface {
   listSubscriptions: ListSubscriptions;
   createSubscription: CreateSubscription;
   deleteSubscription: DeleteSubscription;
@@ -53,8 +56,9 @@ export interface PublishSubscribeService {
 export function getPublishSubscribeClient(
   config: Config,
 ): Promise<PublishSubscribeService> {
-  return createPublishSubscribeServices(config).then(client => ({
+  return createPublishSubscribeServices(config).then((client) => ({
     __soapClient: client,
+    config,
     listSubscriptions: listSubscriptions(client),
     createSubscription: createSubscription(client),
     deleteSubscription: deleteSubscription(client),

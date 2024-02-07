@@ -1,10 +1,7 @@
-import path from 'path';
-import { getWSDLPath } from '../constants';
-import { getEndpoint } from '../config';
-import { prepareSecurity } from '../security';
 import { createClient } from 'soap';
 import { Config } from '../config';
-import util from 'util';
+import { getWSDLPath } from '../constants';
+import { prepareSecurity } from '../security';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
@@ -38,31 +35,35 @@ function createFlowServices(config: Config): Promise<FlowClient> {
   });
 }
 
-import retrieveSectorConfigurationPlan from './retrieveSectorConfigurationPlan';
-import { Resolver as RetrieveSectorConfigurationPlan } from './retrieveSectorConfigurationPlan';
-import queryTrafficCountsByAirspace from './queryTrafficCountsByAirspace';
-import { Resolver as QueryTrafficCountsByAirspace } from './queryTrafficCountsByAirspace';
-import queryRegulations from './queryRegulations';
-import { Resolver as QueryRegulations } from './queryRegulations';
-import queryHotspots from './queryHotspots';
-import { Resolver as QueryHotspots } from './queryHotspots';
-import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolume';
-import { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume';
-import retrieveOTMVPlan from './retrieveOTMVPlan';
-import { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
-import updateOTMVPlan from './updateOTMVPlan';
-import { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
+import { BaseServiceInterface } from '../Common/ServiceInterface';
+import queryHotspots, { Resolver as QueryHotspots } from './queryHotspots';
+import queryRegulations, {
+  Resolver as QueryRegulations,
+} from './queryRegulations';
+import queryTrafficCountsByAirspace, {
+  Resolver as QueryTrafficCountsByAirspace,
+} from './queryTrafficCountsByAirspace';
+import queryTrafficCountsByTrafficVolume, {
+  Resolver as QueryTrafficCountsByTrafficVolume,
+} from './queryTrafficCountsByTrafficVolume';
 import retrieveCapacityPlan, {
   Resolver as RetrieveCapacityPlan,
 } from './retrieveCapacityPlan';
-import updateCapacityPlan from './updateCapacityPlan';
-import { Resolver as UpdateCapacityPlan } from './updateCapacityPlan';
+import retrieveOTMVPlan, {
+  Resolver as RetrieveOTMVPlan,
+} from './retrieveOTMVPlan';
 import retrieveRunwayConfigurationPlan, {
   Resolver as RetrieveRunwayConfigurationPlan,
 } from './retrieveRunwayConfigurationPlan';
+import retrieveSectorConfigurationPlan, {
+  Resolver as RetrieveSectorConfigurationPlan,
+} from './retrieveSectorConfigurationPlan';
+import updateCapacityPlan, {
+  Resolver as UpdateCapacityPlan,
+} from './updateCapacityPlan';
+import updateOTMVPlan, { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
 
-export interface FlowService {
-  __soapClient: object;
+export interface FlowService extends BaseServiceInterface {
   retrieveSectorConfigurationPlan: RetrieveSectorConfigurationPlan;
   queryTrafficCountsByAirspace: QueryTrafficCountsByAirspace;
   queryRegulations: QueryRegulations;
@@ -78,6 +79,7 @@ export interface FlowService {
 export function getFlowClient(config: Config): Promise<FlowService> {
   return createFlowServices(config).then((client) => ({
     __soapClient: client,
+    config,
     retrieveSectorConfigurationPlan: retrieveSectorConfigurationPlan(client),
     queryTrafficCountsByAirspace: queryTrafficCountsByAirspace(client),
     queryRegulations: queryRegulations(client),
