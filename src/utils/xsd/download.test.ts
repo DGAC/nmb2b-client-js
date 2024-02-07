@@ -1,7 +1,7 @@
 import path from 'path';
 import nock from 'nock';
 import fs from 'fs';
-import * as uuid from 'uuid';
+import { randomUUID } from 'crypto';
 import { rimraf } from 'rimraf';
 import { createDir as mkdirp } from '../fs';
 import { getFileUrl, getEndpoint } from '../../config';
@@ -10,7 +10,7 @@ import { downloadFile } from './downloadFile';
 import { beforeEach, afterEach, describe, test, expect } from 'vitest';
 
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
-const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${uuid.v4()}`);
+const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 
 beforeEach(async () => {
   await mkdirp(OUTPUT_DIR);
