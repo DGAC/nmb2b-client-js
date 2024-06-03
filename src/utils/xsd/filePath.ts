@@ -1,14 +1,10 @@
-import axios, { AxiosError } from 'axios';
-import { fromEnv } from '../../security';
-import dotenv from 'dotenv';
-import path from 'path';
-import moment from 'moment';
+import axios from 'axios';
+import { UTCDateMini } from '@date-fns/utc';
+import { format } from 'date-fns';
 import { timeFormatWithSeconds } from '../timeFormats';
 import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { getEndpoint } from '../../config';
 import { Security } from '../../security';
-import d from '../debug';
-const debug = d('wsdl-downloader');
 import { createAxiosConfig } from './createAxiosConfig';
 
 const makeQuery = ({ version }: { version: string }) => `
@@ -20,7 +16,7 @@ const makeQuery = ({ version }: { version: string }) => `
   <soap:Header />
   <soap:Body>
     <generalinformation:NMB2BWSDLsRequest>
-      <sendTime>${moment.utc().format(timeFormatWithSeconds)}</sendTime>
+      <sendTime>${format(new UTCDateMini(), timeFormatWithSeconds)}</sendTime>
       <version>${version}</version>
     </generalinformation:NMB2BWSDLsRequest>
   </soap:Body>

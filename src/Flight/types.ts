@@ -55,7 +55,6 @@ export type ATFMMessageType =
   | 'SWM'
   | 'UNK';
 
-import { Duration } from 'moment';
 import {
   AerodromeICAOId,
   FlightLevel,
@@ -102,6 +101,7 @@ import {
   Cost,
   SignedDurationHourMinuteSecond,
   Colours,
+  Duration,
 } from '../Common/types';
 
 import {

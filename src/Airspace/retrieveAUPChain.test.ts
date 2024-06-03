@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { describe, expect, test } from 'vitest';
 import { makeAirspaceClient } from '..';
 import b2bOptions from '../../tests/options';
@@ -10,7 +9,7 @@ describe('retrieveAUPChain', async () => {
   test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {
     const res = await Airspace.retrieveAUPChain({
       amcIds: ['LFFAZAMC'],
-      chainDate: moment.utc().toDate(),
+      chainDate: new Date(),
     });
 
     if (res.data === null) {

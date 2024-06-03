@@ -1,10 +1,10 @@
-import moment from 'moment';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
 import { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
+import { add, startOfDay } from 'date-fns';
 
 describe('updateCapacityPlan', async () => {
   const Flow = await makeFlowClient(b2bOptions);
@@ -14,7 +14,7 @@ describe('updateCapacityPlan', async () => {
       const plan: CapacityPlanRetrievalResult = await Flow.retrieveCapacityPlan(
         {
           dataset: { type: 'OPERATIONAL' },
-          day: moment.utc().toDate(),
+          day: new Date(),
           trafficVolumes: {
             item: ['LFERMS'],
           },
@@ -28,12 +28,12 @@ describe('updateCapacityPlan', async () => {
         return;
       }
 
-      const hPlus10Min: moment.Moment = moment.utc().add(10, 'minute');
+      const hPlus10Min = add(new Date(), { minutes: 10 });
       const res: CapacityPlanUpdateResult = await Flow.updateCapacityPlan({
         plans: {
           dataId: plan.data.plans.dataId,
           dataset: { type: 'OPERATIONAL' },
-          day: moment.utc().toDate(),
+          day: new Date(),
           tvCapacities: {
             item: [
               {
@@ -43,19 +43,15 @@ describe('updateCapacityPlan', async () => {
                     item: [
                       {
                         applicabilityPeriod: {
-                          wef: moment.utc().startOf('day').toDate(), //.format('YYYY-MM-DD HH:mm'),//.toDate(),
-                          unt: hPlus10Min.toDate(),
+                          wef: startOfDay(new Date()),
+                          unt: hPlus10Min,
                         },
                         dataSource: 'AIRSPACE',
                       },
                       {
                         applicabilityPeriod: {
-                          wef: hPlus10Min.toDate(),
-                          unt: moment
-                            .utc()
-                            .add(1, 'day')
-                            .startOf('day')
-                            .toDate(),
+                          wef: hPlus10Min,
+                          unt: startOfDay(add(new Date(), { days: 1 })),
                         },
                         dataSource: 'TACTICAL',
                         capacity: 2,

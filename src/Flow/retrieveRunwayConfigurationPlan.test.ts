@@ -1,6 +1,5 @@
 import { inspect } from 'util';
-import { makeFlowClient, B2BClient, NMB2BError } from '..';
-import moment from 'moment';
+import { makeFlowClient, NMB2BError } from '..';
 import b2bOptions from '../../tests/options';
 import { RunwayConfigurationPlanRetrievalReply } from './types';
 import { expect, test, describe } from 'vitest';
@@ -14,7 +13,7 @@ describe('retrieveRunwayConfigurationPlan', async () => {
       const res: RunwayConfigurationPlanRetrievalReply =
         await Flow.retrieveRunwayConfigurationPlan({
           dataset: { type: 'OPERATIONAL' },
-          day: moment.utc().toDate(),
+          day: new Date(),
           aerodrome: 'LFBD',
         });
 

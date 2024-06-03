@@ -1,13 +1,11 @@
-import moment from 'moment';
-import { timeFormatWithSeconds } from './timeFormats';
 import { Request } from '../Common/types';
 
 export default function injectSendTime<T>(values: T): Request {
-  const sendTime = moment.utc().toDate();
+  const sendTime = new Date();
 
   if (!values || typeof values !== 'object') {
     return { sendTime };
   }
 
-  return { sendTime, ...values};
+  return { sendTime, ...values };
 }

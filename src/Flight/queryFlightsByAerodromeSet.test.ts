@@ -1,5 +1,5 @@
 import { makeFlightClient } from '..';
-import moment from 'moment';
+import { add, sub } from 'date-fns';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { describe, test, expect } from 'vitest';
@@ -9,8 +9,8 @@ describe('queryFlightsByAirspace', async () => {
 
   test.runIf(shouldUseRealB2BConnection)('query in LFPG+', async () => {
     const trafficWindow = {
-      wef: moment.utc().subtract(10, 'minutes').toDate(),
-      unt: moment.utc().add(10, 'minutes').toDate(),
+      wef: sub(new Date(), { minutes: 10 }),
+      unt: add(new Date(), { minutes: 10 }),
     };
 
     const res = await Flight.queryFlightsByAerodromeSet({

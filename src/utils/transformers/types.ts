@@ -1,13 +1,38 @@
-import moment from 'moment';
 import * as timeFormats from '../timeFormats';
+import { format } from 'date-fns';
+import { UTCDate } from '@date-fns/utc';
 
 const outputBase = {
   integer: (text: string) => {
     return parseInt(text, 10);
   },
+  /**
+   *
+   * Parse a NMB2B date/datetime.
+   *
+   * All datetimes are assumed to be UTC.
+   *
+   * Per NM B2B documentation, we only need to support these formats:
+   * - DateTimeMinute: YYYY-MM-DD hh:mm
+   * - DateTimeSecond: YYYY-MM-DD hh:mm:ss
+   * - DateYearMonthDay: YYYY-MM-DD
+   *
+   * All dates are
+   * @param text NM B2B Date string
+   * @returns Parsed Date instance
+   */
   date: (text: string) => {
-    const d = moment.utc(text).toDate();
-    return d;
+    let [date, time] = text.split(' ');
+
+    if (!time) {
+      return new Date(date);
+    }
+
+    if (time.length === 5) {
+      time += ':00';
+    }
+
+    return new Date(`${date}T${time}Z`);
   },
 };
 
@@ -65,16 +90,16 @@ export const types = {
     output: outputBase.integer,
   },
   DateTimeMinute: {
-    input: (d: Date): string => moment(d).utc().format(timeFormats.timeFormat),
+    input: (d: Date): string => format(new UTCDate(d), timeFormats.timeFormat),
     output: outputBase.date,
   },
   DateYearMonthDay: {
-    input: (d: Date): string => moment(d).utc().format(timeFormats.dateFormat),
+    input: (d: Date): string => format(new UTCDate(d), timeFormats.dateFormat),
     output: outputBase.date,
   },
   DateTimeSecond: {
     input: (d: Date): string =>
-      moment(d).utc().format(timeFormats.timeFormatWithSeconds),
+      format(new UTCDate(d), timeFormats.timeFormatWithSeconds),
     output: outputBase.date,
   },
   DistanceNM: {

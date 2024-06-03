@@ -1,9 +1,7 @@
-import path from 'path';
-import { getWSDLPath } from '../constants';
-import { getEndpoint } from '../config';
-import { prepareSecurity } from '../security';
 import { createClient } from 'soap';
 import { Config } from '../config';
+import { getWSDLPath } from '../constants';
+import { prepareSecurity } from '../security';
 import { deserializer as customDeserializer } from '../utils/transformers';
 
 export const getWSDL = ({
@@ -34,16 +32,17 @@ function createAirspaceServices(config: Config): Promise<AirspaceClient> {
 import queryCompleteAIXMDatasets, {
   Resolver as QueryCompleteAIXMDatasets,
 } from './queryCompleteAIXMDatasets';
+import retrieveAUP, { Resolver as RetrieveAUP } from './retrieveAUP';
 import retrieveAUPChain, {
   Resolver as RetrieveAUPChain,
 } from './retrieveAUPChain';
-import retrieveAUP, { Resolver as RetrieveAUP } from './retrieveAUP';
 import retrieveEAUPChain, {
   Resolver as RetrieveEAUPChain,
 } from './retrieveEAUPChain';
 
-export interface AirspaceService {
-  __soapClient: object;
+import { BaseServiceInterface } from '../Common/ServiceInterface';
+
+export interface AirspaceService extends BaseServiceInterface {
   queryCompleteAIXMDatasets: QueryCompleteAIXMDatasets;
   retrieveAUPChain: RetrieveAUPChain;
   retrieveEAUPChain: RetrieveEAUPChain;
@@ -53,6 +52,7 @@ export interface AirspaceService {
 export function getAirspaceClient(config: Config): Promise<AirspaceService> {
   return createAirspaceServices(config).then((client) => ({
     __soapClient: client,
+    config,
     queryCompleteAIXMDatasets: queryCompleteAIXMDatasets(client),
     retrieveAUPChain: retrieveAUPChain(client),
     retrieveEAUPChain: retrieveEAUPChain(client),

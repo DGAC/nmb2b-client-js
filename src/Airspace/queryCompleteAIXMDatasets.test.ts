@@ -1,7 +1,7 @@
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { makeAirspaceClient } from '..';
-import moment from 'moment';
+import { sub } from 'date-fns';
 import { describe, test, expect } from 'vitest';
 
 describe('queryCompleteAIXMDatasets', async () => {
@@ -11,8 +11,8 @@ describe('queryCompleteAIXMDatasets', async () => {
     const res = await Airspace.queryCompleteAIXMDatasets({
       queryCriteria: {
         publicationPeriod: {
-          wef: moment.utc().subtract(28, 'days').toDate(),
-          unt: moment.utc().toDate(),
+          wef: sub(new Date(), { days: 28 }),
+          unt: new Date(),
         },
       },
     });

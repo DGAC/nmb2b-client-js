@@ -1,5 +1,5 @@
 import { makeAirspaceClient } from '..';
-import moment from 'moment';
+import { sub } from 'date-fns';
 import b2bOptions from '../../tests/options';
 import { AUPSummary } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
@@ -13,7 +13,7 @@ describe('retrieveAUP', async () => {
     // Find some AUP id
     const res = await Airspace.retrieveAUPChain({
       amcIds: ['LFFAZAMC'],
-      chainDate: moment.utc().subtract(1, 'day').toDate(),
+      chainDate: sub(new Date(), { days: 1 }),
     });
 
     if (res.data) {
