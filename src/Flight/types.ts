@@ -1355,7 +1355,7 @@ export interface InvalidFiling {
 }
 
 export interface FlightListReplyData {
-  flights: FlightOrFlightPlan[];
+  flights?: FlightOrFlightPlan[];
 }
 
 export interface FlightListByLocationReplyData extends FlightListReplyData {
