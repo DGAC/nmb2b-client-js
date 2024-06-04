@@ -1,7 +1,6 @@
-// import withLog from './withLog';
 import { SoapOptions } from '../../soap';
 import { withLog } from './withLog';
-import { compose } from 'ramda';
+import { piped } from 'remeda';
 
 type SoapQuery<Input, Output> = (
   input?: Input,
@@ -20,5 +19,5 @@ export function instrument<Input, Output>({
   query: string;
 }) {
   return (fn: SoapQuery<Input, Output>) =>
-    compose(withLog<Input, Output>(`${service}:${query}`))(fn);
+    piped(withLog<Input, Output>(`${service}:${query}`))(fn);
 }

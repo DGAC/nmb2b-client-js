@@ -8,8 +8,6 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    // Vite/vitest error :
-    "skipLibCheck": true,
     "noImplicitAny": true,
     "pretty": true,
     "strict": true

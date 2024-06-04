@@ -1,16 +1,17 @@
 import { types } from './types';
-import { compose, identity, evolve, map } from 'ramda';
+import { piped, identity, evolve, map } from 'remeda';
 
-export function prepareSerializer<T>(schema: any): (input: T) => T {
+export function prepareSerializer<T extends Record<string, any>>(
+  schema: Schema,
+) {
   const transformer = prepareTransformer(schema);
-  return compose(
-    // (obj) => {
-    //   console.log(JSON.stringify(obj, null, 2));
-    //   return obj;
-    // },
-    transformer ? evolve(transformer) : identity,
+
+  const transformations = [
     reorderKeys(schema),
-  ) as any as (input: T) => T;
+    transformer ? evolve(transformer) : identity,
+  ] as const;
+
+  return piped(...transformations);
 }
 
 function reduceXSDType(str: string): string {
