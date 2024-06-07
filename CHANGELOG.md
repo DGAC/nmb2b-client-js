@@ -1,4 +1,4 @@
-# Master
+# v1.0.0-beta.5 (2024-06-07)
 
 - NMB2B v27.0.0
 - Attach the current configuration to the service definition : `xxxxService.config`.
