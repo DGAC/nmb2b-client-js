@@ -51,7 +51,10 @@ function prepareTransformer(schema: Schema): null | Transformer {
     } else if (typeof schema[curr] === 'object') {
       const subItem = prepareTransformer(schema[curr] as Schema);
       if (subItem) {
-        return { ...prev, [key]: isArray ? map(evolve(subItem)) : subItem };
+        return {
+          ...prev,
+          [key]: isArray ? map<any, any>(evolve(subItem)) : subItem,
+        };
       }
     }
 
