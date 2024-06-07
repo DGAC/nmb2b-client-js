@@ -35,6 +35,9 @@ importers:
       ramda:
         specifier: ^0.30.1
         version: 0.30.1
+      remeda:
+        specifier: ^2.0.5
+        version: 2.0.5
       soap:
         specifier: ^1.0.3
         version: 1.0.3
@@ -1173,6 +1176,9 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
+  remeda@2.0.5:
+    resolution: {integrity: sha512-2+6w6XBjWk0Lysfss4QFo4LKjQ1SAW0wIEjQfp2MJjBs6BbiGQKzNli1xmUk/bHK7CBCdPS1KqjrWojgdruv0A==}
+
   resolve-from@5.0.0:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
@@ -1363,6 +1369,10 @@ packages:
   type-detect@4.0.8:
     resolution: {integrity: sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==}
     engines: {node: '>=4'}
+
+  type-fest@4.20.0:
+    resolution: {integrity: sha512-MBh+PHUHHisjXf4tlx0CFWoMdjx8zCMLJHOjnV1prABYZFHqtFOyauCIK2/7w4oIfwkF8iNhLtnJEfVY2vn3iw==}
+    engines: {node: '>=16'}
 
   types-ramda@0.30.0:
     resolution: {integrity: sha512-oVPw/KHB5M0Du0txTEKKM8xZOG9cZBRdCVXvwHYuNJUVkAiJ9oWyqkA+9Bj2gjMsHgkkhsYevobQBWs8I2/Xvw==}
@@ -2440,6 +2450,10 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  remeda@2.0.5:
+    dependencies:
+      type-fest: 4.20.0
+
   resolve-from@5.0.0: {}
 
   resolve-pkg-maps@1.0.0: {}
@@ -2642,6 +2656,8 @@ snapshots:
       fsevents: 2.3.3
 
   type-detect@4.0.8: {}
+
+  type-fest@4.20.0: {}
 
   types-ramda@0.30.0:
     dependencies:
