@@ -10,9 +10,7 @@ export async function dirExists(
   },
 ): Promise<boolean> {
   debug(
-    'Testing if directory %s is readable %s...',
-    path,
-    writable ? 'and writable ' : '',
+    `Testing if directory ${path} is readable ${writable ? 'and writable ' : ''}...`,
   );
 
   try {
@@ -28,7 +26,7 @@ export async function dirExists(
       (writable ? fs.constants.W_OK : 0) | (readable ? fs.constants.R_OK : 0),
     );
 
-    debug('Directory %s is accessible');
+    debug(`Directory ${path} is accessible`);
 
     return true;
   } catch (err) {
