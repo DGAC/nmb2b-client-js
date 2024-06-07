@@ -31,7 +31,7 @@ test('should prevent concurrent downloads', async () => {
   const scope = nock(root.origin)
     .get(/.*/)
     .once()
-    .delayBody(2000)
+    .delayBody(500)
     .reply(200, fs.readFileSync(TEST_FILE));
 
   const soap = nock(root.origin)
@@ -69,13 +69,12 @@ test('should prevent concurrent downloads', async () => {
       XSD_PATH: OUTPUT_DIR,
     }),
 
-    // We add a delay to prevent exact concurrency
-    delay(500).then(() =>
-      download({
-        security: undefined as any,
-        flavour,
-        XSD_PATH: OUTPUT_DIR,
-      }),
-    ),
+    download({
+      security: undefined as any,
+      flavour,
+      XSD_PATH: OUTPUT_DIR,
+    }),
   ]);
+
+  scope.isDone();
 });

@@ -1,15 +1,15 @@
 import { types } from './types';
-import { compose, identity, evolve, map } from 'ramda';
+import { piped, identity, evolve, map } from 'remeda';
 
 export function prepareSerializer<T>(schema: any): (input: T) => T {
   const transformer = prepareTransformer(schema);
-  return compose(
+  return piped(
+    reorderKeys(schema),
+    transformer ? evolve(transformer) : identity,
     // (obj) => {
     //   console.log(JSON.stringify(obj, null, 2));
     //   return obj;
     // },
-    transformer ? evolve(transformer) : identity,
-    reorderKeys(schema),
   ) as any as (input: T) => T;
 }
 
@@ -51,7 +51,10 @@ function prepareTransformer(schema: Schema): null | Transformer {
     } else if (typeof schema[curr] === 'object') {
       const subItem = prepareTransformer(schema[curr] as Schema);
       if (subItem) {
-        return { ...prev, [key]: isArray ? map(evolve(subItem)) : subItem };
+        return {
+          ...prev,
+          [key]: isArray ? map(evolve(subItem)) : subItem,
+        };
       }
     }
 

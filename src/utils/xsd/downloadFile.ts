@@ -2,7 +2,7 @@ import { getFileUrl } from '../../config';
 import { B2BFlavour } from '../../constants';
 import { Security } from '../../security';
 import axios from 'axios';
-import tar from 'tar';
+import { extract } from 'tar';
 import d from '../debug';
 const debug = d('wsdl-downloader');
 import { createAxiosConfig } from './createAxiosConfig';
@@ -36,7 +36,7 @@ export async function downloadFile(
       });
 
       res.data
-        .pipe(tar.x({ cwd: outputDir }))
+        .pipe(extract({ cwd: outputDir }))
         .on('error', reject)
         .on('close', () => {
           debug('Downloaded and extracted WSDL files');
