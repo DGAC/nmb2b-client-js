@@ -28,14 +28,14 @@ export async function downloadFile(
   const url = xsdEndpoint || getFileUrl(filePath, { flavour });
 
   debug(`Downloading ${url}`);
-  const res = await axios.get<Readable>(url, {
-    timeout: 15 * 1000,
-    responseType: 'stream',
-    ...options,
-  });
+  try {
+    const res = await axios.get<Readable>(url, {
+      timeout: 15 * 1000,
+      responseType: 'stream',
+      ...options,
+    });
 
-  return new Promise((resolve, reject) => {
-    try {
+    return new Promise((resolve, reject) => {
       res.data
         .pipe(extract({ cwd: outputDir }))
         .on('error', reject)
@@ -43,9 +43,9 @@ export async function downloadFile(
           debug('Downloaded and extracted WSDL files');
           resolve();
         });
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      reject(new Error(`Unable to download WSDL: ${message}`));
-    }
-  });
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    throw new Error(`Unable to download WSDL: ${message}`, { cause: err });
+  }
 }
