@@ -1,6 +1,9 @@
 export type IFPLId = string; // UALPHA{2}DIGIT{8}
 export type FlightDataset = 'flight' | 'flightPlan' | 'flightPlanHistory';
-export type FlightIdentificationInput = { id: IFPLId } | { keys: FlightKeys };
+export type FlightIdentificationInput =
+  | { id: IFPLId }
+  | { keys: FlightKeys }
+  | { iataKeys: IATAFlightKeys };
 export interface FlightIdentificationOutput {
   id?: IFPLId;
   keys?: FlightKeys;
@@ -97,6 +100,7 @@ import {
   FlightLevelM,
   Cost,
   SignedDurationHourMinuteSecond,
+  Colours,
   Duration,
 } from '../Common/types';
 
@@ -114,6 +118,7 @@ import {
   MeasureId,
   TrafficVolumeScenarios,
   Flow,
+  ReroutingId,
 } from '../Flow/types';
 
 export interface FlightKeys {
@@ -125,6 +130,11 @@ export interface FlightKeys {
   nonICAOAerodromeOfDestination?: boolean;
   estimatedOffBlockTime: DateTimeMinute;
 }
+
+export type IATAFlightKeys = {
+  flightDesignator: AircraftIATAId;
+  estimatedOffBlockTime: DateTimeMinute;
+};
 
 export interface TimeAndModel {
   model: TrafficType;
@@ -252,8 +262,6 @@ export type FlightField =
   | 'oceanicReroute'
   | 'visibility';
 
-export type FlightExchangeModel = 'FIXM' | 'NM_B2B';
-
 export type FlightPlanOutput = { structured: StructuredFlightPlan };
 
 export interface BasicTrajectoryData {
@@ -290,7 +298,7 @@ export interface DepartureData {
   taxiTime: DurationMinute;
 }
 
-export type FIXMFlight = object; // aero.fixm.flight._4.FlightType
+export type FIXMFlight = Record<string, unknown>; // aero.fixm.flight._4.FlightType
 export interface StructuredFlightPlan {
   flightPlan?: FlightPlan;
   basicTrajectoryData?: BasicTrajectoryData;
@@ -450,7 +458,49 @@ export interface Flight {
   flightCriticality?: FlightCriticalityIndicator;
   oceanicRoute?: boolean;
   visibility?: FlightVisibility;
+  iataFlightDesignator?: AircraftIATAIdFromDataSource;
+  activeACDMAlerts?: NMList<ACDMAlertData>;
+  aoReroutingFeedbacks?: NMList<ReroutingFeedback>;
 }
+
+export type ReroutingFeedbackKind = 'LIKE' | 'DISLIKE';
+export type ReroutingFeedbackReason =
+  | 'TOTAL_COST'
+  | 'FUEL_SAVINGS'
+  | 'ROUTE_CHARGES'
+  | 'ATFM_DELAY_VALUE'
+  | 'DISTANCE'
+  | 'FLYING_TIME'
+  | 'OBT_VALIDITY'
+  | 'AO_INTERNAL_REASONS'
+  | 'OTHER';
+
+export type ReroutingFeedback = {
+  kind: ReroutingFeedbackKind;
+  icaoRoute: string;
+  reason: ReroutingFeedbackReason;
+  comment?: string;
+  reroutingId?: ReroutingId;
+};
+
+export type ACDMAlertCode = string; // UALPHA{3}DIGIT{2}LALPHA{0,1}
+export type ACDMAlertSeverity = 'HIGH' | 'MEDIUM' | 'LOW';
+
+export type ACDMAlertData = {
+  alertCode: ACDMAlertCode;
+  timestamp: DateTimeMinute;
+  inconsistencyDetected: string;
+  actionToTake: string;
+  consequencesNote?: string;
+  severity?: ACDMAlertSeverity;
+};
+
+export type AircraftIATAIdFromDataSource = {
+  id: AircraftIATAId;
+  dataSource: AircraftIdDataSource;
+};
+
+export type AircraftIdDataSource = 'DDR' | 'API' | 'DPI' | 'FPM';
 
 export type FlightTrafficVolume = {
   trafficVolumeId: TrafficVolumeId;
@@ -490,6 +540,7 @@ export type FlightCriticalityIndicator = {
 
 export type GroupReroutingSummary = {
   groupReroutingIndicator: GroupReroutingIndicator;
+  reroutingId: ReroutingId;
   deltaCost: Cost;
   deltaDelay?: SignedDurationHourMinuteSecond;
 };
@@ -581,6 +632,7 @@ export type ProposalInformation = {
   responseBy: DateTimeMinute;
   proposedCTOT?: DateTimeMinute;
   routeId?: ReroutingRouteId;
+  reroutingId?: ReroutingId;
 };
 
 export type ReroutingRouteId = {
@@ -763,7 +815,7 @@ export type Dinghies = {
   numberOfDinghies?: number; // NumberOfDinghies_DataType
   totalCapacity?: number; // TotalCapacity_DataType
   areCovered?: boolean;
-  colour?: string; // Colour_DataType // TEXT{1,51}
+  colours?: Colours;
 };
 
 export type OtherInformation = {
@@ -850,7 +902,8 @@ export type EURSTSIndicator =
   | 'EXM833'
   | 'PROTECTED'
   | 'RNAVINOP'
-  | 'RNAVX';
+  | 'RNAVX'
+  | 'OAT';
 
 export type AircraftOperatorName_DataType = string;
 
@@ -907,9 +960,11 @@ export interface CDM {
     | 'PREDICTED'
     | 'PRE_SEQUENCED'
     | 'TARGETED';
-  AirportType: 'ADVANCED_ATC_TWR' | 'CDM' | 'STANDARD';
+  airportType: DepartureAirportType;
   info?: CDMInfo;
 }
+
+export type DepartureAirportType = 'STANDARD' | 'ADVANCED_ATC_TWR' | 'CDM';
 
 export interface CDMInfo {
   turnaroundTargetTakeOffTime?: DateTimeMinute;
@@ -1300,7 +1355,7 @@ export interface InvalidFiling {
 }
 
 export interface FlightListReplyData {
-  flights: FlightOrFlightPlan[];
+  flights?: FlightOrFlightPlan[];
 }
 
 export interface FlightListByLocationReplyData extends FlightListReplyData {
@@ -1336,7 +1391,6 @@ export interface FlightRetrievalRequest {
   flightId: FlightIdentificationInput;
   requestedFlightDatasets: FlightDataset[];
   requestedFlightFields?: FlightField[];
-  requestedDataFormat: FlightExchangeModel;
 }
 
 export interface FlightRetrievalReply extends Reply {
@@ -1344,6 +1398,7 @@ export interface FlightRetrievalReply extends Reply {
     latestFlightPlan?: FlightPlanOutput;
     flightPlanHistory?: FlightPlanHistory;
     flight?: Flight;
+    structuredFlightPlan?: StructuredFlightPlan;
   };
 }
 
@@ -1384,7 +1439,23 @@ export interface FlightListByAerodromeRequest
   aerodromeRole: AerodromeRole;
 }
 
-export type AerodromeRole = 'DEPARTURE' | 'ARRIVAL' | 'BOTH';
+export type AerodromeRole =
+  /**
+   * The aerodrome is meant as of departure.
+   */
+  | 'DEPARTURE'
+  /**
+   * The aerodrome is meat as of arrival.
+   */
+  | 'ARRIVAL'
+  /**
+   * The aerodrome is meat as of departure or arrival.
+   */
+  | 'GLOBAL'
+  /**
+   * The aerodrome is meat as of alternate.
+   */
+  | 'ALTERNATE';
 
 export interface FlightListByAerodromeReply extends Reply {
   data: FlightListByAerodromeReplyData;

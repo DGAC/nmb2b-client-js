@@ -34,13 +34,20 @@ function createGeneralInformationServices(
   });
 }
 
-import { BaseServiceInterface } from '../Common/ServiceInterface';
 import queryNMB2BWSDLs, {
   Resolver as QueryNMB2BWSDLs,
 } from './queryNMB2BWSDLs';
 
+import retrieveUserInformation, {
+  Resolver as RetrieveUserInformation,
+} from './retrieveUserinformation';
+
+import type { BaseServiceInterface } from '../Common/ServiceInterface';
+
 export interface GeneralInformationService extends BaseServiceInterface {
+  __soapClient: object;
   queryNMB2BWSDLs: QueryNMB2BWSDLs;
+  retrieveUserInformation: RetrieveUserInformation;
 }
 
 export function getGeneralInformationClient(
@@ -51,6 +58,7 @@ export function getGeneralInformationClient(
       __soapClient: client,
       config,
       queryNMB2BWSDLs: queryNMB2BWSDLs(client),
+      retrieveUserInformation: retrieveUserInformation(client),
     }),
     (err) => {
       // TODO: Implement a proper debug log message output

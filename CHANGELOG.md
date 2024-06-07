@@ -1,5 +1,6 @@
 # Master
 
+- NMB2B v27.0.0
 - Attach the current configuration to the service definition : `xxxxService.config`.
 - Remove moment.js, move to `date-fns`
 - Update dependencies

@@ -24,6 +24,8 @@ export type AirNavigationUnitId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,
 export type UserId = string; // ANY{1,12}
 export type PlanDataId = string; // (O|F|S)(DIGIT){14}(UALPHA|DIGIT){0,40}
 
+export type Colours = string; // TEXT{1,51}
+
 // TODO: Implement proper duration (seconds) parsing
 export type SignedDurationHourMinuteSecond = string; // +hhmmss / -hhmmss
 
@@ -140,6 +142,7 @@ export interface Reply {
 
 export interface Request {
   endUserId?: string;
+  onBehalfOfUnit?: AirNavigationUnitId;
   sendTime: DateTimeSecond;
 }
 

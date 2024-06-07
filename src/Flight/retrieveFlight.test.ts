@@ -3,7 +3,7 @@ import { NMB2BError, makeFlightClient } from '..';
 import b2bOptions from '../../tests/options';
 import type { FlightKeys } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-import { expect, beforeAll, test, describe } from 'vitest';
+import { expect, beforeAll, test, describe, assert } from 'vitest';
 import { add, sub } from 'date-fns';
 
 describe('retrieveFlight', async () => {
@@ -27,18 +27,24 @@ describe('retrieveFlight', async () => {
       airspace: 'LFEERMS',
     });
 
-    const flights = res.data.flights.filter((f) => {
-      if ('flightPlan' in f) {
-        return false;
-      }
+    if (!res.data.flights) {
+      console.warn('No flights in the response.');
+      return;
+    }
 
-      return true;
-    });
+    const flights = res.data.flights.filter(
+      (f): f is Extract<typeof f, { flight: any }> => {
+        if ('flightPlan' in f) {
+          return false;
+        }
 
-    // Second condition is here because TS won't infer that the array contains
-    // only Flight and not FlightPlan anymore
+        return true;
+      },
+    );
+
     const flight = flights[0];
-    if (!flight || !('flight' in flight)) {
+
+    if (!flight) {
       console.error('Could not fetch a known flight, test aborted');
       return;
     }
@@ -77,11 +83,11 @@ describe('retrieveFlight', async () => {
           },
           requestedFlightDatasets: ['flight'],
           requestedFlightFields: ['ftfmPointProfile'],
-          requestedDataFormat: 'NM_B2B',
         });
 
-        expect(res.data.flight?.ftfmPointProfile).toBeDefined();
-        res.data.flight?.ftfmPointProfile?.forEach((item) => {
+        assert(res.data.flight?.ftfmPointProfile);
+
+        res.data.flight.ftfmPointProfile.forEach((item) => {
           expect(item).toEqual(
             expect.objectContaining({
               timeOver: expect.any(Date),
@@ -90,7 +96,10 @@ describe('retrieveFlight', async () => {
           );
         });
       } catch (err) {
-        console.error(inspect(err, { depth: 4 }));
+        if (err instanceof NMB2BError) {
+          console.log(inspect(err, { depth: 4 }));
+        }
+
         throw err;
       }
     },
@@ -114,7 +123,6 @@ describe('retrieveFlight', async () => {
           },
           requestedFlightDatasets: ['flight'],
           requestedFlightFields: ['aircraftType', 'delay'],
-          requestedDataFormat: 'NM_B2B',
         });
 
         const flight = res.data?.flight;

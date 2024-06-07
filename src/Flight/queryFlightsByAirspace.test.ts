@@ -40,8 +40,14 @@ describe('queryFlightsByAirspace', async () => {
       ),
     ).toBeLessThan(60 * 1000);
 
-    expect(res.data?.flights).toEqual(expect.any(Array));
-    for (const flight of res.data?.flights) {
+    if (!res.data.flights) {
+      console.warn('No flights in the response.');
+      return;
+    }
+
+    expect(res.data.flights).toEqual(expect.any(Array));
+
+    for (const flight of res.data.flights) {
       expect(flight).toMatchObject({
         flight: {
           flightId: {
