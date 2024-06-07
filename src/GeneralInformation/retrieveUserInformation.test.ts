@@ -7,7 +7,7 @@ describe('retrieveUserInformation', async () => {
   const GeneralInformation = await makeGeneralInformationClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('basic', async () => {
-    const res = await GeneralInformation.retrieveUserInformation();
+    const res = await GeneralInformation.retrieveUserInformation({});
 
     expect(res.status).toBe('OK');
   });

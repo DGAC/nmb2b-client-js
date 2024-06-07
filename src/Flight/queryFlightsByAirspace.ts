@@ -1,10 +1,10 @@
-import { FlightClient } from './';
+import type { FlightClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import {
+import type {
   FlightListByAirspaceRequest,
   FlightListByAirspaceReply,
 } from './types';
@@ -25,9 +25,11 @@ export type Resolver = (
 export default function prepareQueryFlightsByAirspace(
   client: FlightClient,
 ): Resolver {
-  // console.log(Object.keys(client));
-  const schema = client.describe().FlightManagementService.FlightManagementPort
-    .queryFlightsByAirspace.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().FlightManagementService.FlightManagementPort
+      .queryFlightsByAirspace.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -36,6 +38,7 @@ export default function prepareQueryFlightsByAirspace(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.queryFlightsByAirspace(
           serializer(injectSendTime(values)),
           options,

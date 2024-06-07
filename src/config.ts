@@ -1,8 +1,11 @@
 import 'dotenv/config';
-import { Security, isValidSecurity } from './security';
-import { B2B_VERSION, B2BFlavours, B2BFlavour } from './constants';
+import type { Security } from './security';
+import { isValidSecurity } from './security';
+import type { B2BFlavour } from './constants';
+import { B2B_VERSION, B2BFlavours } from './constants';
 import invariant from 'invariant';
 import { URL } from 'url';
+import type { Client as SoapClient } from 'soap';
 
 export interface Config {
   endpoint?: string;
@@ -11,30 +14,38 @@ export interface Config {
   security: Security;
   flavour: B2BFlavour;
   XSD_PATH: string;
-  soapClient?: null | unknown;
+  soapClient?: null | SoapClient;
 }
 
-export function isConfigValid(args: Config): args is Config {
+export function isConfigValid(args: unknown): args is Config {
+  invariant(!!args && typeof args === 'object', 'Invalid config');
+
   invariant(
-    args.security && isValidSecurity(args.security),
+    'security' in args && isValidSecurity(args.security),
     'Please provide a valid security option',
   );
 
   invariant(
-    args.flavour && B2BFlavours.includes(args.flavour),
-    `${args.flavour} is not a supported B2B flavour\n` +
-      `Supported flavours: ${B2BFlavours.join(', ')}`,
+    'flavour' in args && typeof args.flavour === 'string',
+    `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
   invariant(
-    !('apiKeyId' in args.security) ? true : !!args.endpoint,
-    `When using an config.security.apiKeyId, config.endpoint must be defined`,
+    B2BFlavours.includes(args.flavour),
+    `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
-  invariant(
-    !('apiKeyId' in args.security) ? true : !!args.xsdEndpoint,
-    `When using an config.security.apiKeyId, config.xsdEndpoint must be defined`,
-  );
+  if ('apiKeyId' in args.security) {
+    invariant(
+      'endpoint' in args && !!args.endpoint,
+      `When using an config.security.apiKeyId, config.endpoint must be defined`,
+    );
+
+    invariant(
+      'xsdEndpoint' in args && !!args.xsdEndpoint,
+      `When using an config.security.apiKeyId, config.xsdEndpoint must be defined`,
+    );
+  }
 
   return true;
 }
@@ -51,11 +62,11 @@ export function getEndpoint(
 
   if (flavour && flavour === 'PREOPS') {
     return `${
-      endpoint || B2B_ROOTS.PREOPS
+      endpoint ?? B2B_ROOTS.PREOPS
     }/B2B_PREOPS/gateway/spec/${B2B_VERSION}`;
   }
 
-  return `${endpoint || B2B_ROOTS.OPS}/B2B_OPS/gateway/spec/${B2B_VERSION}`;
+  return `${endpoint ?? B2B_ROOTS.OPS}/B2B_OPS/gateway/spec/${B2B_VERSION}`;
 }
 
 export function getFileEndpoint(
@@ -64,26 +75,26 @@ export function getFileEndpoint(
   const { endpoint, flavour } = config;
 
   if (flavour && flavour === 'PREOPS') {
-    return `${endpoint || B2B_ROOTS.PREOPS}/FILE_PREOPS/gateway/spec`;
+    return `${endpoint ?? B2B_ROOTS.PREOPS}/FILE_PREOPS/gateway/spec`;
   }
 
-  return `${endpoint || B2B_ROOTS.OPS}/FILE_OPS/gateway/spec`;
+  return `${endpoint ?? B2B_ROOTS.OPS}/FILE_OPS/gateway/spec`;
 }
 
 export function getFileUrl(
   path: string,
   config: { flavour?: B2BFlavour; endpoint?: string } = {},
 ): string {
-  if (!!config.endpoint) {
+  if (config.endpoint) {
     return new URL(
-      (path && path[0] && path[0] === '/' ? '' : '/') + path,
+      (path[0] && path.startsWith('/') ? '' : '/') + path,
       config.endpoint,
     ).toString();
   }
 
   return (
     getFileEndpoint(config) +
-    (path && path[0] && path[0] === '/' ? '' : '/') +
+    (path[0] && path.startsWith('/') ? '' : '/') +
     path
   );
 }

@@ -1,10 +1,10 @@
-import { FlowClient } from './';
+import type { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import { HotspotListRequest, HotspotListReply } from './types';
+import type { HotspotListRequest, HotspotListReply } from './types';
 export { HotspotListRequest, HotspotListReply } from './types';
 
 type Values = HotspotListRequest;
@@ -16,9 +16,11 @@ export type Resolver = (
 ) => Promise<Result>;
 
 export default function prepareQueryHotspots(client: FlowClient): Resolver {
-  // console.log(client.describe());
-  const schema = client.describe().TacticalUpdatesService.TacticalUpdatesPort
-    .queryHotspots.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().TacticalUpdatesService.TacticalUpdatesPort.queryHotspots
+      .input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -27,6 +29,7 @@ export default function prepareQueryHotspots(client: FlowClient): Resolver {
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.queryHotspots(
           serializer(injectSendTime(values)),
           options,

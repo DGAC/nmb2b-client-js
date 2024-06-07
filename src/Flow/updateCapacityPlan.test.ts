@@ -2,8 +2,8 @@ import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
-import { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
+import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
+import type { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
 import { add, startOfDay } from 'date-fns';
 
 describe('updateCapacityPlan', async () => {

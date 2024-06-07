@@ -1,11 +1,17 @@
-import { FlowClient } from './';
+import type { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import { RunwayConfigurationPlanRetrievalRequest, RunwayConfigurationPlanRetrievalReply } from './types';
-export { RunwayConfigurationPlanRetrievalRequest, RunwayConfigurationPlanRetrievalReply } from './types';
+import type {
+  RunwayConfigurationPlanRetrievalRequest,
+  RunwayConfigurationPlanRetrievalReply,
+} from './types';
+export {
+  RunwayConfigurationPlanRetrievalRequest,
+  RunwayConfigurationPlanRetrievalReply,
+} from './types';
 
 export type Values = RunwayConfigurationPlanRetrievalRequest;
 export type Result = RunwayConfigurationPlanRetrievalReply;
@@ -15,9 +21,14 @@ export type Resolver = (
   options?: SoapOptions,
 ) => Promise<Result>;
 
-export default function prepareRetrieveRunwayConfigurationPlan(client: FlowClient): Resolver {
-  const schema = client.describe().TacticalUpdatesService.TacticalUpdatesPort
-    .retrieveRunwayConfigurationPlan.input;
+export default function prepareRetrieveRunwayConfigurationPlan(
+  client: FlowClient,
+): Resolver {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().TacticalUpdatesService.TacticalUpdatesPort
+      .retrieveRunwayConfigurationPlan.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -26,6 +37,7 @@ export default function prepareRetrieveRunwayConfigurationPlan(client: FlowClien
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.retrieveRunwayConfigurationPlan(
           serializer(injectSendTime(values)),
           options,

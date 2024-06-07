@@ -1,10 +1,10 @@
-import { FlowClient } from './';
+import type { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import { RegulationListRequest, RegulationListReply } from './types';
+import type { RegulationListRequest, RegulationListReply } from './types';
 export { RegulationListRequest, RegulationListReply } from './types';
 
 type Values = RegulationListRequest;
@@ -16,8 +16,10 @@ export type Resolver = (
 ) => Promise<Result>;
 
 export default function prepareQueryRegulations(client: FlowClient): Resolver {
-  const schema = client.describe().MeasuresService.MeasuresPort.queryRegulations
-    .input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().MeasuresService.MeasuresPort.queryRegulations.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -26,6 +28,7 @@ export default function prepareQueryRegulations(client: FlowClient): Resolver {
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.queryRegulations(
           serializer(injectSendTime(values)),
           options,

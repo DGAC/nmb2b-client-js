@@ -43,17 +43,17 @@ export interface AIXMFile {
   type: string;
 }
 
-import {
-  DateYearMonthDay,
+import type {
   AirNavigationUnitId,
-  DateTimeMinutePeriod,
-  LastUpdate,
   Bearing,
-  DistanceNM,
-  DateYearMonthDayPeriod,
-  Position,
-  DateTimeSecond,
   DateTimeMinute,
+  DateTimeMinutePeriod,
+  DateTimeSecond,
+  DateYearMonthDay,
+  DateYearMonthDayPeriod,
+  DistanceNM,
+  LastUpdate,
+  Position,
 } from '../Common/types';
 
 export interface AUPChain {
@@ -206,23 +206,17 @@ export type ReferenceLocationUnionWithPrefix<TPrefix extends string> = {
 
 export type ReferenceLocationUnionWithPrefixOptional<TPrefix extends string> = {
   [TKey in keyof ReferenceLocationMapper]: {
-    [TSubKey in `${TPrefix}-${TKey}`]?: ReferenceLocationMapper[TKey];
+    [TSubKey in `${TPrefix}-${TKey}`]?:
+      | undefined
+      | ReferenceLocationMapper[TKey];
   };
 }[keyof ReferenceLocationMapper];
 
-export type WithReferenceLocationOnPrefix<
-  TPrefix extends string,
-  TInput,
-> = Prettify<TInput & ReferenceLocationUnionWithPrefix<TPrefix>>;
+export type WithReferenceLocationOnPrefix<TPrefix extends string> =
+  ReferenceLocationUnionWithPrefix<TPrefix>;
 
-export type WithReferenceLocationOnPrefixOptional<
-  TPrefix extends string,
-  TInput,
-> = Prettify<TInput & ReferenceLocationUnionWithPrefixOptional<TPrefix>>;
-
-type Prettify<T> = {
-  [K in keyof T]: T[K];
-} & {};
+export type WithReferenceLocationOnPrefixOptional<TPrefix extends string> =
+  ReferenceLocationUnionWithPrefixOptional<TPrefix>;
 
 export type FIRICAOId = string; // UALPHA{4}
 
@@ -295,14 +289,14 @@ export type AirspaceType =
   | 'NAS'
   | 'REG';
 
-interface CompleteDatasetSummary {
+export interface CompleteDatasetSummary {
   updateId: string;
   publicationDate: DateYearMonthDay;
   sourceAIRACs: [AiracIdentifier] | [AiracIdentifier, AiracIdentifier];
   files: AIXMFile[];
 }
 
-type CompleteDatasetQueryCriteria =
+export type CompleteDatasetQueryCriteria =
   | { publicationPeriod: DateYearMonthDayPeriod }
   | { airac: AiracIdentifier }
   | { date: DateYearMonthDay };

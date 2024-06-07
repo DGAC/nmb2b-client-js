@@ -1,6 +1,6 @@
-import * as timeFormats from '../timeFormats';
-import { format } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
+import { format } from 'date-fns';
+import * as timeFormats from '../timeFormats';
 
 const outputBase = {
   integer: (text: string) => {
@@ -22,10 +22,11 @@ const outputBase = {
    * @returns Parsed Date instance
    */
   date: (text: string) => {
+    // eslint-disable-next-line prefer-const
     let [date, time] = text.split(' ');
 
     if (!time) {
-      return new Date(date);
+      return new Date(text);
     }
 
     if (time.length === 5) {

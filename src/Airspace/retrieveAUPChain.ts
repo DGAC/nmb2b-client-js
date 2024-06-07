@@ -1,8 +1,8 @@
-import { AirspaceClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
+import type { SoapOptions } from '../soap';
 import { instrument } from '../utils/instrumentation';
+import { injectSendTime, responseStatusHandler } from '../utils/internals';
+import { prepareSerializer } from '../utils/transformers';
+import type { AirspaceClient } from './';
 
 type Values = AUPChainRetrievalRequest;
 type Result = AUPChainRetrievalReply;
@@ -15,8 +15,11 @@ export type Resolver = (
 export default function prepareRetrieveAUPChain(
   client: AirspaceClient,
 ): Resolver {
-  const schema = client.describe().AirspaceAvailabilityService
-    .AirspaceAvailabilityPort.retrieveAUPChain.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().AirspaceAvailabilityService.AirspaceAvailabilityPort
+      .retrieveAUPChain.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -25,6 +28,7 @@ export default function prepareRetrieveAUPChain(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.retrieveAUPChain(
           serializer(injectSendTime(values)),
           options,
@@ -34,14 +38,13 @@ export default function prepareRetrieveAUPChain(
   );
 }
 
-import {
-  DateYearMonthDay,
+import type {
   AirNavigationUnitId,
-  Request,
+  DateYearMonthDay,
   Reply,
 } from '../Common/types';
 
-import { AUPChain } from './types';
+import type { AUPChain } from './types';
 
 export interface AUPChainRetrievalRequest {
   chainDate: DateYearMonthDay;

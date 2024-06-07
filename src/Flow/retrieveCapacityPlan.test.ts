@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
+import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
 import { describe, test, expect } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 

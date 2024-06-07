@@ -1,10 +1,10 @@
-import { FlowClient } from './';
+import type { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import { OTMVPlanUpdateRequest, OTMVPlanUpdateReply } from './types';
+import type { OTMVPlanUpdateRequest, OTMVPlanUpdateReply } from './types';
 
 export { OTMVPlanUpdateRequest, OTMVPlanUpdateReply } from './types';
 
@@ -17,10 +17,12 @@ export type Resolver = (
 ) => Promise<Result>;
 
 export default function prepareUpdateOTMVPlan(client: FlowClient): Resolver {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     client.describe().TacticalUpdatesService.TacticalUpdatesPort.updateOTMVPlan
-      .input; //console.log(JSON.stringify(schema));
-  const serializer = prepareSerializer(schema); //console.log(serializer.toString());//console.dir(serializer, { depth: null });
+      .input;
+  const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
     service: 'Flow',
@@ -31,6 +33,7 @@ export default function prepareUpdateOTMVPlan(client: FlowClient): Resolver {
         console.log(
           JSON.stringify(serializer(injectSendTime(values)), null, 2),
         );
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.updateOTMVPlan(
           serializer(injectSendTime(values)),
           options,

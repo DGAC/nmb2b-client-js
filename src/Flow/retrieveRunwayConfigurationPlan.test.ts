@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 import { makeFlowClient, NMB2BError } from '..';
 import b2bOptions from '../../tests/options';
-import { RunwayConfigurationPlanRetrievalReply } from './types';
+import type { RunwayConfigurationPlanRetrievalReply } from './types';
 import { expect, test, describe } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 

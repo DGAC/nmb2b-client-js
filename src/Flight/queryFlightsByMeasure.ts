@@ -1,10 +1,13 @@
-import { FlightClient } from './';
+import type { FlightClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import { FlightListByMeasureRequest, FlightListByMeasureReply } from './types';
+import type {
+  FlightListByMeasureRequest,
+  FlightListByMeasureReply,
+} from './types';
 export { FlightListByMeasureRequest, FlightListByMeasureReply } from './types';
 
 type Values = FlightListByMeasureRequest;
@@ -18,9 +21,11 @@ export type Resolver = (
 export default function prepareQueryFlightsByMeasure(
   client: FlightClient,
 ): Resolver {
-  // console.log(Object.keys(client));
-  const schema = client.describe().FlightManagementService.FlightManagementPort
-    .queryFlightsByMeasure.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().FlightManagementService.FlightManagementPort
+      .queryFlightsByMeasure.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -29,6 +34,7 @@ export default function prepareQueryFlightsByMeasure(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.queryFlightsByMeasure(
           serializer(injectSendTime(values)),
           options,

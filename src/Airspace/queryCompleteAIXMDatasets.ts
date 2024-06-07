@@ -1,13 +1,12 @@
-import { AirspaceClient } from './';
+import type { SoapOptions } from '../soap';
+import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
-import { instrument } from '../utils/instrumentation';
-import { SoapOptions } from '../soap';
+import type { AirspaceClient } from './';
 
-import {
+import type {
   DateYearMonthDay,
   DateYearMonthDayPeriod,
-  Request,
   Reply,
 } from '../Common/types';
 
@@ -32,8 +31,11 @@ export type Resolver = (
 export default function prepareQueryCompleteAIXMDatasets(
   client: AirspaceClient,
 ): Resolver {
-  const schema = client.describe().AirspaceStructureService
-    .AirspaceStructurePort.queryCompleteAIXMDatasets.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().AirspaceStructureService.AirspaceStructurePort
+      .queryCompleteAIXMDatasets.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -42,6 +44,7 @@ export default function prepareQueryCompleteAIXMDatasets(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.queryCompleteAIXMDatasets(
           serializer(injectSendTime(values)),
           options,
@@ -51,7 +54,7 @@ export default function prepareQueryCompleteAIXMDatasets(
   );
 }
 
-import { AiracIdentifier, AIXMFile } from './types';
+import type { AiracIdentifier, AIXMFile } from './types';
 
 interface CompleteDatasetSummary {
   updateId: string;

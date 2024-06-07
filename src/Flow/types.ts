@@ -9,7 +9,7 @@ export type SectorConfigurationId = string; // (UALPHA|DIGIT|.){1,6}
 export type PlanDataSource = 'AIRSPACE' | 'MEASURE' | 'NO_DATA' | 'TACTICAL';
 export type RegulationIdWildcard = string; // (UALPHA|DIGIT){1,8}|(UALPHA|DIGIT){0,7}*
 
-import {
+import type {
   ReferenceLocation,
   TrafficVolumeId,
   AirspaceId,
@@ -17,27 +17,20 @@ import {
   TrafficVolumeSetIdWildcard,
   FlightLevelRange,
   TrafficVolumeSetId,
-  ReferenceLocationAirspace,
-  ReferenceLocationAerodrome,
-  ReferenceLocationAerodromeSet,
-  ReferenceLocationDBEPoint,
-  ReferenceLocationPublishedPoint,
   AerodromeICAOId,
   WithReferenceLocationOnPrefix,
   WithReferenceLocationOnPrefixOptional,
 } from '../Airspace/types';
 
-import {
+import type {
   DateTimeMinutePeriod,
   DurationHourMinute,
-  Request,
   Reply,
   Dataset,
   DateYearMonthDay,
   PlanDataId,
   NMSet,
   NMMap,
-  NMInt,
   DistanceM,
   DateTimeSecond,
   UserId,
@@ -45,30 +38,25 @@ import {
   DateTimeMinute,
 } from '../Common/types';
 
-import {
+import type {
   TrafficType,
   FlightKeys,
   IFPLId,
   GroupReroutingIndicator,
 } from '../Flight/types';
 
-export type FlightRegulationLocation = WithReferenceLocationOnPrefix<
-  'referenceLocation',
-  {
+export type FlightRegulationLocation =
+  WithReferenceLocationOnPrefix<'referenceLocation'> & {
     regulationId: RegulationId;
     toConfirm: boolean;
-  }
->;
+  };
 
 export type FlightAtfcmMeasureLocationCommon =
-  WithReferenceLocationOnPrefixOptional<
-    'referenceLocation',
-    {
-      measureSubType: MeasureSubType;
-      hotspotId?: HotspotId;
-      mcdmState?: MCDMState;
-    }
-  >;
+  WithReferenceLocationOnPrefixOptional<'referenceLocation'> & {
+    measureSubType: MeasureSubType;
+    hotspotId?: HotspotId;
+    mcdmState?: MCDMState;
+  };
 
 export type FlightAtfcmRegulationLocation = {
   FlightAtfcmRegulationLocation: FlightAtfcmMeasureLocationCommon & {
@@ -436,6 +424,7 @@ export interface RegulationListReplyData
   regulations: NMSet<Regulation>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface RegulationOrMCDMOnlyListReplyData
   extends MeasureListReplyData {}
 
@@ -490,10 +479,9 @@ interface IRegulationOrMCDMOnly extends Measure {
   delayConfirmationThreshold?: DurationHourMinute;
 }
 
-export type RegulationOrMCDMOnly = WithReferenceLocationOnPrefixOptional<
-  'protectedLocation',
-  IRegulationOrMCDMOnly
->;
+export type RegulationOrMCDMOnly =
+  WithReferenceLocationOnPrefixOptional<'protectedLocation'> &
+    IRegulationOrMCDMOnly;
 
 export interface Measure {
   dataId?: PlanDataId;
@@ -616,15 +604,13 @@ export type MCDMApprovalState =
 
 export type LifeCycleEventType = 'CREATION' | 'DELETION' | 'UPDATE';
 
-export type TrafficVolumeLocation = WithReferenceLocationOnPrefix<
-  'referenceLocation',
-  {
+export type TrafficVolumeLocation =
+  WithReferenceLocationOnPrefix<'referenceLocation'> & {
     id: TrafficVolumeId;
     flightLevels?: FlightLevelRange;
     description?: string;
     setIds?: NMSet<TrafficVolumeSetId>;
-  }
->;
+  };
 
 export interface RegulationInitialConstraint {
   constraintPeriod: DateTimeMinutePeriod;

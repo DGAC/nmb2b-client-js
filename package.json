@@ -82,6 +82,7 @@
     "downloadWSDL": "tsx ./scripts/downloadWSDL.mts",
     "clean": "rimraf dist",
     "build": "tsup-node",
+    "lint": "eslint",
     "test": "vitest",
     "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
     "typecheck": "tsc --noEmit"
@@ -90,18 +91,23 @@
     "dist"
   ],
   "devDependencies": {
+    "@eslint/js": "^9.4.0",
+    "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
+    "@types/eslint__js": "^8.42.3",
     "@types/invariant": "^2.2.37",
     "@types/node": "^18.19.34",
     "@types/proper-lockfile": "^4.1.4",
     "@vitest/coverage-v8": "^1.6.0",
     "dotenv": "^16.4.5",
+    "eslint": "^9.4.0",
     "nock": "^13.5.4",
     "prettier": "^3.3.1",
     "rimraf": "^5.0.7",
     "tsup": "^8.1.0",
     "tsx": "^4.13.2",
     "typescript": "^5.4.5",
+    "typescript-eslint": "^8.0.0-alpha.28",
     "vitest": "^1.6.0"
   },
   "dependencies": {

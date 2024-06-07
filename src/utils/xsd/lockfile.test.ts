@@ -1,17 +1,17 @@
-import path from 'path';
-import nock from 'nock';
-import fs from 'fs';
 import { randomUUID } from 'crypto';
+import fs from 'fs';
+import nock from 'nock';
+import path from 'path';
 import { rimraf } from 'rimraf';
+import { afterEach, beforeEach, test } from 'vitest';
+import { getFileUrl } from '../../config';
+import { B2B_VERSION } from '../../constants';
 import { createDir as mkdirp } from '../fs';
-import { getFileUrl, getEndpoint } from '../../config';
-import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { download } from './index';
-import { beforeEach, afterEach, test, expect } from 'vitest';
+import { fromPartial } from '@total-typescript/shoehorn';
 
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
-const delay = (d: number) => new Promise((resolve) => setTimeout(resolve, d));
 
 beforeEach(async () => {
   await mkdirp(OUTPUT_DIR);
@@ -34,7 +34,7 @@ test('should prevent concurrent downloads', async () => {
     .delayBody(500)
     .reply(200, fs.readFileSync(TEST_FILE));
 
-  const soap = nock(root.origin)
+  nock(root.origin)
     .post('/B2B_PREOPS/gateway/spec/27.0.0')
     .reply(
       200,
@@ -63,17 +63,19 @@ test('should prevent concurrent downloads', async () => {
     );
 
   await Promise.all([
-    download({
-      security: undefined as any,
-      flavour,
-      XSD_PATH: OUTPUT_DIR,
-    }),
+    download(
+      fromPartial({
+        flavour,
+        XSD_PATH: OUTPUT_DIR,
+      }),
+    ),
 
-    download({
-      security: undefined as any,
-      flavour,
-      XSD_PATH: OUTPUT_DIR,
-    }),
+    download(
+      fromPartial({
+        flavour,
+        XSD_PATH: OUTPUT_DIR,
+      }),
+    ),
   ]);
 
   scope.isDone();

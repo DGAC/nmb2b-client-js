@@ -1,13 +1,14 @@
-import path from 'path';
-import nock from 'nock';
-import fs from 'fs';
 import { randomUUID } from 'crypto';
+import fs from 'fs';
+import nock from 'nock';
+import path from 'path';
 import { rimraf } from 'rimraf';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { getFileUrl } from '../../config';
+import { B2B_VERSION } from '../../constants';
 import { createDir as mkdirp } from '../fs';
-import { getFileUrl, getEndpoint } from '../../config';
-import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { downloadFile } from './downloadFile';
-import { beforeEach, afterEach, describe, test, expect } from 'vitest';
+import { fromPartial } from '@total-typescript/shoehorn';
 
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
@@ -29,11 +30,13 @@ describe('downloadFile', () => {
       .get(/test.tar.gz/)
       .reply(200, fs.readFileSync(TEST_FILE));
 
-    await downloadFile(filePath, {
-      security: undefined as any,
-      flavour,
-      XSD_PATH: OUTPUT_DIR,
-    });
+    await downloadFile(
+      filePath,
+      fromPartial({
+        flavour,
+        XSD_PATH: OUTPUT_DIR,
+      }),
+    );
 
     // Expect that a B2B has been made
     expect(scope.isDone()).toBe(true);
@@ -46,18 +49,20 @@ describe('downloadFile', () => {
   test('with an http error', async () => {
     const flavour = 'PREOPS';
     const filePath = 'test.tar.gz';
-    const scope = nock(getFileUrl(filePath, { flavour }))
+    nock(getFileUrl(filePath, { flavour }))
       .get(/test.tar.gz/)
       .reply(503);
 
     expect.assertions(2);
 
     try {
-      await downloadFile(filePath, {
-        security: undefined as any,
-        flavour,
-        XSD_PATH: OUTPUT_DIR,
-      });
+      await downloadFile(
+        filePath,
+        fromPartial({
+          flavour,
+          XSD_PATH: OUTPUT_DIR,
+        }),
+      );
     } catch (err) {
       expect(err).toBeInstanceOf(Error);
       expect((err as Error).message).toMatch(/Unable.*WSDL.*/);

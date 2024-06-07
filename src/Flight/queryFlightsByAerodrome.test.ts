@@ -48,7 +48,7 @@ describe('queryFlightsByAirspace', async () => {
 
     expect(res.data.flights).toEqual(expect.any(Array));
 
-    for (const flight of res.data?.flights) {
+    for (const flight of res.data.flights) {
       expect(flight).toMatchObject({
         flight: {
           flightId: {

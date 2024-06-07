@@ -24,7 +24,7 @@ describe('queryFlightsByTrafficVolume', async () => {
 
     expect(res.status).toBe('OK');
 
-    if (!res.data || !res.data.flights) {
+    if (!res.data.flights) {
       // No flights in the TV, return early
       console.warn('No flights returned in the query');
       return;
@@ -47,11 +47,6 @@ describe('queryFlightsByTrafficVolume', async () => {
       ),
     ).toBeLessThan(60 * 1000);
 
-    if (!res.data.flights) {
-      console.warn('No flights in the response.');
-      return;
-    }
-
     expect(res.data.flights).toEqual(expect.any(Array));
 
     for (const flight of res.data.flights) {
@@ -66,12 +61,12 @@ describe('queryFlightsByTrafficVolume', async () => {
         estimatedOffBlockTime: expect.any(Date),
       };
 
-      if (!flight.flight.flightId?.keys?.nonICAOAerodromeOfDeparture) {
+      if (!flight.flight.flightId.keys?.nonICAOAerodromeOfDeparture) {
         flightKeysMatcher.aerodromeOfDeparture =
           expect.stringMatching(/^[A-Z]{4}$/);
       }
 
-      if (!flight.flight.flightId?.keys?.nonICAOAerodromeOfDestination) {
+      if (!flight.flight.flightId.keys?.nonICAOAerodromeOfDestination) {
         flightKeysMatcher.aerodromeOfDestination =
           expect.stringMatching(/^[A-Z]{4}$/);
       }

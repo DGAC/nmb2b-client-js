@@ -1,13 +1,6 @@
-import {
-  describe,
-  beforeEach,
-  afterEach,
-  test,
-  expect,
-  expectTypeOf,
-} from 'vitest';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
-import { fromEnv, clearCache } from './security';
+import { clearCache, fromEnv } from './security';
 
 const usedEnvKeys = [
   'B2B_CERT',

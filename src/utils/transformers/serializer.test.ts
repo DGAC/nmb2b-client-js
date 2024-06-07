@@ -93,8 +93,7 @@ describe('schema with array', () => {
   };
 
   test('should prepare a correct serializer', () => {
-    const serialize = prepareSerializer<any>(schema);
-    const serialized = serialize({
+    const input = {
       foo: new Date(),
       bar: 'bar',
       item: [
@@ -103,7 +102,9 @@ describe('schema with array', () => {
           unt: new Date(),
         },
       ],
-    });
+    };
+    const serialize = prepareSerializer<typeof input>(schema);
+    const serialized = serialize(input);
 
     expect(serialized.bar).not.toBeDefined();
     expect(serialized).toEqual({

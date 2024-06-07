@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, assert } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 
 describe('retrieveOTMVPlan', async () => {
@@ -26,6 +26,8 @@ describe('retrieveOTMVPlan', async () => {
           item: expect.any(Array),
         },
       });
+
+      assert(res.data.plans.tvsOTMVs.item[0]);
 
       for (const otmvPlan of res.data.plans.tvsOTMVs.item[0].value.item) {
         expect(otmvPlan).toEqual({

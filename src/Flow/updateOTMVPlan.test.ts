@@ -1,15 +1,16 @@
 import { makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { Result as OTMVPlanUpdateResult } from './updateOTMVPlan';
-import { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan';
-import { describe, expect, beforeAll, afterAll, test } from 'vitest';
+import type { Result as OTMVPlanUpdateResult } from './updateOTMVPlan';
+import type { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan';
+import { describe, expect, beforeAll, afterAll, test, assert } from 'vitest';
 import { add, startOfDay } from 'date-fns';
 import { UTCDateMini } from '@date-fns/utc';
 
 describe('updateOTMVPlan', async () => {
   const Flow = await makeFlowClient(b2bOptions);
 
-  let planBefore: OTMVPlanRetrievalResult['data'];
+  let planBefore: OTMVPlanRetrievalResult['data'] | undefined;
+
   beforeAll(async () => {
     const res = await Flow.retrieveOTMVPlan({
       dataset: { type: 'OPERATIONAL' },
@@ -33,11 +34,13 @@ describe('updateOTMVPlan', async () => {
       }
 
       function clearNmSchedules(plan: typeof planBefore): typeof planBefore {
+        assert(plan);
+
         const plans = plan.plans;
 
-        for (const { key, value } of plans.tvsOTMVs.item) {
+        for (const { value } of plans.tvsOTMVs.item) {
           const v = value.item;
-          for (const { key, value } of v) {
+          for (const { value } of v) {
             if (value.nmSchedule) {
               delete value.nmSchedule;
             }
@@ -57,7 +60,7 @@ describe('updateOTMVPlan', async () => {
 
   test.skip('LFERMS', async () => {
     try {
-      expect(planBefore).toBeDefined();
+      assert(planBefore);
 
       if (b2bOptions.flavour !== 'PREOPS') {
         console.warn('B2B_FLAVOUR is not PREOPS, skipping test');

@@ -16,7 +16,7 @@ export interface B2BInfoFile extends File {
   hasAddendaErrata?: boolean;
 }
 
-export interface UserInformationRequest {}
+export type UserInformationRequest = Record<string, never>;
 
 export interface UserInformationReply extends Reply {
   data?: UserInformationReplyData;
