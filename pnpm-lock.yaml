@@ -11,9 +11,6 @@ importers:
       '@date-fns/utc':
         specifier: ^1.2.0
         version: 1.2.0
-      '@types/sax':
-        specifier: ^1.2.7
-        version: 1.2.7
       axios:
         specifier: ^1.7.2
         version: 1.7.2(debug@4.3.5)
@@ -26,15 +23,9 @@ importers:
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
-      mkdirp:
-        specifier: ^3.0.1
-        version: 3.0.1
       proper-lockfile:
         specifier: ^4.1.2
         version: 4.1.2
-      ramda:
-        specifier: ^0.30.1
-        version: 0.30.1
       remeda:
         specifier: ^2.0.5
         version: 2.0.5
@@ -57,9 +48,6 @@ importers:
       '@types/proper-lockfile':
         specifier: ^4.1.4
         version: 4.1.4
-      '@types/ramda':
-        specifier: ^0.30.0
-        version: 0.30.0
       '@vitest/coverage-v8':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@18.19.34))
@@ -544,14 +532,8 @@ packages:
   '@types/proper-lockfile@4.1.4':
     resolution: {integrity: sha512-uo2ABllncSqg9F1D4nugVl9v93RmjxF6LJzQLMLDdPaXCUIDPeOJ21Gbqi43xNKzBi/WQ0Q0dICqufzQbMjipQ==}
 
-  '@types/ramda@0.30.0':
-    resolution: {integrity: sha512-DQtfqUbSB18iM9NHbQ++kVUDuBWHMr6T2FpW1XTiksYRGjq4WnNPZLt712OEHEBJs7aMyJ68Mf2kGMOP1srVVw==}
-
   '@types/retry@0.12.5':
     resolution: {integrity: sha512-3xSjTp3v03X/lSQLkczaN9UIEwJMoMCA1+Nb5HfbJEQWogdeQIyVtTvxPXDQjZ5zws8rFQfVfRdz03ARihPJgw==}
-
-  '@types/sax@1.2.7':
-    resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
 
   '@vitest/coverage-v8@1.6.0':
     resolution: {integrity: sha512-KvapcbMY/8GYIG0rlwwOKCVNRc0OL20rrhFkg/CHNzncV03TE2XWvO5w9uZYoxNiMEBacAJt3unSOiZ7svePew==}
@@ -1166,9 +1148,6 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  ramda@0.30.1:
-    resolution: {integrity: sha512-tEF5I22zJnuclswcZMc8bDIrwRHRzf+NqVEmqg50ShAZMP7MWeR/RGDthfM/p+BlqvF2fXAzpn8i+SJcYD3alw==}
-
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
@@ -1339,9 +1318,6 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  ts-toolbelt@9.6.0:
-    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
-
   tsup@8.1.0:
     resolution: {integrity: sha512-UFdfCAXukax+U6KzeTNO2kAARHcWxmKsnvSPXUcfA1D+kU05XDccCrkffCQpFaWDsZfV0jMyTsxU39VfCp6EOg==}
     engines: {node: '>=18'}
@@ -1373,9 +1349,6 @@ packages:
   type-fest@4.20.0:
     resolution: {integrity: sha512-MBh+PHUHHisjXf4tlx0CFWoMdjx8zCMLJHOjnV1prABYZFHqtFOyauCIK2/7w4oIfwkF8iNhLtnJEfVY2vn3iw==}
     engines: {node: '>=16'}
-
-  types-ramda@0.30.0:
-    resolution: {integrity: sha512-oVPw/KHB5M0Du0txTEKKM8xZOG9cZBRdCVXvwHYuNJUVkAiJ9oWyqkA+9Bj2gjMsHgkkhsYevobQBWs8I2/Xvw==}
 
   typescript@5.4.5:
     resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
@@ -1784,15 +1757,7 @@ snapshots:
     dependencies:
       '@types/retry': 0.12.5
 
-  '@types/ramda@0.30.0':
-    dependencies:
-      types-ramda: 0.30.0
-
   '@types/retry@0.12.5': {}
-
-  '@types/sax@1.2.7':
-    dependencies:
-      '@types/node': 18.19.34
 
   '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@18.19.34))':
     dependencies:
@@ -2442,8 +2407,6 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  ramda@0.30.1: {}
-
   react-is@18.3.1: {}
 
   readdirp@3.6.0:
@@ -2623,8 +2586,6 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-toolbelt@9.6.0: {}
-
   tsup@8.1.0(postcss@8.4.38)(typescript@5.4.5):
     dependencies:
       bundle-require: 4.2.1(esbuild@0.21.4)
@@ -2658,10 +2619,6 @@ snapshots:
   type-detect@4.0.8: {}
 
   type-fest@4.20.0: {}
-
-  types-ramda@0.30.0:
-    dependencies:
-      ts-toolbelt: 9.6.0
 
   typescript@5.4.5: {}
 

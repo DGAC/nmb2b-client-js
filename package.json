@@ -106,12 +106,10 @@
   },
   "dependencies": {
     "@date-fns/utc": "^1.2.0",
-    "@types/sax": "^1.2.7",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "debug": "^4.3.5",
     "invariant": "^2.2.4",
-    "mkdirp": "^3.0.1",
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.0.5",
     "soap": "^1.0.3",
