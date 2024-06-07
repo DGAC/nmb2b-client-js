@@ -82,7 +82,7 @@
     "downloadWSDL": "tsx ./scripts/downloadWSDL.mts",
     "clean": "rimraf dist",
     "build": "tsup-node",
-    "test": "vitest --watch=false",
+    "test": "vitest",
     "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
     "typecheck": "tsc --noEmit"
   },
@@ -95,7 +95,6 @@
     "@types/node": "^18.19.33",
     "@types/proper-lockfile": "^4.1.4",
     "@types/ramda": "^0.28.25",
-    "@types/tar": "^6.1.13",
     "@vitest/coverage-v8": "^1.6.0",
     "dotenv": "^16.4.5",
     "nock": "^13.5.4",
@@ -117,7 +116,7 @@
     "proper-lockfile": "^4.1.2",
     "ramda": "~0.28.0",
     "soap": "^1.0.3",
-    "tar": "^6.2.1"
+    "tar": "^7.2.0"
   },
-  "packageManager": "pnpm@9.1.4"
+  "packageManager": "pnpm@9.2.0+sha256.94fab213df221c55b6956b14a2264c21c6203cca9f0b3b95ff2fe9b84b120390"
 }
