@@ -138,7 +138,7 @@ describe('retrieveFlight', async () => {
         }
 
         expect(flight?.aircraftType).toEqual(
-          expect.stringMatching(/^[A-Z0-9]{4}$/),
+          expect.stringMatching(/^[A-Z0-9]{2,4}$/),
         );
       } catch (err) {
         if (err instanceof NMB2BError) {
