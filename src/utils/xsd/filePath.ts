@@ -1,10 +1,11 @@
-import axios from 'axios';
 import { UTCDateMini } from '@date-fns/utc';
+import axios from 'axios';
 import { format } from 'date-fns';
-import { timeFormatWithSeconds } from '../timeFormats';
-import { B2B_VERSION, B2BFlavour } from '../../constants';
 import { getEndpoint } from '../../config';
-import { Security } from '../../security';
+import type { B2BFlavour } from '../../constants';
+import { B2B_VERSION } from '../../constants';
+import type { Security } from '../../security';
+import { timeFormatWithSeconds } from '../timeFormats';
 import { createAxiosConfig } from './createAxiosConfig';
 
 const makeQuery = ({ version }: { version: string }) => `
@@ -36,22 +37,24 @@ export async function requestFilename({
     return xsdEndpoint;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!!security && 'apiKeyId' in security) {
     throw new Error(
       'Should never happen, config.xsdEndpoint should be defined',
     );
   }
 
-  const res = await axios({
+  const res = await axios<string>({
     url: getEndpoint({ flavour }),
     method: 'POST',
     data: makeQuery({ version: B2B_VERSION }),
+    responseType: 'text',
     ...createAxiosConfig({ security }),
   });
 
-  const matches = res.data.match(/<id>(.+)<\/id>/);
+  const matches = /<id>(.+)<\/id>/.exec(res.data);
 
-  if (!matches || !matches[1]) {
+  if (!matches?.[1]) {
     throw new Error(`Could not extract WSDL tarball file from B2B response`);
   }
 

@@ -1,13 +1,14 @@
 import { inspect } from 'util';
 import { NMB2BError, makeFlightClient, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
-import { Regulation } from '../Flow/types';
+import type { Regulation } from '../Flow/types';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { sub, add, startOfHour } from 'date-fns';
+import { extractReferenceLocation } from '../utils';
 
 describe('queryFlightsByMeasure', async () => {
-  let measure: void | Regulation;
+  let measure: undefined | Regulation;
 
   const [Flight, Flow] = await Promise.all([
     makeFlightClient(b2bOptions),
@@ -28,22 +29,24 @@ describe('queryFlightsByMeasure', async () => {
       },
     });
 
-    // console.log(res.data.regulations.item);
-
-    const hasAirspaceMatching = (regex: RegExp) => (item: any) =>
-      item &&
-      item.location &&
-      item.location['referenceLocation-ReferenceLocationAirspace'] &&
-      item.location['referenceLocation-ReferenceLocationAirspace'].id &&
-      regex.test(
-        item.location['referenceLocation-ReferenceLocationAirspace'].id,
+    const hasAirspaceMatching = (regex: RegExp) => (item: Regulation) => {
+      const referenceLocation = extractReferenceLocation(
+        'referenceLocation',
+        item.location,
       );
 
-    const candidates = res.data.regulations?.item?.filter(
+      if (!referenceLocation || referenceLocation.type !== 'AIRSPACE') {
+        return false;
+      }
+
+      return regex.test(referenceLocation.id);
+    };
+
+    const candidates = res.data.regulations.item.filter(
       hasAirspaceMatching(/^LF/),
     );
 
-    if (!candidates?.length) {
+    if (!candidates.length) {
       return;
     }
 
@@ -53,7 +56,7 @@ describe('queryFlightsByMeasure', async () => {
   });
 
   test.runIf(shouldUseRealB2BConnection)('query in regulation', async () => {
-    if (!measure || !measure.regulationId || !measure.applicability) {
+    if (!measure?.regulationId || !measure.applicability) {
       console.warn('No measure was found, cannot query flights by measure');
       return;
     }

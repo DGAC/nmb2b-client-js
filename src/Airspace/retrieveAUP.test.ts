@@ -1,9 +1,9 @@
 import { makeAirspaceClient } from '..';
 import { sub } from 'date-fns';
 import b2bOptions from '../../tests/options';
-import { AUPSummary } from './types';
+import type { AUPSummary } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-import { describe, beforeAll, test, expect } from 'vitest';
+import { describe, beforeAll, test, expect, assert } from 'vitest';
 
 describe('retrieveAUP', async () => {
   const Airspace = await makeAirspaceClient(b2bOptions);
@@ -16,7 +16,9 @@ describe('retrieveAUP', async () => {
       chainDate: sub(new Date(), { days: 1 }),
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Check if this condition is necessary ?
     if (res.data) {
+      assert(res.data.chains[0]);
       AUPSummaries = res.data.chains[0].aups.filter(
         ({ aupState }) => aupState === 'RELEASED',
       );
@@ -30,7 +32,7 @@ describe('retrieveAUP', async () => {
   });
 
   test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {
-    if (AUPSummaries.length === 0) {
+    if (!AUPSummaries[0]) {
       console.warn('AUPChainRetrieval did not yield any AUP id');
       return;
     }

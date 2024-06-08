@@ -2,9 +2,9 @@ import { inspect } from 'util';
 import { NMB2BError, makeFlightClient } from '..';
 import { sub, add } from 'date-fns';
 import b2bOptions from '../../tests/options';
-import { FlightOrFlightPlan as B2BFlight } from './types';
+import type { FlightOrFlightPlan as B2BFlight } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-import { describe, beforeAll, expect, test } from 'vitest';
+import { describe, beforeAll, expect, test, assert } from 'vitest';
 
 describe('queryFlightPlans', async () => {
   const Flight = await makeFlightClient(b2bOptions);
@@ -40,7 +40,7 @@ describe('queryFlightPlans', async () => {
       const { flight } = f;
 
       if (
-        flight.flightId?.keys?.aircraftId &&
+        flight.flightId.keys?.aircraftId &&
         /(AFR)|(BAW)|(MON)|(EZY)|(RYR)/i.test(flight.flightId.keys.aircraftId)
       ) {
         return true;
@@ -65,16 +65,18 @@ describe('queryFlightPlans', async () => {
         return;
       }
 
+      assert(knownFlight.flight.flightId.keys, 'Invalid flight');
+
       const res = await Flight.queryFlightPlans({
-        aircraftId: knownFlight.flight.flightId.keys?.aircraftId,
+        aircraftId: knownFlight.flight.flightId.keys.aircraftId,
         nonICAOAerodromeOfDeparture: false,
         airFiled: false,
         nonICAOAerodromeOfDestination: false,
         estimatedOffBlockTime: {
-          wef: sub(knownFlight.flight.flightId.keys?.estimatedOffBlockTime!, {
+          wef: sub(knownFlight.flight.flightId.keys.estimatedOffBlockTime, {
             minutes: 30,
           }),
-          unt: add(knownFlight.flight.flightId.keys?.estimatedOffBlockTime!, {
+          unt: add(knownFlight.flight.flightId.keys.estimatedOffBlockTime, {
             minutes: 30,
           }),
         },
@@ -82,7 +84,7 @@ describe('queryFlightPlans', async () => {
 
       const { data } = res;
 
-      if (!data?.summaries || data.summaries.length === 0) {
+      if (!data.summaries || data.summaries.length === 0) {
         console.error(
           'Query did not return any flight plan, this should never happen.',
         );

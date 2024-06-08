@@ -55,70 +55,69 @@ export type ATFMMessageType =
   | 'SWM'
   | 'UNK';
 
-import {
+import type {
   AerodromeICAOId,
-  FlightLevel,
-  TerminalProcedure,
+  AerodromeOrPublishedPointId,
+  AerodromeSetId,
   AirSpeed,
-  NetworkAddress,
-  FlightPlanProcessing,
-  RestrictionId,
-  LoadState,
-  AerodromeIATAId,
-  RouteOrTerminalProcedure,
-  ICAOPoint,
   AirspaceId,
   AirspaceType,
-  TrafficVolumeId,
-  RunwayId,
-  PublishedPointId,
-  AerodromeOrPublishedPointId,
-  NonPublishedPoint,
   FIRICAOId,
-  AerodromeSetId,
+  FlightLevel,
+  FlightPlanProcessing,
+  ICAOPoint,
+  LoadState,
+  NetworkAddress,
+  NonPublishedPoint,
+  PublishedPointId,
+  RestrictionId,
+  RouteOrTerminalProcedure,
+  RunwayId,
+  TerminalProcedure,
+  TrafficVolumeId,
 } from '../Airspace/types';
 
-import {
+import type {
+  AirNavigationUnitId,
+  Colours,
+  Position as CommonPosition,
+  Cost,
+  Dataset,
   DateTimeMinute,
-  DurationHourMinute,
-  DurationMinute,
-  DurationHourMinuteSecond,
+  DateTimeMinutePeriod,
   DateTimeSecond,
-  ShiftHourMinute,
-  ReceivedOrSent,
   DistanceM,
   DistanceNM,
-  AirNavigationUnitId,
-  TimeHourMinutePeriod,
-  DateTimeMinutePeriod,
-  Dataset,
-  Reply,
-  NMSet,
-  NMList,
-  Position as CommonPosition,
-  WeightKg,
-  FlightLevelM,
-  Cost,
-  SignedDurationHourMinuteSecond,
-  Colours,
   Duration,
+  DurationHourMinute,
+  DurationHourMinuteSecond,
+  DurationMinute,
+  FlightLevelM,
+  NMList,
+  NMSet,
+  ReceivedOrSent,
+  Reply,
+  ShiftHourMinute,
+  SignedDurationHourMinuteSecond,
+  TimeHourMinutePeriod,
+  WeightKg,
 } from '../Common/types';
 
-import {
-  RegulationId,
-  FlightRegulationLocation,
+import type {
+  CountsCalculationType,
+  CountsInterval,
   FlightAtfcmMeasureLocation,
-  RegulationCause,
   FlightHotspotLocation,
   FlightMCDMInfo,
-  OtmvStatus,
-  CountsInterval,
-  CountsCalculationType,
+  FlightRegulationLocation,
+  Flow,
   FlowId,
   MeasureId,
-  TrafficVolumeScenarios,
-  Flow,
+  OtmvStatus,
+  RegulationCause,
+  RegulationId,
   ReroutingId,
+  TrafficVolumeScenarios,
 } from '../Flow/types';
 
 export interface FlightKeys {
@@ -1355,7 +1354,7 @@ export interface InvalidFiling {
 }
 
 export interface FlightListReplyData {
-  flights?: FlightOrFlightPlan[];
+  flights?: Array<FlightOrFlightPlan>;
 }
 
 export interface FlightListByLocationReplyData extends FlightListReplyData {
@@ -1366,6 +1365,7 @@ export interface FlightListByAirspaceReply extends Reply {
   data: FlightListByAirspaceReplyData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAirspaceReplyData
   extends FlightListByLocationReplyData {}
 
@@ -1413,6 +1413,7 @@ export interface FlightListByTrafficVolumeReply extends Reply {
   data: FlightListByTrafficVolumeReplyData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByTrafficVolumeReplyData
   extends FlightListByLocationReplyData {}
 
@@ -1430,6 +1431,7 @@ export interface FlightListByMeasureReply extends Reply {
   data: FlightListByMeasureReplyData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByMeasureReplyData
   extends FlightListByLocationReplyData {}
 
@@ -1461,6 +1463,7 @@ export interface FlightListByAerodromeReply extends Reply {
   data: FlightListByAerodromeReplyData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAerodromeReplyData
   extends FlightListByLocationReplyData {}
 
@@ -1474,6 +1477,7 @@ export interface FlightListByAerodromeSetReply extends Reply {
   data: FlightListByAerodromeSetReplyData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAerodromeSetReplyData
   extends FlightListByLocationReplyData {}
 
@@ -1486,5 +1490,6 @@ export interface FlightListByAircraftOperatorReply extends Reply {
   data: FlightListByAircraftOperatorReplyData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAircraftOperatorReplyData
   extends FlightListByLocationReplyData {}

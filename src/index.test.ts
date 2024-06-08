@@ -7,7 +7,7 @@ import {
   makeAirspaceClient,
 } from '.';
 
-import { Config } from './config';
+import type { Config } from './config';
 
 import { describe, test, expect } from 'vitest';
 

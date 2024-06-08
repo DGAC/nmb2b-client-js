@@ -1,5 +1,5 @@
-import { createClient } from 'soap';
-import { Config } from '../config';
+import { type Client as SoapClient, createClient } from 'soap';
+import type { Config } from '../config';
 import { getWSDLPath } from '../constants';
 import { prepareSecurity } from '../security';
 import { deserializer as customDeserializer } from '../utils/transformers';
@@ -7,7 +7,7 @@ import { deserializer as customDeserializer } from '../utils/transformers';
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
   getWSDLPath({ service: 'FlightServices', flavour, XSD_PATH });
 
-export type FlightClient = any;
+export type FlightClient = SoapClient;
 
 function createFlightServices(config: Config): Promise<FlightClient> {
   const WSDL = getWSDL(config);
@@ -16,7 +16,12 @@ function createFlightServices(config: Config): Promise<FlightClient> {
     try {
       createClient(WSDL, { customDeserializer }, (err, client) => {
         if (err) {
-          return reject(err);
+          reject(
+            err instanceof Error
+              ? err
+              : new Error('Unknown error', { cause: err }),
+          );
+          return;
         }
         client.setSecurity(security);
 
@@ -25,12 +30,15 @@ function createFlightServices(config: Config): Promise<FlightClient> {
         //   client.wsdl.definitions.schemas['eurocontrol/cfmu/b2b/CommonServices']
         //     .complexTypes['Reply'].children[0].children,
         // );
-        return resolve(client);
+        resolve(client);
       });
     } catch (err) {
       // TODO: Implement a proper debug log message output
       console.log(err);
-      return reject(err);
+      reject(
+        err instanceof Error ? err : new Error('Unknown error', { cause: err }),
+      );
+      return;
     }
   });
 }
@@ -56,7 +64,7 @@ import queryFlightsByAerodrome from './queryFlightsByAerodrome';
 import type { Resolver as QueryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet';
 import queryFlightsByAerodromeSet from './queryFlightsByAerodromeSet';
 
-import { BaseServiceInterface } from '../Common/ServiceInterface';
+import type { BaseServiceInterface } from '../Common/ServiceInterface';
 import type { Resolver as QueryFlightsByAircraftOperator } from './queryFlightsByAircraftOperator';
 import queryFlightsByAircraftOperator from './queryFlightsByAircraftOperator';
 

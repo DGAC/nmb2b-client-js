@@ -1,18 +1,19 @@
-import { Security } from './security';
-import { B2B_VERSION, B2BFlavour } from './constants';
-import { isConfigValid, Config, obfuscate } from './config';
-import { download as downloadWSDL } from './utils/xsd';
+import { isConfigValid, obfuscate } from './config';
+import type { B2BFlavour } from './constants';
+import type { Security } from './security';
 import d from './utils/debug';
+import { download as downloadWSDL } from './utils/xsd';
 const debug = d();
 
-import { getAirspaceClient, AirspaceService } from './Airspace';
-import { getFlightClient, FlightService } from './Flight';
+import type { AirspaceService } from './Airspace';
+import { getAirspaceClient } from './Airspace';
+import type { FlightService } from './Flight';
+import { getFlightClient } from './Flight';
 
-import { getFlowClient, FlowService } from './Flow';
-import {
-  getGeneralInformationClient,
-  GeneralInformationService,
-} from './GeneralInformation';
+import type { FlowService } from './Flow';
+import { getFlowClient } from './Flow';
+import type { GeneralInformationService } from './GeneralInformation';
+import { getGeneralInformationClient } from './GeneralInformation';
 
 export { AirspaceService } from './Airspace';
 export { FlightService } from './Flight';

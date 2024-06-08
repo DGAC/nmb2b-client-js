@@ -31,7 +31,7 @@ const keys = [
  */
 export function extractReferenceLocation<
   const TPrefix extends string,
-  TInput extends WithReferenceLocationOnPrefix<TPrefix, {}>,
+  TInput extends WithReferenceLocationOnPrefix<TPrefix>,
 >(prefix: TPrefix, input: TInput): ReferenceLocation;
 
 /**
@@ -53,15 +53,15 @@ export function extractReferenceLocation<
  */
 export function extractReferenceLocation<
   const TPrefix extends string,
-  TInput extends undefined | WithReferenceLocationOnPrefixOptional<TPrefix, {}>,
+  TInput extends undefined | WithReferenceLocationOnPrefixOptional<TPrefix>,
 >(prefix: TPrefix, input: TInput): undefined | ReferenceLocation;
 
 export function extractReferenceLocation<
   const TPrefix extends string,
   TInput extends
     | undefined
-    | WithReferenceLocationOnPrefixOptional<TPrefix, {}>
-    | WithReferenceLocationOnPrefix<TPrefix, {}>,
+    | WithReferenceLocationOnPrefixOptional<TPrefix>
+    | WithReferenceLocationOnPrefix<TPrefix>,
 >(prefix: TPrefix, input: TInput): ReferenceLocation | undefined {
   if (!input) {
     return;
@@ -70,8 +70,8 @@ export function extractReferenceLocation<
   for (const k of keys) {
     const key = `${prefix}-${k}` as const;
 
-    if (key in input && (input as any)[key] !== undefined) {
-      return (input as any)[key] as ReferenceLocation;
+    if (key in input) {
+      return input[key as keyof TInput];
     }
   }
 }

@@ -1,6 +1,6 @@
-import { AirspaceClient } from './';
+import type { AirspaceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
@@ -15,7 +15,9 @@ export type Resolver = (
 export default function prepareRetrieveEAUPChain(
   client: AirspaceClient,
 ): Resolver {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     client.describe().AirspaceAvailabilityService.AirspaceAvailabilityPort
       .retrieveEAUPChain.input;
   const serializer = prepareSerializer(schema);
@@ -26,6 +28,7 @@ export default function prepareRetrieveEAUPChain(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.retrieveEAUPChain(
           serializer(injectSendTime(values)),
           options,
@@ -37,7 +40,7 @@ export default function prepareRetrieveEAUPChain(
 
 import type { DateYearMonthDay, Reply } from '../Common/types';
 
-import { EAUPChain } from './types';
+import type { EAUPChain } from './types';
 
 export interface EAUPChainRetrievalRequest {
   chainDate: DateYearMonthDay;

@@ -29,7 +29,7 @@ export async function dirExists(
     debug(`Directory ${path} is accessible`);
 
     return true;
-  } catch (err) {
+  } catch {
     return false;
   }
 }

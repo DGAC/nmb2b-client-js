@@ -1,12 +1,12 @@
 import invariant from 'invariant';
 import d from './utils/debug';
 const debug = d('security');
-import { Config } from './config';
+import type { Config } from './config';
+import type { ISecurity } from 'soap';
 import {
   ClientSSLSecurity,
   ClientSSLSecurityPFX,
   BasicAuthSecurity,
-  ISecurity,
 } from 'soap';
 import fs from 'fs';
 
@@ -28,15 +28,21 @@ interface ApiGwSecurity {
 
 export type Security = PfxSecurity | PemSecurity | ApiGwSecurity;
 
-export function isValidSecurity(obj: Security): obj is Security {
+export function isValidSecurity(obj: unknown): obj is Security {
+  invariant(!!obj && typeof obj === 'object', 'Must be an object');
+
   if ('apiKeyId' in obj) {
     invariant(
-      !!obj.apiKeyId && obj.apiKeyId.length > 0,
+      !!obj.apiKeyId &&
+        typeof obj.apiKeyId === 'string' &&
+        obj.apiKeyId.length > 0,
       'security.apiKeyId must be a string with a length > 0',
     );
 
     invariant(
-      !!obj.apiSecretKey && obj.apiSecretKey.length > 0,
+      'apiSecretKey' in obj &&
+        typeof obj.apiSecretKey === 'string' &&
+        obj.apiSecretKey.length > 0,
       'security.apiSecretKey must be defined when using security.apiKeyId',
     );
 
@@ -51,7 +57,7 @@ export function isValidSecurity(obj: Security): obj is Security {
 
   if ('cert' in obj && obj.cert) {
     invariant(
-      obj.key && Buffer.isBuffer(obj.key),
+      'key' in obj && obj.key && Buffer.isBuffer(obj.key),
       'security.key must be a buffer if security.pem is defined',
     );
   }
@@ -77,7 +83,7 @@ export function prepareSecurity(config: Config): ISecurity {
       key,
       cert,
       undefined,
-      !!passphrase ? { passphrase } : null,
+      passphrase ? { passphrase } : null,
     );
   }
 
@@ -106,7 +112,7 @@ export function fromEnv(): Security {
     );
   }
 
-  if (!!B2B_API_KEY_ID) {
+  if (B2B_API_KEY_ID) {
     if (!B2B_API_SECRET_KEY) {
       throw new Error(
         `When using B2B_API_KEY_ID, a B2B_API_SECRET_KEY must be defined`,
@@ -132,7 +138,7 @@ export function fromEnv(): Security {
   if (!process.env.B2B_CERT_FORMAT || process.env.B2B_CERT_FORMAT === 'pfx') {
     envSecurity = {
       pfx: pfxOrPem,
-      passphrase: process.env.B2B_CERT_PASSPHRASE || '',
+      passphrase: process.env.B2B_CERT_PASSPHRASE ?? '',
     };
 
     return envSecurity;

@@ -1,14 +1,14 @@
-import { B2B_VERSION, B2BFlavour } from '../../constants';
-import path from 'path';
 import fs from 'fs';
-import { promisify } from 'util';
-import d from '../debug';
-const debug = d('wsdl');
+import path from 'path';
 import lockfile from 'proper-lockfile';
-import { dirExists, createDir } from '../fs';
-import { Config } from '../../config';
-import { requestFilename } from './filePath';
+import { promisify } from 'util';
+import type { Config } from '../../config';
+import { B2B_VERSION } from '../../constants';
+import d from '../debug';
+import { createDir, dirExists } from '../fs';
 import { downloadFile } from './downloadFile';
+import { requestFilename } from './filePath';
+const debug = d('wsdl');
 
 const readdir = promisify(fs.readdir);
 
@@ -35,12 +35,12 @@ export async function download(config: Config): Promise<void> {
     await createDir(outputDir);
   }
 
-  debug(`Aquiring lock for folder ${outputDir}`);
+  debug(`Acquiring lock for folder ${outputDir}`);
   const release = await lockfile.lock(outputDir, {
     retries: 5,
   });
 
-  debug(`Lock aquired. Testing WSDL existence ...`);
+  debug(`Lock acquired. Testing WSDL existence ...`);
 
   const hasWSDL = await WSDLExists(config);
 

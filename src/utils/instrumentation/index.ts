@@ -1,5 +1,5 @@
 // import withLog from './withLog';
-import { SoapOptions } from '../../soap';
+import type { SoapOptions } from '../../soap';
 import { withLog } from './withLog';
 import { pipe } from 'remeda';
 

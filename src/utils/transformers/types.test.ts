@@ -1,3 +1,4 @@
+import { fromAny } from '@total-typescript/shoehorn';
 import { types } from './types';
 import { test, expect, describe } from 'vitest';
 
@@ -21,7 +22,7 @@ describe('serialization', () => {
   test.each(serialization)(
     '$type .input($input) => $expected',
     ({ type, expected, input }) => {
-      expect(types[type].input(input as any)).toEqual(expected);
+      expect(types[type].input(fromAny(input))).toEqual(expected);
     },
   );
 });
@@ -61,8 +62,8 @@ describe('deserialization', () => {
   test.each(deserialization)(
     '$type .output($input) => $expected',
     ({ type, input, expected }) => {
-      const deserializer: any = types[type].output;
-      expect(deserializer(input)).toEqual(expected);
+      const deserializer = types[type].output;
+      expect(deserializer(fromAny(input))).toEqual(expected);
     },
   );
 });

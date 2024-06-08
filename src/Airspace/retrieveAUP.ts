@@ -1,6 +1,6 @@
-import { AirspaceClient } from './';
+import type { AirspaceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
@@ -13,8 +13,11 @@ export type Resolver = (
 ) => Promise<Result>;
 
 export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
-  const schema = client.describe().AirspaceAvailabilityService
-    .AirspaceAvailabilityPort.retrieveAUP.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().AirspaceAvailabilityService.AirspaceAvailabilityPort
+      .retrieveAUP.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -23,6 +26,7 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.retrieveAUP(
           serializer(injectSendTime(values)),
           options,
@@ -32,8 +36,8 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
   );
 }
 
-import { AUPId, AUP } from './types';
-import { Reply } from '../Common/types';
+import type { AUPId, AUP } from './types';
+import type { Reply } from '../Common/types';
 
 export interface AUPRetrievalRequest {
   aupId: AUPId;

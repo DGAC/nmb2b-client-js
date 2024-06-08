@@ -1,6 +1,6 @@
-import { GeneralInformationServiceClient } from './';
+import type { GeneralInformationServiceClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
@@ -17,9 +17,11 @@ export type Resolver = (
 export default function prepareRetrieveUserInformation(
   client: GeneralInformationServiceClient,
 ): Resolver {
-  // console.log(client.describe());
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const schema =
-    client.describe().NMB2BInfoService.NMB2BInfoPort.retrieveUserInformation.input;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().NMB2BInfoService.NMB2BInfoPort.retrieveUserInformation
+      .input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -28,6 +30,7 @@ export default function prepareRetrieveUserInformation(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.retrieveUserInformation(
           serializer(injectSendTime(values)),
           options,

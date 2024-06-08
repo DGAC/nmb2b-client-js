@@ -9,10 +9,12 @@ import { add, sub } from 'date-fns';
 describe('retrieveFlight', async () => {
   const Flight = await makeFlightClient(b2bOptions);
 
-  let knownFlight: {
-    ifplId: string;
-    keys: FlightKeys;
-  };
+  let knownFlight:
+    | {
+        ifplId: string;
+        keys: FlightKeys;
+      }
+    | undefined;
 
   beforeAll(async () => {
     const res = await Flight.queryFlightsByAirspace({
@@ -68,7 +70,7 @@ describe('retrieveFlight', async () => {
   test.runIf(shouldUseRealB2BConnection)(
     'query flightPlan by ifplId',
     async () => {
-      if (!knownFlight.ifplId || !knownFlight.keys) {
+      if (!knownFlight) {
         return;
       }
 
@@ -108,7 +110,7 @@ describe('retrieveFlight', async () => {
   test.runIf(shouldUseRealB2BConnection)(
     'query flight by flight keys',
     async () => {
-      if (!knownFlight.keys) {
+      if (!knownFlight) {
         return;
       }
 
@@ -125,14 +127,14 @@ describe('retrieveFlight', async () => {
           requestedFlightFields: ['aircraftType', 'delay'],
         });
 
-        const flight = res.data?.flight;
+        const flight = res.data.flight;
         expect(flight).toBeDefined();
         expect(flight?.flightId.id).toEqual(
           expect.stringMatching(/^A(A|T)[0-9]{8}$/),
         );
 
         if (flight?.delay !== undefined) {
-          expect(flight?.delay).toBeGreaterThanOrEqual(0);
+          expect(flight.delay).toBeGreaterThanOrEqual(0);
         }
 
         expect(flight?.aircraftType).toEqual(

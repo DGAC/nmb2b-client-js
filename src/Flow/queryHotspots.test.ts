@@ -10,6 +10,7 @@ describe('queryHotspots', async () => {
   // Not authorised with this certificate in OPS
   test.runIf(shouldUseRealB2BConnection)('List all hotspots', async () => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const res = await Flow.queryHotspots({
         dataset: { type: 'OPERATIONAL' },
         day: new Date(),

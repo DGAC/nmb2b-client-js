@@ -20,7 +20,11 @@ export function withLog<Input, Output>(
       },
       (err) => {
         debug('Failed');
-        return Promise.reject(err);
+        return Promise.reject(
+          err instanceof Error
+            ? err
+            : new Error('Unknown error', { cause: err }),
+        );
       },
     );
   };

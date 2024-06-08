@@ -1,10 +1,10 @@
-import { FlowClient } from './';
+import type { FlowClient } from './';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { SoapOptions } from '../soap';
+import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
-import {
+import type {
   SectorConfigurationPlanRetrievalRequest,
   SectorConfigurationPlanRetrievalReply,
   KnownConfigurations,
@@ -16,7 +16,7 @@ export {
   SectorConfigurationPlanRetrievalReply,
 } from './types';
 
-import { AirspaceId } from '../Airspace/types';
+import type { AirspaceId } from '../Airspace/types';
 
 type Values = SectorConfigurationPlanRetrievalRequest;
 type Result = SectorConfigurationPlanRetrievalReply;
@@ -29,8 +29,11 @@ export type Resolver = (
 export default function prepareRetrieveSectorConfigurationPlan(
   client: FlowClient,
 ): Resolver {
-  const schema = client.describe().TacticalUpdatesService.TacticalUpdatesPort
-    .retrieveSectorConfigurationPlan.input;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const schema =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    client.describe().TacticalUpdatesService.TacticalUpdatesPort
+      .retrieveSectorConfigurationPlan.input;
   const serializer = prepareSerializer(schema);
 
   return instrument<Values, Result>({
@@ -39,6 +42,7 @@ export default function prepareRetrieveSectorConfigurationPlan(
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.retrieveSectorConfigurationPlan(
           serializer(injectSendTime(values)),
           options,
@@ -51,7 +55,7 @@ export default function prepareRetrieveSectorConfigurationPlan(
 export function knownConfigurationsToMap(
   knownConfigurations: undefined | null | KnownConfigurations,
 ): Map<SectorConfigurationId, AirspaceId[]> {
-  if (!knownConfigurations || !knownConfigurations.item) {
+  if (!knownConfigurations?.item) {
     return new Map();
   }
 

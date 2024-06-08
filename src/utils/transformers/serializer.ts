@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { types } from './types';
 import { piped, identity, evolve, map } from 'remeda';
 
@@ -14,7 +19,8 @@ export function prepareSerializer<T>(schema: any): (input: T) => T {
 }
 
 function reduceXSDType(str: string): string {
-  return str.split('|')[0];
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return str.split('|')[0]!;
 }
 
 interface Schema {
@@ -22,6 +28,7 @@ interface Schema {
 }
 
 interface Transformer {
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   [k: string]: (input: any) => any | Transformer;
 }
 
@@ -44,7 +51,7 @@ function prepareTransformer(schema: Schema): null | Transformer {
     if (typeof schema[curr] === 'string') {
       const type = reduceXSDType(schema[curr] as string);
 
-      if ((types as any)[type] && (types as any)[type].input) {
+      if ((types as any)[type]?.input) {
         const transformer = (types as any)[type].input;
         return { ...prev, [key]: isArray ? map(transformer) : transformer };
       }
@@ -70,9 +77,9 @@ export function reorderKeys<T extends Schema, O extends { [key: string]: any }>(
     // console.log(JSON.stringify(obj, null, 2));
 
     // Loop through schema, pull property from Object
-    return Object.keys(schema).reduce((prev, curr) => {
+    return Object.keys(schema).reduce<any>((prev, curr) => {
       const lookupKey: string = curr.replace(/\[\]$/, '');
-      const isArrayExpected: boolean = curr.slice(-2) === '[]';
+      const isArrayExpected: boolean = curr.endsWith('[]');
 
       if (!(lookupKey in obj)) {
         return prev;
@@ -103,6 +110,6 @@ export function reorderKeys<T extends Schema, O extends { [key: string]: any }>(
       }
 
       return prev;
-    }, {} as any);
+    }, {});
   };
 }

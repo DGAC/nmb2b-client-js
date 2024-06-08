@@ -1,5 +1,5 @@
-import { createClient } from 'soap';
-import { Config } from '../config';
+import { createClient, type Client as SoapClient } from 'soap';
+import type { Config } from '../config';
 import { getWSDLPath } from '../constants';
 import { prepareSecurity } from '../security';
 import { deserializer as customDeserializer } from '../utils/transformers';
@@ -7,7 +7,7 @@ import { deserializer as customDeserializer } from '../utils/transformers';
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
   getWSDLPath({ service: 'FlowServices', flavour, XSD_PATH });
 
-export type FlowClient = any;
+export type FlowClient = SoapClient;
 
 function createFlowServices(config: Config): Promise<FlowClient> {
   const WSDL = getWSDL(config);
@@ -16,52 +16,49 @@ function createFlowServices(config: Config): Promise<FlowClient> {
     try {
       createClient(WSDL, { customDeserializer }, (err, client) => {
         if (err) {
-          return reject(err);
+          reject(
+            err instanceof Error
+              ? err
+              : new Error('Unknown error', { cause: err }),
+          );
+          return;
         }
         client.setSecurity(security);
 
-        // console.log(util.inspect(client.describe(), { depth: 3 }));
-        // console.log(
-        //   client.wsdl.definitions.schemas['eurocontrol/cfmu/b2b/CommonServices']
-        //     .complexTypes['Reply'].children[0].children,
-        // );
-        return resolve(client);
+        resolve(client);
       });
     } catch (err) {
       // TODO: Implement a proper debug log message output
       console.log(err);
-      return reject(err);
+      reject(
+        err instanceof Error ? err : new Error('Unknown error', { cause: err }),
+      );
+      return;
     }
   });
 }
 
-import { BaseServiceInterface } from '../Common/ServiceInterface';
-import queryHotspots, { Resolver as QueryHotspots } from './queryHotspots';
-import queryRegulations, {
-  Resolver as QueryRegulations,
-} from './queryRegulations';
-import queryTrafficCountsByAirspace, {
-  Resolver as QueryTrafficCountsByAirspace,
-} from './queryTrafficCountsByAirspace';
-import queryTrafficCountsByTrafficVolume, {
-  Resolver as QueryTrafficCountsByTrafficVolume,
-} from './queryTrafficCountsByTrafficVolume';
-import retrieveCapacityPlan, {
-  Resolver as RetrieveCapacityPlan,
-} from './retrieveCapacityPlan';
-import retrieveOTMVPlan, {
-  Resolver as RetrieveOTMVPlan,
-} from './retrieveOTMVPlan';
-import retrieveRunwayConfigurationPlan, {
-  Resolver as RetrieveRunwayConfigurationPlan,
-} from './retrieveRunwayConfigurationPlan';
-import retrieveSectorConfigurationPlan, {
-  Resolver as RetrieveSectorConfigurationPlan,
-} from './retrieveSectorConfigurationPlan';
-import updateCapacityPlan, {
-  Resolver as UpdateCapacityPlan,
-} from './updateCapacityPlan';
-import updateOTMVPlan, { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
+import type { BaseServiceInterface } from '../Common/ServiceInterface';
+import type { Resolver as QueryHotspots } from './queryHotspots';
+import queryHotspots from './queryHotspots';
+import type { Resolver as QueryRegulations } from './queryRegulations';
+import queryRegulations from './queryRegulations';
+import type { Resolver as QueryTrafficCountsByAirspace } from './queryTrafficCountsByAirspace';
+import queryTrafficCountsByAirspace from './queryTrafficCountsByAirspace';
+import type { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume';
+import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolume';
+import type { Resolver as RetrieveCapacityPlan } from './retrieveCapacityPlan';
+import retrieveCapacityPlan from './retrieveCapacityPlan';
+import type { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
+import retrieveOTMVPlan from './retrieveOTMVPlan';
+import type { Resolver as RetrieveRunwayConfigurationPlan } from './retrieveRunwayConfigurationPlan';
+import retrieveRunwayConfigurationPlan from './retrieveRunwayConfigurationPlan';
+import type { Resolver as RetrieveSectorConfigurationPlan } from './retrieveSectorConfigurationPlan';
+import retrieveSectorConfigurationPlan from './retrieveSectorConfigurationPlan';
+import type { Resolver as UpdateCapacityPlan } from './updateCapacityPlan';
+import updateCapacityPlan from './updateCapacityPlan';
+import type { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
+import updateOTMVPlan from './updateOTMVPlan';
 
 export interface FlowService extends BaseServiceInterface {
   retrieveSectorConfigurationPlan: RetrieveSectorConfigurationPlan;
