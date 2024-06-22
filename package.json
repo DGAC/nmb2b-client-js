@@ -91,6 +91,8 @@
     "dist"
   ],
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.5",
     "@eslint/js": "^9.4.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
@@ -120,6 +122,9 @@
     "remeda": "^2.0.5",
     "soap": "^1.0.3",
     "tar": "^7.2.0"
+  },
+  "publishConfig": {
+    "provenance": true
   },
   "packageManager": "pnpm@9.2.0+sha256.94fab213df221c55b6956b14a2264c21c6203cca9f0b3b95ff2fe9b84b120390"
 }
