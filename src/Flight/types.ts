@@ -424,7 +424,7 @@ export interface Flight {
   targetTimeOverFix?: TargetTime;
   flightState?: FlightState;
   lastKnownPosition?: FourDPosition;
-  slotSwapCounter: {
+  slotSwapCounter?: {
     // SlotSwapCounter,
     currentCounter: number;
     maxLimit: number;
