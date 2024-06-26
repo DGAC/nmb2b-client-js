@@ -82,6 +82,7 @@
     "downloadWSDL": "tsx ./scripts/downloadWSDL.mts",
     "clean": "rimraf dist",
     "build": "tsup-node",
+    "release": "pnpm build && changeset publish",
     "lint": "eslint",
     "test": "vitest",
     "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
