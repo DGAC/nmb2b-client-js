@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 1.0.1
+
+### Patch Changes
+
+- [#140](https://github.com/DGAC/nmb2b-client-js/pull/140) [`8b4c7a3`](https://github.com/DGAC/nmb2b-client-js/commit/8b4c7a3bdce6c291c98082190b48fb85e2f4139b) Thanks [@kouak](https://github.com/kouak)! - Fix Flight.slotSwapCounter typings
+
 ## 1.0.0
 
 ### Minor Changes
