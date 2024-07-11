@@ -8,3 +8,4 @@ Update multiple dev dependencies:
 - prettier v3.3.2
 - eslint v9.6.0
 - tsx v4.16.2
+- typescript v5.5.3
