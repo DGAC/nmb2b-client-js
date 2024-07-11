@@ -94,7 +94,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.7",
-    "@eslint/js": "^9.4.0",
+    "@eslint/js": "^9.6.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
     "@types/eslint__js": "^8.42.3",
@@ -103,14 +103,14 @@
     "@types/proper-lockfile": "^4.1.4",
     "@vitest/coverage-v8": "^1.6.0",
     "dotenv": "^16.4.5",
-    "eslint": "^9.4.0",
+    "eslint": "^9.6.0",
     "nock": "^13.5.4",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "tsup": "^8.1.0",
     "tsx": "^4.13.2",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^8.0.0-alpha.28",
+    "typescript-eslint": "^8.0.0-alpha.41",
     "vitest": "^1.6.0"
   },
   "dependencies": {
