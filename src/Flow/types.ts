@@ -333,7 +333,7 @@ export type CountsValue = number;
 
 export type OTMVThresholds = {
   peakThreshold?: OTMVThreshold;
-  sustaintedThreshold?: OTMVThreshold;
+  sustainedThreshold?: OTMVThreshold;
   sustainedElapsedDuration?: DurationHourMinute;
   sustainedCrossingOccurences?: number;
 };
@@ -376,7 +376,7 @@ export type SubTotalsRegulationDetailedType =
   /**
    * The count of not yet airborne zero (0) delay flights of which most penalising regulation is the target regulation or any other regulation.
    */
-  | 'ZERO_DELAY_FLIGHTS_NOT_YET_AIRBONE'
+  | 'ZERO_DELAY_FLIGHTS_NOT_YET_AIRBORNE'
   /**
    * The count of airborne zero (0) delay flights of which most penalising regulation is the target regulation or any other regulation.
    */

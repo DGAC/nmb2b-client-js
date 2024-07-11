@@ -1,9 +1,8 @@
+import { assert, beforeAll, describe, expect, test } from 'vitest';
 import { makeAirspaceClient } from '..';
-import { sub } from 'date-fns';
 import b2bOptions from '../../tests/options';
-import type { AUPSummary } from './types';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-import { describe, beforeAll, test, expect, assert } from 'vitest';
+import type { AUPSummary } from './types';
 
 describe('retrieveAUP', async () => {
   const Airspace = await makeAirspaceClient(b2bOptions);
@@ -13,7 +12,7 @@ describe('retrieveAUP', async () => {
     // Find some AUP id
     const res = await Airspace.retrieveAUPChain({
       amcIds: ['LFFAZAMC'],
-      chainDate: sub(new Date(), { days: 1 }),
+      chainDate: new Date(),
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Check if this condition is necessary ?

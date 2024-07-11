@@ -317,6 +317,7 @@ export type FlightPlanHistoryInfo = {
   addresses?: Array<string>;
   detail?: string;
 };
+
 export interface Flight {
   flightId: FlightIdentificationOutput;
   divertedAerodromeOfDestination?: AerodromeICAOId;
@@ -381,7 +382,7 @@ export interface Flight {
     | 'FILING_ALLOWED_BY_AO_CFMU'
     | 'NOT_AUTHORISED'
     | 'OPERATOR_MUST_REFILE';
-  initialFPLMessageOritinator?: MessageOriginator;
+  initialFPLMessageOriginator?: MessageOriginator;
   lastFPLMessageOriginator?: MessageOriginator;
   icaoRoute?: string;
   routeLength?: DistanceNM;
@@ -408,7 +409,7 @@ export interface Flight {
   ftfmRestrictionProfile?: FlightRestriction[];
   rtfmRestrictionProfile?: FlightRestriction[];
   ctfmRestrictionProfile?: FlightRestriction[];
-  cmfuFlightType?: CfmuFlightType;
+  cfmuFlightType?: CfmuFlightType;
   ccamsSSRCode?: SSRCode;
   filedRegistrationMark?: AircraftRegistrationMark;
   isProposalFlight?: boolean;
@@ -433,7 +434,7 @@ export interface Flight {
     // SlotSwapCandidate,
     ifplId: IFPLId;
     subjectDeltaDelayMinutes: number;
-    cadidateDeltaDelayMinutes: number;
+    candidateDeltaDelayMinutes: number;
     swapDecideByTime: DateTimeMinute;
   }>;
   aircraftAddress?: ICAOAircraftAddress;
@@ -599,7 +600,7 @@ export type ArrivalInformation = {
   flightStatusInbound?: ATVFlightStatusInbound;
   registrationMark?: AircraftRegistrationMark;
   aircraftType?: AircraftTypeICAOId;
-  aicraftIATAId?: AircraftIATAId;
+  aircraftIATAId?: AircraftIATAId;
   arrivalTaxiTime?: DurationHourMinute;
   apiArrivalProcedure?: TerminalProcedure;
   nmArrivalProcedure?: TerminalProcedure;
@@ -770,20 +771,20 @@ export interface FlightPlan {
   ifplId?: IFPLId;
   airFiledData?: AirFiledData;
   aerodromeOfDeparture?: Aerodrome;
-  aerodromesOfDestination: AerodromesOfDestination;
+  aerodromesOfDestination?: AerodromesOfDestination;
   enrouteAlternateAerodromes?: AlternateAerodrome_DataType;
   takeOffAlternateAerodromes?: AlternateAerodrome_DataType;
   aircraftId?: AircraftIdentification;
   whatIfRerouteReference?: number;
-  numberOfAicraft?: number;
-  aircraftType: AircraftType;
+  numberOfAircraft?: number;
+  aircraftType?: AircraftType;
   totalEstimatedElapsedTime?: DurationHourMinute;
   eetsToLocations?: EstimatedElapsedTimeAtLocation[];
-  wakeTubulenceCategory?: WakeTurbulenceCategory;
+  wakeTurbulenceCategory?: WakeTurbulenceCategory;
   flightType?: FlightType;
   flightRules?: FlightRules;
   estimatedOffBlockTime: DateTimeMinute;
-  icaoRoute: string;
+  icaoRoute?: string;
   stayInformation?: Array<string>; // Array<StayInformation_DataType>;
   enrouteDelays?: Array<EnrouteDelay>;
   equipmentCapabilityAndStatus?: EquipmentCapabilityAndStatus;
@@ -800,7 +801,7 @@ export type SupplementaryInformation = {
   otherSurvivalEquipment?: string;
   lifeJacketEquipment?: Array<LifeJacketEquipment>;
   dinghiesInformation?: Dinghies;
-  aircraftCoulorAndMarkings?: string;
+  aircraftColourAndMarkings?: string;
   pilotInCommand?: string;
 };
 
@@ -1045,7 +1046,7 @@ export interface ExclusionFromRegulations {
   onTrafficVolume?: boolean;
   count?: number;
   all?: boolean;
-  hasBeenExclused: boolean;
+  hasBeenExcluded: boolean;
 }
 
 export interface ReroutingReference {
@@ -1116,7 +1117,7 @@ export interface FlightOperationalLogEntry {
 }
 
 export type FlightOperationalLogEntryType =
-  | 'ENVIRONMENT_MESSSAGE'
+  | 'ENVIRONMENT_MESSAGE'
   | 'ERRONEOUS_INCOMING_MESSAGE'
   | 'ERROR_MESSAGE'
   | 'HISTORY'
