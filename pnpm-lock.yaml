@@ -27,8 +27,8 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
       remeda:
-        specifier: ^2.0.5
-        version: 2.0.5
+        specifier: ^2.5.0
+        version: 2.5.0
       soap:
         specifier: ^1.0.4
         version: 1.0.4
@@ -1656,8 +1656,8 @@ packages:
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
 
-  remeda@2.0.5:
-    resolution: {integrity: sha512-2+6w6XBjWk0Lysfss4QFo4LKjQ1SAW0wIEjQfp2MJjBs6BbiGQKzNli1xmUk/bHK7CBCdPS1KqjrWojgdruv0A==}
+  remeda@2.5.0:
+    resolution: {integrity: sha512-lRR2VCXdsumkeshFtoYrEeBV0BfIkMmd5xay6wL8Me/s3frrxMGs8LDeS3SGaCwnc/qw5Nre5NaylDcnNU7Wlw==}
 
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
@@ -1900,8 +1900,8 @@ packages:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
 
-  type-fest@4.20.0:
-    resolution: {integrity: sha512-MBh+PHUHHisjXf4tlx0CFWoMdjx8zCMLJHOjnV1prABYZFHqtFOyauCIK2/7w4oIfwkF8iNhLtnJEfVY2vn3iw==}
+  type-fest@4.21.0:
+    resolution: {integrity: sha512-ADn2w7hVPcK6w1I0uWnM//y1rLXZhzB9mr0a3OirzclKF1Wp6VzevUmzz/NRAWunOT6E8HrnpGY7xOfc6K57fA==}
     engines: {node: '>=16'}
 
   typescript-eslint@8.0.0-alpha.41:
@@ -3618,9 +3618,9 @@ snapshots:
 
   regenerator-runtime@0.14.1: {}
 
-  remeda@2.0.5:
+  remeda@2.5.0:
     dependencies:
-      type-fest: 4.20.0
+      type-fest: 4.21.0
 
   resolve-from@4.0.0: {}
 
@@ -3864,7 +3864,7 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
 
-  type-fest@4.20.0: {}
+  type-fest@4.21.0: {}
 
   typescript-eslint@8.0.0-alpha.41(eslint@9.6.0)(typescript@5.5.3):
     dependencies:
