@@ -89,14 +89,15 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # This will enable real b2b connections on node 16 and if secrets.B2B_API_KEY_ID is set
-      REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '18' && secrets.B2B_API_KEY_ID && '1' || '' }}
+      # This will enable real b2b connections on node 20 and if secrets.B2B_API_KEY_ID is set
+      REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '20' && secrets.B2B_API_KEY_ID && '1' || '' }}
 
     strategy:
       matrix:
         node-version:
           - 18
           - 20
+          - 22
 
     steps:
       - uses: actions/checkout@v4
