@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -49,14 +48,14 @@ function prepareTransformer(schema: Schema): null | Transformer {
     }
 
     if (typeof schema[curr] === 'string') {
-      const type = reduceXSDType(schema[curr] as string);
+      const type = reduceXSDType(schema[curr]);
 
       if ((types as any)[type]?.input) {
         const transformer = (types as any)[type].input;
         return { ...prev, [key]: isArray ? map(transformer) : transformer };
       }
     } else if (typeof schema[curr] === 'object') {
-      const subItem = prepareTransformer(schema[curr] as Schema);
+      const subItem = prepareTransformer(schema[curr]);
       if (subItem) {
         return {
           ...prev,
