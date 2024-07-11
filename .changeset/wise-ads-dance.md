@@ -9,3 +9,4 @@ Update multiple dev dependencies:
 - eslint v9.6.0
 - tsx v4.16.2
 - typescript v5.5.3
+- rimraf v5.0.9
