@@ -11,3 +11,4 @@ Update multiple dev dependencies:
 - typescript v5.5.3
 - rimraf v5.0.9
 - @types/node v18.19.39
+- vitest v2.0.2
