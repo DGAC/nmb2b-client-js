@@ -93,25 +93,25 @@
   ],
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.5",
-    "@eslint/js": "^9.4.0",
+    "@changesets/cli": "^2.27.7",
+    "@eslint/js": "^9.6.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
     "@types/eslint__js": "^8.42.3",
     "@types/invariant": "^2.2.37",
-    "@types/node": "^18.19.34",
+    "@types/node": "^18.19.39",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/coverage-v8": "^2.0.2",
     "dotenv": "^16.4.5",
-    "eslint": "^9.4.0",
+    "eslint": "^9.6.0",
     "nock": "^13.5.4",
-    "prettier": "^3.3.1",
-    "rimraf": "^5.0.7",
+    "prettier": "^3.3.2",
+    "rimraf": "^5.0.9",
     "tsup": "^8.1.0",
-    "tsx": "^4.13.2",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^8.0.0-alpha.28",
-    "vitest": "^1.6.0"
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.0-alpha.41",
+    "vitest": "^2.0.2"
   },
   "dependencies": {
     "@date-fns/utc": "^1.2.0",
@@ -127,5 +127,5 @@
   "publishConfig": {
     "provenance": true
   },
-  "packageManager": "pnpm@9.2.0+sha256.94fab213df221c55b6956b14a2264c21c6203cca9f0b3b95ff2fe9b84b120390"
+  "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903"
 }
