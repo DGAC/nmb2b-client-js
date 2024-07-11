@@ -317,6 +317,7 @@ export type FlightPlanHistoryInfo = {
   addresses?: Array<string>;
   detail?: string;
 };
+
 export interface Flight {
   flightId: FlightIdentificationOutput;
   divertedAerodromeOfDestination?: AerodromeICAOId;
@@ -381,7 +382,7 @@ export interface Flight {
     | 'FILING_ALLOWED_BY_AO_CFMU'
     | 'NOT_AUTHORISED'
     | 'OPERATOR_MUST_REFILE';
-  initialFPLMessageOritinator?: MessageOriginator;
+  initialFPLMessageOriginator?: MessageOriginator;
   lastFPLMessageOriginator?: MessageOriginator;
   icaoRoute?: string;
   routeLength?: DistanceNM;
@@ -408,7 +409,7 @@ export interface Flight {
   ftfmRestrictionProfile?: FlightRestriction[];
   rtfmRestrictionProfile?: FlightRestriction[];
   ctfmRestrictionProfile?: FlightRestriction[];
-  cmfuFlightType?: CfmuFlightType;
+  cfmuFlightType?: CfmuFlightType;
   ccamsSSRCode?: SSRCode;
   filedRegistrationMark?: AircraftRegistrationMark;
   isProposalFlight?: boolean;
@@ -433,7 +434,7 @@ export interface Flight {
     // SlotSwapCandidate,
     ifplId: IFPLId;
     subjectDeltaDelayMinutes: number;
-    cadidateDeltaDelayMinutes: number;
+    candidateDeltaDelayMinutes: number;
     swapDecideByTime: DateTimeMinute;
   }>;
   aircraftAddress?: ICAOAircraftAddress;
