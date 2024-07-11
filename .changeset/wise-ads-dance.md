@@ -10,3 +10,4 @@ Update multiple dev dependencies:
 - tsx v4.16.2
 - typescript v5.5.3
 - rimraf v5.0.9
+- @types/node v18.19.39
