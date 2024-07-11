@@ -600,7 +600,7 @@ export type ArrivalInformation = {
   flightStatusInbound?: ATVFlightStatusInbound;
   registrationMark?: AircraftRegistrationMark;
   aircraftType?: AircraftTypeICAOId;
-  aicraftIATAId?: AircraftIATAId;
+  aircraftIATAId?: AircraftIATAId;
   arrivalTaxiTime?: DurationHourMinute;
   apiArrivalProcedure?: TerminalProcedure;
   nmArrivalProcedure?: TerminalProcedure;
@@ -801,7 +801,7 @@ export type SupplementaryInformation = {
   otherSurvivalEquipment?: string;
   lifeJacketEquipment?: Array<LifeJacketEquipment>;
   dinghiesInformation?: Dinghies;
-  aircraftCoulorAndMarkings?: string;
+  aircraftColourAndMarkings?: string;
   pilotInCommand?: string;
 };
 
@@ -1046,7 +1046,7 @@ export interface ExclusionFromRegulations {
   onTrafficVolume?: boolean;
   count?: number;
   all?: boolean;
-  hasBeenExclused: boolean;
+  hasBeenExcluded: boolean;
 }
 
 export interface ReroutingReference {
@@ -1117,7 +1117,7 @@ export interface FlightOperationalLogEntry {
 }
 
 export type FlightOperationalLogEntryType =
-  | 'ENVIRONMENT_MESSSAGE'
+  | 'ENVIRONMENT_MESSAGE'
   | 'ERRONEOUS_INCOMING_MESSAGE'
   | 'ERROR_MESSAGE'
   | 'HISTORY'
