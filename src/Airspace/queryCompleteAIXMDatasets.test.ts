@@ -17,12 +17,16 @@ describe('queryCompleteAIXMDatasets', async () => {
       },
     });
 
-    expect(res.data.datasetSummaries).toBeDefined();
+    expect(res.data?.datasetSummaries).toBeDefined();
+    assert(res.data?.datasetSummaries);
     expect(res.data.datasetSummaries.length).toBeGreaterThanOrEqual(1);
+
     const dataset = res.data.datasetSummaries[0];
     assert(dataset);
-    expect(Array.isArray(dataset.files)).toBe(true);
+    assert(Array.isArray(dataset.files));
+
     expect(dataset.files.length).toBeGreaterThan(0);
+
     dataset.files.forEach((f) => {
       expect(f).toMatchObject({
         id: expect.stringMatching(/BASELINE\.zip$/),

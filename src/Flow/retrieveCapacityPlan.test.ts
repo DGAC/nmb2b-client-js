@@ -2,7 +2,7 @@ import { inspect } from 'util';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, assert } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 
 describe('retrieveCapacityPlan', async () => {
@@ -19,7 +19,11 @@ describe('retrieveCapacityPlan', async () => {
       });
 
       expect(res.data.plans).toBeDefined();
-      expect(Array.isArray(res.data.plans.tvCapacities.item)).toBe(true);
+      assert(res.data.plans);
+
+      expect(Array.isArray(res.data.plans.tvCapacities?.item)).toBe(true);
+      assert(res.data.plans.tvCapacities?.item);
+
       for (const item of res.data.plans.tvCapacities.item) {
         expect(item).toEqual({
           key: expect.stringMatching(/^[A-Z0-9]+$/),

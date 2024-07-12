@@ -2,12 +2,11 @@ import { assert, beforeAll, describe, expect, test } from 'vitest';
 import { makeAirspaceClient } from '..';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
-import type { AUPSummary } from './types';
 
 describe('retrieveAUP', async () => {
   const Airspace = await makeAirspaceClient(b2bOptions);
 
-  let AUPSummaries: AUPSummary[] = [];
+  let AUPSummaryIds: Array<string> = [];
   beforeAll(async () => {
     // Find some AUP id
     const res = await Airspace.retrieveAUPChain({
@@ -15,29 +14,28 @@ describe('retrieveAUP', async () => {
       chainDate: new Date(),
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Check if this condition is necessary ?
-    if (res.data) {
-      assert(res.data.chains[0]);
-      AUPSummaries = res.data.chains[0].aups.filter(
-        ({ aupState }) => aupState === 'RELEASED',
-      );
+    assert(res.data?.chains?.[0]?.aups);
 
-      AUPSummaries.sort(
-        (a, b) =>
-          (a.lastUpdate?.timestamp.valueOf() ?? 0) -
-          (b.lastUpdate?.timestamp.valueOf() ?? 0),
-      );
-    }
+    const summaries = res.data.chains[0].aups.filter(
+      ({ aupState }) => aupState === 'RELEASED',
+    );
+    summaries.sort(
+      (a, b) =>
+        (a.lastUpdate?.timestamp.valueOf() ?? 0) -
+        (b.lastUpdate?.timestamp.valueOf() ?? 0),
+    );
+
+    AUPSummaryIds = summaries.map(({ id }) => id);
   });
 
   test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {
-    if (!AUPSummaries[0]) {
+    if (!AUPSummaryIds[0]) {
       console.warn('AUPChainRetrieval did not yield any AUP id');
       return;
     }
 
     const res = await Airspace.retrieveAUP({
-      aupId: AUPSummaries[0].id,
+      aupId: AUPSummaryIds[0],
       returnComputed: true,
     });
 

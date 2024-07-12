@@ -2,6 +2,7 @@ import { inspect } from 'util';
 import { NMB2BError, makeFlightClient } from '..';
 import b2bOptions from '../../tests/options';
 import type { FlightKeys } from './types';
+import type { SafeB2BDeserializedResponse } from '../index';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { expect, beforeAll, test, describe, assert } from 'vitest';
 import { add, sub } from 'date-fns';
@@ -12,7 +13,7 @@ describe('retrieveFlight', async () => {
   let knownFlight:
     | {
         ifplId: string;
-        keys: FlightKeys;
+        keys: SafeB2BDeserializedResponse<FlightKeys>;
       }
     | undefined;
 
@@ -36,7 +37,7 @@ describe('retrieveFlight', async () => {
 
     const flights = res.data.flights.filter(
       (f): f is Extract<typeof f, { flight: any }> => {
-        if ('flightPlan' in f) {
+        if ('flightPlan' in f || !f.flight) {
           return false;
         }
 
@@ -46,12 +47,12 @@ describe('retrieveFlight', async () => {
 
     const flight = flights[0];
 
-    if (!flight) {
+    if (!flight?.flight) {
       console.error('Could not fetch a known flight, test aborted');
       return;
     }
 
-    if (!flight.flight.flightId.id) {
+    if (!flight.flight.flightId?.id) {
       console.error('Flight has no ifplId, test aborted');
       return;
     }
@@ -129,7 +130,7 @@ describe('retrieveFlight', async () => {
 
         const flight = res.data?.flight;
         expect(flight).toBeDefined();
-        expect(flight?.flightId.id).toEqual(
+        expect(flight?.flightId?.id).toEqual(
           expect.stringMatching(/^A(A|T)[0-9]{8}$/),
         );
 

@@ -16,7 +16,7 @@ describe('retrieveEAUPChain', async () => {
       eaups: expect.any(Array),
     });
 
-    for (const eaup of res.data.chain.eaups) {
+    for (const eaup of res.data.chain.eaups ?? []) {
       expect(eaup).toEqual({
         releaseTime: expect.any(Date),
         validityPeriod: {

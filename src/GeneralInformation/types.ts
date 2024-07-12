@@ -1,12 +1,10 @@
-import type { Reply, NMB2BVersion, File } from '../Common/types';
+import type { File, NMB2BVersion, ReplyWithData } from '../Common/types';
 
 export interface NMB2BWSDLsRequest {
   version: NMB2BVersion;
 }
 
-export interface NMB2BWSDLsReply extends Reply {
-  data: NMB2BWSDLsReplyData;
-}
+export type NMB2BWSDLsReply = ReplyWithData<NMB2BWSDLsReplyData>;
 
 export interface NMB2BWSDLsReplyData {
   file: B2BInfoFile;
@@ -18,9 +16,7 @@ export interface B2BInfoFile extends File {
 
 export type UserInformationRequest = Record<string, never>;
 
-export interface UserInformationReply extends Reply {
-  data?: UserInformationReplyData;
-}
+export type UserInformationReply = ReplyWithData<UserInformationReplyData>;
 
 export type UserInformationReplyData = {
   textReport: TextReport;

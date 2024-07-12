@@ -21,6 +21,11 @@ export { FlowService } from './Flow';
 export { GeneralInformationService } from './GeneralInformation';
 export { NMB2BError } from './utils/NMB2BError';
 
+import type { SoapDeserializer } from './utils/types';
+
+export type SafeB2BDeserializedResponse<TResponsePart> =
+  SoapDeserializer<TResponsePart>;
+
 export interface B2BClient {
   Airspace: AirspaceService;
   Flight: FlightService;

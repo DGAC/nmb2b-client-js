@@ -33,15 +33,21 @@ describe('updateOTMVPlan', async () => {
         return;
       }
 
-      function clearNmSchedules(plan: typeof planBefore): typeof planBefore {
+      function clearNmSchedules(plan: typeof planBefore) {
         assert(plan);
 
         const plans = plan.plans;
 
+        assert(plans.tvsOTMVs?.item);
+
         for (const { value } of plans.tvsOTMVs.item) {
-          const v = value.item;
+          const v = value?.item;
+          if (!v) {
+            continue;
+          }
+
           for (const { value } of v) {
-            if (value.nmSchedule) {
+            if (value?.nmSchedule) {
               delete value.nmSchedule;
             }
           }
@@ -50,7 +56,7 @@ describe('updateOTMVPlan', async () => {
         return plan;
       }
 
-      await Flow.updateOTMVPlan(clearNmSchedules(planBefore));
+      await Flow.updateOTMVPlan(clearNmSchedules(planBefore) as any);
     } catch (err) {
       console.warn('Error resetting otmv plan after test');
       console.log(JSON.stringify(err, null, 2));

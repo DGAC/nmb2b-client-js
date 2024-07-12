@@ -25,7 +25,6 @@ import type {
 import type {
   DateTimeMinutePeriod,
   DurationHourMinute,
-  Reply,
   Dataset,
   DateYearMonthDay,
   PlanDataId,
@@ -36,6 +35,7 @@ import type {
   UserId,
   AirNavigationUnitId,
   DateTimeMinute,
+  ReplyWithData,
 } from '../Common/types';
 
 import type {
@@ -204,9 +204,8 @@ export interface TacticalConfigurationRetrievalRequest {
   day: DateYearMonthDay;
 }
 
-export interface SectorConfigurationPlanRetrievalReply extends Reply {
-  data: SectorConfigurationPlanRetrievalReplyData;
-}
+export type SectorConfigurationPlanRetrievalReply =
+  ReplyWithData<SectorConfigurationPlanRetrievalReplyData>;
 
 export interface SectorConfigurationPlanRetrievalReplyData {
   plan: SectorConfigurationPlan;
@@ -281,13 +280,11 @@ export type CountSubTotalComputeMode =
    */
   | 'SUB_TOTALS_BY_REGULATION_DETAILS';
 
-export interface TrafficCountsByAirspaceReply extends Reply {
-  data: TrafficCountsReplyData;
-}
+export type TrafficCountsByAirspaceReply =
+  ReplyWithData<TrafficCountsReplyData>;
 
-export interface TrafficCountsByTrafficVolumeReply extends Reply {
-  data: TrafficCountsReplyData;
-}
+export type TrafficCountsByTrafficVolumeReply =
+  ReplyWithData<TrafficCountsReplyData>;
 
 export interface TrafficCountsReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
@@ -415,9 +412,7 @@ export type RegulationListRequest = RegulationOrMCDMOnlyListRequest & {
   regulationStates?: NMSet<RegulationState>;
 };
 
-export interface RegulationListReply extends Reply {
-  data: RegulationListReplyData;
-}
+export type RegulationListReply = ReplyWithData<RegulationListReplyData>;
 
 export interface RegulationListReplyData
   extends RegulationOrMCDMOnlyListReplyData {
@@ -648,10 +643,9 @@ export interface HotspotListRequest {
 
 export type HotspotKind = 'LOCATION_OF_INTEREST' | 'PROBLEM';
 
-export interface HotspotListReply extends Reply {
-  plans: HotspotPlans;
-}
+export type HotspotListReply = ReplyWithData<HotspotListReplyData>;
 
+export type HotspotListReplyData = { plans: HotspotPlans };
 export interface HotspotPlans {
   dataId: PlanDataId;
   dataset: Dataset;
@@ -710,9 +704,7 @@ interface OTMVSustained {
 
 type OTMVThreshold = number;
 
-export interface OTMVPlanRetrievalReply extends Reply {
-  data: OTMVPlanRetrievalReplyData;
-}
+export type OTMVPlanRetrievalReply = ReplyWithData<OTMVPlanRetrievalReplyData>;
 
 export interface OTMVPlanRetrievalReplyData {
   plans: OTMVPlans;
@@ -722,9 +714,7 @@ export interface OTMVPlanUpdateRequest {
   plans: OTMVPlans;
 }
 
-export interface OTMVPlanUpdateReply extends Reply {
-  data: OTMVPlanUpdateReplyData;
-}
+export type OTMVPlanUpdateReply = ReplyWithData<OTMVPlanUpdateReplyData>;
 
 export interface OTMVPlanUpdateReplyData {
   plans: OTMVPlans;
@@ -735,9 +725,8 @@ export interface CapacityPlanRetrievalRequest
   trafficVolumes: NMSet<TrafficVolumeId>;
 }
 
-export interface CapacityPlanRetrievalReply extends Reply {
-  data: CapacityPlanRetrievalReplyData;
-}
+export type CapacityPlanRetrievalReply =
+  ReplyWithData<CapacityPlanRetrievalReplyData>;
 
 export interface CapacityPlanRetrievalReplyData {
   plans: CapacityPlans;
@@ -764,17 +753,15 @@ export interface CapacityPlanUpdateRequest {
   plans: CapacityPlans;
 }
 
-export interface CapacityPlanUpdateReply extends Reply {
-  data: CapacityPlanUpdateReplyData;
-}
+export type CapacityPlanUpdateReply =
+  ReplyWithData<CapacityPlanUpdateReplyData>;
 
 export interface CapacityPlanUpdateReplyData {
   plans: CapacityPlans;
 }
 
-export interface RunwayConfigurationPlanRetrievalReply extends Reply {
-  data: RunwayConfigurationPlanRetrievalData;
-}
+export type RunwayConfigurationPlanRetrievalReply =
+  ReplyWithData<RunwayConfigurationPlanRetrievalData>;
 
 export interface RunwayConfigurationPlanRetrievalData {
   plan: RunwayConfigurationPlan;

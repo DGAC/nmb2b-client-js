@@ -1,16 +1,15 @@
+import type {
+  AirNavigationUnitId,
+  DateYearMonthDay,
+  ReplyWithData,
+} from '../Common/types';
 import type { SoapOptions } from '../soap';
 import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import type { AirspaceClient } from './';
-import type {
-  AirNavigationUnitId,
-  DateYearMonthDay,
-  Reply,
-} from '../Common/types';
 
 import type { AUPChain } from './types';
-import type { CollapseEmptyObjectsToNull } from '../utils/types';
 
 type Values = AUPChainRetrievalRequest;
 type Result = AUPChainRetrievalReply;
@@ -51,10 +50,6 @@ export interface AUPChainRetrievalRequest {
   amcIds?: AirNavigationUnitId[];
 }
 
-export type AUPChainRetrievalReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: {
-      chains: AUPChain[];
-    };
-  }
->;
+export type AUPChainRetrievalReply = ReplyWithData<{
+  chains: AUPChain[];
+}>;

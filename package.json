@@ -83,9 +83,9 @@
     "clean": "rimraf dist",
     "build": "tsup-node",
     "release": "pnpm build && changeset publish",
-    "lint": "eslint",
+    "lint": "eslint --max-warnings=0",
     "test": "vitest",
-    "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled",
+    "test:ci": "vitest --watch=false --reporter=basic --reporter=junit --outputFile.junit=junit.xml --coverage.enabled --typecheck",
     "typecheck": "tsc --noEmit"
   },
   "files": [
@@ -97,7 +97,6 @@
     "@eslint/js": "^9.6.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
-    "@types/eslint__js": "^8.42.3",
     "@types/invariant": "^2.2.37",
     "@types/node": "^18.19.39",
     "@types/proper-lockfile": "^4.1.4",
@@ -122,7 +121,8 @@
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.5.0",
     "soap": "^1.0.4",
-    "tar": "^7.4.0"
+    "tar": "^7.4.0",
+    "type-fest": "^4.21.0"
   },
   "publishConfig": {
     "provenance": true
