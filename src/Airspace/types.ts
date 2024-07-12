@@ -54,6 +54,7 @@ import type {
   DistanceNM,
   LastUpdate,
   Position,
+  ReplyWithData,
 } from '../Common/types';
 
 export interface AUPChain {
@@ -305,3 +306,37 @@ export interface FlightLevelRange {
   min: FlightLevel;
   max: FlightLevel;
 }
+
+export interface CompleteAIXMDatasetRequest {
+  queryCriteria: CompleteDatasetQueryCriteria;
+}
+
+export type CompleteAIXMDatasetReply = ReplyWithData<{
+  datasetSummaries: CompleteDatasetSummary[];
+}>;
+
+export interface AUPRetrievalRequest {
+  aupId: AUPId;
+  returnComputed?: boolean;
+}
+
+export type AUPRetrievalReply = ReplyWithData<{
+  aup: AUP;
+}>;
+
+export interface AUPChainRetrievalRequest {
+  chainDate: DateYearMonthDay;
+  amcIds?: AirNavigationUnitId[];
+}
+
+export type AUPChainRetrievalReply = ReplyWithData<{
+  chains: AUPChain[];
+}>;
+
+export interface EAUPChainRetrievalRequest {
+  chainDate: DateYearMonthDay;
+}
+
+export type EAUPChainRetrievalReply = ReplyWithData<{
+  chain: EAUPChain;
+}>;
