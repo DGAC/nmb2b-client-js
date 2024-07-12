@@ -8,7 +8,8 @@ import type {
   RunwayConfigurationPlanRetrievalRequest,
   RunwayConfigurationPlanRetrievalReply,
 } from './types';
-export {
+
+export type {
   RunwayConfigurationPlanRetrievalRequest,
   RunwayConfigurationPlanRetrievalReply,
 } from './types';

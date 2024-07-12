@@ -5,7 +5,7 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type { RegulationListRequest, RegulationListReply } from './types';
-export { RegulationListRequest, RegulationListReply } from './types';
+export type { RegulationListRequest, RegulationListReply } from './types';
 
 type Values = RegulationListRequest;
 type Result = RegulationListReply;

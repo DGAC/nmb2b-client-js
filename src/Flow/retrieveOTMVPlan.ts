@@ -5,7 +5,7 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
-export { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
+export type { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
 
 export type Values = OTMVPlanRetrievalRequest;
 export type Result = OTMVPlanRetrievalReply;

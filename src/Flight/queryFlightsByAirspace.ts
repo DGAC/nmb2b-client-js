@@ -9,7 +9,7 @@ import type {
   FlightListByAirspaceReply,
 } from './types';
 
-export {
+export type {
   FlightListByAirspaceRequest,
   FlightListByAirspaceReply,
 } from './types';

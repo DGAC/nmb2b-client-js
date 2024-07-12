@@ -9,7 +9,7 @@ import type {
   TrafficCountsByAirspaceReply,
 } from './types';
 
-export {
+export type {
   TrafficCountsByAirspaceRequest,
   TrafficCountsByAirspaceReply,
 } from './types';

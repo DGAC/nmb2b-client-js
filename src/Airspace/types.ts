@@ -82,7 +82,7 @@ export interface AUPSummary {
   aupState: AUPState;
   nilAUP: boolean;
   remark: string;
-  note: Array<string | null>;
+  note: Array<string>;
   expandedAUP: boolean;
   lastUpdate?: LastUpdate;
   isP3?: boolean;

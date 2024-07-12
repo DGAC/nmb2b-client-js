@@ -9,7 +9,7 @@ import type {
   CompleteAIXMDatasetRequest,
 } from './types';
 
-export { CompleteAIXMDatasetReply, CompleteAIXMDatasetRequest } from './types';
+export type { CompleteAIXMDatasetReply, CompleteAIXMDatasetRequest } from './types';
 
 type Values = CompleteAIXMDatasetRequest;
 type Result = CompleteAIXMDatasetReply;

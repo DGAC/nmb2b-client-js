@@ -9,7 +9,7 @@ import type {
   CapacityPlanRetrievalReply,
 } from './types';
 
-export {
+export type {
   CapacityPlanRetrievalRequest,
   CapacityPlanRetrievalReply,
 } from './types';

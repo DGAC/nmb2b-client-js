@@ -8,7 +8,11 @@ import type {
   FlightListByMeasureRequest,
   FlightListByMeasureReply,
 } from './types';
-export { FlightListByMeasureRequest, FlightListByMeasureReply } from './types';
+
+export type {
+  FlightListByMeasureRequest,
+  FlightListByMeasureReply,
+} from './types';
 
 type Values = FlightListByMeasureRequest;
 type Result = FlightListByMeasureReply;
