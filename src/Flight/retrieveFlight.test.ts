@@ -2,7 +2,7 @@ import { inspect } from 'util';
 import { NMB2BError, makeFlightClient } from '..';
 import b2bOptions from '../../tests/options';
 import type { FlightKeys } from './types';
-import type { B2BDeserializedResponse } from '../index';
+import type { SafeB2BDeserializedResponse } from '../index';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { expect, beforeAll, test, describe, assert } from 'vitest';
 import { add, sub } from 'date-fns';
@@ -13,7 +13,7 @@ describe('retrieveFlight', async () => {
   let knownFlight:
     | {
         ifplId: string;
-        keys: B2BDeserializedResponse<FlightKeys>;
+        keys: SafeB2BDeserializedResponse<FlightKeys>;
       }
     | undefined;
 

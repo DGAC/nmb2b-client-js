@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import {
-  type B2BDeserializedResponse,
+  type SafeB2BDeserializedResponse,
   NMB2BError,
   makeFlightClient,
   makeFlowClient,
@@ -15,7 +15,7 @@ import { sub, add, startOfHour } from 'date-fns';
 import { extractReferenceLocation } from '../utils';
 
 describe('queryFlightsByMeasure', async () => {
-  let measure: undefined | B2BDeserializedResponse<Regulation>;
+  let measure: undefined | SafeB2BDeserializedResponse<Regulation>;
 
   const [Flight, Flow] = await Promise.all([
     makeFlightClient(b2bOptions),
@@ -37,7 +37,7 @@ describe('queryFlightsByMeasure', async () => {
     });
 
     const hasAirspaceMatching =
-      (regex: RegExp) => (item: B2BDeserializedResponse<Regulation>) => {
+      (regex: RegExp) => (item: SafeB2BDeserializedResponse<Regulation>) => {
         const referenceLocation = extractReferenceLocation(
           'referenceLocation',
           item.location,

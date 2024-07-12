@@ -17,7 +17,7 @@ export {
 } from './types';
 
 import type { AirspaceId } from '../Airspace/types';
-import type { B2BDeserializedResponse } from '..';
+import type { SafeB2BDeserializedResponse } from '..';
 
 type Values = SectorConfigurationPlanRetrievalRequest;
 type Result = SectorConfigurationPlanRetrievalReply;
@@ -54,7 +54,7 @@ export default function prepareRetrieveSectorConfigurationPlan(
 }
 
 export function knownConfigurationsToMap(
-  knownConfigurations: undefined | null | B2BDeserializedResponse<KnownConfigurations>,
+  knownConfigurations: undefined | null | SafeB2BDeserializedResponse<KnownConfigurations>,
 ): Map<SectorConfigurationId, AirspaceId[]> {
   if (!knownConfigurations?.item) {
     return new Map();

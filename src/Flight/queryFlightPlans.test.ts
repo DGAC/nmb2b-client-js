@@ -1,5 +1,5 @@
 import { inspect } from 'util';
-import { type B2BDeserializedResponse, NMB2BError, makeFlightClient } from '..';
+import { type SafeB2BDeserializedResponse, NMB2BError, makeFlightClient } from '..';
 import { sub, add } from 'date-fns';
 import b2bOptions from '../../tests/options';
 import type { FlightOrFlightPlan as B2BFlight } from './types';
@@ -9,7 +9,7 @@ import { describe, beforeAll, expect, test, assert } from 'vitest';
 describe('queryFlightPlans', async () => {
   const Flight = await makeFlightClient(b2bOptions);
 
-  let knownFlight: B2BDeserializedResponse<B2BFlight> | undefined;
+  let knownFlight: SafeB2BDeserializedResponse<B2BFlight> | undefined;
 
   beforeAll(async () => {
     if (!shouldUseRealB2BConnection) {
