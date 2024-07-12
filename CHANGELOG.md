@@ -1,5 +1,13 @@
 # @dgac/nmb2b-client
 
+## 1.1.0
+
+### Minor Changes
+
+- [#150](https://github.com/DGAC/nmb2b-client-js/pull/150) [`4c4ee7c`](https://github.com/DGAC/nmb2b-client-js/commit/4c4ee7c2c9fce42169d23b164260180de7e8ba3c) Thanks [@kouak](https://github.com/kouak)! - Improve type safety of B2B replies when objects are potentially empty.
+
+  See https://github.com/DGAC/nmb2b-client-js/issues/149
+
 ## 1.0.2
 
 ### Patch Changes
