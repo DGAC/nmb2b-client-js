@@ -1,5 +1,13 @@
 # @dgac/nmb2b-client
 
+## 1.2.1
+
+### Patch Changes
+
+- [#156](https://github.com/DGAC/nmb2b-client-js/pull/156) [`222fb69`](https://github.com/DGAC/nmb2b-client-js/commit/222fb693705980e2e262a9026b205eb770609d7d) Thanks [@kouak](https://github.com/kouak)! - All B2B types are now exported.
+
+  Fix `AUPSummary.notes` typing.
+
 ## 1.2.0
 
 ### Minor Changes
