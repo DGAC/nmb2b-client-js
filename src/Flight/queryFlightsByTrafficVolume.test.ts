@@ -61,12 +61,12 @@ describe('queryFlightsByTrafficVolume', async () => {
         estimatedOffBlockTime: expect.any(Date),
       };
 
-      if (!flight.flight.flightId.keys?.nonICAOAerodromeOfDeparture) {
+      if (!flight.flight?.flightId?.keys?.nonICAOAerodromeOfDeparture) {
         flightKeysMatcher.aerodromeOfDeparture =
           expect.stringMatching(/^[A-Z]{4}$/);
       }
 
-      if (!flight.flight.flightId.keys?.nonICAOAerodromeOfDestination) {
+      if (!flight.flight?.flightId?.keys?.nonICAOAerodromeOfDestination) {
         flightKeysMatcher.aerodromeOfDestination =
           expect.stringMatching(/^[A-Z]{4}$/);
       }

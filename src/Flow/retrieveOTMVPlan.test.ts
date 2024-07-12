@@ -19,15 +19,15 @@ describe('retrieveOTMVPlan', async () => {
 
       expect(res.data).toBeDefined();
       expect(res.data.plans.planCutOffReached).toEqual(expect.any(Boolean));
-      expect(res.data.plans.tvsOTMVs.item.length).toEqual(1);
-      expect(res.data.plans.tvsOTMVs.item[0]).toEqual({
+      expect(res.data.plans.tvsOTMVs?.item?.length).toEqual(1);
+      expect(res.data.plans.tvsOTMVs?.item?.[0]).toEqual({
         key: 'LFERMS',
         value: {
           item: expect.any(Array),
         },
       });
 
-      assert(res.data.plans.tvsOTMVs.item[0]);
+      assert(res.data.plans.tvsOTMVs?.item?.[0]?.value?.item);
 
       for (const otmvPlan of res.data.plans.tvsOTMVs.item[0].value.item) {
         expect(otmvPlan).toEqual({

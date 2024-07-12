@@ -1,5 +1,5 @@
 import { inspect } from 'util';
-import { describe, expect, test } from 'vitest';
+import { assert, describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
@@ -29,6 +29,7 @@ describe('retrieveSectorConfigurationPlan', async () => {
       expect(Array.isArray(nmSchedule.item)).toBe(true);
       expect(Array.isArray(clientSchedule.item)).toBe(true);
       expect(Array.isArray(knownConfigurations.item)).toBe(true);
+      assert(knownConfigurations.item);
 
       for (const conf of knownConfigurations.item) {
         expect(conf).toMatchObject({
@@ -40,7 +41,7 @@ describe('retrieveSectorConfigurationPlan', async () => {
       }
 
       // Test that we can generate a valid map
-      const map = knownConfigurationsToMap(res.data.plan.knownConfigurations);
+      const map = knownConfigurationsToMap(knownConfigurations);
 
       const keys = Array.from(map.keys());
       expect(keys.length).toBeGreaterThan(0);
@@ -69,10 +70,12 @@ describe('retrieveSectorConfigurationPlan', async () => {
         }
       };
 
+      assert(nmSchedule.item);
       for (const conf of nmSchedule.item) {
         testSchedule(conf);
       }
 
+      assert(clientSchedule.item);
       for (const conf of clientSchedule.item) {
         testSchedule(conf);
       }

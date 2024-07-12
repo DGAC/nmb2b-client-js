@@ -32,7 +32,7 @@ describe('queryTrafficCountsByTrafficVolume', async () => {
 
       const { counts } = res.data;
       expect(Array.isArray(counts?.item)).toBe(true);
-      expect(counts?.item.length).toBe(6);
+      expect(counts?.item?.length).toBe(6);
 
       for (const item of counts?.item ?? []) {
         expect(item).toMatchObject({

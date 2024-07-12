@@ -1,3 +1,5 @@
+import type { SoapDeserializer } from '../utils/types';
+
 export type DateYearMonthDay = Date;
 export type DateTimeMinute = Date;
 export type DateTimeSecond = Date;
@@ -128,7 +130,7 @@ export type ReplyStatus =
   | 'CONFLICTING_UPDATE'
   | 'INVALID_DATASET';
 
-export type Reply = {
+export interface Reply {
   requestReceptionTime?: DateTimeSecond;
   requestId?: string;
   sendTime?: DateTimeSecond;
@@ -139,6 +141,10 @@ export type Reply = {
   slaError?: B2B_Error;
   reason?: string;
 }
+
+export type ReplyWithData<TData = never> = Reply & {
+  data: SoapDeserializer<TData>;
+};
 
 export type Request = {
   endUserId?: string;

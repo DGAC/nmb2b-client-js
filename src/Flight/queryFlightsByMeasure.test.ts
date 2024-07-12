@@ -1,5 +1,12 @@
 import { inspect } from 'util';
-import { NMB2BError, makeFlightClient, makeFlowClient } from '..';
+
+import {
+  type B2BDeserializedResponse,
+  NMB2BError,
+  makeFlightClient,
+  makeFlowClient,
+} from '..';
+
 import b2bOptions from '../../tests/options';
 import type { Regulation } from '../Flow/types';
 import { beforeAll, describe, expect, test } from 'vitest';
@@ -8,7 +15,7 @@ import { sub, add, startOfHour } from 'date-fns';
 import { extractReferenceLocation } from '../utils';
 
 describe('queryFlightsByMeasure', async () => {
-  let measure: undefined | Regulation;
+  let measure: undefined | B2BDeserializedResponse<Regulation>;
 
   const [Flight, Flow] = await Promise.all([
     makeFlightClient(b2bOptions),
@@ -29,24 +36,25 @@ describe('queryFlightsByMeasure', async () => {
       },
     });
 
-    const hasAirspaceMatching = (regex: RegExp) => (item: Regulation) => {
-      const referenceLocation = extractReferenceLocation(
-        'referenceLocation',
-        item.location,
-      );
+    const hasAirspaceMatching =
+      (regex: RegExp) => (item: B2BDeserializedResponse<Regulation>) => {
+        const referenceLocation = extractReferenceLocation(
+          'referenceLocation',
+          item.location,
+        );
 
-      if (!referenceLocation || referenceLocation.type !== 'AIRSPACE') {
-        return false;
-      }
+        if (!referenceLocation || referenceLocation.type !== 'AIRSPACE') {
+          return false;
+        }
 
-      return regex.test(referenceLocation.id);
-    };
+        return regex.test(referenceLocation.id);
+      };
 
-    const candidates = res.data.regulations.item.filter(
+    const candidates = res.data.regulations?.item?.filter(
       hasAirspaceMatching(/^LF/),
     );
 
-    if (!candidates.length) {
+    if (!candidates?.length) {
       return;
     }
 

@@ -1,5 +1,5 @@
 import { inspect } from 'util';
-import { describe, expect, test } from 'vitest';
+import { assert, describe, expect, test } from 'vitest';
 import { NMB2BError, makeFlowClient } from '..';
 import b2bOptions from '../../tests/options';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
@@ -9,6 +9,40 @@ import { add, startOfHour, sub } from 'date-fns';
 
 describe('queryRegulations', async () => {
   const Flow = await makeFlowClient(b2bOptions);
+
+  test.runIf(shouldUseRealB2BConnection)('empty regulation lists', async () => {
+    try {
+      const res = await Flow.queryRegulations({
+        dataset: { type: 'OPERATIONAL' },
+        regulations: {
+          item: ['LFZZ*'],
+        },
+        queryPeriod: {
+          wef: sub(new Date(), { minutes: 1 }),
+          unt: add(new Date(), { minutes: 1 }),
+        },
+        requestedRegulationFields: {
+          item: [
+            'applicability',
+            'location',
+            'reason',
+            'linkedRegulations',
+            'scenarioReference',
+          ],
+        },
+      });
+
+      console.log(inspect(res, { depth: 6 }));
+
+      expect(res.data.regulations).toBe(null);
+    } catch (err) {
+      if (err instanceof NMB2BError) {
+        console.log(inspect(err, { depth: 4 }));
+      }
+
+      throw err;
+    }
+  });
 
   test.runIf(shouldUseRealB2BConnection)('List all regulations', async () => {
     try {
@@ -29,9 +63,10 @@ describe('queryRegulations', async () => {
         },
       });
 
-      const items = res.data.regulations.item;
+      const items = res.data.regulations?.item;
 
-      expect(items).toBeDefined();
+      assert(items);
+
       expect(items.length).toBeGreaterThanOrEqual(1);
 
       for (const item of items) {

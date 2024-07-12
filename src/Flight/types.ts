@@ -96,7 +96,7 @@ import type {
   NMList,
   NMSet,
   ReceivedOrSent,
-  Reply,
+  ReplyWithData,
   ShiftHourMinute,
   SignedDurationHourMinuteSecond,
   TimeHourMinutePeriod,
@@ -119,8 +119,6 @@ import type {
   ReroutingId,
   TrafficVolumeScenarios,
 } from '../Flow/types';
-
-import type { CollapseEmptyObjectsToNull } from '../utils/types';
 
 export interface FlightKeys {
   aircraftId: ExtendedAircraftICAOId;
@@ -1364,11 +1362,8 @@ export interface FlightListByLocationReplyData extends FlightListReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
 }
 
-export type FlightListByAirspaceReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: FlightListByAirspaceReplyData;
-  }
->;
+export type FlightListByAirspaceReply =
+  ReplyWithData<FlightListByAirspaceReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAirspaceReplyData
@@ -1384,13 +1379,11 @@ export interface FlightPlanListRequest {
   estimatedOffBlockTime: DateTimeMinutePeriod;
 }
 
-export type FlightPlanListReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: {
-      summaries?: FlightPlanOrInvalidFiling[];
-    };
-  }
->;
+export type FlightPlanListReply = ReplyWithData<FlightPlanListReplyData>;
+
+export type FlightPlanListReplyData = {
+  summaries: FlightPlanOrInvalidFiling[];
+};
 
 export interface FlightRetrievalRequest {
   dataset: Dataset;
@@ -1400,16 +1393,14 @@ export interface FlightRetrievalRequest {
   requestedFlightFields?: FlightField[];
 }
 
-export type FlightRetrievalReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: {
-      latestFlightPlan?: FlightPlanOutput;
-      flightPlanHistory?: FlightPlanHistory;
-      flight?: Flight;
-      structuredFlightPlan?: StructuredFlightPlan;
-    };
-  }
->;
+export type FlightRetrievalReply = ReplyWithData<FlightRetrievalReplyData>;
+
+export type FlightRetrievalReplyData = {
+  latestFlightPlan?: FlightPlanOutput;
+  flightPlanHistory?: FlightPlanHistory;
+  flight?: Flight;
+  structuredFlightPlan?: StructuredFlightPlan;
+};
 
 export interface FlightListByTrafficVolumeRequest
   extends FlightListByLocationRequest {
@@ -1418,11 +1409,8 @@ export interface FlightListByTrafficVolumeRequest
   flow?: FlowId;
 }
 
-export type FlightListByTrafficVolumeReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: FlightListByTrafficVolumeReplyData;
-  }
->;
+export type FlightListByTrafficVolumeReply =
+  ReplyWithData<FlightListByTrafficVolumeReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByTrafficVolumeReplyData
@@ -1438,11 +1426,8 @@ export type FlightListByMeasureMode =
   | 'ACTIVATED_BY_MEASURE'
   | 'CONCERNED_BY_MEASURE';
 
-export type FlightListByMeasureReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: FlightListByMeasureReplyData;
-  }
->;
+export type FlightListByMeasureReply =
+  ReplyWithData<FlightListByMeasureReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByMeasureReplyData
@@ -1472,11 +1457,8 @@ export type AerodromeRole =
    */
   | 'ALTERNATE';
 
-export type FlightListByAerodromeReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: FlightListByAerodromeReplyData;
-  }
->;
+export type FlightListByAerodromeReply =
+  ReplyWithData<FlightListByAerodromeReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAerodromeReplyData
@@ -1488,11 +1470,8 @@ export interface FlightListByAerodromeSetRequest
   aerodromeRole: AerodromeRole;
 }
 
-export type FlightListByAerodromeSetReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: FlightListByAerodromeSetReplyData;
-  }
->;
+export type FlightListByAerodromeSetReply =
+  ReplyWithData<FlightListByAerodromeSetReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAerodromeSetReplyData
@@ -1503,11 +1482,8 @@ export interface FlightListByAircraftOperatorRequest
   calculationType?: CountsCalculationType;
 }
 
-export type FlightListByAircraftOperatorReply = CollapseEmptyObjectsToNull<
-  Reply & {
-    data: FlightListByAircraftOperatorReplyData;
-  }
->;
+export type FlightListByAircraftOperatorReply =
+  ReplyWithData<FlightListByAircraftOperatorReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAircraftOperatorReplyData
