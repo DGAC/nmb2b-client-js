@@ -1,5 +1,17 @@
 # @dgac/nmb2b-client
 
+## 1.2.0
+
+### Minor Changes
+
+- [#152](https://github.com/DGAC/nmb2b-client-js/pull/152) [`efc9f0a`](https://github.com/DGAC/nmb2b-client-js/commit/efc9f0a60cd9826ab9f8ba81184e15bc707604f7) Thanks [@kouak](https://github.com/kouak)! - Safer B2B response types.
+
+  Typings will now contain `null | undefined` when there's a risk a partial deserialization.
+
+  A type helper `SafeB2BDeserializedResponse` is now exported, and will apply a safe type transformation to any typed exported from `@dgac/nmb2b-client/*/types`.
+
+  See https://github.com/DGAC/nmb2b-client-js/issues/149 for more information.
+
 ## 1.1.0
 
 ### Minor Changes
