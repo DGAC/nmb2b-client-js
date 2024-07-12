@@ -1,11 +1,14 @@
-import type { DateYearMonthDay, ReplyWithData } from '../Common/types';
 import type { SoapOptions } from '../soap';
 import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import type { AirspaceClient } from './';
+import type {
+  EAUPChainRetrievalReply,
+  EAUPChainRetrievalRequest,
+} from './types';
 
-import type { EAUPChain } from './types';
+export type { EAUPChainRetrievalReply, EAUPChainRetrievalRequest };
 
 type Values = EAUPChainRetrievalRequest;
 type Result = EAUPChainRetrievalReply;
@@ -40,11 +43,3 @@ export default function prepareRetrieveEAUPChain(
       }),
   );
 }
-
-export interface EAUPChainRetrievalRequest {
-  chainDate: DateYearMonthDay;
-}
-
-export type EAUPChainRetrievalReply = ReplyWithData<{
-  chain: EAUPChain;
-}>;

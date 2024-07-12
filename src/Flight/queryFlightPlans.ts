@@ -4,7 +4,7 @@ import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 import type { FlightPlanListRequest, FlightPlanListReply } from './types';
-export { FlightPlanListRequest, FlightPlanListReply } from './types';
+export type { FlightPlanListRequest, FlightPlanListReply } from './types';
 
 type Values = FlightPlanListRequest;
 type Result = FlightPlanListReply;

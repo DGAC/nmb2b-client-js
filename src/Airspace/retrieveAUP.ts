@@ -1,10 +1,11 @@
-import type { ReplyWithData } from '../Common/types';
 import type { SoapOptions } from '../soap';
 import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import type { AirspaceClient } from './';
-import type { AUP, AUPId } from './types';
+
+import type { AUPRetrievalReply, AUPRetrievalRequest } from './types';
+export type { AUPRetrievalReply, AUPRetrievalRequest };
 
 type Values = AUPRetrievalRequest;
 type Result = AUPRetrievalReply;
@@ -37,12 +38,3 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
       }),
   );
 }
-
-export interface AUPRetrievalRequest {
-  aupId: AUPId;
-  returnComputed?: boolean;
-}
-
-export type AUPRetrievalReply = ReplyWithData<{
-  aup: AUP;
-}>;

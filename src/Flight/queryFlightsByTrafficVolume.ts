@@ -9,7 +9,7 @@ import type {
   FlightListByTrafficVolumeReply,
 } from './types';
 
-export {
+export type {
   FlightListByTrafficVolumeRequest,
   FlightListByTrafficVolumeReply,
 } from './types';

@@ -5,7 +5,7 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type { FlightRetrievalRequest, FlightRetrievalReply } from './types';
-export { FlightRetrievalRequest, FlightRetrievalReply } from './types';
+export type { FlightRetrievalRequest, FlightRetrievalReply } from './types';
 
 type Values = FlightRetrievalRequest;
 type Result = FlightRetrievalReply;

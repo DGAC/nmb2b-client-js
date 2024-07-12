@@ -6,7 +6,7 @@ import { instrument } from '../utils/instrumentation';
 
 import type { OTMVPlanUpdateRequest, OTMVPlanUpdateReply } from './types';
 
-export { OTMVPlanUpdateRequest, OTMVPlanUpdateReply } from './types';
+export type { OTMVPlanUpdateRequest, OTMVPlanUpdateReply } from './types';
 
 export type Values = OTMVPlanUpdateRequest;
 export type Result = OTMVPlanUpdateReply;

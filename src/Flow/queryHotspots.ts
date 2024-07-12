@@ -5,7 +5,7 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type { HotspotListRequest, HotspotListReply } from './types';
-export { HotspotListRequest, HotspotListReply } from './types';
+export type { HotspotListRequest, HotspotListReply } from './types';
 
 type Values = HotspotListRequest;
 type Result = HotspotListReply;

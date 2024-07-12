@@ -3,21 +3,13 @@ import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import type { AirspaceClient } from './';
-import type { AiracIdentifier, AIXMFile } from './types';
 
 import type {
-  DateYearMonthDay,
-  DateYearMonthDayPeriod,
-  ReplyWithData,
-} from '../Common/types';
+  CompleteAIXMDatasetReply,
+  CompleteAIXMDatasetRequest,
+} from './types';
 
-export interface CompleteAIXMDatasetRequest {
-  queryCriteria: CompleteDatasetQueryCriteria;
-}
-
-export type CompleteAIXMDatasetReply = ReplyWithData<{
-  datasetSummaries: CompleteDatasetSummary[];
-}>;
+export type { CompleteAIXMDatasetReply, CompleteAIXMDatasetRequest } from './types';
 
 type Values = CompleteAIXMDatasetRequest;
 type Result = CompleteAIXMDatasetReply;
@@ -52,15 +44,3 @@ export default function prepareQueryCompleteAIXMDatasets(
       }),
   );
 }
-
-interface CompleteDatasetSummary {
-  updateId: string;
-  publicationDate: DateYearMonthDay;
-  sourceAIRACs: [AiracIdentifier] | [AiracIdentifier, AiracIdentifier];
-  files: AIXMFile[];
-}
-
-type CompleteDatasetQueryCriteria =
-  | { publicationPeriod: DateYearMonthDayPeriod }
-  | { airac: AiracIdentifier }
-  | { date: DateYearMonthDay };

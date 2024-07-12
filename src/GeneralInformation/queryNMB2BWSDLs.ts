@@ -5,6 +5,7 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type { NMB2BWSDLsReply, NMB2BWSDLsRequest } from './types';
+export type { NMB2BWSDLsReply, NMB2BWSDLsRequest };
 
 type Values = NMB2BWSDLsRequest;
 type Result = NMB2BWSDLsReply;

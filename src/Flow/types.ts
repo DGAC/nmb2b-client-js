@@ -456,7 +456,7 @@ export type ScenarioTrafficVolumeMatchingKind =
   | 'OVERLAPPING_REFERENCE_LOCATION'
   | 'SAME_REFERENCE_LOCATION'
   | 'SAME_TRAFFIC_VOLUME';
-interface IRegulationOrMCDMOnly extends Measure {
+export interface IRegulationOrMCDMOnly extends Measure {
   regulationId: RegulationId;
   reason?: RegulationReason;
   location?: TrafficVolumeLocation;
@@ -673,18 +673,18 @@ export interface OTMVPlans extends TacticalConfigurationPlan {
   >;
 }
 
-interface OTMVPlanForDuration {
+export interface OTMVPlanForDuration {
   nmSchedule?: NMSet<PlannedOTMV>;
   clientSchedule: NMSet<PlannedOTMV>;
 }
 
-interface PlannedOTMV {
+export interface PlannedOTMV {
   applicabilityPeriod: DateTimeMinutePeriod;
   dataSource: PlanDataSource;
   otmv?: OTMV;
 }
 
-interface OTMV {
+export interface OTMV {
   trafficVolume: TrafficVolumeId;
   otmvDuration: DurationHourMinute;
   peak?: OTMVPeak;
@@ -692,17 +692,17 @@ interface OTMV {
   remark?: string;
 }
 
-interface OTMVPeak {
+export interface OTMVPeak {
   threshold: OTMVThreshold;
 }
 
-interface OTMVSustained {
+export interface OTMVSustained {
   threshold: OTMVThreshold;
   crossingOccurrences: number;
   elapsed: DurationHourMinute;
 }
 
-type OTMVThreshold = number;
+export type OTMVThreshold = number;
 
 export type OTMVPlanRetrievalReply = ReplyWithData<OTMVPlanRetrievalReplyData>;
 

@@ -9,7 +9,10 @@ import type {
   CapacityPlanUpdateReply,
 } from './types';
 
-export { CapacityPlanUpdateRequest, CapacityPlanUpdateReply } from './types';
+export type {
+  CapacityPlanUpdateRequest,
+  CapacityPlanUpdateReply,
+} from './types';
 
 export type Values = CapacityPlanUpdateRequest;
 export type Result = CapacityPlanUpdateReply;

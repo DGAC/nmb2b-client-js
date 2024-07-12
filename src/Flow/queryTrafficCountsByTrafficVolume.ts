@@ -9,7 +9,7 @@ import type {
   TrafficCountsByTrafficVolumeReply,
 } from './types';
 
-export {
+export type {
   TrafficCountsByTrafficVolumeRequest,
   TrafficCountsByTrafficVolumeReply,
 } from './types';

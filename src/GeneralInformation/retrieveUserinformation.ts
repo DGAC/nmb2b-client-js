@@ -5,6 +5,7 @@ import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
 
 import type { UserInformationRequest, UserInformationReply } from './types';
+export type { UserInformationRequest, UserInformationReply };
 
 type Values = UserInformationRequest;
 type Result = UserInformationReply;
