@@ -3,6 +3,14 @@ import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import type { AirspaceClient } from './';
+import type {
+  AirNavigationUnitId,
+  DateYearMonthDay,
+  Reply,
+} from '../Common/types';
+
+import type { AUPChain } from './types';
+import type { CollapseEmptyObjectsToNull } from '../utils/types';
 
 type Values = AUPChainRetrievalRequest;
 type Result = AUPChainRetrievalReply;
@@ -38,21 +46,15 @@ export default function prepareRetrieveAUPChain(
   );
 }
 
-import type {
-  AirNavigationUnitId,
-  DateYearMonthDay,
-  Reply,
-} from '../Common/types';
-
-import type { AUPChain } from './types';
-
 export interface AUPChainRetrievalRequest {
   chainDate: DateYearMonthDay;
   amcIds?: AirNavigationUnitId[];
 }
 
-export type AUPChainRetrievalReply = Reply & {
-  data: {
-    chains: AUPChain[];
-  };
-};
+export type AUPChainRetrievalReply = CollapseEmptyObjectsToNull<
+  Reply & {
+    data: {
+      chains: AUPChain[];
+    };
+  }
+>;

@@ -1,8 +1,12 @@
-import type { AirspaceClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import type { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
+import { injectSendTime, responseStatusHandler } from '../utils/internals';
+import { prepareSerializer } from '../utils/transformers';
+import type { AirspaceClient } from './';
+import type { DateYearMonthDay, Reply } from '../Common/types';
+
+import type { CollapseEmptyObjectsToNull } from '../utils/types';
+import type { EAUPChain } from './types';
 
 type Values = EAUPChainRetrievalRequest;
 type Result = EAUPChainRetrievalReply;
@@ -38,16 +42,14 @@ export default function prepareRetrieveEAUPChain(
   );
 }
 
-import type { DateYearMonthDay, Reply } from '../Common/types';
-
-import type { EAUPChain } from './types';
-
 export interface EAUPChainRetrievalRequest {
   chainDate: DateYearMonthDay;
 }
 
-export type EAUPChainRetrievalReply = Reply & {
-  data: {
-    chain: EAUPChain;
-  };
-};
+export type EAUPChainRetrievalReply = CollapseEmptyObjectsToNull<
+  Reply & {
+    data: {
+      chain: EAUPChain;
+    };
+  }
+>;

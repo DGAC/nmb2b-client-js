@@ -3,6 +3,8 @@ import { instrument } from '../utils/instrumentation';
 import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import { prepareSerializer } from '../utils/transformers';
 import type { AirspaceClient } from './';
+import type { AiracIdentifier, AIXMFile } from './types';
+import type { CollapseEmptyObjectsToNull } from '../utils/types';
 
 import type {
   DateYearMonthDay,
@@ -14,11 +16,13 @@ export interface CompleteAIXMDatasetRequest {
   queryCriteria: CompleteDatasetQueryCriteria;
 }
 
-export type CompleteAIXMDatasetReply = Reply & {
-  data: {
-    datasetSummaries: CompleteDatasetSummary[];
-  };
-};
+export type CompleteAIXMDatasetReply = CollapseEmptyObjectsToNull<
+  Reply & {
+    data: {
+      datasetSummaries: CompleteDatasetSummary[];
+    };
+  }
+>;
 
 type Values = CompleteAIXMDatasetRequest;
 type Result = CompleteAIXMDatasetReply;
@@ -53,8 +57,6 @@ export default function prepareQueryCompleteAIXMDatasets(
       }),
   );
 }
-
-import type { AiracIdentifier, AIXMFile } from './types';
 
 interface CompleteDatasetSummary {
   updateId: string;
