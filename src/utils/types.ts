@@ -2,16 +2,16 @@ export type SoapDeserializer<TInput> = TInput extends Primitive | Date
   ? TInput
   : TInput extends Array<infer T>
     ? Array<Exclude<SoapDeserializer<T>, null | undefined>> | null | undefined
-    : AllOptionalObjectsAreUndefined<{
+    : EmptyObjectToNullish<{
         [TKey in keyof TInput]: SoapDeserializer<TInput[TKey]>;
       }>;
 
-export type AllOptionalObjectsAreUndefined<T extends object> =
-  Exclude<keyof T, PartialOrUndefinedKeysOf<T>> extends never
+export type EmptyObjectToNullish<T extends object> =
+  Exclude<keyof T, NullishKeysOf<T>> extends never
     ? T | null | undefined
     : T;
 
-type PartialOrUndefinedKeysOf<T extends object> =
+type NullishKeysOf<T extends object> =
   | UndefinedKeysOf<T>
   | NullKeysOf<T>
   | OptionalKeysOf<T>;

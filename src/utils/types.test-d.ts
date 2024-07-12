@@ -1,24 +1,24 @@
 import { describe, test, expectTypeOf } from 'vitest';
-import type { SoapDeserializer, AllOptionalObjectsAreUndefined } from './types';
+import type { SoapDeserializer, EmptyObjectToNullish } from './types';
 
-describe('AllOptionalObjectsAreUndefined', () => {
+describe('EmptyObjectToNullish', () => {
   test('should not modify an object with a required key', () => {
     type Input = { foo: string };
-    type T = AllOptionalObjectsAreUndefined<Input>;
+    type T = EmptyObjectToNullish<Input>;
 
     expectTypeOf<T>().toEqualTypeOf<Input>();
   });
 
   test('should not modify an object with a required key and an optional key', () => {
     type Input = { foo: string; bar?: string };
-    type T = AllOptionalObjectsAreUndefined<Input>;
+    type T = EmptyObjectToNullish<Input>;
 
     expectTypeOf<T>().toEqualTypeOf<Input>();
   });
 
   test('should modify an object with a key which can be undefined', () => {
     type Input = { foo: string | undefined };
-    type T = AllOptionalObjectsAreUndefined<Input>;
+    type T = EmptyObjectToNullish<Input>;
 
     expectTypeOf<T>().toEqualTypeOf<Input | null | undefined>();
   });
@@ -29,7 +29,7 @@ describe('AllOptionalObjectsAreUndefined', () => {
       bar: undefined | string;
       baz?: { foo: string };
     };
-    type T = AllOptionalObjectsAreUndefined<Input>;
+    type T = EmptyObjectToNullish<Input>;
 
     expectTypeOf<T>().toEqualTypeOf<Input | null | undefined>();
   });
