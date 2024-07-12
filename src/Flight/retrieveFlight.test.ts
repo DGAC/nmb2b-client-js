@@ -87,7 +87,7 @@ describe('retrieveFlight', async () => {
           requestedFlightFields: ['ftfmPointProfile'],
         });
 
-        assert(res.data.flight?.ftfmPointProfile);
+        assert(res.data?.flight?.ftfmPointProfile);
 
         res.data.flight.ftfmPointProfile.forEach((item) => {
           expect(item).toEqual(
@@ -127,7 +127,7 @@ describe('retrieveFlight', async () => {
           requestedFlightFields: ['aircraftType', 'delay'],
         });
 
-        const flight = res.data.flight;
+        const flight = res.data?.flight;
         expect(flight).toBeDefined();
         expect(flight?.flightId.id).toEqual(
           expect.stringMatching(/^A(A|T)[0-9]{8}$/),

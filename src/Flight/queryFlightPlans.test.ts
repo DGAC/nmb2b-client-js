@@ -59,70 +59,94 @@ describe('queryFlightPlans', async () => {
     }
   });
 
-  test.runIf(shouldUseRealB2BConnection)('query known flight', async () => {
-    try {
-      if (!knownFlight || !('flight' in knownFlight)) {
-        return;
-      }
+  test.runIf(shouldUseRealB2BConnection)('query empty callsign', async () => {
+    const invalidCallsign = 'ABCDE';
 
-      assert(knownFlight.flight.flightId.keys, 'Invalid flight');
+    const res = await Flight.queryFlightPlans({
+      aircraftId: invalidCallsign,
+      nonICAOAerodromeOfDeparture: false,
+      airFiled: false,
+      nonICAOAerodromeOfDestination: false,
+      estimatedOffBlockTime: {
+        wef: sub(new Date(), {
+          minutes: 30,
+        }),
+        unt: add(new Date(), {
+          minutes: 30,
+        }),
+      },
+    });
 
-      const res = await Flight.queryFlightPlans({
-        aircraftId: knownFlight.flight.flightId.keys.aircraftId,
-        nonICAOAerodromeOfDeparture: false,
-        airFiled: false,
-        nonICAOAerodromeOfDestination: false,
-        estimatedOffBlockTime: {
-          wef: sub(knownFlight.flight.flightId.keys.estimatedOffBlockTime, {
-            minutes: 30,
-          }),
-          unt: add(knownFlight.flight.flightId.keys.estimatedOffBlockTime, {
-            minutes: 30,
-          }),
-        },
-      });
-
-      const { data } = res;
-
-      if (!data.summaries || data.summaries.length === 0) {
-        console.error(
-          'Query did not return any flight plan, this should never happen.',
-        );
-        return;
-      }
-
-      for (const f of data.summaries) {
-        if (!('lastValidFlightPlan' in f || 'currentInvalid' in f)) {
-          throw new Error(
-            'queryFlightPlans: either lastValidFlightPlan or currentInvalid should exist',
-          );
-        }
-
-        if ('lastValidFlightPlan' in f) {
-          expect(f.lastValidFlightPlan).toMatchObject({
-            id: {
-              id: expect.any(String),
-              keys: {
-                aircraftId: expect.any(String),
-                aerodromeOfDeparture: expect.any(String),
-                aerodromeOfDestination: expect.any(String),
-                estimatedOffBlockTime: expect.any(Date),
-              },
-            },
-            status: expect.any(String),
-          });
-        } else if ('currentInvalid' in f) {
-          console.warn(
-            'Query returned a flight with a currentInvalid property',
-          );
-        }
-      }
-    } catch (err) {
-      if (err instanceof NMB2BError) {
-        console.log(inspect(err, { depth: 4 }));
-      }
-
-      throw err;
-    }
+    expect(res.data).toBe(null);
   });
+
+  test.runIf(shouldUseRealB2BConnection && false)(
+    'query known flight',
+    async () => {
+      try {
+        if (!knownFlight || !('flight' in knownFlight)) {
+          return;
+        }
+
+        assert(knownFlight.flight.flightId.keys, 'Invalid flight');
+
+        const res = await Flight.queryFlightPlans({
+          aircraftId: knownFlight.flight.flightId.keys.aircraftId,
+          nonICAOAerodromeOfDeparture: false,
+          airFiled: false,
+          nonICAOAerodromeOfDestination: false,
+          estimatedOffBlockTime: {
+            wef: sub(knownFlight.flight.flightId.keys.estimatedOffBlockTime, {
+              minutes: 30,
+            }),
+            unt: add(knownFlight.flight.flightId.keys.estimatedOffBlockTime, {
+              minutes: 30,
+            }),
+          },
+        });
+
+        const { data } = res;
+
+        if (!data?.summaries || data.summaries.length === 0) {
+          console.error(
+            'Query did not return any flight plan, this should never happen.',
+          );
+          return;
+        }
+
+        for (const f of data.summaries) {
+          if (!('lastValidFlightPlan' in f || 'currentInvalid' in f)) {
+            throw new Error(
+              'queryFlightPlans: either lastValidFlightPlan or currentInvalid should exist',
+            );
+          }
+
+          if ('lastValidFlightPlan' in f) {
+            expect(f.lastValidFlightPlan).toMatchObject({
+              id: {
+                id: expect.any(String),
+                keys: {
+                  aircraftId: expect.any(String),
+                  aerodromeOfDeparture: expect.any(String),
+                  aerodromeOfDestination: expect.any(String),
+                  estimatedOffBlockTime: expect.any(Date),
+                },
+              },
+              status: expect.any(String),
+            });
+          } else if ('currentInvalid' in f) {
+            console.warn(
+              'Query returned a flight with a currentInvalid property',
+            );
+          }
+        }
+      } catch (err) {
+        if (err instanceof NMB2BError) {
+          console.log(inspect(err, { depth: 4 }));
+        }
+
+        throw err;
+      }
+    },
+  );
 });

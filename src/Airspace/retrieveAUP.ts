@@ -3,6 +3,9 @@ import { injectSendTime, responseStatusHandler } from '../utils/internals';
 import type { SoapOptions } from '../soap';
 import { prepareSerializer } from '../utils/transformers';
 import { instrument } from '../utils/instrumentation';
+import type { AUPId, AUP } from './types';
+import type { Reply } from '../Common/types';
+import type { CollapseEmptyObjectsToNull } from '../utils/types';
 
 type Values = AUPRetrievalRequest;
 type Result = AUPRetrievalReply;
@@ -36,16 +39,15 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
   );
 }
 
-import type { AUPId, AUP } from './types';
-import type { Reply } from '../Common/types';
-
 export interface AUPRetrievalRequest {
   aupId: AUPId;
   returnComputed?: boolean;
 }
 
-export interface AUPRetrievalReply extends Reply {
-  data: {
-    aup: AUP;
-  };
-}
+export type AUPRetrievalReply = CollapseEmptyObjectsToNull<
+  Reply & {
+    data: {
+      aup: AUP;
+    };
+  }
+>;

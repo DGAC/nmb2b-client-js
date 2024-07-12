@@ -128,7 +128,7 @@ export type ReplyStatus =
   | 'CONFLICTING_UPDATE'
   | 'INVALID_DATASET';
 
-export interface Reply {
+export type Reply = {
   requestReceptionTime?: DateTimeSecond;
   requestId?: string;
   sendTime?: DateTimeSecond;
@@ -140,11 +140,11 @@ export interface Reply {
   reason?: string;
 }
 
-export interface Request {
+export type Request = {
   endUserId?: string;
   onBehalfOfUnit?: AirNavigationUnitId;
   sendTime: DateTimeSecond;
-}
+};
 
 export type ServiceGroup =
   | 'AIRSPACE'
