@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 1.3.0
+
+### Minor Changes
+
+- [#158](https://github.com/DGAC/nmb2b-client-js/pull/158) [`e6a5a62`](https://github.com/DGAC/nmb2b-client-js/commit/e6a5a62ba7735497dde76ac985e20c9965d13ef3) Thanks [@kouak](https://github.com/kouak)! - soap v1.1.0
+
 ## 1.2.1
 
 ### Patch Changes
