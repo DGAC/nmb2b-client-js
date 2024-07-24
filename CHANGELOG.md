@@ -1,5 +1,13 @@
 # @dgac/nmb2b-client
 
+## 1.3.1
+
+### Patch Changes
+
+- [#160](https://github.com/DGAC/nmb2b-client-js/pull/160) [`f872768`](https://github.com/DGAC/nmb2b-client-js/commit/f872768eab6cf100f2fd6a06af885ecea73506db) Thanks [@kouak](https://github.com/kouak)! - Remove unused dotenv/config import from config.ts
+
+- [#161](https://github.com/DGAC/nmb2b-client-js/pull/161) [`fb8297d`](https://github.com/DGAC/nmb2b-client-js/commit/fb8297dcdfed25288f8a2322879871a673900fef) Thanks [@kouak](https://github.com/kouak)! - Fix tests failing when a flight returned by `queryFlightsBy*` has a non ICAO aerodrome of departure or destination
+
 ## 1.3.0
 
 ### Minor Changes
