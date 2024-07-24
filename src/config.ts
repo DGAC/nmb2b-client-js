@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import type { Security } from './security';
 import { isValidSecurity } from './security';
 import type { B2BFlavour } from './constants';
