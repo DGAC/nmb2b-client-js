@@ -9,7 +9,7 @@ import {
 
 import b2bOptions from '../../tests/options';
 import type { Regulation } from '../Flow/types';
-import { beforeAll, describe, expect, test } from 'vitest';
+import { assert, beforeAll, describe, expect, test } from 'vitest';
 import { shouldUseRealB2BConnection } from '../../tests/utils';
 import { sub, add, startOfHour } from 'date-fns';
 import { extractReferenceLocation } from '../utils';
@@ -89,17 +89,28 @@ describe('queryFlightsByMeasure', async () => {
 
       expect(res.data.flights).toEqual(expect.any(Array));
 
-      for (const flight of res.data.flights) {
+      for (const flightOrFlightPlan of res.data.flights) {
+        assert('flight' in flightOrFlightPlan && !!flightOrFlightPlan.flight);
+
+        const flight = flightOrFlightPlan.flight;
+        assert(flight.flightId);
+
+        if (!flight.flightId.keys?.aerodromeOfDeparture) {
+          expect(flight.flightId.keys?.nonICAOAerodromeOfDeparture).toBe(true);
+        }
+
+        if (!flight.flightId.keys?.aerodromeOfDestination) {
+          expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(
+            true,
+          );
+        }
+
         expect(flight).toMatchObject({
-          flight: {
-            flightId: {
-              id: expect.any(String),
-              keys: {
-                aircraftId: expect.any(String),
-                aerodromeOfDeparture: expect.stringMatching(/^[A-Z]{4}$/),
-                aerodromeOfDestination: expect.stringMatching(/^[A-Z]{4}$/),
-                estimatedOffBlockTime: expect.any(Date),
-              },
+          flightId: {
+            id: expect.any(String),
+            keys: {
+              aircraftId: expect.any(String),
+              estimatedOffBlockTime: expect.any(Date),
             },
           },
         });
