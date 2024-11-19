@@ -108,9 +108,9 @@
     "vitest": "^2.1.5"
   },
   "dependencies": {
-    "@date-fns/utc": "^1.2.0",
+    "@date-fns/utc": "^2.1.0",
     "axios": "^1.7.7",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "debug": "^4.3.7",
     "invariant": "^2.2.4",
     "proper-lockfile": "^4.1.2",
