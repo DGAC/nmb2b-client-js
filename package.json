@@ -9,7 +9,10 @@
   ],
   "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "license": "MIT",
-  "repository": "https://github.com/DGAC/nmb2b-client-js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DGAC/nmb2b-client-js.git"
+  },
   "engines": {
     "node": ">=18"
   },
@@ -63,17 +66,9 @@
       "import": "./dist/GeneralInformation/types.js",
       "require": "./dist/GeneralInformation/types.cjs"
     },
-    "./PublishSubscribe": {
-      "import": "./dist/PublishSubscribe/index.js",
-      "require": "./dist/PublishSubscribe/index.cjs"
-    },
-    "./PublishSubscribe/types": {
-      "import": "./dist/PublishSubscribe/types.js",
-      "require": "./dist/PublishSubscribe/types.cjs"
-    },
     "./utils": {
       "import": "./dist/utils/index.js",
-      "require": "./dist/utils/types.cjs"
+      "require": "./dist/utils/index.cjs"
     }
   },
   "scripts": {
