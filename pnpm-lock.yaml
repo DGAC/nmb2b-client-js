@@ -12,14 +12,14 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       axios:
-        specifier: ^1.7.7
-        version: 1.7.7(debug@4.3.7)
+        specifier: ^1.7.9
+        version: 1.7.9(debug@4.4.0)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
       debug:
         specifier: ^4.3.7
-        version: 4.3.7
+        version: 4.4.0
       invariant:
         specifier: ^2.2.4
         version: 2.2.4
@@ -30,8 +30,8 @@ importers:
         specifier: ^2.17.3
         version: 2.17.3
       soap:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.1.7
+        version: 1.1.7
       tar:
         specifier: ^7.4.3
         version: 7.4.3
@@ -995,8 +995,8 @@ packages:
   axios-ntlm@1.4.2:
     resolution: {integrity: sha512-8mS/uhmSWiRBiFKQvysPbX1eDBp6e+eXskmasuAXRHrn1Zjgji3O/oGXzXLw7tOhyD9nho1vGjZ2OYOD3cCvHg==}
 
-  axios@1.7.7:
-    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
+  axios@1.7.9:
+    resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -1088,8 +1088,8 @@ packages:
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
-  debug@4.3.7:
-    resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
+  debug@4.4.0:
+    resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -1293,8 +1293,8 @@ packages:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
 
-  formidable@3.5.1:
-    resolution: {integrity: sha512-WJWKelbRHN41m5dumb0/k8TeAx7Id/y3a+Z7QfhxP/htI9Js5zYaEDtG8uMgG0vM0lOlqnmjE99/kfpOYi/0Og==}
+  formidable@3.5.2:
+    resolution: {integrity: sha512-Jqc1btCy3QzRbJaICGwKcBfGWuLADRerLzDqi2NwSt/UkXLsHJw2TVResiaoBufHVHy9aSgClOHCeJsSsFLTbg==}
 
   fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
@@ -1347,8 +1347,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hexoid@1.0.0:
-    resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==}
+  hexoid@2.0.0:
+    resolution: {integrity: sha512-qlspKUK7IlSQv2o+5I7yhUd7TxlOG2Vr5LTa3ve2XSNVKAL/n/u/7KLvKmFNimomDIKvZFXWHv0T12mv7rT8Aw==}
     engines: {node: '>=8'}
 
   html-escaper@2.0.2:
@@ -1815,8 +1815,8 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
 
-  soap@1.1.0:
-    resolution: {integrity: sha512-5C9PT00v9KygPviQCSuwCobeERV+zQV0t0qUPW6kAw3Vs69UmG64h2zJhMcK/NNOMmUnVEOnHevMfCXc68O2Vw==}
+  soap@1.1.7:
+    resolution: {integrity: sha512-zKNMtlZhnqhW0jv5z8qVE5A/1Vw/HKXnIFe2bss8s/+tqub4uLU9r20A4mTfiluePHABvm7p2YQjyvFBJjIf9A==}
     engines: {node: '>=14.0.0'}
 
   source-map-js@1.2.1:
@@ -2525,7 +2525,7 @@ snapshots:
   '@eslint/config-array@0.19.0':
     dependencies:
       '@eslint/object-schema': 2.1.4
-      debug: 4.3.7
+      debug: 4.4.0
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -2535,7 +2535,7 @@ snapshots:
   '@eslint/eslintrc@3.2.0':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.7
+      debug: 4.4.0
       espree: 10.3.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -2733,7 +2733,7 @@ snapshots:
       '@typescript-eslint/types': 8.18.1
       '@typescript-eslint/typescript-estree': 8.18.1(typescript@5.7.2)
       '@typescript-eslint/visitor-keys': 8.18.1
-      debug: 4.3.7
+      debug: 4.4.0
       eslint: 9.17.0
       typescript: 5.7.2
     transitivePeerDependencies:
@@ -2748,7 +2748,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 8.18.1(typescript@5.7.2)
       '@typescript-eslint/utils': 8.18.1(eslint@9.17.0)(typescript@5.7.2)
-      debug: 4.3.7
+      debug: 4.4.0
       eslint: 9.17.0
       ts-api-utils: 1.4.3(typescript@5.7.2)
       typescript: 5.7.2
@@ -2761,7 +2761,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.18.1
       '@typescript-eslint/visitor-keys': 8.18.1
-      debug: 4.3.7
+      debug: 4.4.0
       fast-glob: 3.3.2
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -2791,7 +2791,7 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
-      debug: 4.3.7
+      debug: 4.4.0
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 5.0.6
@@ -2890,18 +2890,18 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios-ntlm@1.4.2(debug@4.3.7):
+  axios-ntlm@1.4.2(debug@4.4.0):
     dependencies:
-      axios: 1.7.7(debug@4.3.7)
+      axios: 1.7.9(debug@4.4.0)
       des.js: 1.1.0
       dev-null: 0.1.1
       js-md4: 0.3.2
     transitivePeerDependencies:
       - debug
 
-  axios@1.7.7(debug@4.3.7):
+  axios@1.7.9(debug@4.4.0):
     dependencies:
-      follow-redirects: 1.15.6(debug@4.3.7)
+      follow-redirects: 1.15.6(debug@4.4.0)
       form-data: 4.0.0
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -2986,7 +2986,7 @@ snapshots:
 
   date-fns@4.1.0: {}
 
-  debug@4.3.7:
+  debug@4.4.0:
     dependencies:
       ms: 2.1.3
 
@@ -3139,7 +3139,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.3.7
+      debug: 4.4.0
       escape-string-regexp: 4.0.0
       eslint-scope: 8.2.0
       eslint-visitor-keys: 4.2.0
@@ -3242,9 +3242,9 @@ snapshots:
 
   flatted@3.3.1: {}
 
-  follow-redirects@1.15.6(debug@4.3.7):
+  follow-redirects@1.15.6(debug@4.4.0):
     optionalDependencies:
-      debug: 4.3.7
+      debug: 4.4.0
 
   foreground-child@3.1.1:
     dependencies:
@@ -3257,10 +3257,10 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
-  formidable@3.5.1:
+  formidable@3.5.2:
     dependencies:
       dezalgo: 1.0.4
-      hexoid: 1.0.0
+      hexoid: 2.0.0
       once: 1.4.0
 
   fs-extra@7.0.1:
@@ -3317,7 +3317,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hexoid@1.0.0: {}
+  hexoid@2.0.0: {}
 
   html-escaper@2.0.2: {}
 
@@ -3371,7 +3371,7 @@ snapshots:
   istanbul-lib-source-maps@5.0.6:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
-      debug: 4.3.7
+      debug: 4.4.0
       istanbul-lib-coverage: 3.2.2
     transitivePeerDependencies:
       - supports-color
@@ -3515,7 +3515,7 @@ snapshots:
 
   nock@13.5.6:
     dependencies:
-      debug: 4.3.7
+      debug: 4.4.0
       json-stringify-safe: 5.0.1
       propagate: 2.0.1
     transitivePeerDependencies:
@@ -3710,12 +3710,12 @@ snapshots:
 
   slash@3.0.0: {}
 
-  soap@1.1.0:
+  soap@1.1.7:
     dependencies:
-      axios: 1.7.7(debug@4.3.7)
-      axios-ntlm: 1.4.2(debug@4.3.7)
-      debug: 4.3.7
-      formidable: 3.5.1
+      axios: 1.7.9(debug@4.4.0)
+      axios-ntlm: 1.4.2(debug@4.4.0)
+      debug: 4.4.0
+      formidable: 3.5.2
       get-stream: 6.0.1
       lodash: 4.17.21
       sax: 1.4.1
@@ -3848,7 +3848,7 @@ snapshots:
       cac: 6.7.14
       chokidar: 4.0.1
       consola: 3.2.3
-      debug: 4.3.7
+      debug: 4.4.0
       esbuild: 0.24.0
       joycon: 3.1.1
       picocolors: 1.1.1
@@ -3905,7 +3905,7 @@ snapshots:
   vite-node@2.1.8(@types/node@18.19.64):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.7
+      debug: 4.4.0
       es-module-lexer: 1.5.4
       pathe: 1.1.2
       vite: 5.4.11(@types/node@18.19.64)
@@ -3939,7 +3939,7 @@ snapshots:
       '@vitest/spy': 2.1.8
       '@vitest/utils': 2.1.8
       chai: 5.1.2
-      debug: 4.3.7
+      debug: 4.4.0
       expect-type: 1.1.0
       magic-string: 0.30.13
       pathe: 1.1.2
