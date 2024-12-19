@@ -1,5 +1,41 @@
 # @dgac/nmb2b-client
 
+## 1.4.0
+
+### Minor Changes
+
+- [#163](https://github.com/DGAC/nmb2b-client-js/pull/163) [`28b3764`](https://github.com/DGAC/nmb2b-client-js/commit/28b3764f4d7a22416e787f53fbd8d754fdf876a6) Thanks [@kouak](https://github.com/kouak)! - Removed extraneous exports for old `PublishSubscribe` API from `package.json`.
+  Fix invalid export for `utils` in CommonJS environment.
+  Fix `package.json#repository` property.
+
+### Patch Changes
+
+- [#173](https://github.com/DGAC/nmb2b-client-js/pull/173) [`d2f3253`](https://github.com/DGAC/nmb2b-client-js/commit/d2f3253c8065735bc74238d7c6ace030bb57372c) Thanks [@kouak](https://github.com/kouak)! - Changesets v2.27.10
+
+- [#169](https://github.com/DGAC/nmb2b-client-js/pull/169) [`5c35994`](https://github.com/DGAC/nmb2b-client-js/commit/5c35994156fba6bb2e25d5afae54692832864844) Thanks [@kouak](https://github.com/kouak)! - Axios v1.7.7
+
+- [#172](https://github.com/DGAC/nmb2b-client-js/pull/172) [`d59b4c9`](https://github.com/DGAC/nmb2b-client-js/commit/d59b4c9fd100e2b3ea4ea7f6fe7bca3c7fe96621) Thanks [@kouak](https://github.com/kouak)! - Update micromatch v4.0.8 to fix CVE
+
+- [#179](https://github.com/DGAC/nmb2b-client-js/pull/179) [`8d81e8d`](https://github.com/DGAC/nmb2b-client-js/commit/8d81e8d0643a2c103d092fff706edb40cf9ccaaa) Thanks [@kouak](https://github.com/kouak)! - vitest v2.1.8
+
+- [#170](https://github.com/DGAC/nmb2b-client-js/pull/170) [`dab435c`](https://github.com/DGAC/nmb2b-client-js/commit/dab435cc0fb6e9808b249f9bd5f9cb6ce0fd024c) Thanks [@kouak](https://github.com/kouak)! - eslint v9.15.0, typescript 5.6.3
+
+- [#176](https://github.com/DGAC/nmb2b-client-js/pull/176) [`efe05c5`](https://github.com/DGAC/nmb2b-client-js/commit/efe05c5b7dea4aa379c785a89a4e27590ee1088c) Thanks [@kouak](https://github.com/kouak)! - date-fns v4
+
+- [#171](https://github.com/DGAC/nmb2b-client-js/pull/171) [`112eebd`](https://github.com/DGAC/nmb2b-client-js/commit/112eebd2e7a8abdb22faa86ed3accf8496f79010) Thanks [@kouak](https://github.com/kouak)! - Vitest v2.1.5, tsx v4.19.2, tsup v8.3.5
+
+- [#182](https://github.com/DGAC/nmb2b-client-js/pull/182) [`61bf748`](https://github.com/DGAC/nmb2b-client-js/commit/61bf748c2d50e968d429209f38d7a079a2f75175) Thanks [@kouak](https://github.com/kouak)! - Run main tests in node 22
+
+- [#177](https://github.com/DGAC/nmb2b-client-js/pull/177) [`de35e91`](https://github.com/DGAC/nmb2b-client-js/commit/de35e91e4028ff1320e338bf2e0968795145a45d) Thanks [@kouak](https://github.com/kouak)! - TypeScript v5.7
+
+- [#180](https://github.com/DGAC/nmb2b-client-js/pull/180) [`e03d09b`](https://github.com/DGAC/nmb2b-client-js/commit/e03d09bba81afe0c6ebf173f2f1a9cb5edd5e7ab) Thanks [@kouak](https://github.com/kouak)! - Update dev dependencies
+
+- [#175](https://github.com/DGAC/nmb2b-client-js/pull/175) [`a19ebe8`](https://github.com/DGAC/nmb2b-client-js/commit/a19ebe8d52f3b1341e6b8d7b894b52060ba4fad6) Thanks [@kouak](https://github.com/kouak)! - remeda v2.17.3, type-fest v4.27.0
+
+- [#184](https://github.com/DGAC/nmb2b-client-js/pull/184) [`087edb5`](https://github.com/DGAC/nmb2b-client-js/commit/087edb5a5cdd960e08fa8370547ee66595a86959) Thanks [@kouak](https://github.com/kouak)! - Update remeda / type-fest
+
+- [#181](https://github.com/DGAC/nmb2b-client-js/pull/181) [`210bfc4`](https://github.com/DGAC/nmb2b-client-js/commit/210bfc4bca80b813e97d5a0a29b8aaf5a93c30b8) Thanks [@kouak](https://github.com/kouak)! - soap v1.1.7, axios v1.7.9
+
 ## 1.3.1
 
 ### Patch Changes
