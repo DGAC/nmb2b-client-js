@@ -95,7 +95,7 @@
     "@types/invariant": "^2.2.37",
     "@types/node": "^18.19.74",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^3.0.4",
+    "@vitest/coverage-v8": "^3.0.5",
     "dotenv": "^16.4.7",
     "eslint": "^9.19.0",
     "nock": "^14.0.0",
@@ -105,7 +105,7 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.22.0",
-    "vitest": "^3.0.4"
+    "vitest": "^3.0.5"
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.0",
