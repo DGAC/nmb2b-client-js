@@ -1,10 +1,10 @@
 import b2bOptions from '../tests/options.js';
 import {
-  makeB2BClient,
-  makeFlowClient,
-  makeFlightClient,
-  makeGeneralInformationClient,
-  makeAirspaceClient,
+  createB2BClient,
+  createFlowClient,
+  createFlightClient,
+  createAirspaceClient,
+  createGeneralInformationClient,
 } from './index.js';
 
 import type { Config } from './config.js';
@@ -12,8 +12,8 @@ import type { Config } from './config.js';
 import { describe, test, expect } from 'vitest';
 
 describe('Main API', () => {
-  test('makeB2BClient', async () => {
-    const b2bClient = await makeB2BClient(b2bOptions as Config);
+  test('createB2BClient', async () => {
+    const b2bClient = await createB2BClient(b2bOptions as Config);
     expect(b2bClient).toBeDefined();
     expect(b2bClient.Airspace).toBeDefined();
     expect(b2bClient.Flight).toBeDefined();
@@ -22,10 +22,10 @@ describe('Main API', () => {
   });
 
   test.each([
-    makeAirspaceClient,
-    makeFlowClient,
-    makeFlightClient,
-    makeGeneralInformationClient,
+    createFlowClient,
+    createFlightClient,
+    createAirspaceClient,
+    createGeneralInformationClient,
   ])('%O', async (fn) => {
     const res = await fn(b2bOptions);
     expect(res).toBeDefined();

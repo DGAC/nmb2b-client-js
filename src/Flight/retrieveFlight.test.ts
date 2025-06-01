@@ -1,14 +1,14 @@
-import { inspect } from 'util';
-import { NMB2BError, makeFlightClient } from '../index.js';
-import b2bOptions from '../../tests/options.js';
-import type { FlightKeys } from './types.js';
-import type { SafeB2BDeserializedResponse } from '../index.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { expect, beforeAll, test, describe, assert } from 'vitest';
 import { add, sub } from 'date-fns';
+import { inspect } from 'util';
+import { assert, beforeAll, describe, expect, test } from 'vitest';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import { createFlightClient, NMB2BError } from '../index.js';
+import type { SafeB2BDeserializedResponse } from '../types.js';
+import type { FlightKeys } from './types.js';
 
 describe('retrieveFlight', async () => {
-  const Flight = await makeFlightClient(b2bOptions);
+  const Flight = await createFlightClient(b2bOptions);
 
   let knownFlight:
     | {

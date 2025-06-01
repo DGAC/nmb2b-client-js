@@ -1,12 +1,12 @@
 import { inspect } from 'util';
 import { assert, describe, expect, test } from 'vitest';
-import { NMB2BError, makeFlowClient } from '../index.js';
 import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import { NMB2BError, createFlowClient } from '../index.js';
 import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan.js';
 
 describe('retrieveSectorConfigurationPlan', async () => {
-  const Flow = await makeFlowClient(b2bOptions);
+  const Flow = await createFlowClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('LFEERMS', async () => {
     try {

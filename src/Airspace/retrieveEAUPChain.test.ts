@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { makeAirspaceClient } from '../index.js';
+import { createAirspaceClient } from '../index.js';
 import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 
 describe('retrieveEAUPChain', async () => {
-  const Airspace = await makeAirspaceClient(b2bOptions);
+  const Airspace = await createAirspaceClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('EAUP Retrieval', async () => {
     const res = await Airspace.retrieveEAUPChain({

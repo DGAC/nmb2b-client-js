@@ -1,11 +1,11 @@
-import { makeFlightClient } from '../index.js';
 import { add, sub } from 'date-fns';
+import { assert, describe, expect, test } from 'vitest';
 import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { describe, test, expect, assert } from 'vitest';
+import { createFlightClient } from '../index.js';
 
 describe('queryFlightsByAirspace', async () => {
-  const Flight = await makeFlightClient(b2bOptions);
+  const Flight = await createFlightClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('query in LFPG+', async () => {
     const trafficWindow = {

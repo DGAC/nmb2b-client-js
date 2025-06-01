@@ -23,7 +23,6 @@ import type {
 import type {
   AirNavigationUnitId,
   Colours,
-  Position as CommonPosition,
   Cost,
   Dataset,
   DateTimeMinute,
@@ -36,8 +35,11 @@ import type {
   DurationHourMinuteSecond,
   DurationMinute,
   FlightLevelM,
+  Latitude,
+  Longitude,
   NMList,
   NMSet,
+  Position,
   ReceivedOrSent,
   ReplyWithData,
   ShiftHourMinute,
@@ -1183,7 +1185,7 @@ export interface FlightRestriction {
   flightPlanProcessing: FlightPlanProcessing;
   restrictionId: RestrictionId;
   event: EntryExit;
-  position: CommonPosition;
+  position: Position;
   flightLevel: FlightLevel;
 }
 
@@ -1265,14 +1267,6 @@ export interface FourDPosition {
   position: Position;
   level: FlightLevel;
 }
-
-export interface Position {
-  latitude?: Latitude;
-  longitude?: Longitude;
-}
-
-export type Latitude = number;
-export type Longitude = number;
 
 export interface ActualTimeAtTarget {
   estimatedActualTimeAtTarget: DateTimeSecond;

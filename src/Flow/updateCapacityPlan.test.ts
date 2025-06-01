@@ -1,13 +1,13 @@
+import { add, startOfDay } from 'date-fns';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import { NMB2BError, makeFlowClient } from '../index.js';
 import b2bOptions from '../../tests/options.js';
+import { NMB2BError, createFlowClient } from '../index.js';
 import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan.js';
 import type { Result as CapacityPlanUpdateResult } from './updateCapacityPlan.js';
-import { add, startOfDay } from 'date-fns';
 
 describe('updateCapacityPlan', async () => {
-  const Flow = await makeFlowClient(b2bOptions);
+  const Flow = await createFlowClient(b2bOptions);
 
   test.skip('LFERMS', async () => {
     try {

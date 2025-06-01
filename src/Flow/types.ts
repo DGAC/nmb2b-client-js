@@ -1,37 +1,38 @@
 import type {
-  ReferenceLocation,
-  TrafficVolumeId,
-  AirspaceId,
-  TrafficVolumeIdWildcard,
-  TrafficVolumeSetIdWildcard,
-  FlightLevelRange,
-  TrafficVolumeSetId,
   AerodromeICAOId,
+  AirspaceId,
+  FlightLevelRange,
+  ReferenceLocation,
+  RunwayId,
+  TrafficVolumeId,
+  TrafficVolumeIdWildcard,
+  TrafficVolumeSetId,
+  TrafficVolumeSetIdWildcard,
   WithReferenceLocationOnPrefix,
   WithReferenceLocationOnPrefixOptional,
 } from '../Airspace/types.js';
 
 import type {
-  DateTimeMinutePeriod,
-  DurationHourMinute,
-  Dataset,
-  DateYearMonthDay,
-  PlanDataId,
-  NMSet,
-  NMMap,
-  DistanceM,
-  DateTimeSecond,
-  UserId,
   AirNavigationUnitId,
+  Dataset,
   DateTimeMinute,
+  DateTimeMinutePeriod,
+  DateTimeSecond,
+  DateYearMonthDay,
+  DistanceM,
+  DurationHourMinute,
+  NMMap,
+  NMSet,
+  PlanDataId,
   ReplyWithData,
+  UserId,
 } from '../Common/types.js';
 
 import type {
-  TrafficType,
   FlightKeys,
-  IFPLId,
   GroupReroutingIndicator,
+  IFPLId,
+  TrafficType,
 } from '../Flight/types.js';
 
 export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
@@ -772,8 +773,6 @@ export interface RunwayConfigurationPlan extends TacticalConfigurationPlan {
   nmSchedule?: NMSet<RunwayConfigurationPlanSchedule>;
   clientSchedule?: NMSet<RunwayConfigurationPlanSchedule>;
 }
-
-export type RunwayId = string; // ([0-9]{2}([A-Z]|( )){0,1})
 
 export interface RunwayConfigurationPlanSchedule {
   applicabilityPeriod: DateTimeMinutePeriod;

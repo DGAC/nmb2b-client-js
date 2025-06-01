@@ -1,10 +1,10 @@
 import { beforeAll, describe, expect, test } from 'vitest';
 import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { makeAirspaceClient } from '../index.js';
+import { createAirspaceClient } from '../index.js';
 
 describe('retrieveAUP', async () => {
-  const Airspace = await makeAirspaceClient(b2bOptions);
+  const Airspace = await createAirspaceClient(b2bOptions);
 
   let AUPSummaryIds: undefined | Array<string>;
 
