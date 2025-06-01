@@ -14,61 +14,59 @@
     "url": "git+https://github.com/DGAC/nmb2b-client-js.git"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "type": "module",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "module-sync": "./dist/index.js"
     },
     "./package.json": "./package.json",
     "./security": {
       "import": "./dist/security.js",
-      "require": "./dist/security.cjs"
+      "module-sync": "./dist/security.js"
     },
     "./config": {
       "import": "./dist/config.js",
-      "require": "./dist/config.cjs"
+      "module-sync": "./dist/config.js"
     },
     "./Airspace": {
       "import": "./dist/Airspace/index.js",
-      "require": "./dist/Airspace/index.cjs"
+      "module-sync": "./dist/Airspace/index.js"
     },
     "./Airspace/types": {
       "import": "./dist/Airspace/types.js",
-      "require": "./dist/Airspace/types.cjs"
+      "module-sync": "./dist/Airspace/types.js"
     },
     "./Flight": {
       "import": "./dist/Flight/index.js",
-      "require": "./dist/Flight/index.cjs"
+      "module-sync": "./dist/Flight/index.js"
     },
     "./Flight/types": {
       "import": "./dist/Flight/types.js",
-      "require": "./dist/Flight/types.cjs"
+      "module-sync": "./dist/Flight/types.js"
     },
     "./Flow": {
       "import": "./dist/Flow/index.js",
-      "require": "./dist/Flow/index.cjs"
+      "module-sync": "./dist/Flow/index.js"
     },
     "./Flow/types": {
       "import": "./dist/Flow/types.js",
-      "require": "./dist/Flow/types.cjs"
+      "module-sync": "./dist/Flow/types.js"
     },
     "./GeneralInformation": {
       "import": "./dist/GeneralInformation/index.js",
-      "require": "./dist/GeneralInformation/index.cjs"
+      "module-sync": "./dist/GeneralInformation/index.js"
     },
     "./GeneralInformation/types": {
       "import": "./dist/GeneralInformation/types.js",
+      "module-sync": "./dist/GeneralInformation/types.js",
       "require": "./dist/GeneralInformation/types.cjs"
     },
     "./utils": {
       "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.cjs"
+      "module-sync": "./dist/utils/index.js"
     }
   },
   "scripts": {
@@ -76,7 +74,7 @@
     "prepack": "pnpm build",
     "downloadWSDL": "tsx ./scripts/downloadWSDL.mts",
     "clean": "rimraf dist",
-    "build": "tsup-node",
+    "build": "tsdown",
     "release": "pnpm build && changeset publish",
     "lint": "eslint --max-warnings=0",
     "test": "vitest",
@@ -101,7 +99,7 @@
     "nock": "^14.0.1",
     "prettier": "^3.5.3",
     "rimraf": "^5.0.10",
-    "tsup": "^8.4.0",
+    "tsdown": "^0.12.5",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",
@@ -122,7 +120,7 @@
   "publishConfig": {
     "provenance": true
   },
-  "packageManager": "pnpm@10.6.3+sha512.bb45e34d50a9a76e858a95837301bfb6bd6d35aea2c5d52094fa497a467c43f5c440103ce2511e9e0a2f89c3d6071baac3358fc68ac6fb75e2ceb3d2736065e6",
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"

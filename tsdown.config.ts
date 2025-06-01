@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
 export default defineConfig({
   entry: [
@@ -18,10 +18,5 @@ export default defineConfig({
     'src/PublishSubscribe/types.ts',
   ],
   sourcemap: true,
-  clean: true,
-  target: 'node18',
-  dts: true,
   outDir: 'dist',
-  splitting: false,
-  format: ['cjs', 'esm'],
 });
