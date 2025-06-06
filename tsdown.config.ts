@@ -18,5 +18,7 @@ export default defineConfig({
     'src/PublishSubscribe/types.ts',
   ],
   sourcemap: true,
+  dts: true,
   outDir: 'dist',
+  unbundle: true,
 });

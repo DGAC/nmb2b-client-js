@@ -99,7 +99,7 @@
     "nock": "^14.0.1",
     "prettier": "^3.5.3",
     "rimraf": "^5.0.10",
-    "tsdown": "^0.12.5",
+    "tsdown": "^0.12.7",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",
