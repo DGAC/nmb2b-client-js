@@ -61,8 +61,7 @@
     },
     "./GeneralInformation/types": {
       "import": "./dist/GeneralInformation/types.js",
-      "module-sync": "./dist/GeneralInformation/types.js",
-      "require": "./dist/GeneralInformation/types.cjs"
+      "module-sync": "./dist/GeneralInformation/types.js"
     },
     "./utils": {
       "import": "./dist/utils/index.js",
