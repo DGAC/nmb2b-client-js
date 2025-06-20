@@ -1,9 +1,9 @@
 import { inspect } from 'util';
-import { NMB2BError, makeFlightClient } from '..';
-import b2bOptions from '../../tests/options';
-import type { FlightKeys } from './types';
-import type { SafeB2BDeserializedResponse } from '../index';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { NMB2BError, makeFlightClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import type { FlightKeys } from './types.js';
+import type { SafeB2BDeserializedResponse } from '../index.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { expect, beforeAll, test, describe, assert } from 'vitest';
 import { add, sub } from 'date-fns';
 

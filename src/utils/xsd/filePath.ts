@@ -1,12 +1,12 @@
 import { UTCDateMini } from '@date-fns/utc';
 import axios from 'axios';
 import { format } from 'date-fns';
-import { getEndpoint } from '../../config';
-import type { B2BFlavour } from '../../constants';
-import { B2B_VERSION } from '../../constants';
-import type { Security } from '../../security';
-import { timeFormatWithSeconds } from '../timeFormats';
-import { createAxiosConfig } from './createAxiosConfig';
+import { getEndpoint } from '../../config.js';
+import type { B2BFlavour } from '../../constants.js';
+import { B2B_VERSION } from '../../constants.js';
+import type { Security } from '../../security.js';
+import { timeFormatWithSeconds } from '../timeFormats.js';
+import { createAxiosConfig } from './createAxiosConfig.js';
 
 const makeQuery = ({ version }: { version: string }) => `
 <soap:Envelope

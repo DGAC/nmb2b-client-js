@@ -5,14 +5,14 @@ import {
   NMB2BError,
   makeFlightClient,
   makeFlowClient,
-} from '..';
+} from '../index.js';
 
-import b2bOptions from '../../tests/options';
-import type { Regulation } from '../Flow/types';
+import b2bOptions from '../../tests/options.js';
+import type { Regulation } from '../Flow/types.js';
 import { assert, beforeAll, describe, expect, test } from 'vitest';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { sub, add, startOfHour } from 'date-fns';
-import { extractReferenceLocation } from '../utils';
+import { extractReferenceLocation } from '../utils/index.js';
 
 describe('queryFlightsByMeasure', async () => {
   let measure: undefined | SafeB2BDeserializedResponse<Regulation>;

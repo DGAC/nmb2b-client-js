@@ -1,10 +1,10 @@
 import { inspect } from 'util';
 import { assert, describe, expect, test } from 'vitest';
-import { NMB2BError, makeFlowClient } from '..';
-import b2bOptions from '../../tests/options';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
-import type { RegulationListReply } from './queryRegulations';
-import { extractReferenceLocation } from '../utils/extractReferenceLocation';
+import { NMB2BError, makeFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import type { RegulationListReply } from './queryRegulations.js';
+import { extractReferenceLocation } from '../utils/extractReferenceLocation.js';
 import { add, startOfHour, sub } from 'date-fns';
 
 describe('queryRegulations', async () => {

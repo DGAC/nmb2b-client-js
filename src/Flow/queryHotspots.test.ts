@@ -1,8 +1,8 @@
 import { inspect } from 'util';
-import { makeFlowClient, NMB2BError } from '..';
-import b2bOptions from '../../tests/options';
+import { makeFlowClient, NMB2BError } from '../index.js';
+import b2bOptions from '../../tests/options.js';
 import { describe, test } from 'vitest';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 
 describe('queryHotspots', async () => {
   const Flow = await makeFlowClient(b2bOptions);

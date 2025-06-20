@@ -1,7 +1,7 @@
-import type { Security } from './security';
-import { isValidSecurity } from './security';
-import type { B2BFlavour } from './constants';
-import { B2B_VERSION, B2BFlavours } from './constants';
+import type { Security } from './security.js';
+import { isValidSecurity } from './security.js';
+import type { B2BFlavour } from './constants.js';
+import { B2B_VERSION, B2BFlavours } from './constants.js';
 import invariant from 'invariant';
 import { URL } from 'url';
 import type { Client as SoapClient } from 'soap';

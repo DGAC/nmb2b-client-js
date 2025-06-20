@@ -1,7 +1,7 @@
-import { makeFlowClient } from '..';
-import b2bOptions from '../../tests/options';
-import type { Result as OTMVPlanUpdateResult } from './updateOTMVPlan';
-import type { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan';
+import { makeFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import type { Result as OTMVPlanUpdateResult } from './updateOTMVPlan.js';
+import type { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan.js';
 import { describe, expect, beforeAll, afterAll, test, assert } from 'vitest';
 import { add, startOfDay } from 'date-fns';
 import { UTCDateMini } from '@date-fns/utc';

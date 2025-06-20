@@ -1,6 +1,6 @@
-import { makeFlightClient } from '..';
-import b2bOptions from '../../tests/options';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { makeFlightClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { describe, expect, test } from 'vitest';
 import { add, sub } from 'date-fns';
 

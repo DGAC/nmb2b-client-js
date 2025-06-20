@@ -1,7 +1,7 @@
-import { makeFlightClient } from '..';
+import { makeFlightClient } from '../index.js';
 import { add, sub } from 'date-fns';
-import b2bOptions from '../../tests/options';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { describe, test, expect, assert } from 'vitest';
 
 describe('queryFlightsByAirspace', async () => {
@@ -58,9 +58,7 @@ describe('queryFlightsByAirspace', async () => {
       }
 
       if (!flight.flightId.keys?.aerodromeOfDestination) {
-        expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(
-          true,
-        );
+        expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(true);
       }
 
       expect(flight).toMatchObject({

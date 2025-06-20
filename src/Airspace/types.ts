@@ -1,3 +1,17 @@
+import type {
+  AirNavigationUnitId,
+  Bearing,
+  DateTimeMinute,
+  DateTimeMinutePeriod,
+  DateTimeSecond,
+  DateYearMonthDay,
+  DateYearMonthDayPeriod,
+  DistanceNM,
+  LastUpdate,
+  Position,
+  ReplyWithData,
+} from '../Common/types.js';
+
 export type RouteId = string; // (UALPHA|DIGIT){1,7}
 export type PublishedPointId = string; // (UALPHA|DIGIT){1,5}
 export type AerodromeSetId = string; // ANY{1,8}
@@ -42,20 +56,6 @@ export interface AIXMFile {
   releaseTime: DateTimeSecond;
   type: string;
 }
-
-import type {
-  AirNavigationUnitId,
-  Bearing,
-  DateTimeMinute,
-  DateTimeMinutePeriod,
-  DateTimeSecond,
-  DateYearMonthDay,
-  DateYearMonthDayPeriod,
-  DistanceNM,
-  LastUpdate,
-  Position,
-  ReplyWithData,
-} from '../Common/types';
 
 export interface AUPChain {
   chainDate: DateYearMonthDay;

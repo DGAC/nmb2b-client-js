@@ -1,13 +1,13 @@
-import b2bOptions from '../tests/options';
+import b2bOptions from '../tests/options.js';
 import {
   makeB2BClient,
   makeFlowClient,
   makeFlightClient,
   makeGeneralInformationClient,
   makeAirspaceClient,
-} from '.';
+} from './index.js';
 
-import type { Config } from './config';
+import type { Config } from './config.js';
 
 import { describe, test, expect } from 'vitest';
 

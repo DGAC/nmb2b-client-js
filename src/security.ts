@@ -1,14 +1,14 @@
 import invariant from 'invariant';
-import d from './utils/debug';
+import d from './utils/debug.js';
 const debug = d('security');
-import type { Config } from './config';
+import type { Config } from './config.js';
 import type { ISecurity } from 'soap';
 import {
   ClientSSLSecurity,
   ClientSSLSecurityPFX,
   BasicAuthSecurity,
 } from 'soap';
-import fs from 'fs';
+import fs from 'node:fs';
 
 interface PfxSecurity {
   pfx: Buffer;

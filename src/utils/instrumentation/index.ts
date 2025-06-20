@@ -1,6 +1,6 @@
 // import withLog from './withLog';
-import type { SoapOptions } from '../../soap';
-import { withLog } from './withLog';
+import type { SoapOptions } from '../../soap.js';
+import { withLog } from './withLog.js';
 import { pipe } from 'remeda';
 
 type SoapQuery<Input, Output> = (

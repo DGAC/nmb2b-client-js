@@ -1,9 +1,9 @@
 import { inspect } from 'util';
-import { NMB2BError, makeFlowClient } from '..';
-import b2bOptions from '../../tests/options';
-import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
+import { NMB2BError, makeFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan.js';
 import { describe, test, expect, assert } from 'vitest';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 
 describe('retrieveCapacityPlan', async () => {
   const Flow = await makeFlowClient(b2bOptions);

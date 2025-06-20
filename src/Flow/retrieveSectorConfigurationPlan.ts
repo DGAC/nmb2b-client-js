@@ -1,23 +1,23 @@
-import type { FlowClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import type { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
-import { instrument } from '../utils/instrumentation';
+import type { FlowClient } from './index.js';
+import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import type { SoapOptions } from '../soap.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import { instrument } from '../utils/instrumentation/index.js';
 
 import type {
   SectorConfigurationPlanRetrievalRequest,
   SectorConfigurationPlanRetrievalReply,
   KnownConfigurations,
   SectorConfigurationId,
-} from './types';
+} from './types.js';
+
+import type { AirspaceId } from '../Airspace/types.js';
+import type { SafeB2BDeserializedResponse } from '../index.js';
 
 export type {
   SectorConfigurationPlanRetrievalRequest,
   SectorConfigurationPlanRetrievalReply,
-} from './types';
-
-import type { AirspaceId } from '../Airspace/types';
-import type { SafeB2BDeserializedResponse } from '..';
+} from './types.js';
 
 type Values = SectorConfigurationPlanRetrievalRequest;
 type Result = SectorConfigurationPlanRetrievalReply;

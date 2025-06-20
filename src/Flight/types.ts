@@ -1,3 +1,68 @@
+import type {
+  AerodromeICAOId,
+  AerodromeOrPublishedPointId,
+  AerodromeSetId,
+  AirSpeed,
+  AirspaceId,
+  AirspaceType,
+  FIRICAOId,
+  FlightLevel,
+  FlightPlanProcessing,
+  ICAOPoint,
+  LoadState,
+  NetworkAddress,
+  NonPublishedPoint,
+  PublishedPointId,
+  RestrictionId,
+  RouteOrTerminalProcedure,
+  RunwayId,
+  TerminalProcedure,
+  TrafficVolumeId,
+} from '../Airspace/types.js';
+
+import type {
+  AirNavigationUnitId,
+  Colours,
+  Position as CommonPosition,
+  Cost,
+  Dataset,
+  DateTimeMinute,
+  DateTimeMinutePeriod,
+  DateTimeSecond,
+  DistanceM,
+  DistanceNM,
+  Duration,
+  DurationHourMinute,
+  DurationHourMinuteSecond,
+  DurationMinute,
+  FlightLevelM,
+  NMList,
+  NMSet,
+  ReceivedOrSent,
+  ReplyWithData,
+  ShiftHourMinute,
+  SignedDurationHourMinuteSecond,
+  TimeHourMinutePeriod,
+  WeightKg,
+} from '../Common/types.js';
+
+import type {
+  CountsCalculationType,
+  CountsInterval,
+  FlightAtfcmMeasureLocation,
+  FlightHotspotLocation,
+  FlightMCDMInfo,
+  FlightRegulationLocation,
+  Flow,
+  FlowId,
+  MeasureId,
+  OtmvStatus,
+  RegulationCause,
+  RegulationId,
+  ReroutingId,
+  TrafficVolumeScenarios,
+} from '../Flow/types.js';
+
 export type IFPLId = string; // UALPHA{2}DIGIT{8}
 export type FlightDataset = 'flight' | 'flightPlan' | 'flightPlanHistory';
 export type FlightIdentificationInput =
@@ -54,71 +119,6 @@ export type ATFMMessageType =
   | 'SRM'
   | 'SWM'
   | 'UNK';
-
-import type {
-  AerodromeICAOId,
-  AerodromeOrPublishedPointId,
-  AerodromeSetId,
-  AirSpeed,
-  AirspaceId,
-  AirspaceType,
-  FIRICAOId,
-  FlightLevel,
-  FlightPlanProcessing,
-  ICAOPoint,
-  LoadState,
-  NetworkAddress,
-  NonPublishedPoint,
-  PublishedPointId,
-  RestrictionId,
-  RouteOrTerminalProcedure,
-  RunwayId,
-  TerminalProcedure,
-  TrafficVolumeId,
-} from '../Airspace/types';
-
-import type {
-  AirNavigationUnitId,
-  Colours,
-  Position as CommonPosition,
-  Cost,
-  Dataset,
-  DateTimeMinute,
-  DateTimeMinutePeriod,
-  DateTimeSecond,
-  DistanceM,
-  DistanceNM,
-  Duration,
-  DurationHourMinute,
-  DurationHourMinuteSecond,
-  DurationMinute,
-  FlightLevelM,
-  NMList,
-  NMSet,
-  ReceivedOrSent,
-  ReplyWithData,
-  ShiftHourMinute,
-  SignedDurationHourMinuteSecond,
-  TimeHourMinutePeriod,
-  WeightKg,
-} from '../Common/types';
-
-import type {
-  CountsCalculationType,
-  CountsInterval,
-  FlightAtfcmMeasureLocation,
-  FlightHotspotLocation,
-  FlightMCDMInfo,
-  FlightRegulationLocation,
-  Flow,
-  FlowId,
-  MeasureId,
-  OtmvStatus,
-  RegulationCause,
-  RegulationId,
-  ReroutingId,
-  TrafficVolumeScenarios,
-} from '../Flow/types';
 
 export interface FlightKeys {
   aircraftId: ExtendedAircraftICAOId;

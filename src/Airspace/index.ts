@@ -1,8 +1,19 @@
 import { createClient, type Client as SoapClient } from 'soap';
-import type { Config } from '../config';
-import { getWSDLPath } from '../constants';
-import { prepareSecurity } from '../security';
-import { deserializer as customDeserializer } from '../utils/transformers';
+import type { Config } from '../config.js';
+import { getWSDLPath } from '../constants.js';
+import { prepareSecurity } from '../security.js';
+import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+
+import type { Resolver as QueryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.js';
+import queryCompleteAIXMDatasets from './queryCompleteAIXMDatasets.js';
+import type { Resolver as RetrieveAUP } from './retrieveAUP.js';
+import retrieveAUP from './retrieveAUP.js';
+import type { Resolver as RetrieveAUPChain } from './retrieveAUPChain.js';
+import retrieveAUPChain from './retrieveAUPChain.js';
+import type { Resolver as RetrieveEAUPChain } from './retrieveEAUPChain.js';
+import retrieveEAUPChain from './retrieveEAUPChain.js';
+
+import type { BaseServiceInterface } from '../Common/ServiceInterface.js';
 
 export const getWSDL = ({
   XSD_PATH,
@@ -44,17 +55,6 @@ function createAirspaceServices(config: Config): Promise<AirspaceClient> {
     });
   });
 }
-
-import type { Resolver as QueryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets';
-import queryCompleteAIXMDatasets from './queryCompleteAIXMDatasets';
-import type { Resolver as RetrieveAUP } from './retrieveAUP';
-import retrieveAUP from './retrieveAUP';
-import type { Resolver as RetrieveAUPChain } from './retrieveAUPChain';
-import retrieveAUPChain from './retrieveAUPChain';
-import type { Resolver as RetrieveEAUPChain } from './retrieveEAUPChain';
-import retrieveEAUPChain from './retrieveEAUPChain';
-
-import type { BaseServiceInterface } from '../Common/ServiceInterface';
 
 export interface AirspaceService extends BaseServiceInterface {
   queryCompleteAIXMDatasets: QueryCompleteAIXMDatasets;

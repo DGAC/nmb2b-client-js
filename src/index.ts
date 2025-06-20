@@ -1,27 +1,27 @@
-import { isConfigValid, obfuscate } from './config';
-import type { B2BFlavour } from './constants';
-import type { Security } from './security';
-import d from './utils/debug';
-import { download as downloadWSDL } from './utils/xsd';
+import { isConfigValid, obfuscate } from './config.js';
+import type { B2BFlavour } from './constants.js';
+import type { Security } from './security.js';
+import d from './utils/debug.js';
+import { download as downloadWSDL } from './utils/xsd/index.js';
 const debug = d();
 
-import type { AirspaceService } from './Airspace';
-import { getAirspaceClient } from './Airspace';
-import type { FlightService } from './Flight';
-import { getFlightClient } from './Flight';
+import type { AirspaceService } from './Airspace/index.js';
+import { getAirspaceClient } from './Airspace/index.js';
+import type { FlightService } from './Flight/index.js';
+import { getFlightClient } from './Flight/index.js';
 
-import type { FlowService } from './Flow';
-import { getFlowClient } from './Flow';
-import type { GeneralInformationService } from './GeneralInformation';
-import { getGeneralInformationClient } from './GeneralInformation';
+import type { FlowService } from './Flow/index.js';
+import { getFlowClient } from './Flow/index.js';
+import type { GeneralInformationService } from './GeneralInformation/index.js';
+import { getGeneralInformationClient } from './GeneralInformation/index.js';
 
-export { AirspaceService } from './Airspace';
-export { FlightService } from './Flight';
-export { FlowService } from './Flow';
-export { GeneralInformationService } from './GeneralInformation';
-export { NMB2BError } from './utils/NMB2BError';
+export type { AirspaceService } from './Airspace/index.js';
+export type { FlightService } from './Flight/index.js';
+export type { FlowService } from './Flow/index.js';
+export type { GeneralInformationService } from './GeneralInformation/index.js';
+export { NMB2BError } from './utils/NMB2BError.js';
 
-import type { SoapDeserializer } from './utils/types';
+import type { SoapDeserializer } from './utils/types.js';
 
 export type SafeB2BDeserializedResponse<TResponsePart> =
   SoapDeserializer<TResponsePart>;

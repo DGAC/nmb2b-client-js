@@ -1,14 +1,3 @@
-export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
-export type RegulationId = string; // UALPHA(UALPHA|DIGIT){0,5}DIGIT{2}UALPHA{0,1}
-export type MeasureId =
-  | { REGULATION: RegulationId }
-  | { REROUTING: ReroutingId };
-export type FlowId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
-export type ScenarioId = string;
-export type SectorConfigurationId = string; // (UALPHA|DIGIT|.){1,6}
-export type PlanDataSource = 'AIRSPACE' | 'MEASURE' | 'NO_DATA' | 'TACTICAL';
-export type RegulationIdWildcard = string; // (UALPHA|DIGIT){1,8}|(UALPHA|DIGIT){0,7}*
-
 import type {
   ReferenceLocation,
   TrafficVolumeId,
@@ -20,7 +9,7 @@ import type {
   AerodromeICAOId,
   WithReferenceLocationOnPrefix,
   WithReferenceLocationOnPrefixOptional,
-} from '../Airspace/types';
+} from '../Airspace/types.js';
 
 import type {
   DateTimeMinutePeriod,
@@ -36,14 +25,25 @@ import type {
   AirNavigationUnitId,
   DateTimeMinute,
   ReplyWithData,
-} from '../Common/types';
+} from '../Common/types.js';
 
 import type {
   TrafficType,
   FlightKeys,
   IFPLId,
   GroupReroutingIndicator,
-} from '../Flight/types';
+} from '../Flight/types.js';
+
+export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
+export type RegulationId = string; // UALPHA(UALPHA|DIGIT){0,5}DIGIT{2}UALPHA{0,1}
+export type MeasureId =
+  | { REGULATION: RegulationId }
+  | { REROUTING: ReroutingId };
+export type FlowId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
+export type ScenarioId = string;
+export type SectorConfigurationId = string; // (UALPHA|DIGIT|.){1,6}
+export type PlanDataSource = 'AIRSPACE' | 'MEASURE' | 'NO_DATA' | 'TACTICAL';
+export type RegulationIdWildcard = string; // (UALPHA|DIGIT){1,8}|(UALPHA|DIGIT){0,7}*
 
 export type FlightRegulationLocation =
   WithReferenceLocationOnPrefix<'referenceLocation'> & {

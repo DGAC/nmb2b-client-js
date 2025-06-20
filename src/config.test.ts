@@ -1,4 +1,4 @@
-import { getEndpoint, getFileUrl, getFileEndpoint } from './config';
+import { getEndpoint, getFileUrl, getFileEndpoint } from './config.js';
 
 import { test, expect, describe } from 'vitest';
 

@@ -1,6 +1,6 @@
-import { makeGeneralInformationClient } from '..';
-import b2bOptions from '../../tests/options';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { makeGeneralInformationClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { describe, test, expect } from 'vitest';
 
 describe('queryNMB2BWSDLs', async () => {

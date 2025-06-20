@@ -1,18 +1,18 @@
-import type { FlowClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import type { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
-import { instrument } from '../utils/instrumentation';
+import type { FlowClient } from './index.js';
+import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import type { SoapOptions } from '../soap.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import { instrument } from '../utils/instrumentation/index.js';
 
 import type {
   CapacityPlanUpdateRequest,
   CapacityPlanUpdateReply,
-} from './types';
+} from './types.js';
 
 export type {
   CapacityPlanUpdateRequest,
   CapacityPlanUpdateReply,
-} from './types';
+} from './types.js';
 
 export type Values = CapacityPlanUpdateRequest;
 export type Result = CapacityPlanUpdateReply;
