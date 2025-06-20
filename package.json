@@ -14,69 +14,78 @@
     "url": "git+https://github.com/DGAC/nmb2b-client-js.git"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "type": "module",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "module-sync": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "./package.json": "./package.json",
     "./security": {
       "import": "./dist/security.js",
-      "require": "./dist/security.cjs"
+      "module-sync": "./dist/security.js",
+      "types": "./dist/security.d.ts"
     },
     "./config": {
       "import": "./dist/config.js",
-      "require": "./dist/config.cjs"
+      "module-sync": "./dist/config.js",
+      "types": "./dist/config.d.ts"
     },
     "./Airspace": {
       "import": "./dist/Airspace/index.js",
-      "require": "./dist/Airspace/index.cjs"
+      "module-sync": "./dist/Airspace/index.js",
+      "types": "./dist/Airspace/index.d.ts"
     },
     "./Airspace/types": {
       "import": "./dist/Airspace/types.js",
-      "require": "./dist/Airspace/types.cjs"
+      "module-sync": "./dist/Airspace/types.js",
+      "types": "./dist/Airspace/types.d.ts"
     },
     "./Flight": {
       "import": "./dist/Flight/index.js",
-      "require": "./dist/Flight/index.cjs"
+      "module-sync": "./dist/Flight/index.js",
+      "types": "./dist/Flight/index.d.ts"
     },
     "./Flight/types": {
       "import": "./dist/Flight/types.js",
-      "require": "./dist/Flight/types.cjs"
+      "module-sync": "./dist/Flight/types.js",
+      "types": "./dist/Flight/types.d.ts"
     },
     "./Flow": {
       "import": "./dist/Flow/index.js",
-      "require": "./dist/Flow/index.cjs"
+      "module-sync": "./dist/Flow/index.js",
+      "types": "./dist/Flow/index.d.ts"
     },
     "./Flow/types": {
       "import": "./dist/Flow/types.js",
-      "require": "./dist/Flow/types.cjs"
+      "module-sync": "./dist/Flow/types.js",
+      "types": "./dist/Flow/types.d.ts"
     },
     "./GeneralInformation": {
       "import": "./dist/GeneralInformation/index.js",
-      "require": "./dist/GeneralInformation/index.cjs"
+      "module-sync": "./dist/GeneralInformation/index.js",
+      "types": "./dist/GeneralInformation/index.d.ts"
     },
     "./GeneralInformation/types": {
       "import": "./dist/GeneralInformation/types.js",
-      "require": "./dist/GeneralInformation/types.cjs"
+      "module-sync": "./dist/GeneralInformation/types.js",
+      "types": "./dist/GeneralInformation/types.d.ts"
     },
     "./utils": {
       "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.cjs"
-    }
+      "module-sync": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepack": "pnpm build",
-    "downloadWSDL": "tsx ./scripts/downloadWSDL.mts",
+    "downloadWSDL": "tsx ./scripts/downloadWSDL.ts",
     "clean": "rimraf dist",
-    "build": "tsup-node",
+    "build": "tsdown",
     "release": "pnpm build && changeset publish",
     "lint": "eslint --max-warnings=0",
     "test": "vitest",
@@ -88,41 +97,41 @@
   ],
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.28.1",
-    "@eslint/js": "^9.22.0",
+    "@changesets/cli": "^2.29.5",
+    "@eslint/js": "^9.29.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
     "@types/invariant": "^2.2.37",
-    "@types/node": "^18.19.80",
+    "@types/node": "^20.19.1",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^3.0.8",
-    "dotenv": "^16.4.7",
-    "eslint": "^9.22.0",
-    "nock": "^14.0.1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.29.0",
+    "nock": "^14.0.5",
     "prettier": "^3.5.3",
-    "rimraf": "^5.0.10",
-    "tsup": "^8.4.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.1",
-    "vitest": "^3.0.8"
+    "rimraf": "^6.0.1",
+    "tsdown": "^0.12.8",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.1",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.0",
-    "axios": "^1.8.3",
+    "axios": "^1.10.0",
     "date-fns": "^4.1.0",
-    "debug": "^4.4.0",
+    "debug": "^4.4.1",
     "invariant": "^2.2.4",
     "proper-lockfile": "^4.1.2",
-    "remeda": "^2.21.2",
-    "soap": "^1.1.9",
+    "remeda": "^2.23.0",
+    "soap": "^1.1.12",
     "tar": "^7.4.3",
-    "type-fest": "^4.37.0"
+    "type-fest": "^4.41.0"
   },
   "publishConfig": {
     "provenance": true
   },
-  "packageManager": "pnpm@10.6.3+sha512.bb45e34d50a9a76e858a95837301bfb6bd6d35aea2c5d52094fa497a467c43f5c440103ce2511e9e0a2f89c3d6071baac3358fc68ac6fb75e2ceb3d2736065e6",
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"
