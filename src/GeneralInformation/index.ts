@@ -1,8 +1,16 @@
 import { createClient, type Client as SoapClient } from 'soap';
-import type { Config } from '../config';
-import { getWSDLPath } from '../constants';
-import { prepareSecurity } from '../security';
-import { deserializer as customDeserializer } from '../utils/transformers';
+import type { Config } from '../config.js';
+import { getWSDLPath } from '../constants.js';
+import { prepareSecurity } from '../security.js';
+import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+
+import type { Resolver as QueryNMB2BWSDLs } from './queryNMB2BWSDLs.js';
+import queryNMB2BWSDLs from './queryNMB2BWSDLs.js';
+
+import type { Resolver as RetrieveUserInformation } from './retrieveUserinformation.js';
+import retrieveUserInformation from './retrieveUserinformation.js';
+
+import type { BaseServiceInterface } from '../Common/ServiceInterface.js';
 
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
   getWSDLPath({ service: 'GeneralinformationServices', flavour, XSD_PATH });
@@ -40,14 +48,6 @@ function createGeneralInformationServices(
     }
   });
 }
-
-import type { Resolver as QueryNMB2BWSDLs } from './queryNMB2BWSDLs';
-import queryNMB2BWSDLs from './queryNMB2BWSDLs';
-
-import type { Resolver as RetrieveUserInformation } from './retrieveUserinformation';
-import retrieveUserInformation from './retrieveUserinformation';
-
-import type { BaseServiceInterface } from '../Common/ServiceInterface';
 
 export interface GeneralInformationService extends BaseServiceInterface {
   __soapClient: object;

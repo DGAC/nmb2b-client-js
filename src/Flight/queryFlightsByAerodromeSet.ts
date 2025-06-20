@@ -1,18 +1,18 @@
-import type { FlightClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import type { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
-import { instrument } from '../utils/instrumentation';
+import type { FlightClient } from './index.js';
+import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import type { SoapOptions } from '../soap.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import { instrument } from '../utils/instrumentation/index.js';
 
 import type {
   FlightListByAerodromeSetRequest,
   FlightListByAerodromeSetReply,
-} from './types';
+} from './types.js';
 
 export type {
   FlightListByAerodromeSetRequest,
   FlightListByAerodromeSetReply,
-} from './types';
+} from './types.js';
 
 type Values = FlightListByAerodromeSetRequest;
 type Result = FlightListByAerodromeSetReply;

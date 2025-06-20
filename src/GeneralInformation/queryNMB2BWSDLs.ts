@@ -1,10 +1,10 @@
-import type { GeneralInformationServiceClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import type { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
-import { instrument } from '../utils/instrumentation';
+import type { GeneralInformationServiceClient } from './index.js';
+import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import type { SoapOptions } from '../soap.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import { instrument } from '../utils/instrumentation/index.js';
 
-import type { NMB2BWSDLsReply, NMB2BWSDLsRequest } from './types';
+import type { NMB2BWSDLsReply, NMB2BWSDLsRequest } from './types.js';
 export type { NMB2BWSDLsReply, NMB2BWSDLsRequest };
 
 type Values = NMB2BWSDLsRequest;

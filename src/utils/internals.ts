@@ -1,5 +1,5 @@
-import type { Reply, ReplyStatus, Request } from '../Common/types';
-import { NMB2BError } from './NMB2BError';
+import type { Reply, ReplyStatus, Request } from '../Common/types.js';
+import { NMB2BError } from './NMB2BError.js';
 
 export function injectSendTime<
   T extends Record<string, any> | null | undefined,

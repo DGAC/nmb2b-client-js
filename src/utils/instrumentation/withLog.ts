@@ -1,5 +1,5 @@
-import type { Instrumentor } from './';
-import d from '../debug';
+import type { Instrumentor } from './index.js';
+import d from '../debug.js';
 
 export function withLog<Input, Output>(
   namespace: string,

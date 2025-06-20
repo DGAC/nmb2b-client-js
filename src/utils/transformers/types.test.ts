@@ -1,5 +1,5 @@
 import { fromAny } from '@total-typescript/shoehorn';
-import { types } from './types';
+import { types } from './types.js';
 import { test, expect, describe } from 'vitest';
 
 describe('serialization', () => {

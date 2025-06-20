@@ -1,12 +1,12 @@
-import type { SoapOptions } from '../soap';
-import { instrument } from '../utils/instrumentation';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import { prepareSerializer } from '../utils/transformers';
-import type { AirspaceClient } from './';
+import type { SoapOptions } from '../soap.js';
+import { instrument } from '../utils/instrumentation/index.js';
+import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import type { AirspaceClient } from './index.js';
 import type {
   EAUPChainRetrievalReply,
   EAUPChainRetrievalRequest,
-} from './types';
+} from './types.js';
 
 export type { EAUPChainRetrievalReply, EAUPChainRetrievalRequest };
 

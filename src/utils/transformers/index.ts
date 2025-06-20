@@ -1,5 +1,5 @@
-import { types } from './types';
-export { prepareSerializer } from './serializer';
+import { types } from './types.js';
+export { prepareSerializer } from './serializer.js';
 
 type T = typeof types;
 

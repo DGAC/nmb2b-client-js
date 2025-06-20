@@ -1,11 +1,17 @@
-import type { FlowClient } from './';
-import { injectSendTime, responseStatusHandler } from '../utils/internals';
-import type { SoapOptions } from '../soap';
-import { prepareSerializer } from '../utils/transformers';
-import { instrument } from '../utils/instrumentation';
+import type { FlowClient } from './index.js';
+import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import type { SoapOptions } from '../soap.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import { instrument } from '../utils/instrumentation/index.js';
 
-import type { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
-export type { OTMVPlanRetrievalRequest, OTMVPlanRetrievalReply } from './types';
+import type {
+  OTMVPlanRetrievalRequest,
+  OTMVPlanRetrievalReply,
+} from './types.js';
+export type {
+  OTMVPlanRetrievalRequest,
+  OTMVPlanRetrievalReply,
+} from './types.js';
 
 export type Values = OTMVPlanRetrievalRequest;
 export type Result = OTMVPlanRetrievalReply;

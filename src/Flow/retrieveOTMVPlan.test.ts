@@ -1,8 +1,8 @@
 import { inspect } from 'util';
-import { NMB2BError, makeFlowClient } from '..';
-import b2bOptions from '../../tests/options';
+import { NMB2BError, makeFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
 import { describe, test, expect, assert } from 'vitest';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 
 describe('retrieveOTMVPlan', async () => {
   const Flow = await makeFlowClient(b2bOptions);

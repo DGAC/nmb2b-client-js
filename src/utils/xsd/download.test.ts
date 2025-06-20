@@ -1,13 +1,13 @@
-import { randomUUID } from 'crypto';
-import fs from 'fs';
+import { randomUUID } from 'node:crypto';
+import fs from 'node:fs';
 import nock from 'nock';
-import path from 'path';
+import path from 'node:path';
 import { rimraf } from 'rimraf';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { getFileUrl } from '../../config';
-import { B2B_VERSION } from '../../constants';
-import { createDir as mkdirp } from '../fs';
-import { downloadFile } from './downloadFile';
+import { getFileUrl } from '../../config.js';
+import { B2B_VERSION } from '../../constants.js';
+import { createDir as mkdirp } from '../fs.js';
+import { downloadFile } from './downloadFile.js';
 import { fromPartial } from '@total-typescript/shoehorn';
 
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');

@@ -1,8 +1,33 @@
 import { type Client as SoapClient, createClient } from 'soap';
-import type { Config } from '../config';
-import { getWSDLPath } from '../constants';
-import { prepareSecurity } from '../security';
-import { deserializer as customDeserializer } from '../utils/transformers';
+import type { Config } from '../config.js';
+import { getWSDLPath } from '../constants.js';
+import { prepareSecurity } from '../security.js';
+import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+
+import type { Resolver as RetrieveFlight } from './retrieveFlight.js';
+import retrieveFlight from './retrieveFlight.js';
+
+import type { Resolver as QueryFlightsByAirspace } from './queryFlightsByAirspace.js';
+import queryFlightsByAirspace from './queryFlightsByAirspace.js';
+
+import type { Resolver as QueryFlightPlans } from './queryFlightPlans.js';
+import queryFlightPlans from './queryFlightPlans.js';
+
+import type { Resolver as QueryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume.js';
+import queryFlightsByTrafficVolume from './queryFlightsByTrafficVolume.js';
+
+import type { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure.js';
+import queryFlightsByMeasure from './queryFlightsByMeasure.js';
+
+import type { Resolver as QueryFlightsByAerodrome } from './queryFlightsByAerodrome.js';
+import queryFlightsByAerodrome from './queryFlightsByAerodrome.js';
+
+import type { Resolver as QueryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet.js';
+import queryFlightsByAerodromeSet from './queryFlightsByAerodromeSet.js';
+
+import type { BaseServiceInterface } from '../Common/ServiceInterface.js';
+import type { Resolver as QueryFlightsByAircraftOperator } from './queryFlightsByAircraftOperator.js';
+import queryFlightsByAircraftOperator from './queryFlightsByAircraftOperator.js';
 
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
   getWSDLPath({ service: 'FlightServices', flavour, XSD_PATH });
@@ -42,31 +67,6 @@ function createFlightServices(config: Config): Promise<FlightClient> {
     }
   });
 }
-
-import type { Resolver as RetrieveFlight } from './retrieveFlight';
-import retrieveFlight from './retrieveFlight';
-
-import type { Resolver as QueryFlightsByAirspace } from './queryFlightsByAirspace';
-import queryFlightsByAirspace from './queryFlightsByAirspace';
-
-import type { Resolver as QueryFlightPlans } from './queryFlightPlans';
-import queryFlightPlans from './queryFlightPlans';
-
-import type { Resolver as QueryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume';
-import queryFlightsByTrafficVolume from './queryFlightsByTrafficVolume';
-
-import type { Resolver as QueryFlightsByMeasure } from './queryFlightsByMeasure';
-import queryFlightsByMeasure from './queryFlightsByMeasure';
-
-import type { Resolver as QueryFlightsByAerodrome } from './queryFlightsByAerodrome';
-import queryFlightsByAerodrome from './queryFlightsByAerodrome';
-
-import type { Resolver as QueryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet';
-import queryFlightsByAerodromeSet from './queryFlightsByAerodromeSet';
-
-import type { BaseServiceInterface } from '../Common/ServiceInterface';
-import type { Resolver as QueryFlightsByAircraftOperator } from './queryFlightsByAircraftOperator';
-import queryFlightsByAircraftOperator from './queryFlightsByAircraftOperator';
 
 export interface FlightService extends BaseServiceInterface {
   retrieveFlight: RetrieveFlight;

@@ -1,8 +1,30 @@
 import { createClient, type Client as SoapClient } from 'soap';
-import type { Config } from '../config';
-import { getWSDLPath } from '../constants';
-import { prepareSecurity } from '../security';
-import { deserializer as customDeserializer } from '../utils/transformers';
+import type { Config } from '../config.js';
+import { getWSDLPath } from '../constants.js';
+import { prepareSecurity } from '../security.js';
+import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+
+import type { BaseServiceInterface } from '../Common/ServiceInterface.js';
+import type { Resolver as QueryHotspots } from './queryHotspots.js';
+import queryHotspots from './queryHotspots.js';
+import type { Resolver as QueryRegulations } from './queryRegulations.js';
+import queryRegulations from './queryRegulations.js';
+import type { Resolver as QueryTrafficCountsByAirspace } from './queryTrafficCountsByAirspace.js';
+import queryTrafficCountsByAirspace from './queryTrafficCountsByAirspace.js';
+import type { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume.js';
+import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolume.js';
+import type { Resolver as RetrieveCapacityPlan } from './retrieveCapacityPlan.js';
+import retrieveCapacityPlan from './retrieveCapacityPlan.js';
+import type { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan.js';
+import retrieveOTMVPlan from './retrieveOTMVPlan.js';
+import type { Resolver as RetrieveRunwayConfigurationPlan } from './retrieveRunwayConfigurationPlan.js';
+import retrieveRunwayConfigurationPlan from './retrieveRunwayConfigurationPlan.js';
+import type { Resolver as RetrieveSectorConfigurationPlan } from './retrieveSectorConfigurationPlan.js';
+import retrieveSectorConfigurationPlan from './retrieveSectorConfigurationPlan.js';
+import type { Resolver as UpdateCapacityPlan } from './updateCapacityPlan.js';
+import updateCapacityPlan from './updateCapacityPlan.js';
+import type { Resolver as UpdateOTMVPlan } from './updateOTMVPlan.js';
+import updateOTMVPlan from './updateOTMVPlan.js';
 
 const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
   getWSDLPath({ service: 'FlowServices', flavour, XSD_PATH });
@@ -37,28 +59,6 @@ function createFlowServices(config: Config): Promise<FlowClient> {
     }
   });
 }
-
-import type { BaseServiceInterface } from '../Common/ServiceInterface';
-import type { Resolver as QueryHotspots } from './queryHotspots';
-import queryHotspots from './queryHotspots';
-import type { Resolver as QueryRegulations } from './queryRegulations';
-import queryRegulations from './queryRegulations';
-import type { Resolver as QueryTrafficCountsByAirspace } from './queryTrafficCountsByAirspace';
-import queryTrafficCountsByAirspace from './queryTrafficCountsByAirspace';
-import type { Resolver as QueryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume';
-import queryTrafficCountsByTrafficVolume from './queryTrafficCountsByTrafficVolume';
-import type { Resolver as RetrieveCapacityPlan } from './retrieveCapacityPlan';
-import retrieveCapacityPlan from './retrieveCapacityPlan';
-import type { Resolver as RetrieveOTMVPlan } from './retrieveOTMVPlan';
-import retrieveOTMVPlan from './retrieveOTMVPlan';
-import type { Resolver as RetrieveRunwayConfigurationPlan } from './retrieveRunwayConfigurationPlan';
-import retrieveRunwayConfigurationPlan from './retrieveRunwayConfigurationPlan';
-import type { Resolver as RetrieveSectorConfigurationPlan } from './retrieveSectorConfigurationPlan';
-import retrieveSectorConfigurationPlan from './retrieveSectorConfigurationPlan';
-import type { Resolver as UpdateCapacityPlan } from './updateCapacityPlan';
-import updateCapacityPlan from './updateCapacityPlan';
-import type { Resolver as UpdateOTMVPlan } from './updateOTMVPlan';
-import updateOTMVPlan from './updateOTMVPlan';
 
 export interface FlowService extends BaseServiceInterface {
   retrieveSectorConfigurationPlan: RetrieveSectorConfigurationPlan;

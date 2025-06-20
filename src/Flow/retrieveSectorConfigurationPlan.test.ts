@@ -1,9 +1,9 @@
 import { inspect } from 'util';
 import { assert, describe, expect, test } from 'vitest';
-import { NMB2BError, makeFlowClient } from '..';
-import b2bOptions from '../../tests/options';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
-import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan';
+import { NMB2BError, makeFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import { knownConfigurationsToMap } from './retrieveSectorConfigurationPlan.js';
 
 describe('retrieveSectorConfigurationPlan', async () => {
   const Flow = await makeFlowClient(b2bOptions);

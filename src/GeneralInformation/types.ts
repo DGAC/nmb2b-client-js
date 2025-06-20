@@ -1,4 +1,4 @@
-import type { File, NMB2BVersion, ReplyWithData } from '../Common/types';
+import type { File, NMB2BVersion, ReplyWithData } from '../Common/types.js';
 
 export interface NMB2BWSDLsRequest {
   version: NMB2BVersion;

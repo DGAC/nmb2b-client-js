@@ -1,9 +1,9 @@
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import { NMB2BError, makeFlowClient } from '..';
-import b2bOptions from '../../tests/options';
-import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan';
-import type { Result as CapacityPlanUpdateResult } from './updateCapacityPlan';
+import { NMB2BError, makeFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.js';
+import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan.js';
+import type { Result as CapacityPlanUpdateResult } from './updateCapacityPlan.js';
 import { add, startOfDay } from 'date-fns';
 
 describe('updateCapacityPlan', async () => {

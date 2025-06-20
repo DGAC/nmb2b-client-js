@@ -1,10 +1,10 @@
 import 'dotenv/config';
-import { B2B_VERSION } from '../src/constants';
-import { requestFilename } from '../src/utils/xsd/filePath';
-import { downloadFile } from '../src/utils/xsd/downloadFile';
+import { B2B_VERSION } from '../src/constants.js';
+import { requestFilename } from '../src/utils/xsd/filePath.js';
+import { downloadFile } from '../src/utils/xsd/downloadFile.js';
 import path from 'path';
-import { createDir, dirExists } from '../src/utils/fs';
-import b2bOptions from './options';
+import { createDir, dirExists } from '../src/utils/fs.js';
+import b2bOptions from './options.js';
 
 export async function downloadWSDL() {
   console.log('Global setup !');

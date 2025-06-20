@@ -1,13 +1,13 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import lockfile from 'proper-lockfile';
-import { promisify } from 'util';
-import type { Config } from '../../config';
-import { B2B_VERSION } from '../../constants';
-import d from '../debug';
-import { createDir, dirExists } from '../fs';
-import { downloadFile } from './downloadFile';
-import { requestFilename } from './filePath';
+import { promisify } from 'node:util';
+import type { Config } from '../../config.js';
+import { B2B_VERSION } from '../../constants.js';
+import d from '../debug.js';
+import { createDir, dirExists } from '../fs.js';
+import { downloadFile } from './downloadFile.js';
+import { requestFilename } from './filePath.js';
 const debug = d('wsdl');
 
 const readdir = promisify(fs.readdir);

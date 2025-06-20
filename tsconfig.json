@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
     "esModuleInterop": true,
     // Vite/vitest error :
     "skipLibCheck": true,
-    "noImplicitAny": true,
     "pretty": true,
-    "noUncheckedIndexedAccess": true,
-    "strict": true
+    "noUncheckedIndexedAccess": true
   },
   "include": [
     "src/**/*",

@@ -1,84 +1,90 @@
-export { B2BClient } from './';
-export { AirspaceService } from './Airspace';
-export { FlightService } from './Flight';
-export { FlowService } from './Flow';
-export { GeneralInformationService } from './GeneralInformation';
+export type { B2BClient } from './index.js';
+export type { AirspaceService } from './Airspace/index.js';
+export type { FlightService } from './Flight/index.js';
+export type { FlowService } from './Flow/index.js';
+export type { GeneralInformationService } from './GeneralInformation/index.js';
 
 // Airspace
-export { AUPRetrievalRequest, AUPRetrievalReply } from './Airspace/retrieveAUP';
+export type {
+  AUPRetrievalRequest,
+  AUPRetrievalReply,
+} from './Airspace/retrieveAUP.js';
 
-export {
+export type {
   AUPChainRetrievalRequest,
   AUPChainRetrievalReply,
-} from './Airspace/retrieveAUPChain';
+} from './Airspace/retrieveAUPChain.js';
 
-export {
+export type {
   CompleteAIXMDatasetRequest,
   CompleteAIXMDatasetReply,
-} from './Airspace/queryCompleteAIXMDatasets';
+} from './Airspace/queryCompleteAIXMDatasets.js';
 
 // Flight
-export {
+export type {
   FlightPlanListRequest,
   FlightPlanListReply,
-} from './Flight/queryFlightPlans';
+} from './Flight/queryFlightPlans.js';
 
-export {
+export type {
   FlightListByAirspaceRequest,
   FlightListByAirspaceReply,
-} from './Flight/queryFlightsByAirspace';
+} from './Flight/queryFlightsByAirspace.js';
 
-export {
+export type {
   FlightListByMeasureRequest,
   FlightListByMeasureReply,
-} from './Flight/queryFlightsByMeasure';
+} from './Flight/queryFlightsByMeasure.js';
 
-export {
+export type {
   FlightListByTrafficVolumeRequest,
   FlightListByTrafficVolumeReply,
-} from './Flight/queryFlightsByTrafficVolume';
+} from './Flight/queryFlightsByTrafficVolume.js';
 
-export {
+export type {
   FlightRetrievalRequest,
   FlightRetrievalReply,
-} from './Flight/retrieveFlight';
+} from './Flight/retrieveFlight.js';
 
 // Flow
-export { HotspotListRequest, HotspotListReply } from './Flow/queryHotspots';
+export type {
+  HotspotListRequest,
+  HotspotListReply,
+} from './Flow/queryHotspots.js';
 
-export {
+export type {
   RegulationListRequest,
   RegulationListReply,
-} from './Flow/queryRegulations';
+} from './Flow/queryRegulations.js';
 
-export {
+export type {
   TrafficCountsByAirspaceRequest,
   TrafficCountsByAirspaceReply,
-} from './Flow/queryTrafficCountsByAirspace';
+} from './Flow/queryTrafficCountsByAirspace.js';
 
-export {
+export type {
   TrafficCountsByTrafficVolumeRequest,
   TrafficCountsByTrafficVolumeReply,
-} from './Flow/queryTrafficCountsByTrafficVolume';
+} from './Flow/queryTrafficCountsByTrafficVolume.js';
 
-export {
+export type {
   CapacityPlanRetrievalRequest,
   CapacityPlanRetrievalReply,
-} from './Flow/retrieveCapacityPlan';
+} from './Flow/retrieveCapacityPlan.js';
 
-export {
+export type {
   CapacityPlanUpdateRequest,
   CapacityPlanUpdateReply,
-} from './Flow/updateCapacityPlan';
+} from './Flow/updateCapacityPlan.js';
 
-export {
+export type {
   OTMVPlanRetrievalRequest,
   OTMVPlanRetrievalReply,
-} from './Flow/retrieveOTMVPlan';
+} from './Flow/retrieveOTMVPlan.js';
 
-export {
+export type {
   SectorConfigurationPlanRetrievalRequest,
   SectorConfigurationPlanRetrievalReply,
-} from './Flow/retrieveSectorConfigurationPlan';
+} from './Flow/retrieveSectorConfigurationPlan.js';
 
 // GeneralInformation
