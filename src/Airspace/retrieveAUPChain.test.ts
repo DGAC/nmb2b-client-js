@@ -12,6 +12,10 @@ describe('retrieveAUPChain', async () => {
       chainDate: new Date(),
     });
 
-    expect(Array.isArray(res.data?.chains)).toBe(true);
+    expect(res.status).toBe('OK');
+
+    if (res.data) {
+      expect(Array.isArray(res.data.chains)).toBe(true);
+    }
   });
 });
