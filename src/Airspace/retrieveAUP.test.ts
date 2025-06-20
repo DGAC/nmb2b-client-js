@@ -1,12 +1,13 @@
-import { assert, beforeAll, describe, expect, test } from 'vitest';
-import { makeAirspaceClient } from '..';
-import b2bOptions from '../../tests/options';
-import { shouldUseRealB2BConnection } from '../../tests/utils';
+import { beforeAll, describe, expect, test } from 'vitest';
+import b2bOptions from '../../tests/options.js';
+import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import { makeAirspaceClient } from '../index.js';
 
 describe('retrieveAUP', async () => {
   const Airspace = await makeAirspaceClient(b2bOptions);
 
-  let AUPSummaryIds: Array<string> = [];
+  let AUPSummaryIds: undefined | Array<string>;
+
   beforeAll(async () => {
     // Find some AUP id
     const res = await Airspace.retrieveAUPChain({
@@ -14,22 +15,19 @@ describe('retrieveAUP', async () => {
       chainDate: new Date(),
     });
 
-    assert(res.data?.chains?.[0]?.aups);
+    const summaries = res.data?.chains?.[0]?.aups
+      ?.filter(({ aupState }) => aupState === 'RELEASED')
+      .toSorted(
+        (a, b) =>
+          (a.lastUpdate?.timestamp.valueOf() ?? 0) -
+          (b.lastUpdate?.timestamp.valueOf() ?? 0),
+      );
 
-    const summaries = res.data.chains[0].aups.filter(
-      ({ aupState }) => aupState === 'RELEASED',
-    );
-    summaries.sort(
-      (a, b) =>
-        (a.lastUpdate?.timestamp.valueOf() ?? 0) -
-        (b.lastUpdate?.timestamp.valueOf() ?? 0),
-    );
-
-    AUPSummaryIds = summaries.map(({ id }) => id);
+    AUPSummaryIds = summaries?.map(({ id }) => id);
   });
 
   test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {
-    if (!AUPSummaryIds[0]) {
+    if (!AUPSummaryIds?.[0]) {
       console.warn('AUPChainRetrieval did not yield any AUP id');
       return;
     }
