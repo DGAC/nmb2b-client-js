@@ -20,53 +20,65 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "module-sync": "./dist/index.js"
+      "module-sync": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "./package.json": "./package.json",
     "./security": {
       "import": "./dist/security.js",
-      "module-sync": "./dist/security.js"
+      "module-sync": "./dist/security.js",
+      "types": "./dist/security.d.ts"
     },
     "./config": {
       "import": "./dist/config.js",
-      "module-sync": "./dist/config.js"
+      "module-sync": "./dist/config.js",
+      "types": "./dist/config.d.ts"
     },
     "./Airspace": {
       "import": "./dist/Airspace/index.js",
-      "module-sync": "./dist/Airspace/index.js"
+      "module-sync": "./dist/Airspace/index.js",
+      "types": "./dist/Airspace/index.d.ts"
     },
     "./Airspace/types": {
       "import": "./dist/Airspace/types.js",
-      "module-sync": "./dist/Airspace/types.js"
+      "module-sync": "./dist/Airspace/types.js",
+      "types": "./dist/Airspace/types.d.ts"
     },
     "./Flight": {
       "import": "./dist/Flight/index.js",
-      "module-sync": "./dist/Flight/index.js"
+      "module-sync": "./dist/Flight/index.js",
+      "types": "./dist/Flight/index.d.ts"
     },
     "./Flight/types": {
       "import": "./dist/Flight/types.js",
-      "module-sync": "./dist/Flight/types.js"
+      "module-sync": "./dist/Flight/types.js",
+      "types": "./dist/Flight/types.d.ts"
     },
     "./Flow": {
       "import": "./dist/Flow/index.js",
-      "module-sync": "./dist/Flow/index.js"
+      "module-sync": "./dist/Flow/index.js",
+      "types": "./dist/Flow/index.d.ts"
     },
     "./Flow/types": {
       "import": "./dist/Flow/types.js",
-      "module-sync": "./dist/Flow/types.js"
+      "module-sync": "./dist/Flow/types.js",
+      "types": "./dist/Flow/types.d.ts"
     },
     "./GeneralInformation": {
       "import": "./dist/GeneralInformation/index.js",
-      "module-sync": "./dist/GeneralInformation/index.js"
+      "module-sync": "./dist/GeneralInformation/index.js",
+      "types": "./dist/GeneralInformation/index.d.ts"
     },
     "./GeneralInformation/types": {
       "import": "./dist/GeneralInformation/types.js",
-      "module-sync": "./dist/GeneralInformation/types.js"
+      "module-sync": "./dist/GeneralInformation/types.js",
+      "types": "./dist/GeneralInformation/types.d.ts"
     },
     "./utils": {
       "import": "./dist/utils/index.js",
-      "module-sync": "./dist/utils/index.js"
-    }
+      "module-sync": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
