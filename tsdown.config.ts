@@ -17,6 +17,8 @@ export default defineConfig({
     'src/GeneralInformation/types.ts',
     'src/PublishSubscribe/types.ts',
   ],
+  target: 'node20',
+  clean: true,
   sourcemap: true,
   dts: true,
   outDir: 'dist',
