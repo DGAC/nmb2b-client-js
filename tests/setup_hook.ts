@@ -17,18 +17,15 @@ export async function downloadWSDL() {
   ) {
     console.log('XSD files not found, downloading from B2B ...');
     await createDir(XSD_PATH);
-    await requestFilename({ flavour, security, xsdEndpoint })
-      .then((fileName) => {
-        console.log(`Downloading ${fileName}`);
-        return fileName;
-      })
-      .then((fileName) =>
-        downloadFile(fileName, {
-          flavour,
-          security,
-          XSD_PATH,
-          xsdEndpoint,
-        }),
-      );
+    const filename = await requestFilename({ flavour, security, xsdEndpoint });
+
+    console.log(`Got XSD filename from B2B, downloading ${filename}`);
+
+    await downloadFile(filename, {
+      flavour,
+      security,
+      XSD_PATH,
+      xsdEndpoint,
+    });
   }
 }

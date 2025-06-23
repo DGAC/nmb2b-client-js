@@ -1,4 +1,4 @@
-import { createClient, type Client as SoapClient } from 'soap';
+import { createClientAsync, type Client as SoapClient } from 'soap';
 import type { Config } from '../config.js';
 import { getWSDLPath } from '../constants.js';
 import { prepareSecurity } from '../security.js';
@@ -26,39 +26,7 @@ import updateCapacityPlan from './updateCapacityPlan.js';
 import type { Resolver as UpdateOTMVPlan } from './updateOTMVPlan.js';
 import updateOTMVPlan from './updateOTMVPlan.js';
 
-const getWSDL = ({ flavour, XSD_PATH }: Pick<Config, 'flavour' | 'XSD_PATH'>) =>
-  getWSDLPath({ service: 'FlowServices', flavour, XSD_PATH });
-
 export type FlowClient = SoapClient;
-
-function createFlowServices(config: Config): Promise<FlowClient> {
-  const WSDL = getWSDL(config);
-  const security = prepareSecurity(config);
-  return new Promise((resolve, reject) => {
-    try {
-      createClient(WSDL, { customDeserializer }, (err, client) => {
-        if (err) {
-          reject(
-            err instanceof Error
-              ? err
-              : new Error('Unknown error', { cause: err }),
-          );
-          return;
-        }
-        client.setSecurity(security);
-
-        resolve(client);
-      });
-    } catch (err) {
-      // TODO: Implement a proper debug log message output
-      console.log(err);
-      reject(
-        err instanceof Error ? err : new Error('Unknown error', { cause: err }),
-      );
-      return;
-    }
-  });
-}
 
 export interface FlowService extends BaseServiceInterface {
   retrieveSectorConfigurationPlan: RetrieveSectorConfigurationPlan;
@@ -73,8 +41,19 @@ export interface FlowService extends BaseServiceInterface {
   retrieveRunwayConfigurationPlan: RetrieveRunwayConfigurationPlan;
 }
 
-export function getFlowClient(config: Config): Promise<FlowService> {
-  return createFlowServices(config).then((client) => ({
+export async function getFlowClient(config: Config): Promise<FlowService> {
+  const WSDL = getWSDLPath({
+    service: 'FlowServices',
+    flavour: config.flavour,
+    XSD_PATH: config.XSD_PATH,
+  });
+
+  const security = prepareSecurity(config);
+
+  const client = await createClientAsync(WSDL, { customDeserializer });
+  client.setSecurity(security);
+
+  return {
     __soapClient: client,
     config,
     retrieveSectorConfigurationPlan: retrieveSectorConfigurationPlan(client),
@@ -88,5 +67,5 @@ export function getFlowClient(config: Config): Promise<FlowService> {
     retrieveCapacityPlan: retrieveCapacityPlan(client),
     updateCapacityPlan: updateCapacityPlan(client),
     retrieveRunwayConfigurationPlan: retrieveRunwayConfigurationPlan(client),
-  }));
+  };
 }

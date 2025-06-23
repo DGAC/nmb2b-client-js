@@ -9,9 +9,10 @@ import { B2B_VERSION } from '../src/constants';
 import { dirExists } from '../src/utils/fs';
 import b2bOptions from '../tests/options';
 
-console.log('Looking for XSD files ...');
+const XSD_PATH = path.join(b2bOptions.XSD_PATH, B2B_VERSION);
+console.log(`Looking for XSD files in ${XSD_PATH} ...`);
 
-dirExists(path.join(b2bOptions.XSD_PATH, B2B_VERSION)).then((exists) => {
+dirExists(XSD_PATH).then((exists) => {
   if (exists) {
     console.log(
       `B2B XSD for version ${B2B_VERSION} already exists, do not download`,

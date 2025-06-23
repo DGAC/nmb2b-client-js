@@ -60,22 +60,21 @@ export async function makeB2BClient(args: InputOptions): Promise<B2BClient> {
 
   await downloadWSDL(options);
 
-  return Promise.all([
+  const [Airspace, Flight, Flow, GeneralInformation] = await Promise.all([
     getAirspaceClient(options),
     getFlightClient(options),
     getFlowClient(options),
     getGeneralInformationClient(options),
-  ])
-    .then((res) => {
-      debug('Successfully created B2B Client');
-      return res;
-    })
-    .then(([Airspace, Flight, Flow, GeneralInformation]) => ({
-      Airspace,
-      Flight,
-      Flow,
-      GeneralInformation,
-    }));
+  ]);
+
+  debug('Successfully created B2B Client');
+
+  return {
+    Airspace,
+    Flight,
+    Flow,
+    GeneralInformation,
+  };
 }
 
 export async function makeAirspaceClient(
@@ -93,10 +92,11 @@ export async function makeAirspaceClient(
 
   await downloadWSDL(options);
 
-  return getAirspaceClient(options).then((res) => {
-    debug('Successfully created B2B Airspace client');
-    return res;
-  });
+  const client = await getAirspaceClient(options);
+
+  debug('Successfully created B2B Airspace client');
+
+  return client;
 }
 
 export async function makeFlightClient(
@@ -114,10 +114,11 @@ export async function makeFlightClient(
 
   await downloadWSDL(options);
 
-  return getFlightClient(options).then((res) => {
-    debug('Successfully created B2B Flight client');
-    return res;
-  });
+  const client = await getFlightClient(options);
+
+  debug('Successfully created B2B Flight client');
+
+  return client;
 }
 
 export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
@@ -133,10 +134,11 @@ export async function makeFlowClient(args: InputOptions): Promise<FlowService> {
 
   await downloadWSDL(options);
 
-  return getFlowClient(options).then((res) => {
-    debug('Successfully created B2B Flow client');
-    return res;
-  });
+  const client = getFlowClient(options);
+
+  debug('Successfully created B2B Flow client');
+
+  return client;
 }
 
 export async function makeGeneralInformationClient(
@@ -154,8 +156,9 @@ export async function makeGeneralInformationClient(
 
   await downloadWSDL(options);
 
-  return getGeneralInformationClient(options).then((res) => {
-    debug('Successfully created B2B GeneralInformation client');
-    return res;
-  });
+  const client = await getGeneralInformationClient(options);
+
+  debug('Successfully created B2B GeneralInformation client');
+
+  return client;
 }
