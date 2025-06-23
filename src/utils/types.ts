@@ -7,9 +7,7 @@ export type SoapDeserializer<TInput> = TInput extends Primitive | Date
       }>;
 
 export type EmptyObjectToNullish<T extends object> =
-  Exclude<keyof T, NullishKeysOf<T>> extends never
-    ? T | null | undefined
-    : T;
+  Exclude<keyof T, NullishKeysOf<T>> extends never ? T | null | undefined : T;
 
 type NullishKeysOf<T extends object> =
   | UndefinedKeysOf<T>
