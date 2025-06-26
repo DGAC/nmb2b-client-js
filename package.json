@@ -109,15 +109,15 @@
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.0",
-    "axios": "^1.8.3",
+    "axios": "^1.10.0",
     "date-fns": "^4.1.0",
-    "debug": "^4.4.0",
+    "debug": "^4.4.1",
     "invariant": "^2.2.4",
     "proper-lockfile": "^4.1.2",
-    "remeda": "^2.21.2",
-    "soap": "^1.1.9",
+    "remeda": "^2.23.1",
+    "soap": "^1.1.12",
     "tar": "^7.4.3",
-    "type-fest": "^4.37.0"
+    "type-fest": "^4.41.0"
   },
   "publishConfig": {
     "provenance": true
