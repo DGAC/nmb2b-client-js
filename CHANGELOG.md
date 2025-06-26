@@ -1,5 +1,25 @@
 # @dgac/nmb2b-client
 
+## 1.5.0
+
+### Minor Changes
+
+- [#195](https://github.com/DGAC/nmb2b-client-js/pull/195) [`98c6e30`](https://github.com/DGAC/nmb2b-client-js/commit/98c6e307d88e8c4bcc43489359dd78bb45155932) Thanks [@kouak](https://github.com/kouak)! - Implement compatibility with typescript moduleResolution: nodenext
+
+### Patch Changes
+
+- [#192](https://github.com/DGAC/nmb2b-client-js/pull/192) [`1d7233a`](https://github.com/DGAC/nmb2b-client-js/commit/1d7233a4277f04fd9d216aa05b6dcb4fbeb75ffa) Thanks [@kouak](https://github.com/kouak)! - Update vitest to fix CVE
+
+- [#189](https://github.com/DGAC/nmb2b-client-js/pull/189) [`c3e50e4`](https://github.com/DGAC/nmb2b-client-js/commit/c3e50e48f06da4a89f85446fb6aca863f574abd8) Thanks [@kouak](https://github.com/kouak)! - Nock v14
+
+- [#190](https://github.com/DGAC/nmb2b-client-js/pull/190) [`6ba2813`](https://github.com/DGAC/nmb2b-client-js/commit/6ba2813bee2694526aeb13fd9960a42fd5adb2eb) Thanks [@kouak](https://github.com/kouak)! - Update eslint + typescript + tsup
+
+- [#187](https://github.com/DGAC/nmb2b-client-js/pull/187) [`deadbed`](https://github.com/DGAC/nmb2b-client-js/commit/deadbede4d0b2a977ab07a450348f401bfe0e3cb) Thanks [@kouak](https://github.com/kouak)! - Vitest v3.0.4
+
+- [#191](https://github.com/DGAC/nmb2b-client-js/pull/191) [`a6a2a07`](https://github.com/DGAC/nmb2b-client-js/commit/a6a2a07d096b3543f35ad682b710e65e48755882) Thanks [@kouak](https://github.com/kouak)! - Update various dependencies
+
+- [#193](https://github.com/DGAC/nmb2b-client-js/pull/193) [`269128f`](https://github.com/DGAC/nmb2b-client-js/commit/269128fe88a3a408c372661c5405f74e4a7e316e) Thanks [@kouak](https://github.com/kouak)! - Update dependencies
+
 ## 1.4.0
 
 ### Minor Changes
