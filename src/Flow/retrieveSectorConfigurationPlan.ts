@@ -12,7 +12,7 @@ import type {
 } from './types.js';
 
 import type { AirspaceId } from '../Airspace/types.js';
-import type { SafeB2BDeserializedResponse } from '../index.js';
+import type { SafeB2BDeserializedResponse } from '../types.js';
 
 export type {
   SectorConfigurationPlanRetrievalRequest,
