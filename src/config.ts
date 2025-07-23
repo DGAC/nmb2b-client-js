@@ -2,7 +2,7 @@ import type { Security } from './security.js';
 import { isValidSecurity } from './security.js';
 import type { B2BFlavour } from './constants.js';
 import { B2B_VERSION, B2BFlavours } from './constants.js';
-import invariant from 'invariant';
+import { assert } from './utils/assert.js';
 import { URL } from 'url';
 import type { Client as SoapClient } from 'soap';
 
@@ -17,30 +17,30 @@ export interface Config {
 }
 
 export function isConfigValid(args: unknown): args is Config {
-  invariant(!!args && typeof args === 'object', 'Invalid config');
+  assert(!!args && typeof args === 'object', 'Invalid config');
 
-  invariant(
+  assert(
     'security' in args && isValidSecurity(args.security),
     'Please provide a valid security option',
   );
 
-  invariant(
+  assert(
     'flavour' in args && typeof args.flavour === 'string',
     `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
-  invariant(
+  assert(
     B2BFlavours.includes(args.flavour),
     `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
   if ('apiKeyId' in args.security) {
-    invariant(
+    assert(
       'endpoint' in args && !!args.endpoint,
       `When using an config.security.apiKeyId, config.endpoint must be defined`,
     );
 
-    invariant(
+    assert(
       'xsdEndpoint' in args && !!args.xsdEndpoint,
       `When using an config.security.apiKeyId, config.xsdEndpoint must be defined`,
     );
