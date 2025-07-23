@@ -1,4 +1,4 @@
-import invariant from 'invariant';
+import { assert } from './utils/assert.js';
 import d from './utils/debug.js';
 const debug = d('security');
 import type { Config } from './config.js';
@@ -29,17 +29,17 @@ interface ApiGwSecurity {
 export type Security = PfxSecurity | PemSecurity | ApiGwSecurity;
 
 export function isValidSecurity(obj: unknown): obj is Security {
-  invariant(!!obj && typeof obj === 'object', 'Must be an object');
+  assert(!!obj && typeof obj === 'object', 'Must be an object');
 
   if ('apiKeyId' in obj) {
-    invariant(
+    assert(
       !!obj.apiKeyId &&
         typeof obj.apiKeyId === 'string' &&
         obj.apiKeyId.length > 0,
       'security.apiKeyId must be a string with a length > 0',
     );
 
-    invariant(
+    assert(
       'apiSecretKey' in obj &&
         typeof obj.apiSecretKey === 'string' &&
         obj.apiSecretKey.length > 0,
@@ -49,14 +49,14 @@ export function isValidSecurity(obj: unknown): obj is Security {
     return true;
   }
 
-  invariant(
+  assert(
     ('pfx' in obj && Buffer.isBuffer(obj.pfx)) ||
       ('cert' in obj && Buffer.isBuffer(obj.cert)),
     'security.pfx or security.cert must be buffers',
   );
 
   if ('cert' in obj && obj.cert) {
-    invariant(
+    assert(
       'key' in obj && obj.key && Buffer.isBuffer(obj.key),
       'security.key must be a buffer if security.pem is defined',
     );
