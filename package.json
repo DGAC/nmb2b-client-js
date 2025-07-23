@@ -109,13 +109,13 @@
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "date-fns": "^4.1.0",
     "debug": "^4.4.1",
     "invariant": "^2.2.4",
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.23.1",
-    "soap": "^1.1.12",
+    "soap": "^1.2.0",
     "tar": "^7.4.3",
     "type-fest": "^4.41.0"
   },
