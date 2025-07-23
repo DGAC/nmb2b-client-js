@@ -1,5 +1,13 @@
 # @dgac/nmb2b-client
 
+## 1.5.1
+
+### Patch Changes
+
+- [#200](https://github.com/DGAC/nmb2b-client-js/pull/200) [`8ded29b`](https://github.com/DGAC/nmb2b-client-js/commit/8ded29bed84da78ba8390efafd295d642b44e203) Thanks [@kouak](https://github.com/kouak)! - Remove `invariant` dependency
+
+- [#202](https://github.com/DGAC/nmb2b-client-js/pull/202) [`168d357`](https://github.com/DGAC/nmb2b-client-js/commit/168d357f44162419fac6ede2371aac8cc2dfa940) Thanks [@kouak](https://github.com/kouak)! - Update `soap` and `axios`
+
 ## 1.5.0
 
 ### Minor Changes
