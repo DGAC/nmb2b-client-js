@@ -15,8 +15,6 @@ NM target version: **27.0.0**
 
 https://github.com/DGAC/nmb2b-client-js-example
 
-[![asciicast](https://asciinema.org/a/Q3pPaXOVF3646JufOipA9bpUX.svg)](https://asciinema.org/a/Q3pPaXOVF3646JufOipA9bpUX)
-
 # Features
 
 - No WSDL/XSD dependency. The library will download and cache those on start up.
