@@ -27,8 +27,8 @@ importers:
         specifier: ^2.26.1
         version: 2.26.1
       soap:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.1
+        version: 1.2.1
       tar:
         specifier: ^7.4.3
         version: 7.4.3
@@ -1764,8 +1764,8 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
 
-  soap@1.2.0:
-    resolution: {integrity: sha512-LUncmLhklyVt4dFYjKGZhBVWNbV231yMlrhl7H9cDJQKGMUFaZI2bjWorpyRY1YkUMW080w1rTgDC/pyk3lj8w==}
+  soap@1.2.1:
+    resolution: {integrity: sha512-QRkgCb8C99x1SxZ84jCJAd5VDFpp0MNL5O1X6vKtHp3Hba6UnN1Wdy0Lq+o1CmvBkxyxBYIW/Y+xPQLPq+Sv6g==}
     engines: {node: '>=14.17.0'}
 
   source-map-js@1.2.1:
@@ -3739,7 +3739,7 @@ snapshots:
 
   slash@3.0.0: {}
 
-  soap@1.2.0:
+  soap@1.2.1:
     dependencies:
       axios: 1.11.0(debug@4.4.1)
       axios-ntlm: 1.4.4(debug@4.4.1)
