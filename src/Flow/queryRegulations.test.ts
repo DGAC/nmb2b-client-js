@@ -1,14 +1,14 @@
+import { add, startOfHour, sub } from 'date-fns';
 import { inspect } from 'util';
 import { assert, describe, expect, test } from 'vitest';
-import { NMB2BError, makeFlowClient } from '../index.js';
 import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import type { RegulationListReply } from './queryRegulations.js';
+import { NMB2BError, createFlowClient } from '../index.js';
 import { extractReferenceLocation } from '../utils/extractReferenceLocation.js';
-import { add, startOfHour, sub } from 'date-fns';
+import type { RegulationListReply } from './queryRegulations.js';
 
 describe('queryRegulations', async () => {
-  const Flow = await makeFlowClient(b2bOptions);
+  const Flow = await createFlowClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('empty regulation lists', async () => {
     try {

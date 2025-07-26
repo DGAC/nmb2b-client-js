@@ -15,8 +15,6 @@ NM target version: **27.0.0**
 
 https://github.com/DGAC/nmb2b-client-js-example
 
-[![asciicast](https://asciinema.org/a/Q3pPaXOVF3646JufOipA9bpUX.svg)](https://asciinema.org/a/Q3pPaXOVF3646JufOipA9bpUX)
-
 # Features
 
 - No WSDL/XSD dependency. The library will download and cache those on start up.
@@ -79,10 +77,10 @@ Just set a `DEBUG=@dgac/nmb2b-client*` environment variable :
 ## Main service
 
 ```typescript
-import makeB2BClient from '@dgac/nmb2b-client';
+import { createB2BClient } from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
-const client = await makeB2BClient({ security });
+const client = await createB2BClient({ security });
 
 const res = await client.Airspace.queryCompleteAIXMDatasets();
 ```
@@ -90,10 +88,10 @@ const res = await client.Airspace.queryCompleteAIXMDatasets();
 ## Per domain service
 
 ```typescript
-import { makeAirspaceService } from '@dgac/nmb2b-client';
+import { createAirspaceClient } from '@dgac/nmb2b-client';
 
 // See below for more information about the security argument
-const Airspace = await makeAirspaceService({ security });
+const Airspace = await createAirspaceClient({ security });
 
 const res = await Airspace.queryCompleteAIXMDatasets();
 ```
@@ -101,10 +99,10 @@ const res = await Airspace.queryCompleteAIXMDatasets();
 ## Error handling
 
 ```typescript
-import { makeAirspaceService, NMB2BError } from '@dgac/nmb2b-client';
+import { createAirspaceClient, NMB2BError } from '@dgac/nmb2b-client';
 
 try {
-  const Airspace = await makeAirspaceService({ security });
+  const Airspace = await createAirspaceClient({ security });
 
   const res = await Airspace.queryCompleteAIXMDatasets();
 } catch (err) {
@@ -132,7 +130,7 @@ const security = {
   passphrase: 'your-passphrase',
 };
 
-makeB2BClient({ security }).then((client) => {
+createB2BClient({ security }).then((client) => {
   client.Airspace.queryCompleteAIXMDatasets().then(() => {});
 });
 ```
@@ -148,7 +146,7 @@ const security = {
   passphrase: 'your-passphrase',
 };
 
-makeB2BClient({ security }).then((client) => {
+createB2BClient({ security }).then((client) => {
   client.Airspace.queryCompleteAIXMDatasets().then(() => {});
 });
 ```

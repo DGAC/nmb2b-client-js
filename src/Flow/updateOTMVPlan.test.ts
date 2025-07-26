@@ -1,13 +1,13 @@
-import { makeFlowClient } from '../index.js';
-import b2bOptions from '../../tests/options.js';
-import type { Result as OTMVPlanUpdateResult } from './updateOTMVPlan.js';
-import type { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan.js';
-import { describe, expect, beforeAll, afterAll, test, assert } from 'vitest';
-import { add, startOfDay } from 'date-fns';
 import { UTCDateMini } from '@date-fns/utc';
+import { add, startOfDay } from 'date-fns';
+import { afterAll, assert, beforeAll, describe, expect, test } from 'vitest';
+import b2bOptions from '../../tests/options.js';
+import { createFlowClient } from '../index.js';
+import type { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan.js';
+import type { Result as OTMVPlanUpdateResult } from './updateOTMVPlan.js';
 
 describe('updateOTMVPlan', async () => {
-  const Flow = await makeFlowClient(b2bOptions);
+  const Flow = await createFlowClient(b2bOptions);
 
   let planBefore: OTMVPlanRetrievalResult['data'] | undefined;
 
