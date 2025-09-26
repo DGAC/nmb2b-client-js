@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 2.0.1
+
+### Patch Changes
+
+- [#205](https://github.com/DGAC/nmb2b-client-js/pull/205) [`6f53edb`](https://github.com/DGAC/nmb2b-client-js/commit/6f53edb68e9afa0db1b992ef33903ef28cd72efd) Thanks [@kouak](https://github.com/kouak)! - Update dependencies
+
 ## 2.0.0
 
 ### Major Changes
