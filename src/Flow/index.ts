@@ -56,16 +56,21 @@ export async function getFlowClient(config: Config): Promise<FlowService> {
   return {
     __soapClient: client,
     config,
-    retrieveSectorConfigurationPlan: retrieveSectorConfigurationPlan(client),
-    queryTrafficCountsByAirspace: queryTrafficCountsByAirspace(client),
-    queryRegulations: queryRegulations(client),
-    queryHotspots: queryHotspots(client),
-    queryTrafficCountsByTrafficVolume:
-      queryTrafficCountsByTrafficVolume(client),
-    retrieveOTMVPlan: retrieveOTMVPlan(client),
-    updateOTMVPlan: updateOTMVPlan(client),
-    retrieveCapacityPlan: retrieveCapacityPlan(client),
-    updateCapacityPlan: updateCapacityPlan(client),
-    retrieveRunwayConfigurationPlan: retrieveRunwayConfigurationPlan(client),
+    retrieveSectorConfigurationPlan: retrieveSectorConfigurationPlan({
+      client,
+    }),
+    queryTrafficCountsByAirspace: queryTrafficCountsByAirspace({ client }),
+    queryRegulations: queryRegulations({ client }),
+    queryHotspots: queryHotspots({ client }),
+    queryTrafficCountsByTrafficVolume: queryTrafficCountsByTrafficVolume({
+      client,
+    }),
+    retrieveOTMVPlan: retrieveOTMVPlan({ client }),
+    updateOTMVPlan: updateOTMVPlan({ client }),
+    retrieveCapacityPlan: retrieveCapacityPlan({ client }),
+    updateCapacityPlan: updateCapacityPlan({ client }),
+    retrieveRunwayConfigurationPlan: retrieveRunwayConfigurationPlan({
+      client,
+    }),
   };
 }

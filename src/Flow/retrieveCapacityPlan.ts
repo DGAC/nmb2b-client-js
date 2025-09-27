@@ -22,9 +22,11 @@ export type Resolver = (
   options?: SoapOptions,
 ) => Promise<Result>;
 
-export default function prepareRetrieveCapacityPlan(
-  client: FlowClient,
-): Resolver {
+export default function prepareRetrieveCapacityPlan({
+  client,
+}: {
+  client: FlowClient;
+}): Resolver {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const schema =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

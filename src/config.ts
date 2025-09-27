@@ -4,16 +4,42 @@ import type { B2BFlavour } from './constants.js';
 import { B2B_VERSION, B2BFlavours } from './constants.js';
 import { assert } from './utils/assert.js';
 import { URL } from 'url';
-import type { Client as SoapClient } from 'soap';
 
 export interface Config {
+  /**
+   * The endpoint used to perform B2B queries.
+   *
+   * If not specified, uses the public NM B2B endpoints.
+   */
   endpoint?: string;
+
+  /**
+   * Where to fetch the WSDL/XSD files.
+   *
+   * If not specified, uses the public NM B2B endpoints.
+   */
   xsdEndpoint?: string;
+
+  /**
+   * If true, will redownload the WSDL/XSD files.
+   */
   ignoreWSDLCache?: boolean;
+
+  /**
+   * The security configuration.
+   *
+   */
   security: Security;
+
+  /**
+   * Either 'OPS' or 'PREOPS'
+   */
   flavour: B2BFlavour;
+
+  /**
+   * Where the WSDL/XSD files should be stored on the disk.
+   */
   XSD_PATH: string;
-  soapClient?: null | SoapClient;
 }
 
 export function isConfigValid(args: unknown): args is Config {
