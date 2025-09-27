@@ -4,7 +4,6 @@ import type { B2BFlavour } from './constants.js';
 import { B2B_VERSION, B2BFlavours } from './constants.js';
 import { assert } from './utils/assert.js';
 import { URL } from 'url';
-import type { Client as SoapClient } from 'soap';
 
 export interface Config {
   endpoint?: string;
@@ -13,7 +12,6 @@ export interface Config {
   security: Security;
   flavour: B2BFlavour;
   XSD_PATH: string;
-  soapClient?: null | SoapClient;
 }
 
 export function isConfigValid(args: unknown): args is Config {
