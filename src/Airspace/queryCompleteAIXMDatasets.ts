@@ -22,9 +22,11 @@ export type Resolver = (
   options?: SoapOptions,
 ) => Promise<CompleteAIXMDatasetReply>;
 
-export default function prepareQueryCompleteAIXMDatasets(
-  client: AirspaceClient,
-): Resolver {
+export default function prepareQueryCompleteAIXMDatasets({
+  client,
+}: {
+  client: AirspaceClient;
+}): Resolver {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const schema =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

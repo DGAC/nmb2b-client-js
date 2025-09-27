@@ -16,7 +16,11 @@ export type Resolver = (
   options?: SoapOptions,
 ) => Promise<Result>;
 
-export default function prepareUpdateOTMVPlan(client: FlowClient): Resolver {
+export default function prepareUpdateOTMVPlan({
+  client,
+}: {
+  client: FlowClient;
+}): Resolver {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const schema =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

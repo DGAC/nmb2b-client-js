@@ -37,7 +37,7 @@ export async function getGeneralInformationClient(
   return {
     __soapClient: client,
     config,
-    queryNMB2BWSDLs: queryNMB2BWSDLs(client),
-    retrieveUserInformation: retrieveUserInformation(client),
+    queryNMB2BWSDLs: queryNMB2BWSDLs({ client }),
+    retrieveUserInformation: retrieveUserInformation({ client }),
   };
 }

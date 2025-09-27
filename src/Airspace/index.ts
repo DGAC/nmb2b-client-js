@@ -41,9 +41,9 @@ export async function getAirspaceClient(
   return {
     __soapClient: client,
     config,
-    queryCompleteAIXMDatasets: queryCompleteAIXMDatasets(client),
-    retrieveAUPChain: retrieveAUPChain(client),
-    retrieveEAUPChain: retrieveEAUPChain(client),
-    retrieveAUP: retrieveAUP(client),
+    queryCompleteAIXMDatasets: queryCompleteAIXMDatasets({ client }),
+    retrieveAUPChain: retrieveAUPChain({ client }),
+    retrieveEAUPChain: retrieveEAUPChain({ client }),
+    retrieveAUP: retrieveAUP({ client }),
   };
 }

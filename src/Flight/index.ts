@@ -57,13 +57,13 @@ export async function getFlightClient(config: Config): Promise<FlightService> {
   return {
     __soapClient: client,
     config,
-    retrieveFlight: retrieveFlight(client),
-    queryFlightsByAirspace: queryFlightsByAirspace(client),
-    queryFlightPlans: queryFlightPlans(client),
-    queryFlightsByTrafficVolume: queryFlightsByTrafficVolume(client),
-    queryFlightsByMeasure: queryFlightsByMeasure(client),
-    queryFlightsByAerodrome: queryFlightsByAerodrome(client),
-    queryFlightsByAerodromeSet: queryFlightsByAerodromeSet(client),
-    queryFlightsByAircraftOperator: queryFlightsByAircraftOperator(client),
+    retrieveFlight: retrieveFlight({ client }),
+    queryFlightsByAirspace: queryFlightsByAirspace({ client }),
+    queryFlightPlans: queryFlightPlans({ client }),
+    queryFlightsByTrafficVolume: queryFlightsByTrafficVolume({ client }),
+    queryFlightsByMeasure: queryFlightsByMeasure({ client }),
+    queryFlightsByAerodrome: queryFlightsByAerodrome({ client }),
+    queryFlightsByAerodromeSet: queryFlightsByAerodromeSet({ client }),
+    queryFlightsByAircraftOperator: queryFlightsByAircraftOperator({ client }),
   };
 }
