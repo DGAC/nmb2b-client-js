@@ -6,11 +6,39 @@ import { assert } from './utils/assert.js';
 import { URL } from 'url';
 
 export interface Config {
+  /**
+   * The endpoint used to perform B2B queries.
+   *
+   * If not specified, uses the public NM B2B endpoints.
+   */
   endpoint?: string;
+
+  /**
+   * Where to fetch the WSDL/XSD files.
+   *
+   * If not specified, uses the public NM B2B endpoints.
+   */
   xsdEndpoint?: string;
+
+  /**
+   * If true, will redownload the WSDL/XSD files.
+   */
   ignoreWSDLCache?: boolean;
+
+  /**
+   * The security configuration.
+   *
+   */
   security: Security;
+
+  /**
+   * Either 'OPS' or 'PREOPS'
+   */
   flavour: B2BFlavour;
+
+  /**
+   * Where the WSDL/XSD files should be stored on the disk.
+   */
   XSD_PATH: string;
 }
 
