@@ -1,7 +1,7 @@
 import { createClientAsync, type Client as SoapClient } from 'soap';
 import type { B2BRequest, Reply } from '../Common/types.js';
 import type { SoapOptions } from '../soap.js';
-import { instrument } from './hooks/index.js';
+import { applyHooks } from './hooks/index.js';
 import {
   assertOkReply,
   injectSendTime,
@@ -13,6 +13,8 @@ import { getWSDLPath } from '../constants.js';
 import { prepareSecurity } from '../security.js';
 import { deserializer as customDeserializer } from '../utils/transformers/index.js';
 import { assert } from './assert.js';
+import type { SoapQueryHook } from './hooks/hooks.js';
+import { logHook } from './hooks/withLog.js';
 
 export type SoapQueryDefinition<
   TInput extends B2BRequest,
@@ -76,10 +78,28 @@ export async function createSoapService<
   const client = await createClientAsync(WSDL, { customDeserializer });
   client.setSecurity(security);
 
+  return createSoapServiceFromSoapClient({ config, client, queryDefinitions });
+}
+
+export function createSoapServiceFromSoapClient<
+  TDefinitions extends ServiceDefinition,
+>({
+  client,
+  config,
+  queryDefinitions,
+}: {
+  client: SoapClient;
+  config: Config;
+  queryDefinitions: TDefinitions;
+}): SoapService<TDefinitions> {
   const soapQueryFunctions = Object.fromEntries(
     Object.entries(queryDefinitions).map(([queryName, queryDefinition]) => [
       queryName,
-      buildQueryFunctionFromSoapDefinition({ queryDefinition, client }),
+      buildQueryFunctionFromSoapDefinition({
+        queryDefinition,
+        client,
+        hooks: [logHook, ...config.hooks],
+      }),
     ]),
   );
 
@@ -103,9 +123,11 @@ function buildQueryFunctionFromSoapDefinition<
 >({
   queryDefinition,
   client,
+  hooks,
 }: {
   queryDefinition: SoapQueryDefinition<TInput, TResult>;
   client: SoapClient;
+  hooks: Array<SoapQueryHook>;
 }): (
   input: WithInjectedSendTime<TInput>,
   options?: SoapOptions,
@@ -132,16 +154,18 @@ function buildQueryFunctionFromSoapDefinition<
 
   queryFn = queryFn.bind(client);
 
-  return instrument<WithInjectedSendTime<TInput>, TResult>({
+  return applyHooks<WithInjectedSendTime<TInput>, TResult>({
     service: queryDefinition.service,
     query: queryDefinition.query,
-  })(async (input, options?): Promise<TResult> => {
-    const withSendTime: TInput = injectSendTime(input);
+    hooks: hooks,
+    queryFn: async (input, options?): Promise<TResult> => {
+      const withSendTime: TInput = injectSendTime(input);
 
-    const [result] = await queryFn(serializer(withSendTime), options);
+      const [result] = await queryFn(serializer(withSendTime), options);
 
-    assertOkReply(result);
-    return result;
+      assertOkReply(result);
+      return result;
+    },
   });
 }
 

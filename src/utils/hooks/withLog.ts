@@ -1,41 +1,13 @@
-import type { Instrumentor } from './index.js';
 import d from '../debug.js';
+import { createHook } from './hooks.js';
 
-export function withLog<Input, Output>(
-  namespace: string,
-): Instrumentor<Input, Output> {
-  const debug = d(namespace);
+export const logHook = createHook(({ service, query, input }) => {
+  const debug = d(`${service}:${query}`);
 
-  return (fn) => (values, options) => {
-    if (values) {
-      debug('Called with input %o', values);
-    } else {
-      debug('Called');
-    }
+  debug(`Called with input %o`, input);
 
-    return fn(values, options).then(
-      (res) => {
-        debug('Succeded');
-        return res;
-      },
-      (err) => {
-        debug('Failed');
-        return Promise.reject(
-          err instanceof Error
-            ? err
-            : new Error('Unknown error', { cause: err }),
-        );
-      },
-    );
+  return {
+    onRequestError: ({ error }) => debug(`Failed: ${error.message}`),
+    onRequestSuccess: () => debug('Succeded'),
   };
-}
-
-// export function withLogHook({ service, query }) {
-//   const debug = d(`${service}:${query}`);
-//   debug(`Called`);
-
-//   return {
-//     onRequestSuccess: () => debug('Success'),
-//     onError: () => debug('Failed'),
-//   };
-// }
+});
