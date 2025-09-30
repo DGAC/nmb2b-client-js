@@ -11,7 +11,7 @@ type Values = HotspotListRequest;
 type Result = HotspotListReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

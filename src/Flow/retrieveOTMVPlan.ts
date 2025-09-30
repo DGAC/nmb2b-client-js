@@ -17,7 +17,7 @@ export type Values = OTMVPlanRetrievalRequest;
 export type Result = OTMVPlanRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

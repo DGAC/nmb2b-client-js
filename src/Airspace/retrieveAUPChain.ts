@@ -13,7 +13,7 @@ type Values = AUPChainRetrievalRequest;
 type Result = AUPChainRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

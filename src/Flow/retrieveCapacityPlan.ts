@@ -18,7 +18,7 @@ export type Values = CapacityPlanRetrievalRequest;
 export type Result = CapacityPlanRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

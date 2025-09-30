@@ -1274,7 +1274,7 @@ export interface ActualTimeAtTarget {
 }
 export type IntervalPosition = 'AFTER' | 'BEFORE' | 'INSIDE';
 
-export interface FlightListRequest {
+export type FlightListRequest = {
   dataset: Dataset;
   includeProposalFlights: boolean;
   includeForecastFlights: boolean;
@@ -1283,18 +1283,18 @@ export interface FlightListRequest {
   worstLoadStateAtReferenceLocationType?: CountsCalculationType;
   compareWithOtherTrafficType?: TrafficType;
   requestedFlightFields?: FlightField[];
-}
+};
 
-export interface FlightListByLocationRequest extends FlightListRequest {
+export type FlightListByLocationRequest = FlightListRequest & {
   countsInterval?: CountsInterval;
   aircraftOperators?: AircraftOperatorICAOId[];
   includeInvisibleFlights?: boolean;
-}
+};
 
-export interface FlightListByAirspaceRequest extends FlightListRequest {
+export type FlightListByAirspaceRequest = FlightListRequest & {
   calculationType?: CountsCalculationType;
   airspace: AirspaceId;
-}
+};
 
 export type FlightOrFlightPlan =
   | { flight: Flight }
@@ -1363,7 +1363,7 @@ export type FlightListByAirspaceReply =
 export interface FlightListByAirspaceReplyData
   extends FlightListByLocationReplyData {}
 
-export interface FlightPlanListRequest {
+export type FlightPlanListRequest = {
   aircraftId?: string;
   aerodromeOfDeparture?: string;
   nonICAOAerodromeOfDeparture: boolean;
@@ -1371,7 +1371,7 @@ export interface FlightPlanListRequest {
   aerodromeOfDestination?: string;
   nonICAOAerodromeOfDestination: boolean;
   estimatedOffBlockTime: DateTimeMinutePeriod;
-}
+};
 
 export type FlightPlanListReply = ReplyWithData<FlightPlanListReplyData>;
 
@@ -1379,13 +1379,13 @@ export type FlightPlanListReplyData = {
   summaries: FlightPlanOrInvalidFiling[];
 };
 
-export interface FlightRetrievalRequest {
+export type FlightRetrievalRequest = {
   dataset: Dataset;
   includeProposalFlights: boolean;
   flightId: FlightIdentificationInput;
   requestedFlightDatasets: FlightDataset[];
   requestedFlightFields?: FlightField[];
-}
+};
 
 export type FlightRetrievalReply = ReplyWithData<FlightRetrievalReplyData>;
 
@@ -1396,12 +1396,11 @@ export type FlightRetrievalReplyData = {
   structuredFlightPlan?: StructuredFlightPlan;
 };
 
-export interface FlightListByTrafficVolumeRequest
-  extends FlightListByLocationRequest {
+export type FlightListByTrafficVolumeRequest = FlightListByLocationRequest & {
   calculationType?: CountsCalculationType;
   trafficVolume: TrafficVolumeId;
   flow?: FlowId;
-}
+};
 
 export type FlightListByTrafficVolumeReply =
   ReplyWithData<FlightListByTrafficVolumeReplyData>;
@@ -1410,11 +1409,10 @@ export type FlightListByTrafficVolumeReply =
 export interface FlightListByTrafficVolumeReplyData
   extends FlightListByLocationReplyData {}
 
-export interface FlightListByMeasureRequest
-  extends FlightListByLocationRequest {
+export type FlightListByMeasureRequest = FlightListByLocationRequest & {
   measure: MeasureId;
   mode: FlightListByMeasureMode;
-}
+};
 
 export type FlightListByMeasureMode =
   | 'ACTIVATED_BY_MEASURE'
@@ -1427,11 +1425,10 @@ export type FlightListByMeasureReply =
 export interface FlightListByMeasureReplyData
   extends FlightListByLocationReplyData {}
 
-export interface FlightListByAerodromeRequest
-  extends FlightListByLocationRequest {
+export type FlightListByAerodromeRequest = FlightListByLocationRequest & {
   aerodrome: AerodromeICAOId;
   aerodromeRole: AerodromeRole;
-}
+};
 
 export type AerodromeRole =
   /**
@@ -1458,11 +1455,10 @@ export type FlightListByAerodromeReply =
 export interface FlightListByAerodromeReplyData
   extends FlightListByLocationReplyData {}
 
-export interface FlightListByAerodromeSetRequest
-  extends FlightListByLocationRequest {
+export type FlightListByAerodromeSetRequest = FlightListByLocationRequest & {
   aerodromeSet: AerodromeSetId;
   aerodromeRole: AerodromeRole;
-}
+};
 
 export type FlightListByAerodromeSetReply =
   ReplyWithData<FlightListByAerodromeSetReplyData>;
@@ -1471,10 +1467,10 @@ export type FlightListByAerodromeSetReply =
 export interface FlightListByAerodromeSetReplyData
   extends FlightListByLocationReplyData {}
 
-export interface FlightListByAircraftOperatorRequest
-  extends FlightListByLocationRequest {
-  calculationType?: CountsCalculationType;
-}
+export type FlightListByAircraftOperatorRequest =
+  FlightListByLocationRequest & {
+    calculationType?: CountsCalculationType;
+  };
 
 export type FlightListByAircraftOperatorReply =
   ReplyWithData<FlightListByAircraftOperatorReplyData>;

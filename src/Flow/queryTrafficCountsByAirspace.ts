@@ -18,7 +18,7 @@ type Values = TrafficCountsByAirspaceRequest;
 type Result = TrafficCountsByAirspaceReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

@@ -11,7 +11,7 @@ type Values = AUPRetrievalRequest;
 type Result = AUPRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

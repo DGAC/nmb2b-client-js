@@ -18,7 +18,7 @@ export type Values = CapacityPlanUpdateRequest;
 export type Result = CapacityPlanUpdateReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 
