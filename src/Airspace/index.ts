@@ -1,49 +1,30 @@
-import { createClientAsync, type Client as SoapClient } from 'soap';
 import type { Config } from '../config.js';
-import { getWSDLPath } from '../constants.js';
-import { prepareSecurity } from '../security.js';
-import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+import {
+  createService,
+  type SoapService,
+} from '../utils/soap-query-definition.js';
+import { queryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.js';
+import { retrieveAUP } from './retrieveAUP.js';
+import { retrieveAUPChain } from './retrieveAUPChain.js';
+import { retrieveEAUPChain } from './retrieveEAUPChain.js';
 
-import type { Resolver as QueryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.js';
-import queryCompleteAIXMDatasets from './queryCompleteAIXMDatasets.js';
-import type { Resolver as RetrieveAUP } from './retrieveAUP.js';
-import retrieveAUP from './retrieveAUP.js';
-import type { Resolver as RetrieveAUPChain } from './retrieveAUPChain.js';
-import retrieveAUPChain from './retrieveAUPChain.js';
-import type { Resolver as RetrieveEAUPChain } from './retrieveEAUPChain.js';
-import retrieveEAUPChain from './retrieveEAUPChain.js';
+const queryDefinitions = {
+  queryCompleteAIXMDatasets,
+  retrieveAUP,
+  retrieveAUPChain,
+  retrieveEAUPChain,
+};
 
-import type { BaseServiceInterface } from '../Common/ServiceInterface.js';
-
-export type AirspaceClient = SoapClient;
-
-export interface AirspaceService extends BaseServiceInterface {
-  queryCompleteAIXMDatasets: QueryCompleteAIXMDatasets;
-  retrieveAUPChain: RetrieveAUPChain;
-  retrieveEAUPChain: RetrieveEAUPChain;
-  retrieveAUP: RetrieveAUP;
-}
+export type AirspaceService = SoapService<typeof queryDefinitions>;
 
 export async function getAirspaceClient(
   config: Config,
 ): Promise<AirspaceService> {
-  const WSDL = getWSDLPath({
-    service: 'AirspaceServices',
-    flavour: config.flavour,
-    XSD_PATH: config.XSD_PATH,
+  const service = await createService({
+    serviceName: 'AirspaceServices',
+    config,
+    queryDefinitions,
   });
 
-  const security = prepareSecurity(config);
-
-  const client = await createClientAsync(WSDL, { customDeserializer });
-  client.setSecurity(security);
-
-  return {
-    __soapClient: client,
-    config,
-    queryCompleteAIXMDatasets: queryCompleteAIXMDatasets(client),
-    retrieveAUPChain: retrieveAUPChain(client),
-    retrieveEAUPChain: retrieveEAUPChain(client),
-    retrieveAUP: retrieveAUP(client),
-  };
+  return service;
 }
