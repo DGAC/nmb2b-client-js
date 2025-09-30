@@ -1,15 +1,16 @@
-import type { SetOptional } from 'type-fest';
 import type { B2BRequest, Reply, ReplyStatus } from '../Common/types.js';
 import { NMB2BError } from './NMB2BError.js';
 
-export type InjectSendTime<T extends B2BRequest> = SetOptional<T, 'sendTime'>;
+export type InjectSendTime<T extends B2BRequest> = Omit<T, 'sendTime'> & {
+  sendTime?: Date | undefined;
+};
 
-export function injectSendTime<T extends InjectSendTime<B2BRequest>>(
-  values: T,
-): T & { sendTime: Date } {
+export function injectSendTime<T extends B2BRequest>(
+  values: InjectSendTime<T>,
+): T {
   const sendTime = new Date();
 
-  return { sendTime, ...values };
+  return { sendTime, ...values } as T;
 }
 
 type Cb = (...args: any[]) => void;
@@ -32,4 +33,14 @@ export function responseStatusHandler(resolve: Cb, reject: Cb) {
       return;
     }
   };
+}
+
+export function assertOkReply<T extends Reply>(
+  reply: T,
+): asserts reply is T & { status: 'OK' } {
+  if (reply.status !== 'OK') {
+    throw new NMB2BError({
+      reply: reply as T & { status: Exclude<ReplyStatus, 'OK'> },
+    });
+  }
 }

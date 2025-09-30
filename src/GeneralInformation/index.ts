@@ -1,43 +1,27 @@
-import { createClientAsync, type Client as SoapClient } from 'soap';
 import type { Config } from '../config.js';
-import { getWSDLPath } from '../constants.js';
-import { prepareSecurity } from '../security.js';
-import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+import {
+  createService,
+  type SoapService,
+} from '../utils/soap-query-definition.js';
+import { queryNMB2BWSDLsDefinition } from './queryNMB2BWSDLs.js';
 
-import type { Resolver as QueryNMB2BWSDLs } from './queryNMB2BWSDLs.js';
-import queryNMB2BWSDLs from './queryNMB2BWSDLs.js';
+import { retrieveUserInformation } from './retrieveUserinformation.js';
 
-import type { Resolver as RetrieveUserInformation } from './retrieveUserinformation.js';
-import retrieveUserInformation from './retrieveUserinformation.js';
+const queryDefinitions = {
+  queryNMB2BWSDLs: queryNMB2BWSDLsDefinition,
+  retrieveUserInformation,
+};
 
-import type { BaseServiceInterface } from '../Common/ServiceInterface.js';
-
-export type GeneralInformationServiceClient = SoapClient;
-
-export interface GeneralInformationService extends BaseServiceInterface {
-  __soapClient: object;
-  queryNMB2BWSDLs: QueryNMB2BWSDLs;
-  retrieveUserInformation: RetrieveUserInformation;
-}
+export type GeneralInformationService = SoapService<typeof queryDefinitions>;
 
 export async function getGeneralInformationClient(
   config: Config,
 ): Promise<GeneralInformationService> {
-  const WSDL = getWSDLPath({
-    service: 'GeneralinformationServices',
-    flavour: config.flavour,
-    XSD_PATH: config.XSD_PATH,
+  const service = await createService({
+    serviceName: 'GeneralinformationServices',
+    config,
+    queryDefinitions,
   });
 
-  const security = prepareSecurity(config);
-
-  const client = await createClientAsync(WSDL, { customDeserializer });
-  client.setSecurity(security);
-
-  return {
-    __soapClient: client,
-    config,
-    queryNMB2BWSDLs: queryNMB2BWSDLs(client),
-    retrieveUserInformation: retrieveUserInformation(client),
-  };
+  return service;
 }
