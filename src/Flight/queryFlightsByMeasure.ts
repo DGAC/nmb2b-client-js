@@ -1,53 +1,19 @@
-import type { FlightClient } from './index.js';
-import {
-  injectSendTime,
-  responseStatusHandler,
-  type InjectSendTime,
-} from '../utils/internals.js';
-import type { SoapOptions } from '../soap.js';
-import { prepareSerializer } from '../utils/transformers/index.js';
-import { instrument } from '../utils/instrumentation/index.js';
-
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
 import type {
   FlightListByMeasureRequest,
   FlightListByMeasureReply,
 } from './types.js';
 
-export type {
+export const queryFlightsByMeasure = createSoapQueryDefinition<
   FlightListByMeasureRequest,
-  FlightListByMeasureReply,
-} from './types.js';
-
-type Input = InjectSendTime<FlightListByMeasureRequest>;
-type Result = FlightListByMeasureReply;
-
-export type Resolver = (
-  values: Input,
-  options?: SoapOptions,
-) => Promise<Result>;
-
-export default function prepareQueryFlightsByMeasure(
-  client: FlightClient,
-): Resolver {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const schema =
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  FlightListByMeasureReply
+>({
+  service: 'Flight',
+  query: 'queryFlightsByMeasure',
+  getSchema: (client) =>
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().FlightManagementService.FlightManagementPort
-      .queryFlightsByMeasure.input;
-  const serializer = prepareSerializer(schema);
-
-  return instrument<Input, Result>({
-    service: 'Flight',
-    query: 'queryFlightsByMeasure',
-  })(
-    (values, options) =>
-      new Promise((resolve, reject) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        client.queryFlightsByMeasure(
-          serializer(injectSendTime(values)),
-          options,
-          responseStatusHandler(resolve, reject),
-        );
-      }),
-  );
-}
+      .queryFlightsByMeasure.input,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  executeQuery: (client) => client.queryFlightsByMeasureAsync,
+});

@@ -1,53 +1,19 @@
-import type { FlightClient } from './index.js';
-import {
-  injectSendTime,
-  responseStatusHandler,
-  type InjectSendTime,
-} from '../utils/internals.js';
-import type { SoapOptions } from '../soap.js';
-import { prepareSerializer } from '../utils/transformers/index.js';
-import { instrument } from '../utils/instrumentation/index.js';
-
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
 import type {
-  FlightListByAirspaceRequest,
   FlightListByAirspaceReply,
+  FlightListByAirspaceRequest,
 } from './types.js';
 
-export type {
+export const queryFlightsByAirspace = createSoapQueryDefinition<
   FlightListByAirspaceRequest,
-  FlightListByAirspaceReply,
-} from './types.js';
-
-type Input = InjectSendTime<FlightListByAirspaceRequest>;
-type Result = FlightListByAirspaceReply;
-
-export type Resolver = (
-  values: Input,
-  options?: SoapOptions,
-) => Promise<Result>;
-
-export default function prepareQueryFlightsByAirspace(
-  client: FlightClient,
-): Resolver {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const schema =
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  FlightListByAirspaceReply
+>({
+  service: 'Flight',
+  query: 'queryFlightsByAirspace',
+  getSchema: (client) =>
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().FlightManagementService.FlightManagementPort
-      .queryFlightsByAirspace.input;
-  const serializer = prepareSerializer(schema);
-
-  return instrument<Input, Result>({
-    service: 'Flight',
-    query: 'queryFlightsByAirspace',
-  })(
-    (values, options) =>
-      new Promise((resolve, reject) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        client.queryFlightsByAirspace(
-          serializer(injectSendTime(values)),
-          options,
-          responseStatusHandler(resolve, reject),
-        );
-      }),
-  );
-}
+      .queryFlightsByAirspace.input,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  executeQuery: (client) => client.queryFlightsByAirspaceAsync,
+});
