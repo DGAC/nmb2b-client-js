@@ -1,6 +1,11 @@
-import type { File, NMB2BVersion, ReplyWithData } from '../Common/types.js';
+import type {
+  B2BRequest,
+  File,
+  NMB2BVersion,
+  ReplyWithData,
+} from '../Common/types.js';
 
-export type NMB2BWSDLsRequest = {
+export type NMB2BWSDLsRequest = B2BRequest & {
   version: NMB2BVersion;
 };
 
@@ -14,7 +19,7 @@ export interface B2BInfoFile extends File {
   hasAddendaErrata?: boolean;
 }
 
-export type UserInformationRequest = Record<string, never>;
+export type UserInformationRequest = Record<string, never> & B2BRequest;
 
 export type UserInformationReply = ReplyWithData<UserInformationReplyData>;
 

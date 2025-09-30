@@ -1,6 +1,10 @@
 import type { SoapOptions } from '../soap.js';
 import { instrument } from '../utils/instrumentation/index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import type { AirspaceClient } from './index.js';
 
@@ -14,11 +18,11 @@ export type {
   CompleteAIXMDatasetRequest,
 } from './types.js';
 
-type Values = CompleteAIXMDatasetRequest;
+type Input = InjectSendTime<CompleteAIXMDatasetRequest>;
 type Result = CompleteAIXMDatasetReply;
 
 export type Resolver = (
-  values: CompleteAIXMDatasetRequest,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<CompleteAIXMDatasetReply>;
 
@@ -32,7 +36,7 @@ export default function prepareQueryCompleteAIXMDatasets(
       .queryCompleteAIXMDatasets.input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'Airspace',
     query: 'queryCompleteAIXMDatasets',
   })(

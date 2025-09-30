@@ -146,7 +146,7 @@ export type ReplyWithData<TData = never> = Reply & {
   data: SoapDeserializer<TData>;
 };
 
-export type Request = {
+export type B2BRequest = {
   endUserId?: string;
   onBehalfOfUnit?: AirNavigationUnitId;
   sendTime: DateTimeSecond;

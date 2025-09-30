@@ -3,13 +3,12 @@ import { add, startOfDay } from 'date-fns';
 import { afterAll, assert, beforeAll, describe, expect, test } from 'vitest';
 import b2bOptions from '../../tests/options.js';
 import { createFlowClient } from '../index.js';
-import type { Result as OTMVPlanRetrievalResult } from './retrieveOTMVPlan.js';
-import type { Result as OTMVPlanUpdateResult } from './updateOTMVPlan.js';
+import type { OTMVPlanRetrievalReply } from './types.js';
 
 describe('updateOTMVPlan', async () => {
   const Flow = await createFlowClient(b2bOptions);
 
-  let planBefore: OTMVPlanRetrievalResult['data'] | undefined;
+  let planBefore: OTMVPlanRetrievalReply['data'] | undefined;
 
   beforeAll(async () => {
     const res = await Flow.retrieveOTMVPlan({
@@ -75,7 +74,7 @@ describe('updateOTMVPlan', async () => {
 
       const hPlus10Min = add(new Date(), { minutes: 10 });
 
-      const res: OTMVPlanUpdateResult = await Flow.updateOTMVPlan({
+      const res = await Flow.updateOTMVPlan({
         plans: {
           dataId: planBefore.plans.dataId,
           dataset: { type: 'OPERATIONAL' },

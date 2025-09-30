@@ -1,17 +1,21 @@
 import type { SoapOptions } from '../soap.js';
 import { instrument } from '../utils/instrumentation/index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import type { AirspaceClient } from './index.js';
 
 import type { AUPRetrievalReply, AUPRetrievalRequest } from './types.js';
 export type { AUPRetrievalReply, AUPRetrievalRequest };
 
-type Values = AUPRetrievalRequest;
+type Input = InjectSendTime<AUPRetrievalRequest>;
 type Result = AUPRetrievalReply;
 
 export type Resolver = (
-  values: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -23,7 +27,7 @@ export default function prepareRetrieveAUP(client: AirspaceClient): Resolver {
       .retrieveAUP.input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'Airspace',
     query: 'retrieveAUP',
   })(

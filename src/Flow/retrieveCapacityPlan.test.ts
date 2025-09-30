@@ -3,14 +3,13 @@ import { assert, describe, expect, test } from 'vitest';
 import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { NMB2BError, createFlowClient } from '../index.js';
-import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan.js';
 
 describe('retrieveCapacityPlan', async () => {
   const Flow = await createFlowClient(b2bOptions);
 
   test.runIf(shouldUseRealB2BConnection)('LFERMS, LFBBDX', async () => {
     try {
-      const res: CapacityPlanRetrievalResult = await Flow.retrieveCapacityPlan({
+      const res = await Flow.retrieveCapacityPlan({
         dataset: { type: 'OPERATIONAL' },
         day: new Date(),
         trafficVolumes: {

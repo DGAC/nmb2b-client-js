@@ -22,6 +22,7 @@ import type {
 
 import type {
   AirNavigationUnitId,
+  B2BRequest,
   Colours,
   Cost,
   Dataset,
@@ -1274,7 +1275,7 @@ export interface ActualTimeAtTarget {
 }
 export type IntervalPosition = 'AFTER' | 'BEFORE' | 'INSIDE';
 
-export type FlightListRequest = {
+export type FlightListRequest = B2BRequest & {
   dataset: Dataset;
   includeProposalFlights: boolean;
   includeForecastFlights: boolean;
@@ -1363,7 +1364,7 @@ export type FlightListByAirspaceReply =
 export interface FlightListByAirspaceReplyData
   extends FlightListByLocationReplyData {}
 
-export type FlightPlanListRequest = {
+export type FlightPlanListRequest = B2BRequest & {
   aircraftId?: string;
   aerodromeOfDeparture?: string;
   nonICAOAerodromeOfDeparture: boolean;
@@ -1379,7 +1380,7 @@ export type FlightPlanListReplyData = {
   summaries: FlightPlanOrInvalidFiling[];
 };
 
-export type FlightRetrievalRequest = {
+export type FlightRetrievalRequest = B2BRequest & {
   dataset: Dataset;
   includeProposalFlights: boolean;
   flightId: FlightIdentificationInput;
