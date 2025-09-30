@@ -4,7 +4,7 @@ import { withLog } from './withLog.js';
 import { pipe } from 'remeda';
 
 type SoapQuery<Input, Output> = (
-  input?: Input,
+  input: Input,
   options?: SoapOptions,
 ) => Promise<Output>;
 

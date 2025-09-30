@@ -1,5 +1,9 @@
 import type { FlightClient } from './index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import type { SoapOptions } from '../soap.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import { instrument } from '../utils/instrumentation/index.js';
@@ -14,11 +18,11 @@ export type {
   FlightListByAirspaceReply,
 } from './types.js';
 
-type Values = FlightListByAirspaceRequest;
+type Input = InjectSendTime<FlightListByAirspaceRequest>;
 type Result = FlightListByAirspaceReply;
 
 export type Resolver = (
-  values: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -32,7 +36,7 @@ export default function prepareQueryFlightsByAirspace(
       .queryFlightsByAirspace.input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'Flight',
     query: 'queryFlightsByAirspace',
   })(

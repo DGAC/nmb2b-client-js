@@ -3,23 +3,19 @@ import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
 import b2bOptions from '../../tests/options.js';
 import { NMB2BError, createFlowClient } from '../index.js';
-import type { Result as CapacityPlanRetrievalResult } from './retrieveCapacityPlan.js';
-import type { Result as CapacityPlanUpdateResult } from './updateCapacityPlan.js';
 
 describe('updateCapacityPlan', async () => {
   const Flow = await createFlowClient(b2bOptions);
 
   test.skip('LFERMS', async () => {
     try {
-      const plan: CapacityPlanRetrievalResult = await Flow.retrieveCapacityPlan(
-        {
-          dataset: { type: 'OPERATIONAL' },
-          day: new Date(),
-          trafficVolumes: {
-            item: ['LFERMS'],
-          },
+      const plan = await Flow.retrieveCapacityPlan({
+        dataset: { type: 'OPERATIONAL' },
+        day: new Date(),
+        trafficVolumes: {
+          item: ['LFERMS'],
         },
-      );
+      });
 
       expect(plan.data).toBeDefined();
 
@@ -29,7 +25,7 @@ describe('updateCapacityPlan', async () => {
       }
 
       const hPlus10Min = add(new Date(), { minutes: 10 });
-      const res: CapacityPlanUpdateResult = await Flow.updateCapacityPlan({
+      const res = await Flow.updateCapacityPlan({
         plans: {
           dataId: plan.data.plans.dataId,
           dataset: { type: 'OPERATIONAL' },

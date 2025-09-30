@@ -1,6 +1,10 @@
 import type { SoapOptions } from '../soap.js';
 import { instrument } from '../utils/instrumentation/index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import type { AirspaceClient } from './index.js';
 import type {
@@ -9,11 +13,11 @@ import type {
 } from './types.js';
 export type { AUPChainRetrievalReply, AUPChainRetrievalRequest };
 
-type Values = AUPChainRetrievalRequest;
+type Input = InjectSendTime<AUPChainRetrievalRequest>;
 type Result = AUPChainRetrievalReply;
 
 export type Resolver = (
-  values: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -27,7 +31,7 @@ export default function prepareRetrieveAUPChain(
       .retrieveAUPChain.input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'Airspace',
     query: 'retrieveAUPChain',
   })(

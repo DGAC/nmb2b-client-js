@@ -1,5 +1,9 @@
 import type { FlowClient } from './index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import type { SoapOptions } from '../soap.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import { instrument } from '../utils/instrumentation/index.js';
@@ -14,11 +18,11 @@ export type {
   CapacityPlanUpdateReply,
 } from './types.js';
 
-export type Values = CapacityPlanUpdateRequest;
-export type Result = CapacityPlanUpdateReply;
+type Input = InjectSendTime<CapacityPlanUpdateRequest>;
+type Result = CapacityPlanUpdateReply;
 
 export type Resolver = (
-  values: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -33,7 +37,7 @@ export default function prepareUpdateCapacityPlan(
 
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'Flow',
     query: 'updateCapacityPlan',
   })(

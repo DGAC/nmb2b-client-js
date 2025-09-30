@@ -14,6 +14,7 @@ import type {
 
 import type {
   AirNavigationUnitId,
+  B2BRequest,
   Dataset,
   DateTimeMinute,
   DateTimeMinutePeriod,
@@ -200,7 +201,7 @@ export type SectorConfigurationPlanRetrievalRequest =
     airspace: AirspaceId;
   };
 
-export type TacticalConfigurationRetrievalRequest = {
+export type TacticalConfigurationRetrievalRequest = B2BRequest & {
   dataset: Dataset;
   day: DateYearMonthDay;
 };
@@ -255,7 +256,7 @@ export type TrafficCountsByTrafficVolumeRequest = TrafficCountsRequest & {
   includeInvisibleFlights?: boolean;
 };
 
-export type TrafficCountsRequest = {
+export type TrafficCountsRequest = B2BRequest & {
   dataset: Dataset;
   trafficWindow: DateTimeMinutePeriod;
   includeProposalFlights: boolean;
@@ -434,7 +435,7 @@ export type RegulationOrMCDMOnlyListRequest = MeasureListRequest & {
   reasons?: NMSet<RegulationReason>;
 };
 
-export type MeasureListRequest = {
+export type MeasureListRequest = B2BRequest & {
   dataset: Dataset;
   queryPeriod: DateTimeMinutePeriod;
   tvs?: NMSet<TrafficVolumeIdWildcard>;
@@ -633,7 +634,7 @@ export interface RegulationOccupancyConstraint {
   pendingCapacityPercentage: number;
 }
 
-export type HotspotListRequest = {
+export type HotspotListRequest = B2BRequest & {
   dataset: Dataset;
   day: DateYearMonthDay;
   trafficVolume?: TrafficVolumeId;
@@ -709,7 +710,7 @@ export interface OTMVPlanRetrievalReplyData {
   plans: OTMVPlans;
 }
 
-export type OTMVPlanUpdateRequest = {
+export type OTMVPlanUpdateRequest = B2BRequest & {
   plans: OTMVPlans;
 };
 
@@ -748,7 +749,7 @@ export interface PlannedCapacity {
 
 export type Capacity = number;
 
-export type CapacityPlanUpdateRequest = {
+export type CapacityPlanUpdateRequest = B2BRequest & {
   plans: CapacityPlans;
 };
 

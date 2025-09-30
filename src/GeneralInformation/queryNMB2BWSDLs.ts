@@ -1,5 +1,9 @@
 import type { GeneralInformationServiceClient } from './index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import type { SoapOptions } from '../soap.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import { instrument } from '../utils/instrumentation/index.js';
@@ -7,11 +11,11 @@ import { instrument } from '../utils/instrumentation/index.js';
 import type { NMB2BWSDLsReply, NMB2BWSDLsRequest } from './types.js';
 export type { NMB2BWSDLsReply, NMB2BWSDLsRequest };
 
-type Values = NMB2BWSDLsRequest;
+type Input = InjectSendTime<NMB2BWSDLsRequest>;
 type Result = NMB2BWSDLsReply;
 
 export type Resolver = (
-  values: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -24,15 +28,14 @@ export default function prepareQueryNMB2BWSDLs(
     client.describe().NMB2BInfoService.NMB2BInfoPort.queryNMB2BWSDLs.input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'GeneralInformation',
     query: 'queryNMB2BWSDLs',
   })((values, options) => {
-    const foo = injectSendTime(values);
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       client.queryNMB2BWSDLs(
-        serializer(foo),
+        serializer(injectSendTime(values)),
         options,
         responseStatusHandler(resolve, reject),
       );

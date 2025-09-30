@@ -1,5 +1,6 @@
 import type {
   AirNavigationUnitId,
+  B2BRequest,
   Bearing,
   DateTimeMinute,
   DateTimeMinutePeriod,
@@ -307,7 +308,7 @@ export interface FlightLevelRange {
   max: FlightLevel;
 }
 
-export type CompleteAIXMDatasetRequest = {
+export type CompleteAIXMDatasetRequest = B2BRequest & {
   queryCriteria: CompleteDatasetQueryCriteria;
 };
 
@@ -315,7 +316,7 @@ export type CompleteAIXMDatasetReply = ReplyWithData<{
   datasetSummaries: CompleteDatasetSummary[];
 }>;
 
-export type AUPRetrievalRequest = {
+export type AUPRetrievalRequest = B2BRequest & {
   aupId: AUPId;
   returnComputed?: boolean;
 };
@@ -324,7 +325,7 @@ export type AUPRetrievalReply = ReplyWithData<{
   aup: AUP;
 }>;
 
-export type AUPChainRetrievalRequest = {
+export type AUPChainRetrievalRequest = B2BRequest & {
   chainDate: DateYearMonthDay;
   amcIds?: AirNavigationUnitId[];
 };
@@ -333,7 +334,7 @@ export type AUPChainRetrievalReply = ReplyWithData<{
   chains: AUPChain[];
 }>;
 
-export type EAUPChainRetrievalRequest = {
+export type EAUPChainRetrievalRequest = B2BRequest & {
   chainDate: DateYearMonthDay;
 };
 

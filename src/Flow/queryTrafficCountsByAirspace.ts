@@ -1,5 +1,9 @@
 import type { FlowClient } from './index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
 import type { SoapOptions } from '../soap.js';
 import { prepareSerializer } from '../utils/transformers/index.js';
 import { instrument } from '../utils/instrumentation/index.js';
@@ -14,11 +18,11 @@ export type {
   TrafficCountsByAirspaceReply,
 } from './types.js';
 
-type Values = TrafficCountsByAirspaceRequest;
+type Input = InjectSendTime<TrafficCountsByAirspaceRequest>;
 type Result = TrafficCountsByAirspaceReply;
 
 export type Resolver = (
-  values: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -32,7 +36,7 @@ export default function prepareQueryTrafficCountsByAirspace(
       .queryTrafficCountsByAirspace.input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'Flow',
     query: 'queryTrafficCountsByAirspace',
   })(

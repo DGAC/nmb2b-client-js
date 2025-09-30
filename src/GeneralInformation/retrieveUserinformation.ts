@@ -1,17 +1,21 @@
-import type { GeneralInformationServiceClient } from './index.js';
-import { injectSendTime, responseStatusHandler } from '../utils/internals.js';
 import type { SoapOptions } from '../soap.js';
-import { prepareSerializer } from '../utils/transformers/index.js';
 import { instrument } from '../utils/instrumentation/index.js';
+import {
+  injectSendTime,
+  responseStatusHandler,
+  type InjectSendTime,
+} from '../utils/internals.js';
+import { prepareSerializer } from '../utils/transformers/index.js';
+import type { GeneralInformationServiceClient } from './index.js';
 
-import type { UserInformationRequest, UserInformationReply } from './types.js';
-export type { UserInformationRequest, UserInformationReply };
+import type { UserInformationReply, UserInformationRequest } from './types.js';
+export type { UserInformationReply, UserInformationRequest };
 
-type Values = UserInformationRequest;
+type Input = InjectSendTime<UserInformationRequest>;
 type Result = UserInformationReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Input,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -25,18 +29,17 @@ export default function prepareRetrieveUserInformation(
       .input;
   const serializer = prepareSerializer(schema);
 
-  return instrument<Values, Result>({
+  return instrument<Input, Result>({
     service: 'GeneralInformation',
     query: 'retrieveUserInformation',
-  })(
-    (values, options) =>
-      new Promise((resolve, reject) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        client.retrieveUserInformation(
-          serializer(injectSendTime(values)),
-          options,
-          responseStatusHandler(resolve, reject),
-        );
-      }),
-  );
+  })((values, options) => {
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      client.retrieveUserInformation(
+        serializer(injectSendTime(values)),
+        options,
+        responseStatusHandler(resolve, reject),
+      );
+    });
+  });
 }

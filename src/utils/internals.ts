@@ -1,18 +1,15 @@
-import type { Reply, ReplyStatus, Request } from '../Common/types.js';
+import type { SetOptional } from 'type-fest';
+import type { B2BRequest, Reply, ReplyStatus } from '../Common/types.js';
 import { NMB2BError } from './NMB2BError.js';
 
-export function injectSendTime<T extends Record<string, unknown>>(
+export type InjectSendTime<T extends B2BRequest> = SetOptional<T, 'sendTime'>;
+
+export function injectSendTime<T extends InjectSendTime<B2BRequest>>(
   values: T,
-): T & Request;
-export function injectSendTime<T extends Record<string, unknown>>(
-  values: T | undefined,
-): Request | (Request & T);
-export function injectSendTime<T extends Record<string, unknown> | undefined>(
-  values: T,
-) {
+): T & { sendTime: Date } {
   const sendTime = new Date();
 
-  return Object.assign({}, values ?? {}, { sendTime });
+  return { sendTime, ...values };
 }
 
 type Cb = (...args: any[]) => void;
