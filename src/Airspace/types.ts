@@ -307,35 +307,35 @@ export interface FlightLevelRange {
   max: FlightLevel;
 }
 
-export interface CompleteAIXMDatasetRequest {
+export type CompleteAIXMDatasetRequest = {
   queryCriteria: CompleteDatasetQueryCriteria;
-}
+};
 
 export type CompleteAIXMDatasetReply = ReplyWithData<{
   datasetSummaries: CompleteDatasetSummary[];
 }>;
 
-export interface AUPRetrievalRequest {
+export type AUPRetrievalRequest = {
   aupId: AUPId;
   returnComputed?: boolean;
-}
+};
 
 export type AUPRetrievalReply = ReplyWithData<{
   aup: AUP;
 }>;
 
-export interface AUPChainRetrievalRequest {
+export type AUPChainRetrievalRequest = {
   chainDate: DateYearMonthDay;
   amcIds?: AirNavigationUnitId[];
-}
+};
 
 export type AUPChainRetrievalReply = ReplyWithData<{
   chains: AUPChain[];
 }>;
 
-export interface EAUPChainRetrievalRequest {
+export type EAUPChainRetrievalRequest = {
   chainDate: DateYearMonthDay;
-}
+};
 
 export type EAUPChainRetrievalReply = ReplyWithData<{
   chain: EAUPChain;

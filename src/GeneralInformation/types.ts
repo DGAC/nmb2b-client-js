@@ -1,8 +1,8 @@
 import type { File, NMB2BVersion, ReplyWithData } from '../Common/types.js';
 
-export interface NMB2BWSDLsRequest {
+export type NMB2BWSDLsRequest = {
   version: NMB2BVersion;
-}
+};
 
 export type NMB2BWSDLsReply = ReplyWithData<NMB2BWSDLsReplyData>;
 

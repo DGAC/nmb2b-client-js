@@ -11,7 +11,7 @@ type Values = RegulationListRequest;
 type Result = RegulationListReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

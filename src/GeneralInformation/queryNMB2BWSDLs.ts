@@ -11,7 +11,7 @@ type Values = NMB2BWSDLsRequest;
 type Result = NMB2BWSDLsReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -27,15 +27,15 @@ export default function prepareQueryNMB2BWSDLs(
   return instrument<Values, Result>({
     service: 'GeneralInformation',
     query: 'queryNMB2BWSDLs',
-  })(
-    (values, options) =>
-      new Promise((resolve, reject) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        client.queryNMB2BWSDLs(
-          serializer(injectSendTime(values)),
-          options,
-          responseStatusHandler(resolve, reject),
-        );
-      }),
-  );
+  })((values, options) => {
+    const foo = injectSendTime(values);
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      client.queryNMB2BWSDLs(
+        serializer(foo),
+        options,
+        responseStatusHandler(resolve, reject),
+      );
+    });
+  });
 }

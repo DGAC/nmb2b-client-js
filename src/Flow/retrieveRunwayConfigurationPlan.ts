@@ -18,7 +18,7 @@ export type Values = RunwayConfigurationPlanRetrievalRequest;
 export type Result = RunwayConfigurationPlanRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

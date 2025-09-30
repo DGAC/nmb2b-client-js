@@ -23,7 +23,7 @@ type Values = SectorConfigurationPlanRetrievalRequest;
 type Result = SectorConfigurationPlanRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

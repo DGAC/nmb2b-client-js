@@ -18,7 +18,7 @@ type Values = FlightListByMeasureRequest;
 type Result = FlightListByMeasureReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

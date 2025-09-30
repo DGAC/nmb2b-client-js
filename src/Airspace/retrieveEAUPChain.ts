@@ -14,7 +14,7 @@ type Values = EAUPChainRetrievalRequest;
 type Result = EAUPChainRetrievalReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 

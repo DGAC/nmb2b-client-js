@@ -1,16 +1,18 @@
 import type { Reply, ReplyStatus, Request } from '../Common/types.js';
 import { NMB2BError } from './NMB2BError.js';
 
-export function injectSendTime<
-  T extends Record<string, any> | null | undefined,
->(values: T): Request {
+export function injectSendTime<T extends Record<string, unknown>>(
+  values: T,
+): T & Request;
+export function injectSendTime<T extends Record<string, unknown>>(
+  values: T | undefined,
+): Request | (Request & T);
+export function injectSendTime<T extends Record<string, unknown> | undefined>(
+  values: T,
+) {
   const sendTime = new Date();
 
-  if (!values || typeof values !== 'object') {
-    return { sendTime };
-  }
-
-  return { sendTime, ...values };
+  return Object.assign({}, values ?? {}, { sendTime });
 }
 
 type Cb = (...args: any[]) => void;

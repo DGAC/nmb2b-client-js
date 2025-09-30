@@ -12,7 +12,7 @@ export type Values = OTMVPlanUpdateRequest;
 export type Result = OTMVPlanUpdateReply;
 
 export type Resolver = (
-  values?: Values,
+  values: Values,
   options?: SoapOptions,
 ) => Promise<Result>;
 
@@ -30,9 +30,6 @@ export default function prepareUpdateOTMVPlan(client: FlowClient): Resolver {
   })(
     (values, options) =>
       new Promise((resolve, reject) => {
-        console.log(
-          JSON.stringify(serializer(injectSendTime(values)), null, 2),
-        );
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         client.updateOTMVPlan(
           serializer(injectSendTime(values)),

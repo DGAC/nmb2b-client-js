@@ -195,15 +195,15 @@ export type RegulationField =
   | 'scenarioReference'
   | 'delayConfirmationThreshold';
 
-export interface SectorConfigurationPlanRetrievalRequest
-  extends TacticalConfigurationRetrievalRequest {
-  airspace: AirspaceId;
-}
+export type SectorConfigurationPlanRetrievalRequest =
+  TacticalConfigurationRetrievalRequest & {
+    airspace: AirspaceId;
+  };
 
-export interface TacticalConfigurationRetrievalRequest {
+export type TacticalConfigurationRetrievalRequest = {
   dataset: Dataset;
   day: DateYearMonthDay;
-}
+};
 
 export type SectorConfigurationPlanRetrievalReply =
   ReplyWithData<SectorConfigurationPlanRetrievalReplyData>;
@@ -242,21 +242,20 @@ export interface TacticalConfigurationPlan {
   planCutOffReached?: boolean;
 }
 
-export interface TrafficCountsByAirspaceRequest extends TrafficCountsRequest {
+export type TrafficCountsByAirspaceRequest = TrafficCountsRequest & {
   airspace: AirspaceId;
   calculationType: CountsCalculationType;
-}
+};
 
-export interface TrafficCountsByTrafficVolumeRequest
-  extends TrafficCountsRequest {
+export type TrafficCountsByTrafficVolumeRequest = TrafficCountsRequest & {
   trafficVolume: TrafficVolumeId;
   calculationType: CountsCalculationType;
   computeOtmvAlerts?: boolean;
   computeFlowCounts?: FlowType;
   includeInvisibleFlights?: boolean;
-}
+};
 
-export interface TrafficCountsRequest {
+export type TrafficCountsRequest = {
   dataset: Dataset;
   trafficWindow: DateTimeMinutePeriod;
   includeProposalFlights: boolean;
@@ -265,7 +264,7 @@ export interface TrafficCountsRequest {
   // computeSubTotals: boolean;
   subTotalComputeMode: CountSubTotalComputeMode;
   countsInterval: CountsInterval;
-}
+};
 
 export type CountSubTotalComputeMode =
   /**
@@ -435,12 +434,12 @@ export type RegulationOrMCDMOnlyListRequest = MeasureListRequest & {
   reasons?: NMSet<RegulationReason>;
 };
 
-export interface MeasureListRequest {
+export type MeasureListRequest = {
   dataset: Dataset;
   queryPeriod: DateTimeMinutePeriod;
   tvs?: NMSet<TrafficVolumeIdWildcard>;
   tvSets?: NMSet<TrafficVolumeSetIdWildcard>;
-}
+};
 
 export type Regulation = RegulationOrMCDMOnly & {
   regulationState: RegulationState;
@@ -634,13 +633,13 @@ export interface RegulationOccupancyConstraint {
   pendingCapacityPercentage: number;
 }
 
-export interface HotspotListRequest {
+export type HotspotListRequest = {
   dataset: Dataset;
   day: DateYearMonthDay;
   trafficVolume?: TrafficVolumeId;
   duration?: DurationHourMinute;
   hotspotKind: HotspotKind;
-}
+};
 
 export type HotspotKind = 'LOCATION_OF_INTEREST' | 'PROBLEM';
 
@@ -662,10 +661,9 @@ export interface OTMVWithDuration {
   otmvDuration?: DurationHourMinute;
 }
 
-export interface OTMVPlanRetrievalRequest
-  extends TacticalConfigurationRetrievalRequest {
+export type OTMVPlanRetrievalRequest = TacticalConfigurationRetrievalRequest & {
   otmvsWithDuration: NMSet<OTMVWithDuration>;
-}
+};
 
 export interface OTMVPlans extends TacticalConfigurationPlan {
   tvsOTMVs: NMMap<
@@ -711,9 +709,9 @@ export interface OTMVPlanRetrievalReplyData {
   plans: OTMVPlans;
 }
 
-export interface OTMVPlanUpdateRequest {
+export type OTMVPlanUpdateRequest = {
   plans: OTMVPlans;
-}
+};
 
 export type OTMVPlanUpdateReply = ReplyWithData<OTMVPlanUpdateReplyData>;
 
@@ -721,10 +719,10 @@ export interface OTMVPlanUpdateReplyData {
   plans: OTMVPlans;
 }
 
-export interface CapacityPlanRetrievalRequest
-  extends TacticalConfigurationRetrievalRequest {
-  trafficVolumes: NMSet<TrafficVolumeId>;
-}
+export type CapacityPlanRetrievalRequest =
+  TacticalConfigurationRetrievalRequest & {
+    trafficVolumes: NMSet<TrafficVolumeId>;
+  };
 
 export type CapacityPlanRetrievalReply =
   ReplyWithData<CapacityPlanRetrievalReplyData>;
@@ -750,9 +748,9 @@ export interface PlannedCapacity {
 
 export type Capacity = number;
 
-export interface CapacityPlanUpdateRequest {
+export type CapacityPlanUpdateRequest = {
   plans: CapacityPlans;
-}
+};
 
 export type CapacityPlanUpdateReply =
   ReplyWithData<CapacityPlanUpdateReplyData>;
@@ -793,10 +791,10 @@ export interface RunwayConfiguration {
   arrivalTaxiTime?: DurationHourMinute;
   arrivalTaxiTimeDataSource: PlanDataSource;
 }
-export interface RunwayConfigurationPlanRetrievalRequest
-  extends TacticalConfigurationRetrievalRequest {
-  aerodrome: AerodromeICAOId;
-}
+export type RunwayConfigurationPlanRetrievalRequest =
+  TacticalConfigurationRetrievalRequest & {
+    aerodrome: AerodromeICAOId;
+  };
 export type RunwayUsage =
   | 'DEPARTURE'
   | 'ARRIVAL'
