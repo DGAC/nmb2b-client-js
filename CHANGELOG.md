@@ -1,5 +1,21 @@
 # @dgac/nmb2b-client
 
+## 2.1.0
+
+### Minor Changes
+
+- [#210](https://github.com/DGAC/nmb2b-client-js/pull/210) [`4f898e5`](https://github.com/DGAC/nmb2b-client-js/commit/4f898e5f7efa50fc7ba99cd9aba267d5223958ee) Thanks [@kouak](https://github.com/kouak)! - Rework B2B input types to accept `Request` parameters (`endUserId`, `onBehalfOfUnit`)
+
+### Patch Changes
+
+- [#212](https://github.com/DGAC/nmb2b-client-js/pull/212) [`39f162f`](https://github.com/DGAC/nmb2b-client-js/commit/39f162f53132a87265e3c16936c1dac111256501) Thanks [@kouak](https://github.com/kouak)! - Document createClient() options and Config properties.
+
+- [#211](https://github.com/DGAC/nmb2b-client-js/pull/211) [`f3ead5a`](https://github.com/DGAC/nmb2b-client-js/commit/f3ead5a94625bac25af79028885249093f8f9ad6) Thanks [@kouak](https://github.com/kouak)! - Refactor internals with a declarative API which makes it easier to implement new Request/Reply queries
+
+- [#208](https://github.com/DGAC/nmb2b-client-js/pull/208) [`6b8cd4c`](https://github.com/DGAC/nmb2b-client-js/commit/6b8cd4c2c5a756ee922e7dc21bf5240cc178efd2) Thanks [@kouak](https://github.com/kouak)! - Fix incorrect optionnal arguments on some B2B queries
+
+- [#205](https://github.com/DGAC/nmb2b-client-js/pull/205) [`6f53edb`](https://github.com/DGAC/nmb2b-client-js/commit/6f53edb68e9afa0db1b992ef33903ef28cd72efd) Thanks [@kouak](https://github.com/kouak)! - Update dependencies
+
 ## 2.0.0
 
 ### Major Changes
