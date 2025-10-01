@@ -13,3 +13,5 @@ export {
   type FlowService,
   type GeneralInformationService,
 } from './createB2BClient.js';
+
+export { createHook } from './utils/hooks/hooks.js';

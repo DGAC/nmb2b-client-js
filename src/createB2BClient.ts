@@ -31,6 +31,7 @@ export type {
 const CONFIG_DEFAULTS = {
   flavour: 'OPS' as B2BFlavour,
   XSD_PATH: '/tmp/b2b-xsd',
+  hooks: [],
 } satisfies Partial<Config>;
 
 export type CreateB2BClientOptions = SetOptional<

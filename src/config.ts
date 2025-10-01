@@ -3,6 +3,7 @@ import { isValidSecurity } from './security.js';
 import type { B2BFlavour } from './constants.js';
 import { B2B_VERSION, B2BFlavours } from './constants.js';
 import { assert } from './utils/assert.js';
+import type { SoapQueryHook } from './utils/hooks/hooks.js';
 
 export interface Config {
   /**
@@ -39,6 +40,13 @@ export interface Config {
    * Where the WSDL/XSD files should be stored on the disk.
    */
   XSD_PATH: string;
+
+  /**
+   * Soap query hooks.
+   *
+   * @see {@link SoapQueryHook}
+   */
+  hooks: Array<SoapQueryHook>;
 }
 
 export function isConfigValid(args: unknown): args is Config {
