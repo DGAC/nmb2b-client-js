@@ -1,12 +1,12 @@
 import type { B2BRequest, Reply, ReplyStatus } from '../Common/types.js';
 import { NMB2BError } from './NMB2BError.js';
 
-export type InjectSendTime<T extends B2BRequest> = Omit<T, 'sendTime'> & {
+export type WithInjectedSendTime<T extends B2BRequest> = Omit<T, 'sendTime'> & {
   sendTime?: Date | undefined;
 };
 
 export function injectSendTime<T extends B2BRequest>(
-  values: InjectSendTime<T>,
+  values: WithInjectedSendTime<T>,
 ): T {
   const sendTime = new Date();
 

@@ -5,7 +5,7 @@ import { instrument } from './instrumentation/index.js';
 import {
   assertOkReply,
   injectSendTime,
-  type InjectSendTime,
+  type WithInjectedSendTime,
 } from './internals.js';
 import { prepareSerializer } from './transformers/serializer.js';
 import type { Config } from '../config.js';
@@ -54,63 +54,6 @@ export function createSoapQueryDefinition<
   return queryDefinition;
 }
 
-function buildQueryFunctionFromSoapDefinition<
-  TInput extends B2BRequest,
-  TResult extends Reply,
->({
-  queryDefinition,
-  client,
-}: {
-  queryDefinition: SoapQueryDefinition<TInput, TResult>;
-  client: SoapClient;
-}): (input: InjectSendTime<TInput>, options?: SoapOptions) => Promise<TResult> {
-  const schema = queryDefinition.getSchema(client);
-
-  assert(
-    typeof schema === 'object' && schema !== null,
-    `Could not find serializer for query ${queryDefinition.service}.${queryDefinition.query}`,
-  );
-
-  const serializer = prepareSerializer<TInput>(schema);
-
-  const queryFn = queryDefinition.executeQuery
-    ? queryDefinition.executeQuery(client).bind(client)
-    : (client[`${queryDefinition.query}Async`] as
-        | undefined
-        | ((values: TInput, options?: SoapOptions) => Promise<[TResult]>));
-
-  assert(
-    typeof queryFn === 'function',
-    `Could not find query function for query ${queryDefinition.service}.${queryDefinition.query}`,
-  );
-
-  return instrument<InjectSendTime<TInput>, TResult>({
-    service: queryDefinition.service,
-    query: queryDefinition.query,
-  })(async (input, options?): Promise<TResult> => {
-    const withSendTime: TInput = injectSendTime(input);
-
-    const [result] = await queryFn(serializer(withSendTime), options);
-
-    assertOkReply(result);
-    return result;
-  });
-}
-
-export type ServiceDefinition = Record<string, SoapQueryDefinition<any, any>>;
-
-type ExtractSoapQuery<T extends SoapQueryDefinition<B2BRequest, Reply>> =
-  T extends SoapQueryDefinition<infer TInput, infer TResult>
-    ? (input: InjectSendTime<TInput>) => Promise<TResult>
-    : never;
-
-export type SoapService<TDefinitions extends ServiceDefinition> = {
-  __soapClient: SoapClient;
-  config: Config;
-} & {
-  [TKey in keyof TDefinitions]: ExtractSoapQuery<TDefinitions[TKey]>;
-};
-
 export async function createSoapService<
   TDefinitions extends ServiceDefinition,
 >({
@@ -146,3 +89,63 @@ export async function createSoapService<
     ...soapQueryFunctions,
   } as SoapService<TDefinitions>;
 }
+
+export type SoapService<TDefinitions extends ServiceDefinition> = {
+  __soapClient: SoapClient;
+  config: Config;
+} & {
+  [TKey in keyof TDefinitions]: ExtractSoapQuery<TDefinitions[TKey]>;
+};
+
+function buildQueryFunctionFromSoapDefinition<
+  TInput extends B2BRequest,
+  TResult extends Reply,
+>({
+  queryDefinition,
+  client,
+}: {
+  queryDefinition: SoapQueryDefinition<TInput, TResult>;
+  client: SoapClient;
+}): (
+  input: WithInjectedSendTime<TInput>,
+  options?: SoapOptions,
+) => Promise<TResult> {
+  const schema = queryDefinition.getSchema(client);
+
+  assert(
+    typeof schema === 'object' && schema !== null,
+    `Could not find serializer for query ${queryDefinition.service}.${queryDefinition.query}`,
+  );
+
+  const serializer = prepareSerializer<TInput>(schema);
+
+  const queryFn = queryDefinition.executeQuery
+    ? queryDefinition.executeQuery(client).bind(client)
+    : (client[`${queryDefinition.query}Async`] as
+        | undefined
+        | ((values: TInput, options?: SoapOptions) => Promise<[TResult]>));
+
+  assert(
+    typeof queryFn === 'function',
+    `Could not find query function for query ${queryDefinition.service}.${queryDefinition.query}`,
+  );
+
+  return instrument<WithInjectedSendTime<TInput>, TResult>({
+    service: queryDefinition.service,
+    query: queryDefinition.query,
+  })(async (input, options?): Promise<TResult> => {
+    const withSendTime: TInput = injectSendTime(input);
+
+    const [result] = await queryFn(serializer(withSendTime), options);
+
+    assertOkReply(result);
+    return result;
+  });
+}
+
+type ServiceDefinition = Record<string, SoapQueryDefinition<any, any>>;
+
+type ExtractSoapQuery<T extends SoapQueryDefinition<B2BRequest, Reply>> =
+  T extends SoapQueryDefinition<infer TInput, infer TResult>
+    ? (input: WithInjectedSendTime<TInput>) => Promise<TResult>
+    : never;
