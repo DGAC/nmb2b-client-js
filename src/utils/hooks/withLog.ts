@@ -29,3 +29,13 @@ export function withLog<Input, Output>(
     );
   };
 }
+
+// export function withLogHook({ service, query }) {
+//   const debug = d(`${service}:${query}`);
+//   debug(`Called`);
+
+//   return {
+//     onRequestSuccess: () => debug('Success'),
+//     onError: () => debug('Failed'),
+//   };
+// }

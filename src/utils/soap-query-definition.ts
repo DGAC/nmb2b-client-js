@@ -1,7 +1,7 @@
 import { createClientAsync, type Client as SoapClient } from 'soap';
 import type { B2BRequest, Reply } from '../Common/types.js';
 import type { SoapOptions } from '../soap.js';
-import { instrument } from './instrumentation/index.js';
+import { instrument } from './hooks/index.js';
 import {
   assertOkReply,
   injectSendTime,
