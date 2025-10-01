@@ -119,8 +119,8 @@ function buildQueryFunctionFromSoapDefinition<
 
   const serializer = prepareSerializer<TInput>(schema);
 
-  const queryFn = queryDefinition.executeQuery
-    ? queryDefinition.executeQuery(client).bind(client)
+  let queryFn = queryDefinition.executeQuery
+    ? queryDefinition.executeQuery(client)
     : (client[`${queryDefinition.query}Async`] as
         | undefined
         | ((values: TInput, options?: SoapOptions) => Promise<[TResult]>));
@@ -129,6 +129,8 @@ function buildQueryFunctionFromSoapDefinition<
     typeof queryFn === 'function',
     `Could not find query function for query ${queryDefinition.service}.${queryDefinition.query}`,
   );
+
+  queryFn = queryFn.bind(client);
 
   return instrument<WithInjectedSendTime<TInput>, TResult>({
     service: queryDefinition.service,
