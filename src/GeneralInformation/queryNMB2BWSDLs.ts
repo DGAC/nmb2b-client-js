@@ -10,6 +10,4 @@ export const queryNMB2BWSDLsDefinition = createSoapQueryDefinition<
   getSchema: (client) =>
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().NMB2BInfoService.NMB2BInfoPort.queryNMB2BWSDLs.input,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  executeQuery: (client) => client.queryNMB2BWSDLsAsync,
 });

@@ -5,7 +5,6 @@ import b2bOptions from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { NMB2BError, createFlowClient } from '../index.js';
 import { extractReferenceLocation } from '../utils/extractReferenceLocation.js';
-import type { RegulationListReply } from './queryRegulations.js';
 
 describe('queryRegulations', async () => {
   const Flow = await createFlowClient(b2bOptions);
@@ -46,7 +45,7 @@ describe('queryRegulations', async () => {
 
   test.runIf(shouldUseRealB2BConnection)('List all regulations', async () => {
     try {
-      const res: RegulationListReply = await Flow.queryRegulations({
+      const res = await Flow.queryRegulations({
         dataset: { type: 'OPERATIONAL' },
         queryPeriod: {
           wef: startOfHour(sub(new Date(), { hours: 10 })),

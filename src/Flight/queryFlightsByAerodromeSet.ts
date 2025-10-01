@@ -14,6 +14,4 @@ export const queryFlightsByAerodromeSet = createSoapQueryDefinition<
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().FlightManagementService.FlightManagementPort
       .queryFlightsByAerodromeSet.input,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  executeQuery: (client) => client.queryFlightsByAerodromeSetAsync,
 });

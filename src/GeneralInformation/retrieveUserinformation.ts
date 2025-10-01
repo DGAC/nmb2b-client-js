@@ -11,6 +11,4 @@ export const retrieveUserInformation = createSoapQueryDefinition<
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().NMB2BInfoService.NMB2BInfoPort.retrieveUserInformation
       .input,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  executeQuery: (client) => client.retrieveUserInformationAsync,
 });

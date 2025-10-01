@@ -12,12 +12,16 @@ import type { Config } from '../config.js';
 import { getWSDLPath } from '../constants.js';
 import { prepareSecurity } from '../security.js';
 import { deserializer as customDeserializer } from '../utils/transformers/index.js';
+import { assert } from './assert.js';
 
-export type SoapQueryDefinition<TInput extends B2BRequest, TResult> = {
+export type SoapQueryDefinition<
+  TInput extends B2BRequest,
+  TResult extends Reply,
+> = {
   service: string;
   query: string;
   getSchema: (client: SoapClient) => unknown;
-  executeQuery: (
+  executeQuery?: (
     client: SoapClient,
   ) => (values: TInput, options?: SoapOptions) => Promise<[TResult]>;
 };
@@ -41,8 +45,23 @@ export function fromSoapDefinition<
 }): (input: InjectSendTime<TInput>, options?: SoapOptions) => Promise<TResult> {
   const schema = queryDefinition.getSchema(client);
 
+  assert(
+    typeof schema === 'object' && schema !== null,
+    `Could not find serializer for query ${queryDefinition.service}.${queryDefinition.query}`,
+  );
+
   const serializer = prepareSerializer<TInput>(schema);
-  const queryFn = queryDefinition.executeQuery(client).bind(client);
+
+  const queryFn = queryDefinition.executeQuery
+    ? queryDefinition.executeQuery(client).bind(client)
+    : (client[`${queryDefinition.query}Async`] as
+        | undefined
+        | ((values: TInput, options?: SoapOptions) => Promise<[TResult]>));
+
+  assert(
+    typeof queryFn === 'function',
+    `Could not find query function for query ${queryDefinition.service}.${queryDefinition.query}`,
+  );
 
   return instrument<InjectSendTime<TInput>, TResult>({
     service: queryDefinition.service,

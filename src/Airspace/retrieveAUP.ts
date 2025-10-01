@@ -11,6 +11,4 @@ export const retrieveAUP = createSoapQueryDefinition<
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().AirspaceAvailabilityService.AirspaceAvailabilityPort
       .retrieveAUP.input,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  executeQuery: (client) => client.retrieveAUPAsync,
 });
