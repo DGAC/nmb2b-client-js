@@ -1,61 +1,24 @@
-import type { FlowClient } from './index.js';
-import {
-  injectSendTime,
-  responseStatusHandler,
-  type InjectSendTime,
-} from '../utils/internals.js';
-import type { SoapOptions } from '../soap.js';
-import { prepareSerializer } from '../utils/transformers/index.js';
-import { instrument } from '../utils/instrumentation/index.js';
-
-import type {
-  SectorConfigurationPlanRetrievalRequest,
-  SectorConfigurationPlanRetrievalReply,
-  KnownConfigurations,
-  SectorConfigurationId,
-} from './types.js';
-
 import type { AirspaceId } from '../Airspace/types.js';
 import type { SafeB2BDeserializedResponse } from '../types.js';
-
-export type {
-  SectorConfigurationPlanRetrievalRequest,
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
+import type {
+  KnownConfigurations,
+  SectorConfigurationId,
   SectorConfigurationPlanRetrievalReply,
+  SectorConfigurationPlanRetrievalRequest,
 } from './types.js';
 
-type Input = InjectSendTime<SectorConfigurationPlanRetrievalRequest>;
-type Result = SectorConfigurationPlanRetrievalReply;
-
-export type Resolver = (
-  values: Input,
-  options?: SoapOptions,
-) => Promise<Result>;
-
-export default function prepareRetrieveSectorConfigurationPlan(
-  client: FlowClient,
-): Resolver {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const schema =
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+export const retrieveSectorConfigurationPlan = createSoapQueryDefinition<
+  SectorConfigurationPlanRetrievalRequest,
+  SectorConfigurationPlanRetrievalReply
+>({
+  service: 'Flow',
+  query: 'retrieveSectorConfigurationPlan',
+  getSchema: (client) =>
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().TacticalUpdatesService.TacticalUpdatesPort
-      .retrieveSectorConfigurationPlan.input;
-  const serializer = prepareSerializer(schema);
-
-  return instrument<Input, Result>({
-    service: 'Flow',
-    query: 'retrieveSectorConfigurationPlan',
-  })(
-    (values, options) =>
-      new Promise((resolve, reject) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        client.retrieveSectorConfigurationPlan(
-          serializer(injectSendTime(values)),
-          options,
-          responseStatusHandler(resolve, reject),
-        );
-      }),
-  );
-}
+      .retrieveSectorConfigurationPlan.input,
+});
 
 export function knownConfigurationsToMap(
   knownConfigurations:
