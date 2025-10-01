@@ -18,9 +18,30 @@ export type SoapQueryDefinition<
   TInput extends B2BRequest,
   TResult extends Reply,
 > = {
+  /**
+   * Name of the service.
+   */
   service: string;
+
+  /**
+   * Name of the query.
+   *
+   * Will be used to infer the soap-client query function name if `executeQuery` is not defined.
+   */
   query: string;
+
+  /**
+   * Given a SoapClient, return the schema for the input of this query.
+   *
+   * Will be used to build a serializer.
+   */
   getSchema: (client: SoapClient) => unknown;
+
+  /**
+   * Optional getter to extract the correct query function from a `SoapClient`.
+   *
+   * By default, will use `SoapClient[${query}Async]`
+   */
   executeQuery?: (
     client: SoapClient,
   ) => (values: TInput, options?: SoapOptions) => Promise<[TResult]>;
@@ -33,7 +54,7 @@ export function createSoapQueryDefinition<
   return queryDefinition;
 }
 
-export function fromSoapDefinition<
+function buildQueryFunctionFromSoapDefinition<
   TInput extends B2BRequest,
   TResult extends Reply,
 >({
@@ -113,13 +134,13 @@ export async function createService<TDefinitions extends ServiceDefinition>({
   const soapQueryFunctions = Object.fromEntries(
     Object.entries(queryDefinitions).map(([queryName, queryDefinition]) => [
       queryName,
-      fromSoapDefinition({ queryDefinition, client }),
+      buildQueryFunctionFromSoapDefinition({ queryDefinition, client }),
     ]),
   );
 
   return {
-    ...soapQueryFunctions,
     __soapClient: client,
     config,
+    ...soapQueryFunctions,
   } as SoapService<TDefinitions>;
 }
