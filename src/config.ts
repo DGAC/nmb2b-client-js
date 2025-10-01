@@ -3,7 +3,6 @@ import { isValidSecurity } from './security.js';
 import type { B2BFlavour } from './constants.js';
 import { B2B_VERSION, B2BFlavours } from './constants.js';
 import { assert } from './utils/assert.js';
-import { URL } from 'url';
 
 export interface Config {
   /**
@@ -127,11 +126,8 @@ export function getFileUrl(
 export function obfuscate(config: Config) {
   return {
     ...config,
-    security: Object.keys(config.security).reduce((prev, curr) => {
-      return {
-        ...prev,
-        [curr]: 'xxxxxxxxxxxxxxxx',
-      };
-    }, {}),
+    security: Object.fromEntries(
+      Object.entries(config.security).map(([key]) => [key, 'xxxxxxxxxxxxxxxx']),
+    ),
   };
 }
