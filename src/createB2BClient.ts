@@ -1,19 +1,18 @@
-import { isConfigValid, obfuscate } from './config.js';
-import type { B2BFlavour } from './constants.js';
-import type { Security } from './security.js';
-import d from './utils/debug.js';
-
-import { download as downloadWSDLIfNeeded } from './utils/xsd/index.js';
-const debug = d();
+import type { SetOptional } from 'type-fest';
 import type { AirspaceService } from './Airspace/index.js';
 import { getAirspaceClient } from './Airspace/index.js';
+import { isConfigValid, obfuscate, type Config } from './config.js';
+import type { B2BFlavour } from './constants.js';
 import type { FlightService } from './Flight/index.js';
 import { getFlightClient } from './Flight/index.js';
-
 import type { FlowService } from './Flow/index.js';
 import { getFlowClient } from './Flow/index.js';
 import type { GeneralInformationService } from './GeneralInformation/index.js';
 import { getGeneralInformationClient } from './GeneralInformation/index.js';
+import d from './utils/debug.js';
+import { download as downloadWSDLIfNeeded } from './utils/xsd/index.js';
+
+const debug = d();
 
 export interface B2BClient {
   Airspace: AirspaceService;
@@ -29,40 +28,30 @@ export type {
   GeneralInformationService,
 };
 
-export interface CreateB2BClientOptions {
-  security: Security;
-  flavour?: B2BFlavour;
-  XSD_PATH?: string;
-  endpoint?: string;
-  xsdEndpoint?: string;
-  ignoreWSDLCache?: boolean;
-}
-
-const defaults = {
+const CONFIG_DEFAULTS = {
   flavour: 'OPS' as B2BFlavour,
   XSD_PATH: '/tmp/b2b-xsd',
-};
+} satisfies Partial<Config>;
+
+export type CreateB2BClientOptions = SetOptional<
+  Config,
+  keyof typeof CONFIG_DEFAULTS
+>;
 
 export async function createB2BClient(
-  args: CreateB2BClientOptions,
+  options: CreateB2BClientOptions,
 ): Promise<B2BClient> {
-  const options = { ...defaults, ...args };
+  debug('Creating B2B Client ...');
 
-  debug('Instantiating B2B Client ...');
-  if (!isConfigValid(options)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  const config = prepareConfig(options);
 
-  debug('Config is %o', obfuscate(options));
-
-  await downloadWSDLIfNeeded(options);
+  await downloadWSDLIfNeeded(config);
 
   const [Airspace, Flight, Flow, GeneralInformation] = await Promise.all([
-    getAirspaceClient(options),
-    getFlightClient(options),
-    getFlowClient(options),
-    getGeneralInformationClient(options),
+    getAirspaceClient(config),
+    getFlightClient(config),
+    getFlowClient(config),
+    getGeneralInformationClient(config),
   ]);
 
   debug('Successfully created B2B Client');
@@ -76,21 +65,15 @@ export async function createB2BClient(
 }
 
 export async function createAirspaceClient(
-  args: CreateB2BClientOptions,
+  options: CreateB2BClientOptions,
 ): Promise<AirspaceService> {
-  const options = { ...defaults, ...args };
-  debug('Instantiating B2B Airspace client ...');
+  debug('Creating B2B Airspace client ...');
 
-  if (!isConfigValid(options)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  const config = prepareConfig(options);
 
-  debug('Config is %o', obfuscate(options));
+  await downloadWSDLIfNeeded(config);
 
-  await downloadWSDLIfNeeded(options);
-
-  const client = await getAirspaceClient(options);
+  const client = await getAirspaceClient(config);
 
   debug('Successfully created B2B Airspace client');
 
@@ -98,21 +81,15 @@ export async function createAirspaceClient(
 }
 
 export async function createFlightClient(
-  args: CreateB2BClientOptions,
+  options: CreateB2BClientOptions,
 ): Promise<FlightService> {
-  const options = { ...defaults, ...args };
-  debug('Instantiating B2B Flight client ...');
+  debug('Creating B2B Flight client ...');
 
-  if (!isConfigValid(options)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  const config = prepareConfig(options);
 
-  debug('Config is %o', obfuscate(options));
+  await downloadWSDLIfNeeded(config);
 
-  await downloadWSDLIfNeeded(options);
-
-  const client = await getFlightClient(options);
+  const client = await getFlightClient(config);
 
   debug('Successfully created B2B Flight client');
 
@@ -120,21 +97,15 @@ export async function createFlightClient(
 }
 
 export async function createFlowClient(
-  args: CreateB2BClientOptions,
+  options: CreateB2BClientOptions,
 ): Promise<FlowService> {
-  const options = { ...defaults, ...args };
-  debug('Instantiating B2B Flow client ...');
+  debug('Creating B2B Flow client ...');
 
-  if (!isConfigValid(options)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  const config = prepareConfig(options);
 
-  debug('Config is %o', obfuscate(options));
+  await downloadWSDLIfNeeded(config);
 
-  await downloadWSDLIfNeeded(options);
-
-  const client = await getFlowClient(options);
+  const client = await getFlowClient(config);
 
   debug('Successfully created B2B Flow client');
 
@@ -142,23 +113,30 @@ export async function createFlowClient(
 }
 
 export async function createGeneralInformationClient(
-  args: CreateB2BClientOptions,
+  options: CreateB2BClientOptions,
 ): Promise<GeneralInformationService> {
-  const options = { ...defaults, ...args };
-  debug('Instantiating B2B GeneralInformation client ...');
+  debug('Creating B2B GeneralInformation client ...');
 
-  if (!isConfigValid(options)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  const config = prepareConfig(options);
 
-  debug('Config is %o', obfuscate(options));
+  await downloadWSDLIfNeeded(config);
 
-  await downloadWSDLIfNeeded(options);
-
-  const client = await getGeneralInformationClient(options);
+  const client = await getGeneralInformationClient(config);
 
   debug('Successfully created B2B GeneralInformation client');
 
   return client;
+}
+
+function prepareConfig(options: CreateB2BClientOptions): Config {
+  const config = { ...CONFIG_DEFAULTS, ...options };
+
+  if (!isConfigValid(config)) {
+    debug('Invalid options provided');
+    throw new Error('Invalid options provided');
+  }
+
+  debug('Config is %o', obfuscate(config));
+
+  return config;
 }
