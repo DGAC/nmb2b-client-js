@@ -111,7 +111,9 @@ export type SoapService<TDefinitions extends ServiceDefinition> = {
   [TKey in keyof TDefinitions]: ExtractSoapQuery<TDefinitions[TKey]>;
 };
 
-export async function createService<TDefinitions extends ServiceDefinition>({
+export async function createSoapService<
+  TDefinitions extends ServiceDefinition,
+>({
   serviceName,
   config,
   queryDefinitions,

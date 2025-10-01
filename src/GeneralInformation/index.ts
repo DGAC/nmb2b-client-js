@@ -1,6 +1,6 @@
 import type { Config } from '../config.js';
 import {
-  createService,
+  createSoapService,
   type SoapService,
 } from '../utils/soap-query-definition.js';
 import { queryNMB2BWSDLsDefinition } from './queryNMB2BWSDLs.js';
@@ -17,7 +17,7 @@ export type GeneralInformationService = SoapService<typeof queryDefinitions>;
 export async function getGeneralInformationClient(
   config: Config,
 ): Promise<GeneralInformationService> {
-  const service = await createService({
+  const service = await createSoapService({
     serviceName: 'GeneralinformationServices',
     config,
     queryDefinitions,

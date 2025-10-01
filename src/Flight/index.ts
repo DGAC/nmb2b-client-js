@@ -1,6 +1,6 @@
 import type { Config } from '../config.js';
 import {
-  createService,
+  createSoapService,
   type SoapService,
 } from '../utils/soap-query-definition.js';
 
@@ -27,7 +27,7 @@ const queryDefinitions = {
 export type FlightService = SoapService<typeof queryDefinitions>;
 
 export async function getFlightClient(config: Config): Promise<FlightService> {
-  const service = await createService({
+  const service = await createSoapService({
     serviceName: 'FlightServices',
     config,
     queryDefinitions,

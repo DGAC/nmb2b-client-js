@@ -1,6 +1,6 @@
 import type { Config } from '../config.js';
 import {
-  createService,
+  createSoapService,
   type SoapService,
 } from '../utils/soap-query-definition.js';
 import { queryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.js';
@@ -20,7 +20,7 @@ export type AirspaceService = SoapService<typeof queryDefinitions>;
 export async function getAirspaceClient(
   config: Config,
 ): Promise<AirspaceService> {
-  const service = await createService({
+  const service = await createSoapService({
     serviceName: 'AirspaceServices',
     config,
     queryDefinitions,
