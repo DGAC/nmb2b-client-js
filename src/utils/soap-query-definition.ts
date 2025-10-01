@@ -91,8 +91,8 @@ export async function createSoapService<
 }
 
 export type SoapService<TDefinitions extends ServiceDefinition> = {
-  __soapClient: SoapClient;
-  config: Config;
+  readonly __soapClient: SoapClient;
+  readonly config: Config;
 } & {
   [TKey in keyof TDefinitions]: ExtractSoapQuery<TDefinitions[TKey]>;
 };
