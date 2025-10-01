@@ -3,12 +3,12 @@ import {
   createSoapService,
   type SoapService,
 } from '../utils/soap-query-definition.js';
-import { queryNMB2BWSDLsDefinition } from './queryNMB2BWSDLs.js';
 
+import { queryNMB2BWSDLs } from './queryNMB2BWSDLs.js';
 import { retrieveUserInformation } from './retrieveUserinformation.js';
 
 const queryDefinitions = {
-  queryNMB2BWSDLs: queryNMB2BWSDLsDefinition,
+  queryNMB2BWSDLs,
   retrieveUserInformation,
 };
 

@@ -1,7 +1,7 @@
 import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
 import type { NMB2BWSDLsReply, NMB2BWSDLsRequest } from './types.js';
 
-export const queryNMB2BWSDLsDefinition = createSoapQueryDefinition<
+export const queryNMB2BWSDLs = createSoapQueryDefinition<
   NMB2BWSDLsRequest,
   NMB2BWSDLsReply
 >({
