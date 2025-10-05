@@ -1,5 +1,109 @@
 # @dgac/nmb2b-client
 
+## 2.1.0
+
+### Minor Changes
+
+- [#210](https://github.com/DGAC/nmb2b-client-js/pull/210) [`4f898e5`](https://github.com/DGAC/nmb2b-client-js/commit/4f898e5f7efa50fc7ba99cd9aba267d5223958ee) Thanks [@kouak](https://github.com/kouak)! - Rework B2B input types to accept `Request` parameters (`endUserId`, `onBehalfOfUnit`)
+
+- [#207](https://github.com/DGAC/nmb2b-client-js/pull/207) [`39d7fe5`](https://github.com/DGAC/nmb2b-client-js/commit/39d7fe5c9a1f7cbfc83693b416520616adbf78d8) Thanks [@kouak](https://github.com/kouak)! - Implement query hooks.
+
+  Hooks are user provided callbacks which will be executed during the SOAP query process.
+
+  Basic example :
+
+  ```typescript
+  const client = await createB2BClient({
+    // ... other options,
+    hooks: [
+      function onRequestStart({ service, query, input }) {
+        console.log(
+          `Query ${query} of service ${service} was invoked with input`,
+          input,
+        );
+      },
+    ],
+  });
+  ```
+
+  A hook can return an optional object containing success / error hooks :
+
+  ```typescript
+  const client = await createB2BClient({
+    // ... other options,
+    hooks: [
+      function onRequestStart({ service, query, input }) {
+        const startTime = new Date();
+
+        console.log(
+          `Query ${query} of service ${service} was invoked with input:`,
+          input,
+        );
+
+        return {
+          onRequestSuccess: ({ response }) => {
+            const durationMs = new Date().valueOf() - startTime;
+            console.log(`Query took ${durationMs}ms`);
+            console.log(`Query responded with`, response);
+          },
+          onRequestError: ({ error }) => {
+            const durationMs = new Date().valueOf() - startTime;
+            console.log(`Query took ${durationMs}ms`);
+            console.log(`Query failed with error ${error.message}`);
+          },
+        };
+      },
+    ],
+  });
+  ```
+
+  Hooks can also be async :
+
+  ```typescript
+  const client = await createB2BClient({
+    // ... other options,
+    hooks: [
+      async function onRequestStart({ service, query, input }) {
+        await sendLog(`Query ${query} of service ${service} was invoked`);
+      },
+    ],
+  });
+  ```
+
+  To get proper typescript support when creating custom hooks, a `createHook()` function helper is now exported :
+
+  ```typescript
+  import { createHook } from '@dgac/nmb2b-client';
+
+  const withPrometheusMetrics = createHook(({ service, query }) => {
+    prometheusCounter.inc({ service, query, status: 'started' });
+
+    return {
+      onRequestSuccess: () =>
+        prometheusCounter.inc({ service, query, status: 'completed' }),
+      onRequestError: () =>
+        prometheusCounter.inc({ service, query, status: 'completed' }),
+    };
+  });
+
+  // ... in another file
+
+  const b2bClient = await createB2BClient({
+    // ... other options
+    hooks: [withPrometheusMetrics],
+  });
+  ```
+
+### Patch Changes
+
+- [#212](https://github.com/DGAC/nmb2b-client-js/pull/212) [`39f162f`](https://github.com/DGAC/nmb2b-client-js/commit/39f162f53132a87265e3c16936c1dac111256501) Thanks [@kouak](https://github.com/kouak)! - Document createClient() options and Config properties.
+
+- [#211](https://github.com/DGAC/nmb2b-client-js/pull/211) [`f3ead5a`](https://github.com/DGAC/nmb2b-client-js/commit/f3ead5a94625bac25af79028885249093f8f9ad6) Thanks [@kouak](https://github.com/kouak)! - Refactor internals with a declarative API which makes it easier to implement new Request/Reply queries
+
+- [#208](https://github.com/DGAC/nmb2b-client-js/pull/208) [`6b8cd4c`](https://github.com/DGAC/nmb2b-client-js/commit/6b8cd4c2c5a756ee922e7dc21bf5240cc178efd2) Thanks [@kouak](https://github.com/kouak)! - Fix incorrect optionnal arguments on some B2B queries
+
+- [#205](https://github.com/DGAC/nmb2b-client-js/pull/205) [`6f53edb`](https://github.com/DGAC/nmb2b-client-js/commit/6f53edb68e9afa0db1b992ef33903ef28cd72efd) Thanks [@kouak](https://github.com/kouak)! - Update dependencies
+
 ## 2.0.0
 
 ### Major Changes
