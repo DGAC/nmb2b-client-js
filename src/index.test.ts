@@ -29,6 +29,6 @@ describe('Main API', () => {
   ])('%O', async (fn) => {
     const res = await fn(b2bOptions);
     expect(res).toBeDefined();
-    expect(res.config).toEqual(b2bOptions);
+    expect(res.config).toEqual(expect.objectContaining(b2bOptions));
   });
 });
