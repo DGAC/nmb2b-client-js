@@ -36,11 +36,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Debug 2
-        run: npm publish --dry-run
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Create Release Pull Request
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba
         with:
