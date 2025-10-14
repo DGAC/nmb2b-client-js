@@ -19,23 +19,32 @@ jobs:
       issues: read
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
       - name: 'Install pnpm'
         uses: pnpm/action-setup@v4
 
-      - name: Setup Node.js 22
-        uses: actions/setup-node@v3
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Debug 2
+        run: npm publish --dry-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Release Pull Request
-        uses: changesets/action@v1
+        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba
         with:
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_TOKEN: ''
