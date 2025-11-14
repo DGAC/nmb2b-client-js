@@ -66,15 +66,15 @@
     "@eslint/js": "^9.39.1",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
-    "@types/node": "^20.19.17",
+    "@types/node": "^20.19.25",
     "@types/proper-lockfile": "^4.1.4",
     "@vitest/coverage-v8": "^4.0.8",
-    "dotenv": "^17.2.2",
-    "eslint": "^9.36.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.39.1",
     "nock": "^14.0.10",
     "prettier": "^3.6.2",
-    "rimraf": "^6.0.1",
-    "tsdown": "^0.15.4",
+    "rimraf": "^6.1.0",
+    "tsdown": "^0.16.4",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4",
@@ -94,7 +94,7 @@
   "publishConfig": {
     "provenance": true
   },
-  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
+  "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"
