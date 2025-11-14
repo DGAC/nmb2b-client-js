@@ -131,7 +131,7 @@ describe('retrieveFlight', async () => {
         const flight = res.data?.flight;
         expect(flight).toBeDefined();
         expect(flight?.flightId?.id).toEqual(
-          expect.stringMatching(/^A(A|T)[0-9]{8}$/),
+          expect.stringMatching(/^(AA|AT|PO)[0-9]{8}$/),
         );
 
         if (flight?.delay !== undefined) {
