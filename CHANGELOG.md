@@ -1,5 +1,14 @@
 # @dgac/nmb2b-client
 
+## 2.1.1
+
+### Patch Changes
+
+- [#214](https://github.com/DGAC/nmb2b-client-js/pull/214) [`0305896`](https://github.com/DGAC/nmb2b-client-js/commit/03058961648202ff5d86635be6076c71c29c0587) Thanks [@kouak](https://github.com/kouak)! - Update dependencies :
+  - axios v1.13.2
+  - soap v1.6.0
+  - type-fest v5.2.0
+
 ## 2.1.0
 
 ### Minor Changes
