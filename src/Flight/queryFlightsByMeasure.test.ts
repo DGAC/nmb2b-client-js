@@ -37,7 +37,7 @@ describe('queryFlightsByMeasure', async () => {
           item.location,
         );
 
-        if (!referenceLocation || referenceLocation.type !== 'AIRSPACE') {
+        if (referenceLocation?.type !== 'AIRSPACE') {
           return false;
         }
 
