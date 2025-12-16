@@ -19,29 +19,29 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "module-sync": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.mjs",
+      "module-sync": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
     },
     "./security": {
-      "import": "./dist/security.js",
-      "module-sync": "./dist/security.js",
-      "types": "./dist/security.d.ts"
+      "import": "./dist/security.mjs",
+      "module-sync": "./dist/security.mjs",
+      "types": "./dist/security.d.mts"
     },
     "./config": {
-      "import": "./dist/config.js",
-      "module-sync": "./dist/config.js",
-      "types": "./dist/config.d.ts"
+      "import": "./dist/config.mjs",
+      "module-sync": "./dist/config.mjs",
+      "types": "./dist/config.d.mts"
     },
     "./types": {
-      "import": "./dist/types.js",
-      "module-sync": "./dist/types.js",
-      "types": "./dist/types.d.ts"
+      "import": "./dist/types.mjs",
+      "module-sync": "./dist/types.mjs",
+      "types": "./dist/types.d.mts"
     },
     "./utils": {
-      "import": "./dist/utils/index.js",
-      "module-sync": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
+      "import": "./dist/utils/index.mjs",
+      "module-sync": "./dist/utils/index.mjs",
+      "types": "./dist/utils/index.d.mts"
     },
     "./package.json": "./package.json"
   },
@@ -74,7 +74,7 @@
     "nock": "^14.0.10",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.0",
-    "tsdown": "^0.16.4",
+    "tsdown": "^0.18.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4",
