@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 2.1.2
+
+### Patch Changes
+
+- [#220](https://github.com/DGAC/nmb2b-client-js/pull/220) [`74901a2`](https://github.com/DGAC/nmb2b-client-js/commit/74901a2ddf297cae5639b9da85cb7f2a2c4b30b3) Thanks [@kouak](https://github.com/kouak)! - Fix broken v2.1.1 build due to tsdown change.
+
 ## 2.1.1
 
 ### Patch Changes
