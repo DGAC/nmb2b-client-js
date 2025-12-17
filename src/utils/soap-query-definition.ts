@@ -173,5 +173,8 @@ type ServiceDefinition = Record<string, SoapQueryDefinition<any, any>>;
 
 type ExtractSoapQuery<T extends SoapQueryDefinition<B2BRequest, Reply>> =
   T extends SoapQueryDefinition<infer TInput, infer TResult>
-    ? (input: WithInjectedSendTime<TInput>) => Promise<TResult>
+    ? (
+        input: WithInjectedSendTime<TInput>,
+        options?: SoapOptions,
+      ) => Promise<TResult>
     : never;

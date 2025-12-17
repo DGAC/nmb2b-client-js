@@ -1,7 +1,6 @@
-// node-soap options object
-// See https://github.com/vpulim/node-soap#options-optional
 export interface SoapOptions {
-  time?: boolean;
+  /**
+   * Maximum duration of a request (in milliseconds)
+   */
   timeout?: number;
-  proxy?: string;
 }
