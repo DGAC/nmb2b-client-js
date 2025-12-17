@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 2.1.3
+
+### Patch Changes
+
+- [#222](https://github.com/DGAC/nmb2b-client-js/pull/222) [`10b5b56`](https://github.com/DGAC/nmb2b-client-js/commit/10b5b56cc1e4f335e6989714fa67b6d3ff4e8140) Thanks [@kouak](https://github.com/kouak)! - Fix typescript types to allow passing node-soap options to NM B2B query functions
+
 ## 2.1.2
 
 ### Patch Changes
