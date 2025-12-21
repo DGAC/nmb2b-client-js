@@ -1,4 +1,4 @@
-export { NMB2BError } from './utils/NMB2BError.js';
+export { NMB2BError } from './utils/NMB2BError.ts';
 
 export {
   createAirspaceClient,
@@ -12,6 +12,6 @@ export {
   type FlightService,
   type FlowService,
   type GeneralInformationService,
-} from './createB2BClient.js';
+} from './createB2BClient.ts';
 
-export { createHook } from './utils/hooks/hooks.js';
+export { createHook } from './utils/hooks/hooks.ts';

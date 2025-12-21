@@ -1,17 +1,17 @@
-import type { Config } from '../config.js';
+import type { Config } from '../config.ts';
 import {
   createSoapService,
   type SoapService,
-} from '../utils/soap-query-definition.js';
+} from '../utils/soap-query-definition.ts';
 
-import { queryFlightPlans } from './queryFlightPlans.js';
-import { queryFlightsByAerodrome } from './queryFlightsByAerodrome.js';
-import { queryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet.js';
-import { queryFlightsByAircraftOperator } from './queryFlightsByAircraftOperator.js';
-import { queryFlightsByAirspace } from './queryFlightsByAirspace.js';
-import { queryFlightsByMeasure } from './queryFlightsByMeasure.js';
-import { queryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume.js';
-import { retrieveFlight } from './retrieveFlight.js';
+import { queryFlightPlans } from './queryFlightPlans.ts';
+import { queryFlightsByAerodrome } from './queryFlightsByAerodrome.ts';
+import { queryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet.ts';
+import { queryFlightsByAircraftOperator } from './queryFlightsByAircraftOperator.ts';
+import { queryFlightsByAirspace } from './queryFlightsByAirspace.ts';
+import { queryFlightsByMeasure } from './queryFlightsByMeasure.ts';
+import { queryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume.ts';
+import { retrieveFlight } from './retrieveFlight.ts';
 
 const queryDefinitions = {
   retrieveFlight,

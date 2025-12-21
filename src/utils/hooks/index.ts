@@ -1,5 +1,5 @@
-import type { SoapOptions } from '../../soap.js';
-import type { SoapQueryHook } from './hooks.js';
+import type { SoapOptions } from '../../soap.ts';
+import type { SoapQueryHook } from './hooks.ts';
 
 type SoapQuery<Input, Output> = (
   input: Input,

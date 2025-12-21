@@ -1,5 +1,5 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
-import type { HotspotListRequest, HotspotListReply } from './types.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
+import type { HotspotListRequest, HotspotListReply } from './types.ts';
 
 export const queryHotspots = createSoapQueryDefinition<
   HotspotListRequest,

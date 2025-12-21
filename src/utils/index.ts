@@ -1,2 +1,2 @@
-export { NMB2BError } from './NMB2BError.js';
-export { extractReferenceLocation } from './extractReferenceLocation.js';
+export { NMB2BError } from './NMB2BError.ts';
+export { extractReferenceLocation } from './extractReferenceLocation.ts';

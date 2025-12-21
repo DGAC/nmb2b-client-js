@@ -1,12 +1,12 @@
-import type { AirspaceId } from '../Airspace/types.js';
-import type { SafeB2BDeserializedResponse } from '../types.js';
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
+import type { AirspaceId } from '../Airspace/types.ts';
+import type { SafeB2BDeserializedResponse } from '../types.ts';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   KnownConfigurations,
   SectorConfigurationId,
   SectorConfigurationPlanRetrievalReply,
   SectorConfigurationPlanRetrievalRequest,
-} from './types.js';
+} from './types.ts';
 
 export const retrieveSectorConfigurationPlan = createSoapQueryDefinition<
   SectorConfigurationPlanRetrievalRequest,

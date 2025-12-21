@@ -1,4 +1,4 @@
-import { reorderKeys, prepareSerializer } from './serializer.js';
+import { reorderKeys, prepareSerializer } from './serializer.ts';
 import { describe, test, expect } from 'vitest';
 import { UTCDate } from '@date-fns/utc';
 

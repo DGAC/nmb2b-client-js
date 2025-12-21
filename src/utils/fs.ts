@@ -1,5 +1,5 @@
 import * as fs from 'node:fs/promises';
-import d from './debug.js';
+import d from './debug.ts';
 const debug = d('dir-exists');
 
 export async function dirExists(

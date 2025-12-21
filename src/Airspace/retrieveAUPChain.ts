@@ -1,8 +1,8 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   AUPChainRetrievalReply,
   AUPChainRetrievalRequest,
-} from './types.js';
+} from './types.ts';
 
 export const retrieveAUPChain = createSoapQueryDefinition<
   AUPChainRetrievalRequest,

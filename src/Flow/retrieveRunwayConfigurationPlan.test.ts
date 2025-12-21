@@ -1,9 +1,9 @@
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { createFlowClient, NMB2BError } from '../index.js';
-import type { RunwayConfigurationPlanRetrievalReply } from './types.js';
+import b2bOptions from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
+import { createFlowClient, NMB2BError } from '../index.ts';
+import type { RunwayConfigurationPlanRetrievalReply } from './types.ts';
 
 describe('retrieveRunwayConfigurationPlan', async () => {
   const Flow = await createFlowClient(b2bOptions);

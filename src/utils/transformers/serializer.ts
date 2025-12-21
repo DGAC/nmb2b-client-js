@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { types } from './types.js';
+import { types } from './types.ts';
 import { piped, identity, evolve, map } from 'remeda';
 
 export function prepareSerializer<T>(schema: any): (input: T) => T {

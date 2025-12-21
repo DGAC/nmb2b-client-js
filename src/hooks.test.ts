@@ -1,13 +1,13 @@
 import { fromPartial } from '@total-typescript/shoehorn';
 import type { Client as SoapClient } from 'soap';
 import { describe, expect, test, vi } from 'vitest';
-import { createHook } from './index.js';
-import type { B2BRequest, ReplyWithData } from './types.js';
-import type { SoapQueryHook } from './utils/hooks/hooks.js';
+import { createHook } from './index.ts';
+import type { B2BRequest, ReplyWithData } from './types.ts';
+import type { SoapQueryHook } from './utils/hooks/hooks.ts';
 import {
   createSoapQueryDefinition,
   createSoapServiceFromSoapClient,
-} from './utils/soap-query-definition.js';
+} from './utils/soap-query-definition.ts';
 
 describe('hooks', () => {
   describe('when a request starts', () => {

@@ -4,10 +4,10 @@
 // }
 
 import path from 'path';
-import { downloadWSDL } from '../tests/setup_hook';
-import { B2B_VERSION } from '../src/constants';
-import { dirExists } from '../src/utils/fs';
-import b2bOptions from '../tests/options';
+import { downloadWSDL } from '../tests/setup_hook.ts';
+import { B2B_VERSION } from '../src/constants.ts';
+import { dirExists } from '../src/utils/fs.ts';
+import b2bOptions from '../tests/options.ts';
 
 const XSD_PATH = path.join(b2bOptions.XSD_PATH, B2B_VERSION);
 console.log(`Looking for XSD files in ${XSD_PATH} ...`);

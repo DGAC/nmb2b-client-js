@@ -1,8 +1,8 @@
 import { add, startOfDay } from 'date-fns';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
-import { NMB2BError, createFlowClient } from '../index.js';
+import b2bOptions from '../../tests/options.ts';
+import { NMB2BError, createFlowClient } from '../index.ts';
 
 describe('updateCapacityPlan', async () => {
   const Flow = await createFlowClient(b2bOptions);

@@ -1,4 +1,4 @@
-import type { SoapDeserializer } from '../utils/types.js';
+import type { SoapDeserializer } from '../utils/types.ts';
 
 export type DateYearMonthDay = Date;
 export type DateTimeMinute = Date;

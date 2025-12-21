@@ -4,7 +4,7 @@ import {
   getFileUrl,
   getFileEndpoint,
   obfuscate,
-} from './config.js';
+} from './config.ts';
 
 import { test, expect, describe } from 'vitest';
 

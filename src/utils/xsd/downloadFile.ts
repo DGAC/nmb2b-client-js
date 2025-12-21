@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { extract } from 'tar';
-import { getFileUrl } from '../../config.js';
-import type { B2BFlavour } from '../../constants.js';
-import type { Security } from '../../security.js';
-import d from '../debug.js';
-import { createAxiosConfig } from './createAxiosConfig.js';
+import { getFileUrl } from '../../config.ts';
+import type { B2BFlavour } from '../../constants.ts';
+import type { Security } from '../../security.ts';
+import d from '../debug.ts';
+import { createAxiosConfig } from './createAxiosConfig.ts';
 import type { Readable } from 'stream';
 const debug = d('wsdl-downloader');
 

@@ -4,18 +4,20 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "outDir": "dist",
-    "declaration": true,
-    "sourceMap": true,
+    // "declaration": true,
+    // "sourceMap": true,
     "verbatimModuleSyntax": true,
     "strict": true,
     "esModuleInterop": true,
-    // Vite/vitest error :
     "skipLibCheck": true,
     "pretty": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true
   },
   "include": [
     "src/**/*",
+    "scripts/**/*",
     "tests/**/*",
     "vitest.config.ts",
     "tsdown.config.ts"

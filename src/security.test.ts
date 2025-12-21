@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
-import { clearCache, fromEnv } from './security.js';
+import { clearCache, fromEnv } from './security.ts';
 
 const usedEnvKeys = [
   'B2B_CERT',

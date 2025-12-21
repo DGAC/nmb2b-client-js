@@ -1,11 +1,11 @@
 import { add, startOfHour, sub } from 'date-fns';
 import { inspect } from 'util';
 import { assert, beforeAll, describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import type { Regulation } from '../Flow/types.js';
-import { NMB2BError, createFlightClient, createFlowClient } from '../index.js';
-import type { SafeB2BDeserializedResponse } from '../types.js';
+import b2bOptions from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
+import type { Regulation } from '../Flow/types.ts';
+import { NMB2BError, createFlightClient, createFlowClient } from '../index.ts';
+import type { SafeB2BDeserializedResponse } from '../types.ts';
 
 describe('queryFlightsByMeasure', async () => {
   let measure: undefined | SafeB2BDeserializedResponse<Regulation>;

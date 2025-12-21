@@ -1,8 +1,8 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   FlightListByAirspaceReply,
   FlightListByAirspaceRequest,
-} from './types.js';
+} from './types.ts';
 
 export const queryFlightsByAirspace = createSoapQueryDefinition<
   FlightListByAirspaceRequest,

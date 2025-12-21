@@ -1,7 +1,7 @@
-import { assert } from './utils/assert.js';
-import d from './utils/debug.js';
+import { assert } from './utils/assert.ts';
+import d from './utils/debug.ts';
 const debug = d('security');
-import type { Config } from './config.js';
+import type { Config } from './config.ts';
 import type { ISecurity } from 'soap';
 import {
   ClientSSLSecurity,

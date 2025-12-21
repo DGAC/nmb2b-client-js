@@ -1,19 +1,19 @@
-import type { Config } from '../config.js';
+import type { Config } from '../config.ts';
 import {
   createSoapService,
   type SoapService,
-} from '../utils/soap-query-definition.js';
+} from '../utils/soap-query-definition.ts';
 
-import { queryHotspots } from './queryHotspots.js';
-import { queryRegulations } from './queryRegulations.js';
-import { queryTrafficCountsByAirspace } from './queryTrafficCountsByAirspace.js';
-import { queryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume.js';
-import { retrieveCapacityPlan } from './retrieveCapacityPlan.js';
-import { retrieveOTMVPlan } from './retrieveOTMVPlan.js';
-import { retrieveRunwayConfigurationPlan } from './retrieveRunwayConfigurationPlan.js';
-import { retrieveSectorConfigurationPlan } from './retrieveSectorConfigurationPlan.js';
-import { updateCapacityPlan } from './updateCapacityPlan.js';
-import { updateOTMVPlan } from './updateOTMVPlan.js';
+import { queryHotspots } from './queryHotspots.ts';
+import { queryRegulations } from './queryRegulations.ts';
+import { queryTrafficCountsByAirspace } from './queryTrafficCountsByAirspace.ts';
+import { queryTrafficCountsByTrafficVolume } from './queryTrafficCountsByTrafficVolume.ts';
+import { retrieveCapacityPlan } from './retrieveCapacityPlan.ts';
+import { retrieveOTMVPlan } from './retrieveOTMVPlan.ts';
+import { retrieveRunwayConfigurationPlan } from './retrieveRunwayConfigurationPlan.ts';
+import { retrieveSectorConfigurationPlan } from './retrieveSectorConfigurationPlan.ts';
+import { updateCapacityPlan } from './updateCapacityPlan.ts';
+import { updateOTMVPlan } from './updateOTMVPlan.ts';
 
 const queryDefinitions = {
   queryHotspots,

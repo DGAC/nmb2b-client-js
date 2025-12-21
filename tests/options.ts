@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import path from 'path';
-import { fromEnv } from '../src/security.js';
+import { fromEnv } from '../src/security.ts';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 

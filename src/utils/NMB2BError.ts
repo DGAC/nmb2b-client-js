@@ -1,4 +1,4 @@
-import type { B2B_Error, Reply, ReplyStatus } from '../Common/types.js';
+import type { B2B_Error, Reply, ReplyStatus } from '../Common/types.ts';
 
 /**
  * Represents an error response received from NM B2B
