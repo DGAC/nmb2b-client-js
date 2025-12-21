@@ -48,7 +48,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepack": "pnpm build",
-    "downloadWSDL": "tsx ./scripts/downloadWSDL.ts",
+    "downloadWSDL": "node ./scripts/downloadWSDL.ts",
     "clean": "rimraf dist",
     "build": "tsdown",
     "release": "pnpm build && changeset publish",
@@ -75,7 +75,6 @@
     "prettier": "^3.7.4",
     "rimraf": "^6.1.2",
     "tsdown": "^0.18.2",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0",
     "vitest": "^4.0.16"
