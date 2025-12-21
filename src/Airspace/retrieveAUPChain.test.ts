@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { createAirspaceClient } from '../index.js';
-import b2bOptions from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import { createAirspaceClient } from '../index.ts';
+import b2bOptions from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 
 describe('retrieveAUPChain', async () => {
   const Airspace = await createAirspaceClient(b2bOptions);

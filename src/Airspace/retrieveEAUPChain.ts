@@ -1,8 +1,8 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   EAUPChainRetrievalReply,
   EAUPChainRetrievalRequest,
-} from './types.js';
+} from './types.ts';
 
 export const retrieveEAUPChain = createSoapQueryDefinition<
   EAUPChainRetrievalRequest,

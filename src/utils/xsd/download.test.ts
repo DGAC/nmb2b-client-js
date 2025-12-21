@@ -4,10 +4,10 @@ import nock from 'nock';
 import path from 'node:path';
 import { rimraf } from 'rimraf';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { getFileUrl } from '../../config.js';
-import { B2B_VERSION } from '../../constants.js';
-import { createDir as mkdirp } from '../fs.js';
-import { downloadFile } from './downloadFile.js';
+import { getFileUrl } from '../../config.ts';
+import { B2B_VERSION } from '../../constants.ts';
+import { createDir as mkdirp } from '../fs.ts';
+import { downloadFile } from './downloadFile.ts';
 import { fromPartial } from '@total-typescript/shoehorn';
 
 const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');

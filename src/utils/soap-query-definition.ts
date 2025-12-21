@@ -1,20 +1,20 @@
 import { createClientAsync, type Client as SoapClient } from 'soap';
-import type { B2BRequest, Reply } from '../Common/types.js';
-import type { SoapOptions } from '../soap.js';
-import { applyHooks } from './hooks/index.js';
+import type { B2BRequest, Reply } from '../Common/types.ts';
+import type { SoapOptions } from '../soap.ts';
+import { applyHooks } from './hooks/index.ts';
 import {
   assertOkReply,
   injectSendTime,
   type WithInjectedSendTime,
-} from './internals.js';
-import { prepareSerializer } from './transformers/serializer.js';
-import type { Config } from '../config.js';
-import { getWSDLPath } from '../constants.js';
-import { prepareSecurity } from '../security.js';
-import { deserializer as customDeserializer } from '../utils/transformers/index.js';
-import { assert } from './assert.js';
-import type { SoapQueryHook } from './hooks/hooks.js';
-import { logHook } from './hooks/withLog.js';
+} from './internals.ts';
+import { prepareSerializer } from './transformers/serializer.ts';
+import type { Config } from '../config.ts';
+import { getWSDLPath } from '../constants.ts';
+import { prepareSecurity } from '../security.ts';
+import { deserializer as customDeserializer } from '../utils/transformers/index.ts';
+import { assert } from './assert.ts';
+import type { SoapQueryHook } from './hooks/hooks.ts';
+import { logHook } from './hooks/withLog.ts';
 
 export type SoapQueryDefinition<
   TInput extends B2BRequest,

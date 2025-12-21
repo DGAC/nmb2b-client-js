@@ -18,7 +18,7 @@ import type {
   RunwayId,
   TerminalProcedure,
   TrafficVolumeId,
-} from '../Airspace/types.js';
+} from '../Airspace/types.ts';
 
 import type {
   AirNavigationUnitId,
@@ -47,7 +47,7 @@ import type {
   SignedDurationHourMinuteSecond,
   TimeHourMinutePeriod,
   WeightKg,
-} from '../Common/types.js';
+} from '../Common/types.ts';
 
 import type {
   CountsCalculationType,
@@ -64,7 +64,7 @@ import type {
   RegulationId,
   ReroutingId,
   TrafficVolumeScenarios,
-} from '../Flow/types.js';
+} from '../Flow/types.ts';
 
 export type IFPLId = string; // UALPHA{2}DIGIT{8}
 export type FlightDataset = 'flight' | 'flightPlan' | 'flightPlanHistory';

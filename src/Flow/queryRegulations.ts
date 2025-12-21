@@ -1,5 +1,5 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
-import type { RegulationListRequest, RegulationListReply } from './types.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
+import type { RegulationListRequest, RegulationListReply } from './types.ts';
 
 export const queryRegulations = createSoapQueryDefinition<
   RegulationListRequest,

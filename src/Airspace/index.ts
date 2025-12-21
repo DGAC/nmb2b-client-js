@@ -1,12 +1,12 @@
-import type { Config } from '../config.js';
+import type { Config } from '../config.ts';
 import {
   createSoapService,
   type SoapService,
-} from '../utils/soap-query-definition.js';
-import { queryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.js';
-import { retrieveAUP } from './retrieveAUP.js';
-import { retrieveAUPChain } from './retrieveAUPChain.js';
-import { retrieveEAUPChain } from './retrieveEAUPChain.js';
+} from '../utils/soap-query-definition.ts';
+import { queryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.ts';
+import { retrieveAUP } from './retrieveAUP.ts';
+import { retrieveAUPChain } from './retrieveAUPChain.ts';
+import { retrieveEAUPChain } from './retrieveEAUPChain.ts';
 
 const queryDefinitions = {
   queryCompleteAIXMDatasets,

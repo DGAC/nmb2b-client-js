@@ -1,5 +1,5 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
-import type { OTMVPlanUpdateReply, OTMVPlanUpdateRequest } from './types.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
+import type { OTMVPlanUpdateReply, OTMVPlanUpdateRequest } from './types.ts';
 
 export const updateOTMVPlan = createSoapQueryDefinition<
   OTMVPlanUpdateRequest,

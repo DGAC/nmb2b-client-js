@@ -1,4 +1,4 @@
-import type { Security } from '../../security.js';
+import type { Security } from '../../security.ts';
 import https from 'node:https';
 
 export function createAxiosConfig({ security }: { security?: Security }) {

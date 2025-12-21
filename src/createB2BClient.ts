@@ -1,16 +1,16 @@
 import type { SetOptional } from 'type-fest';
-import type { AirspaceService } from './Airspace/index.js';
-import { getAirspaceClient } from './Airspace/index.js';
-import { isConfigValid, obfuscate, type Config } from './config.js';
-import type { B2BFlavour } from './constants.js';
-import type { FlightService } from './Flight/index.js';
-import { getFlightClient } from './Flight/index.js';
-import type { FlowService } from './Flow/index.js';
-import { getFlowClient } from './Flow/index.js';
-import type { GeneralInformationService } from './GeneralInformation/index.js';
-import { getGeneralInformationClient } from './GeneralInformation/index.js';
-import d from './utils/debug.js';
-import { download as downloadWSDLIfNeeded } from './utils/xsd/index.js';
+import type { AirspaceService } from './Airspace/index.ts';
+import { getAirspaceClient } from './Airspace/index.ts';
+import { isConfigValid, obfuscate, type Config } from './config.ts';
+import type { B2BFlavour } from './constants.ts';
+import type { FlightService } from './Flight/index.ts';
+import { getFlightClient } from './Flight/index.ts';
+import type { FlowService } from './Flow/index.ts';
+import { getFlowClient } from './Flow/index.ts';
+import type { GeneralInformationService } from './GeneralInformation/index.ts';
+import { getGeneralInformationClient } from './GeneralInformation/index.ts';
+import d from './utils/debug.ts';
+import { download as downloadWSDLIfNeeded } from './utils/xsd/index.ts';
 
 const debug = d();
 

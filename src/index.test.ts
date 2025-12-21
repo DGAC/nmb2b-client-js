@@ -1,13 +1,13 @@
 import { assert, describe, expect, test } from 'vitest';
-import b2bOptions from '../tests/options.js';
-import { shouldUseRealB2BConnection } from '../tests/utils.js';
+import b2bOptions from '../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../tests/utils.ts';
 import {
   createAirspaceClient,
   createB2BClient,
   createFlightClient,
   createFlowClient,
   createGeneralInformationClient,
-} from './index.js';
+} from './index.ts';
 
 describe('Main API', () => {
   test(createB2BClient, async () => {

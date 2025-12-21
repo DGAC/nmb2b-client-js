@@ -1,9 +1,9 @@
-import type { Security } from './security.js';
-import { isValidSecurity } from './security.js';
-import type { B2BFlavour } from './constants.js';
-import { B2B_VERSION, B2BFlavours } from './constants.js';
-import { assert } from './utils/assert.js';
-import type { SoapQueryHook } from './utils/hooks/hooks.js';
+import type { Security } from './security.ts';
+import { isValidSecurity } from './security.ts';
+import type { B2BFlavour } from './constants.ts';
+import { B2B_VERSION, B2BFlavours } from './constants.ts';
+import { assert } from './utils/assert.ts';
+import type { SoapQueryHook } from './utils/hooks/hooks.ts';
 
 export interface Config {
   /**

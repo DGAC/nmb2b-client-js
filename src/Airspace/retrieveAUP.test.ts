@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { createAirspaceClient } from '../index.js';
+import b2bOptions from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
+import { createAirspaceClient } from '../index.ts';
 
 describe('retrieveAUP', async () => {
   const Airspace = await createAirspaceClient(b2bOptions);
