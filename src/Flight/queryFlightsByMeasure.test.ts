@@ -6,7 +6,6 @@ import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import type { Regulation } from '../Flow/types.js';
 import { NMB2BError, createFlightClient, createFlowClient } from '../index.js';
 import type { SafeB2BDeserializedResponse } from '../types.js';
-import { extractReferenceLocation } from '../utils/index.js';
 
 describe('queryFlightsByMeasure', async () => {
   let measure: undefined | SafeB2BDeserializedResponse<Regulation>;
@@ -25,28 +24,15 @@ describe('queryFlightsByMeasure', async () => {
     const res = await Flow.queryRegulations({
       dataset: { type: 'OPERATIONAL' },
       queryPeriod: window,
+      regulationStates: {
+        item: ['APPLIED'],
+      },
       requestedRegulationFields: {
-        item: ['applicability', 'location', 'reason'],
+        item: ['applicability', 'location', 'reason', 'regulationState'],
       },
     });
 
-    const hasAirspaceMatching =
-      (regex: RegExp) => (item: SafeB2BDeserializedResponse<Regulation>) => {
-        const referenceLocation = extractReferenceLocation(
-          'referenceLocation',
-          item.location,
-        );
-
-        if (referenceLocation?.type !== 'AIRSPACE') {
-          return false;
-        }
-
-        return regex.test(referenceLocation.id);
-      };
-
-    const candidates = res.data.regulations?.item?.filter(
-      hasAirspaceMatching(/^LF/),
-    );
+    const candidates = res.data.regulations?.item;
 
     if (!candidates?.length) {
       return;

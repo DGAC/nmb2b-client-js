@@ -61,24 +61,24 @@
     "dist"
   ],
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.7",
-    "@eslint/js": "^9.39.1",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
+    "@eslint/js": "^9.39.2",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
-    "@types/node": "^20.19.25",
+    "@types/node": "^20.19.27",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/coverage-v8": "^4.0.16",
     "dotenv": "^17.2.3",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "nock": "^14.0.10",
-    "prettier": "^3.6.2",
-    "rimraf": "^6.1.0",
-    "tsdown": "^0.18.0",
-    "tsx": "^4.20.6",
+    "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
+    "tsdown": "^0.18.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.4",
-    "vitest": "^4.0.8"
+    "typescript-eslint": "^8.50.0",
+    "vitest": "^4.0.16"
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.1",
@@ -87,9 +87,9 @@
     "debug": "^4.4.3",
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.32.0",
-    "soap": "^1.6.0",
+    "soap": "^1.6.1",
     "tar": "^7.5.2",
-    "type-fest": "^5.2.0"
+    "type-fest": "^5.3.1"
   },
   "publishConfig": {
     "provenance": true
