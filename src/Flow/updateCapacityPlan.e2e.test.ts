@@ -7,6 +7,7 @@ import { NMB2BError, createFlowClient } from '../index.ts';
 describe('updateCapacityPlan', async () => {
   const Flow = await createFlowClient(TEST_B2B_OPTIONS);
 
+  // oxlint-disable-next-line vitest/no-disabled-tests -- Do not run this test
   test.skip('LFERMS', async () => {
     try {
       const plan = await Flow.retrieveCapacityPlan({

@@ -64,6 +64,7 @@ describe('updateOTMVPlan', async () => {
     }
   });
 
+  // oxlint-disable-next-line vitest/no-disabled-tests -- Do not run theses tests in CI
   test.skip('LFERMS', async () => {
     try {
       assert(planBefore);

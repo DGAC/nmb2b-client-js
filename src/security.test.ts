@@ -135,7 +135,7 @@ describe(isValidSecurity, () => {
   });
 
   test('should throw for invalid security (backward compatibility)', () => {
-    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+    // eslint-disable-next-line @typescript-eslint/no-deprecated, vitest/require-to-throw-message -- Legacy API
     expect(() => isValidSecurity({})).toThrow();
   });
 });

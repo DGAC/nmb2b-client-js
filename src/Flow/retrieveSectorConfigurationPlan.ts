@@ -33,7 +33,7 @@ export function knownConfigurationsToMap(
 
   const { item } = knownConfigurations;
 
-  const map: Map<SectorConfigurationId, AirspaceId[]> = new Map();
+  const map = new Map<SectorConfigurationId, AirspaceId[]>();
   item.forEach(({ key, value }) => {
     if (!value?.item) {
       return;
