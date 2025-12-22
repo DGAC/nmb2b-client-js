@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* oxlint-disable no-unsafe-type-assertion */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-unsafe-return */
+/* oxlint-disable @typescript-eslint/no-unsafe-argument */
+/* oxlint-disable @typescript-eslint/no-unsafe-assignment */
+/* oxlint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { types } from './types.js';
 import { piped, identity, evolve, map } from 'remeda';
 
@@ -19,7 +21,7 @@ export function prepareSerializer<T>(schema: any): (input: T) => T {
 }
 
 function reduceXSDType(str: string): string {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // oxlint-disable-next-line @typescript-eslint/no-non-null-assertion
   return str.split('|')[0]!;
 }
 
@@ -28,7 +30,7 @@ interface Schema {
 }
 
 interface Transformer {
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  // oxlint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   [k: string]: (input: any) => any | Transformer;
 }
 
@@ -53,15 +55,20 @@ function prepareTransformer(schema: Schema): null | Transformer {
 
       if ((types as any)[type]?.input) {
         const transformer = (types as any)[type].input;
-        return { ...prev, [key]: isArray ? map(transformer) : transformer };
+
+        return Object.assign(prev ?? {}, {
+          [key]: isArray ? map(transformer) : transformer,
+        });
       }
     } else if (typeof schema[curr] === 'object') {
       const subItem = prepareTransformer(schema[curr]);
+
       if (subItem) {
-        return {
-          ...prev,
-          [key]: isArray ? map(evolve(subItem)) : subItem,
-        };
+        return Object.assign(prev ?? {}, {
+          [key]: isArray
+            ? map((value) => evolve(subItem)(value as any))
+            : subItem,
+        });
       }
     }
 
@@ -94,9 +101,9 @@ export function reorderKeys<O extends { [key: string]: any }>(
 
       if (typeof currSchema === 'object') {
         if (
-          Object.keys(currSchema).filter(
+          Object.keys(currSchema).some(
             (k) => k !== 'targetNSAlias' && k !== 'targetNamespace',
-          ).length
+          )
         ) {
           prev[lookupKey] =
             isArrayExpected && obj[lookupKey] && Array.isArray(obj[lookupKey])

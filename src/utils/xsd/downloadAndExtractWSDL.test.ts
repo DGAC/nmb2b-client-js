@@ -75,6 +75,7 @@ describe(downloadAndExtractWSDL, () => {
         }
         const expectedOutputPath = path.join(OUTPUT_DIR, ...parts);
 
+        // oxlint-disable-next-line no-await-in-loop
         expect(await readFile(expectedOutputPath, 'utf8')).toBe(
           expectedContent,
         );

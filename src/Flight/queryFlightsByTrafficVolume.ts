@@ -11,7 +11,7 @@ export const queryFlightsByTrafficVolume = createSoapQueryDefinition<
   service: 'Flight',
   query: 'queryFlightsByTrafficVolume',
   getSchema: (client) =>
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+    // oxlint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().FlightManagementService.FlightManagementPort
       .queryFlightsByTrafficVolume.input,
 });

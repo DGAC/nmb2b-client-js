@@ -213,9 +213,9 @@ describe('error handling', () => {
         fromPartial({ status: 'INVALID_INPUT' }),
       ]);
 
-      await expect(() => soapService.soapQuery({ foo: 'bar' })).rejects.toEqual(
-        new NMB2BError({ reply: { status: 'INVALID_INPUT' } }),
-      );
+      await expect(async () =>
+        soapService.soapQuery({ foo: 'bar' }),
+      ).rejects.toEqual(new NMB2BError({ reply: { status: 'INVALID_INPUT' } }));
     });
   });
 
@@ -224,13 +224,13 @@ describe('error handling', () => {
       const { soapService, executeQuery } = withMockedSoapService();
 
       executeQuery.mockResolvedValueOnce([
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line no-explicit-any no-unsafe-type-assertion
         null as any,
       ]);
 
-      await expect(() => soapService.soapQuery({ foo: 'bar' })).rejects.toEqual(
-        expect.any(AssertionError),
-      );
+      await expect(async () =>
+        soapService.soapQuery({ foo: 'bar' }),
+      ).rejects.toEqual(expect.any(AssertionError));
     });
   });
 });
@@ -243,15 +243,15 @@ function withMockedSoapService({
   const client: SoapClient = fromPartial({});
 
   const executeQuery = vi.fn(
+    // oxlint-disable-next-line require-await
     async (
       input: B2BRequest & { foo: string },
-    ): Promise<[ReplyWithData<{ bar: string }>]> =>
-      Promise.resolve([
-        fromPartial({
-          status: 'OK',
-          data: { bar: input.foo },
-        }),
-      ]),
+    ): Promise<[ReplyWithData<{ bar: string }>]> => [
+      fromPartial({
+        status: 'OK',
+        data: { bar: input.foo },
+      }),
+    ],
   );
 
   const queryDefinitions = {

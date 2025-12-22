@@ -39,8 +39,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run ESLint
-        run: pnpm lint
+      - name: Run oxlint
+        run: pnpm lint:ci
 
   typecheck:
     runs-on: ubuntu-latest

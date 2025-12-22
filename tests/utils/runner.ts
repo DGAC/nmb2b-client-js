@@ -10,7 +10,8 @@ import { server, SOAP_ENDPOINT } from './msw.js';
 
 /**
  * Registers tests for fixtures loaded via import.meta.glob.
- * @param fixtureModules - The result of import.meta.glob('./__fixtures__/*.ts', { eager: true })
+ *
+ * @param fixtureModules - The result of import.meta.glob('./__fixtures__/*.ts')
  * @param baseUrl - The import.meta.url of the test file, used to resolve absolute paths
  */
 export async function registerFixtures(
@@ -38,6 +39,7 @@ export async function registerFixtures(
         };
         const artifacts = new FixtureArtifacts(fixtureLocation);
 
+        // oxlint-disable-next-line vitest/valid-describe-callback -- https://github.com/oxc-project/oxc/issues/17643
         describe(`[${fixtureId}] ${fixture.description}`, async () => {
           const context = await artifacts.readContext();
           const xmlResponse = await artifacts.readMock();
@@ -81,6 +83,7 @@ function runFixtureTests<
 }) {
   for (const { name, fn } of fixture.tests) {
     test(
+      // oxlint-disable-next-line valid-title -- This rule should use type information, but isn't
       name,
       server.boundary(async () => {
         server.use(
