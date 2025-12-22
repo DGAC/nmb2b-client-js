@@ -52,6 +52,7 @@ export class FixtureArtifacts<TVariables> {
       throw new Error(`Context file missing: ${this.contextPath}`);
     }
     const content = await fs.readFile(this.contextPath, 'utf-8');
+    // oxlint-disable-next-line no-unsafe-type-assertion
     return JSON.parse(content) as FixtureContext<TVariables>;
   }
 
@@ -64,6 +65,7 @@ export class FixtureArtifacts<TVariables> {
     if (!existsSync(this.mockPath)) {
       throw new Error(`Mock file missing: ${this.mockPath}`);
     }
-    return fs.readFile(this.mockPath, 'utf-8');
+
+    return await fs.readFile(this.mockPath, 'utf-8');
   }
 }

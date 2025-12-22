@@ -1010,13 +1010,13 @@ export interface CDMInfo {
   offBlockTimeDiscrepancy: boolean;
   flightStatusOutbound?: ATVFlightStatusOutbound;
   departureProc?: TerminalProcedure;
-  departureRunway?: RunwayId; // TODO
+  departureRunway?: RunwayId;
   departureTerminal?: TerminalOrApronStandName;
-  departureApronStand?: TerminalOrApronStandName; // TODO
+  departureApronStand?: TerminalOrApronStandName;
   aircraftTypeDiscrepancy: boolean;
-  aircraftType?: AircraftType; // TODO
-  aircraftTypeIATA?: AircraftTypeIATAId; // TODO
-  registrationMark?: AircraftRegistrationMark; // TODO
+  aircraftType?: AircraftType;
+  aircraftTypeIATA?: AircraftTypeIATAId;
+  registrationMark?: AircraftRegistrationMark;
   registrationMarkDiscrepancy?: boolean;
   departureStatus: DepartureStatus;
   targetOffBlockTime?: DateTimeMinute;
@@ -1392,7 +1392,6 @@ export interface FlightListByLocationReplyData extends FlightListReplyData {
 export type FlightListByAirspaceReply =
   ReplyWithData<FlightListByAirspaceReplyData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAirspaceReplyData extends FlightListByLocationReplyData {}
 
 export type FlightPlanListRequest = B2BRequest & {
@@ -1436,7 +1435,6 @@ export type FlightListByTrafficVolumeRequest = FlightListByLocationRequest & {
 export type FlightListByTrafficVolumeReply =
   ReplyWithData<FlightListByTrafficVolumeReplyData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByTrafficVolumeReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByMeasureRequest = FlightListByLocationRequest & {
@@ -1451,7 +1449,6 @@ export type FlightListByMeasureMode =
 export type FlightListByMeasureReply =
   ReplyWithData<FlightListByMeasureReplyData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByMeasureReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByAerodromeRequest = FlightListByLocationRequest & {
@@ -1480,7 +1477,6 @@ export type AerodromeRole =
 export type FlightListByAerodromeReply =
   ReplyWithData<FlightListByAerodromeReplyData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAerodromeReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByAerodromeSetRequest = FlightListByLocationRequest & {
@@ -1491,7 +1487,6 @@ export type FlightListByAerodromeSetRequest = FlightListByLocationRequest & {
 export type FlightListByAerodromeSetReply =
   ReplyWithData<FlightListByAerodromeSetReplyData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAerodromeSetReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByAircraftOperatorRequest =
@@ -1502,5 +1497,4 @@ export type FlightListByAircraftOperatorRequest =
 export type FlightListByAircraftOperatorReply =
   ReplyWithData<FlightListByAircraftOperatorReplyData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FlightListByAircraftOperatorReplyData extends FlightListByLocationReplyData {}

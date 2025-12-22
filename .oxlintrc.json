@@ -1,0 +1,206 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "oxc",
+    "typescript",
+    "import",
+    "vitest",
+    "unicorn",
+    "oxc",
+    "promise"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "pedantic": "error"
+  },
+  "env": {
+    "builtin": true,
+    "node": true
+  },
+  "rules": {
+    /**
+     * Rules which are active but need a configuration override.
+     */
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "_",
+        "ignoreRestSiblings": true
+      }
+    ],
+
+    "@typescript-eslint/restrict-template-expressions": [
+      "error",
+      {
+        "allowAny": false,
+        "allowBoolean": true,
+        "allowNever": false,
+        "allowNullish": false,
+        "allowNumber": true,
+        "allowRegExp": false
+      }
+    ],
+
+    /**
+     * Disabled `pedantic` rules
+     */
+    "max-dependencies": "off",
+    "max-lines": "off",
+    "max-lines-per-function": "off",
+    "no-inline-comments": "off",
+    "no-inner-declarations": "off",
+    "no-negated-condition": "off",
+    "require-await": "off",
+    "no-warning-comments": "off",
+
+    "unicorn/consistent-assert": "off",
+    "unicorn/no-useless-undefined": "off",
+
+    /**
+     * Nursery rules
+     */
+    "getter-return": "error",
+    "promise/no-return-in-finally": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+
+    /**
+     * Rules that should be active but we're not there yet.
+     */
+    "@typescript-eslint/strict-boolean-expressions": "off",
+
+    /**
+     * Restrictions rules enabled on a case by case basis
+     */
+    "no-console": "error",
+    "no-empty": "error",
+    "no-regex-spaces": "error",
+
+    "import/no-cycle": "error",
+    "import/no-default-export": "error",
+    "import/extensions": "error",
+    "import/no-common-js": "error",
+    "import/no-amd": "error",
+
+    "promise/catch-or-return": "error",
+
+    "@typescript-eslint/no-dynamic-delete": "error",
+    "@typescript-eslint/no-empty-object-type": [
+      "error",
+      {
+        "allowInterfaces": "always"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-import-type-side-effects": "error",
+    "@typescript-eslint/no-namespace": "error",
+    "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/non-nullable-type-assertion-style": "error",
+    "@typescript-eslint/prefer-literal-enum-member": "error",
+    "@typescript-eslint/promise-function-async": "error",
+    "@typescript-eslint/use-unknown-in-catch-callback-variable": "error",
+
+    /**
+     * Pedantic rules enabled on a case by case basis
+     */
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": true,
+        "ts-nocheck": true,
+        "ts-check": true,
+        "minimumDescriptionLength": 10
+      }
+    ],
+    "@typescript-eslint/restrict-plus-operands": [
+      "error",
+      {
+        "allowAny": false,
+        "allowBoolean": false,
+        "allowNullish": false,
+        "allowNumberAndString": false,
+        "allowRegExp": false
+      }
+    ],
+    "@typescript-eslint/return-await": [
+      "error",
+      "error-handling-correctness-only"
+    ],
+
+    /**
+     * Style rules enabled on a case by case basis.
+     */
+    "curly": "error",
+    "default-cast-last": "error",
+    "default-param-last": "error",
+    "grouped-accessor-pairs": "error",
+    "guard-for-in": "error",
+    "no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
+    // "no-implicit-coercion": "error",
+    "no-labels": "error",
+    "no-lone-blocks": "error",
+    "no-multi-assign": "error",
+    "no-new-func": "error",
+    "no-return-assign": "error",
+    "no-template-curly-in-string": "error",
+    "operator-assignment": ["error", "always"],
+    "prefer-numeric-literals": "error",
+    "prefer-object-has-own": "error",
+    "prefer-object-spread": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+
+    "import/first": "error",
+    "import/no-duplicate": "error",
+    "import/no-mutable-exports": "error",
+
+    "vitest/consistent-vitest-vi": "error",
+    "vitest/no-import-node-test": "error",
+    "vitest/no-unneeded-async-expect-function": "error",
+    "vitest/prefer-called-once": "error",
+    "vitest/prefer-describe-function-title": "error",
+
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/prefer-reduce-type-parameter": "error",
+    "@typescript-eslint/prefer-return-this-type": "error"
+  },
+  "ignorePatterns": ["coverage/", "dist/"],
+  "settings": {
+    "vitest": {
+      "typecheck": true
+    }
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.ts"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-argument": "off"
+      }
+    },
+    {
+      "files": ["src/**/*.test.ts", "scripts/**/*"],
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": [
+        "vitest.config.ts",
+        "tsdown.config.ts",
+        "tests/ensureWSDLPresence.ts"
+      ],
+      "rules": { "no-default-export": "off" }
+    }
+  ]
+}

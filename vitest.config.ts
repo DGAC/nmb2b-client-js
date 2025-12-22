@@ -54,9 +54,9 @@ export default defineConfig({
  *
  * If not, vitest will convert undefined to 'undefined' (string).
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function removeUndefined<T extends Record<string, any>>(obj: T): T {
+export function removeUndefined<T extends Record<string, unknown>>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).filter(([_, v]) => v !== undefined),
+    // oxlint-disable-next-line no-unsafe-type-assertion -- This is fine, we're returning a wider type.
   ) as T;
 }

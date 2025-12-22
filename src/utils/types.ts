@@ -1,3 +1,5 @@
+import type { OptionalKeysOf, Primitive } from 'type-fest';
+
 export type SoapDeserializer<TInput> = TInput extends Primitive | Date
   ? TInput
   : TInput extends Array<infer T>
@@ -58,5 +60,3 @@ type NullKeysOf<T extends object> = keyof {
 //                     | null
 //                     | undefined
 //               : never;
-
-import type { OptionalKeysOf, Primitive } from 'type-fest';

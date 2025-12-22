@@ -35,7 +35,7 @@ describe('retrieveFlight', async () => {
       return;
     }
 
-    const flights = res.data.flights.filter(
+    const flight = res.data.flights.find(
       (f): f is Extract<typeof f, { flight: unknown }> => {
         if ('flightPlan' in f || !f.flight) {
           return false;
@@ -44,8 +44,6 @@ describe('retrieveFlight', async () => {
         return true;
       },
     );
-
-    const flight = flights[0];
 
     if (!flight?.flight) {
       console.error('Could not fetch a known flight, test aborted');

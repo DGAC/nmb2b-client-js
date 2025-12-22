@@ -56,7 +56,6 @@ describe('queryFlightPlans', async () => {
       !knownFlight.flight?.flightId?.keys
     ) {
       console.error('Could not find a valid callsign !');
-      return;
     }
   });
 

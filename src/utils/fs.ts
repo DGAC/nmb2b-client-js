@@ -4,10 +4,10 @@ const debug = createDebugLogger('dir-exists');
 
 export async function dirExists(
   path: string,
-  { readable, writable }: { readable: boolean; writable?: boolean } = {
-    readable: true,
-    writable: false,
-  },
+  {
+    readable = true,
+    writable = false,
+  }: { readable?: boolean; writable?: boolean } = {},
 ): Promise<boolean> {
   debug(
     `Testing if directory ${path} is readable ${writable ? 'and writable ' : ''}...`,
