@@ -1,3 +1,5 @@
+import { AssertionError } from 'node:assert';
+
 export function assert(
   condition: unknown,
   message?: string,
@@ -7,8 +9,9 @@ export function assert(
       message !== undefined
         ? `Assertion failed: ${message}`
         : `Assertion failed.`;
-    throw new AssertionError(errorMessage);
+    throw new AssertionError({
+      message: errorMessage,
+      stackStartFn: assert,
+    });
   }
 }
-
-class AssertionError extends Error {}
