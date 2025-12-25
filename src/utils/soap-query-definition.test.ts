@@ -1,13 +1,14 @@
 import { fromPartial } from '@total-typescript/shoehorn';
+import { AssertionError } from 'node:assert';
 import type { Client as SoapClient } from 'soap';
-import { describe, expect, test, vi } from 'vitest';
-import { createHook } from './index.js';
-import type { B2BRequest, ReplyWithData } from './types.js';
-import type { SoapQueryHook } from './utils/hooks/hooks.js';
+import { assert, describe, expect, test, vi } from 'vitest';
+import { createHook, NMB2BError } from '../index.js';
+import type { B2BRequest, ReplyWithData } from '../types.js';
+import type { SoapQueryHook } from '../utils/hooks/hooks.js';
 import {
   createSoapQueryDefinition,
   createSoapServiceFromSoapClient,
-} from './utils/soap-query-definition.js';
+} from './soap-query-definition.js';
 
 describe('hooks', () => {
   describe('when a request starts', () => {
@@ -78,10 +79,13 @@ describe('hooks', () => {
         // Do nothing
       }
 
-      expect(onRequestError).toHaveBeenCalledWith({
+      expect(onRequestError).toHaveBeenCalledExactlyOnceWith({
         service: 'test-service',
         query: 'testSoapQuery',
-        error,
+        error: new Error(
+          '[Query test-service.testSoapQuery] Error thrown during query execution: Test error',
+          { cause: error },
+        ),
       });
 
       expect(onRequestSuccess).not.toHaveBeenCalled();
@@ -162,6 +166,72 @@ describe('hooks', () => {
   });
 });
 
+describe('error handling', () => {
+  describe('when a request throws an error', () => {
+    test('should throw the original error', async () => {
+      const { soapService, executeQuery } = withMockedSoapService();
+
+      const error = new Error('Test error');
+      executeQuery.mockRejectedValueOnce(error);
+
+      try {
+        await soapService.soapQuery({ foo: 'bar' });
+        expect.unreachable('soapService call must throw');
+      } catch (err) {
+        assert(err instanceof Error);
+        expect(err.cause).toBe(error);
+        expect(err.message).toMatch(/error thrown/i);
+        expect(err.message).toMatch(/Test error/);
+      }
+    });
+  });
+
+  describe('when a request throws a non error', () => {
+    test('should throw an error instance, with the original thrown object as `cause`', async () => {
+      const { soapService, executeQuery } = withMockedSoapService();
+
+      const error = 'non-error';
+      executeQuery.mockRejectedValueOnce(error);
+
+      try {
+        await soapService.soapQuery({ foo: 'bar' });
+        expect.unreachable('soapService call must throw');
+      } catch (err) {
+        assert(err instanceof Error);
+        expect(err.cause).toBe(error);
+        expect(err.message).toMatch(/error thrown/i);
+        expect(err.message).toMatch(/Unknown error/);
+      }
+    });
+  });
+
+  describe('when a request returns an error response', () => {
+    test('should throw a NMB2BError', async () => {
+      const { soapService, executeQuery } = withMockedSoapService();
+
+      executeQuery.mockResolvedValueOnce([
+        fromPartial({ status: 'INVALID_INPUT' }),
+      ]);
+
+      await expect(() => soapService.soapQuery({ foo: 'bar' })).rejects.toEqual(
+        new NMB2BError({ reply: { status: 'INVALID_INPUT' } }),
+      );
+    });
+  });
+
+  describe('when a request returns an invalid response', () => {
+    test('should throw an AssertionError', async () => {
+      const { soapService, executeQuery } = withMockedSoapService();
+
+      executeQuery.mockResolvedValueOnce([null as any]);
+
+      await expect(() => soapService.soapQuery({ foo: 'bar' })).rejects.toEqual(
+        expect.any(AssertionError),
+      );
+    });
+  });
+});
+
 function withMockedSoapService({
   hooks = [],
 }: {
@@ -201,16 +271,3 @@ function withMockedSoapService({
     soapService,
   };
 }
-
-// const client = await createB2BClient({
-//   onRequestStart: () => {
-//     console.log('Request started');
-//
-//     return {
-//       onRequestSuccess: async () => {},
-//       onRequestError: () => {
-//         console.log('Request error');
-//       },
-//     };
-//   },
-// });

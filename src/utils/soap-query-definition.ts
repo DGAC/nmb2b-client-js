@@ -15,6 +15,8 @@ import { deserializer as customDeserializer } from '../utils/transformers/index.
 import { assert } from './assert.js';
 import type { SoapQueryHook } from './hooks/hooks.js';
 import { logHook } from './hooks/withLog.js';
+import { AssertionError } from 'node:assert';
+import { NMB2BError } from './NMB2BError.js';
 
 export type SoapQueryDefinition<
   TInput extends B2BRequest,
@@ -159,12 +161,23 @@ function buildQueryFunctionFromSoapDefinition<
     query: queryDefinition.query,
     hooks: hooks,
     queryFn: async (input, options?): Promise<TResult> => {
-      const withSendTime: TInput = injectSendTime(input);
+      try {
+        const withSendTime: TInput = injectSendTime(input);
 
-      const [result] = await queryFn(serializer(withSendTime), options);
+        const [result] = await queryFn(serializer(withSendTime), options);
 
-      assertOkReply(result);
-      return result;
+        assertOkReply(result);
+        return result;
+      } catch (err: unknown) {
+        if (err instanceof AssertionError || err instanceof NMB2BError) {
+          throw err;
+        }
+
+        throw new Error(
+          `[Query ${queryDefinition.service}.${queryDefinition.query}] Error thrown during query execution: ${err instanceof Error ? err.message : 'Unknown error'}`,
+          { cause: err },
+        );
+      }
     },
   });
 }
