@@ -1,7 +1,5 @@
 import axios, { AxiosHeaders } from 'axios';
 import { extract } from 'tar';
-import { getFileUrl } from '../../config.js';
-import type { B2BFlavour } from '../../constants.js';
 import type { Security } from '../../security.js';
 import d from '../debug.js';
 import { createAxiosConfig } from './createAxiosConfig.js';
@@ -9,24 +7,17 @@ import type { Readable } from 'stream';
 import { assert } from '../assert.js';
 const debug = d('wsdl-downloader');
 
-export async function downloadFile(
-  filePath: string,
+export async function downloadAndExtractWSDL(
+  url: string,
   {
-    flavour,
     security,
-    XSD_PATH: outputDir,
-    xsdEndpoint,
+    outputDir,
   }: {
-    flavour: B2BFlavour;
     security?: Security;
-    XSD_PATH: string;
-    xsdEndpoint?: string;
+    outputDir: string;
   },
 ): Promise<void> {
   const options = createAxiosConfig({ security });
-
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  const url = xsdEndpoint || getFileUrl(filePath, { flavour });
 
   debug(`Downloading ${url}`);
   try {
@@ -61,7 +52,7 @@ export async function downloadFile(
 
     return new Promise((resolve, reject) => {
       res.data
-        .pipe(extract({ cwd: outputDir }))
+        .pipe(extract({ cwd: outputDir, strip: 1 }))
         .on('error', reject)
         .on('close', () => {
           debug('Downloaded and extracted WSDL files');

@@ -9,7 +9,7 @@ import {
 } from './internals.js';
 import { prepareSerializer } from './transformers/serializer.js';
 import type { Config } from '../config.js';
-import { getWSDLPath } from '../constants.js';
+import { getServiceWSDLFilePath } from './xsd/paths.js';
 import { prepareSecurity } from '../security.js';
 import { deserializer as customDeserializer } from '../utils/transformers/index.js';
 import { assert } from './assert.js';
@@ -69,10 +69,11 @@ export async function createSoapService<
   config: Config;
   queryDefinitions: TDefinitions;
 }): Promise<SoapService<TDefinitions>> {
-  const WSDL = getWSDLPath({
+  const WSDL = getServiceWSDLFilePath({
     service: serviceName,
     flavour: config.flavour,
     XSD_PATH: config.XSD_PATH,
+    xsdEndpoint: config.xsdEndpoint,
   });
 
   const security = prepareSecurity(config);

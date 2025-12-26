@@ -1,7 +1,7 @@
 import { UTCDateMini } from '@date-fns/utc';
 import axios from 'axios';
 import { format } from 'date-fns';
-import { getEndpoint } from '../../config.js';
+import { getEndpoint, getFileUrl } from '../../config.js';
 import type { B2BFlavour } from '../../constants.js';
 import { B2B_VERSION } from '../../constants.js';
 import type { Security } from '../../security.js';
@@ -24,7 +24,7 @@ const makeQuery = ({ version }: { version: string }) => `
 </soap:Envelope>
 `;
 
-export async function requestFilename({
+export async function getWSDLDownloadURL({
   flavour,
   security,
   xsdEndpoint,
@@ -58,5 +58,5 @@ export async function requestFilename({
     throw new Error(`Could not extract WSDL tarball file from B2B response`);
   }
 
-  return matches[1];
+  return getFileUrl(matches[1], { flavour });
 }

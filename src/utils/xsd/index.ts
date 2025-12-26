@@ -1,21 +1,18 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import { readdir } from 'node:fs/promises';
 import lockfile from 'proper-lockfile';
-import { promisify } from 'node:util';
 import type { Config } from '../../config.js';
-import { B2B_VERSION } from '../../constants.js';
 import d from '../debug.js';
 import { createDir, dirExists } from '../fs.js';
-import { downloadFile } from './downloadFile.js';
-import { requestFilename } from './filePath.js';
+import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.js';
+import { getWSDLDownloadURL } from './getWSDLDownloadURL.js';
+import { getXSDCacheDirectory } from './paths.js';
+
 const debug = d('wsdl');
 
-const readdir = promisify(fs.readdir);
-
-const getWSDLPath = ({ XSD_PATH }: Config) => path.join(XSD_PATH, B2B_VERSION);
-
-async function WSDLExists(config: Config): Promise<boolean> {
-  const directory = getWSDLPath(config);
+export async function WSDLExists(
+  config: Pick<Config, 'XSD_PATH' | 'xsdEndpoint'>,
+): Promise<boolean> {
+  const directory = getXSDCacheDirectory(config);
 
   debug(`Checking if directory ${directory} exists`);
 
@@ -28,7 +25,7 @@ async function WSDLExists(config: Config): Promise<boolean> {
 }
 
 export async function download(config: Config): Promise<void> {
-  const outputDir = getWSDLPath(config);
+  const outputDir = getXSDCacheDirectory(config);
 
   if (!(await dirExists(outputDir))) {
     debug(`Creating directory ${outputDir}`);
@@ -36,24 +33,29 @@ export async function download(config: Config): Promise<void> {
   }
 
   debug(`Acquiring lock for folder ${outputDir}`);
-  const release = await lockfile.lock(outputDir, {
+  const releaseLock = await lockfile.lock(outputDir, {
     retries: 5,
   });
 
-  debug(`Lock acquired. Testing WSDL existence ...`);
+  try {
+    debug(`Lock acquired. Testing WSDL existence ...`);
 
-  const hasWSDL = await WSDLExists(config);
+    const hasWSDL = await WSDLExists(config);
 
-  if (!config.ignoreWSDLCache && hasWSDL) {
-    debug('WSDL found');
-    await release();
-    return;
+    if (!config.ignoreWSDLCache && hasWSDL) {
+      debug('WSDL found');
+      return;
+    }
+
+    const url = await getWSDLDownloadURL(config);
+
+    debug(`Downloading ${url}`);
+
+    await downloadAndExtractWSDL(url, {
+      security: config.security,
+      outputDir,
+    });
+  } finally {
+    await releaseLock();
   }
-
-  const fileName = await requestFilename(config);
-
-  debug(`Downloading ${fileName}`);
-
-  await downloadFile(fileName, config);
-  await release();
 }

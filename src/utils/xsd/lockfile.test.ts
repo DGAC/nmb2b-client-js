@@ -1,24 +1,25 @@
 import { randomUUID } from 'node:crypto';
-import fs from 'node:fs';
 import nock from 'nock';
 import path from 'node:path';
-import { rimraf } from 'rimraf';
 import { afterEach, beforeEach, test } from 'vitest';
+import { rm } from 'node:fs/promises';
 import { getFileUrl } from '../../config.js';
 import { B2B_VERSION } from '../../constants.js';
+import { createMockArchive } from '../../../tests/utils.js';
 import { createDir as mkdirp } from '../fs.js';
 import { download } from './index.js';
 import { fromPartial } from '@total-typescript/shoehorn';
 
-const TEST_FILE = path.join(import.meta.dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 
 beforeEach(async () => {
   await mkdirp(OUTPUT_DIR);
+  return async () => {
+    await rm(OUTPUT_DIR, { force: true, recursive: true });
+  };
 });
 
-afterEach(async () => {
-  await rimraf(OUTPUT_DIR);
+afterEach(() => {
   nock.cleanAll();
 });
 
@@ -28,14 +29,18 @@ test('should prevent concurrent downloads', async () => {
 
   const root = new URL(getFileUrl(filePath, { flavour }));
 
+  const archive = await createMockArchive({
+    [`${B2B_VERSION}/foo.json`]: JSON.stringify({ foo: 'bar' }),
+  });
+
   const scope = nock(root.origin)
     .get(/.*/)
     .once()
-    .delayBody(500)
-    .reply(200, fs.readFileSync(TEST_FILE));
+    .delay(500)
+    .reply(200, archive);
 
   nock(root.origin)
-    .post('/B2B_PREOPS/gateway/spec/27.0.0')
+    .post(`/B2B_${flavour}/gateway/spec/${B2B_VERSION}`)
     .reply(
       200,
       `
