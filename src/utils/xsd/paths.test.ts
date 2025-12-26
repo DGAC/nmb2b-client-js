@@ -9,7 +9,9 @@ describe(getXSDCacheDirectory, () => {
   describe('when XSD_ENDPOINT is not set', () => {
     test('should return the standard versioned path', () => {
       const dir = getXSDCacheDirectory({ XSD_PATH: XSD_CACHE_PATH });
-      expect(dir).toBe(path.join(XSD_CACHE_PATH, B2B_VERSION));
+      expect(dir).toBe(
+        path.join(XSD_CACHE_PATH, `${B2B_VERSION}-network-manager`),
+      );
     });
   });
 
@@ -24,7 +26,7 @@ describe(getXSDCacheDirectory, () => {
       expect(dir).toContain(B2B_VERSION);
     });
 
-    test.todo('should return a different path than standard', () => {
+    test('should return a different path than standard', () => {
       const xsdEndpoint = 'https://example.com/wsdl';
       const dir = getXSDCacheDirectory({
         XSD_PATH: XSD_CACHE_PATH,
@@ -35,7 +37,7 @@ describe(getXSDCacheDirectory, () => {
       expect(dir).not.toBe(standardDir);
     });
 
-    test.todo('should return different paths for different endpoints', () => {
+    test('should return different paths for different endpoints', () => {
       const dir1 = getXSDCacheDirectory({
         XSD_PATH: XSD_CACHE_PATH,
         xsdEndpoint: 'https://a.com',
@@ -72,7 +74,10 @@ describe(getServiceWSDLFilePath, () => {
       XSD_PATH: XSD_CACHE_PATH,
     });
 
-    const expectedDir = path.join(XSD_CACHE_PATH, B2B_VERSION);
+    const expectedDir = path.join(
+      XSD_CACHE_PATH,
+      `${B2B_VERSION}-network-manager`,
+    );
     const expectedFile = `Flow_OPS_${B2B_VERSION}.wsdl`;
     expect(filePath).toBe(path.join(expectedDir, expectedFile));
   });
