@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosHeaders } from 'axios';
 import { extract } from 'tar';
 import { getFileUrl } from '../../config.js';
 import type { B2BFlavour } from '../../constants.js';
@@ -6,6 +6,7 @@ import type { Security } from '../../security.js';
 import d from '../debug.js';
 import { createAxiosConfig } from './createAxiosConfig.js';
 import type { Readable } from 'stream';
+import { assert } from '../assert.js';
 const debug = d('wsdl-downloader');
 
 export async function downloadFile(
@@ -34,6 +35,29 @@ export async function downloadFile(
       responseType: 'stream',
       ...options,
     });
+
+    assert(
+      res.headers instanceof AxiosHeaders,
+      'Axios response.headers is not an instance of AxiosHeaders class.',
+    );
+
+    const contentType = res.headers.get('content-type');
+
+    if (
+      contentType &&
+      typeof contentType === 'string' &&
+      /**
+       * Check for valid binary formats to avoid parsing HTML/Text errors as TAR.
+       * - gzip: Standard for .tar.gz
+       * - octet-stream: Generic binary (common in proxies)
+       * - x-tar: Uncompressed tar fallback
+       */
+      !contentType.includes('gzip') &&
+      !contentType.includes('octet-stream') &&
+      !contentType.includes('x-tar')
+    ) {
+      throw new Error(`Invalid Content-Type: ${contentType}`);
+    }
 
     return new Promise((resolve, reject) => {
       res.data
