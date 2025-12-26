@@ -10,7 +10,7 @@ import { createDir as mkdirp } from '../fs.js';
 import { download } from './index.js';
 import { fromPartial } from '@total-typescript/shoehorn';
 
-const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
+const TEST_FILE = path.join(import.meta.dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 
 beforeEach(async () => {

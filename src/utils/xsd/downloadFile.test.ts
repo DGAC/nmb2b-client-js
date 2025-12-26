@@ -10,7 +10,7 @@ import { B2B_VERSION } from '../../constants.js';
 import { createDir as mkdirp } from '../fs.js';
 import { downloadFile } from './downloadFile.js';
 
-const TEST_FILE = path.join(__dirname, '../../../tests/test.tar.gz');
+const TEST_FILE = path.join(import.meta.dirname, '../../../tests/test.tar.gz');
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 
 beforeEach(async () => {
