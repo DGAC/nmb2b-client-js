@@ -1,31 +1,33 @@
 import 'dotenv/config';
-import { B2B_VERSION } from '../src/constants.js';
-import { requestFilename } from '../src/utils/xsd/filePath.js';
-import { downloadFile } from '../src/utils/xsd/downloadFile.js';
-import path from 'path';
-import { createDir, dirExists } from '../src/utils/fs.js';
+import { createDir } from '../src/utils/fs.js';
+import { downloadAndExtractWSDL } from '../src/utils/xsd/downloadAndExtractWSDL.js';
+import { getWSDLDownloadURL } from '../src/utils/xsd/getWSDLDownloadURL.js';
+import { WSDLExists } from '../src/utils/xsd/index.js';
+import { getXSDCacheDirectory } from '../src/utils/xsd/paths.js';
 import b2bOptions from './options.js';
 
 export async function downloadWSDL() {
-  console.log('Global setup !');
+  const outputDir = getXSDCacheDirectory(b2bOptions);
 
-  const { flavour, security, XSD_PATH, xsdEndpoint } = b2bOptions;
-
-  if (
-    !(await dirExists(XSD_PATH)) ||
-    !(await dirExists(path.join(XSD_PATH, B2B_VERSION)))
-  ) {
-    console.log('XSD files not found, downloading from B2B ...');
-    await createDir(XSD_PATH);
-    const filename = await requestFilename({ flavour, security, xsdEndpoint });
-
-    console.log(`Got XSD filename from B2B, downloading ${filename}`);
-
-    await downloadFile(filename, {
-      flavour,
-      security,
-      XSD_PATH,
-      xsdEndpoint,
-    });
+  if (await WSDLExists(b2bOptions)) {
+    console.log(`XSD files already exist: ${outputDir}`);
+    return;
   }
+
+  console.log(
+    `XSD files not found, creating output directory ${outputDir} ...`,
+  );
+
+  await createDir(outputDir);
+  console.log('Getting XSD archive URL from B2B ...');
+  const url = await getWSDLDownloadURL(b2bOptions);
+
+  console.log(`Got XSD filename from B2B, downloading ${url} ...`);
+
+  await downloadAndExtractWSDL(url, {
+    security: b2bOptions.security,
+    outputDir,
+  });
+
+  console.log('Done !');
 }
