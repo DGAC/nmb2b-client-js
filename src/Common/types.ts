@@ -30,6 +30,7 @@ export type Colours = string; // TEXT{1,51}
 
 // TODO: Implement proper duration (seconds) parsing
 export type SignedDurationHourMinuteSecond = string; // +hhmmss / -hhmmss
+export type SignedDurationHourMinute = string;
 
 export type NMInt = string;
 export interface NMSet<A> {
@@ -109,6 +110,9 @@ export type ReceivedOrSent = 'RECEIVED' | 'SENT' | 'UNKNOWN';
 
 export type DistanceM = number;
 export type DistanceNM = number;
+
+export type SignedDistanceNM = number;
+
 export type Bearing = number;
 
 export type ReplyStatus =

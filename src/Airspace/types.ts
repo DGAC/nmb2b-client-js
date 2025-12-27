@@ -73,7 +73,7 @@ export type AUPId = string;
 export type AUPType = 'BASELINE' | 'UPDATE';
 export type AUPState = 'DRAFT' | 'READY' | 'RELEASED';
 export interface AUPSummary {
-  id: AUPId;
+  id?: AUPId;
   originatingAupId?: AUPId;
   chainDate: DateYearMonthDay;
   amcId?: AirNavigationUnitId;
@@ -309,7 +309,7 @@ export interface FlightLevelRange {
 }
 
 export type CompleteAIXMDatasetRequest = B2BRequest & {
-  queryCriteria: CompleteDatasetQueryCriteria;
+  queryCriteria?: CompleteDatasetQueryCriteria;
 };
 
 export type CompleteAIXMDatasetReply = ReplyWithData<{
