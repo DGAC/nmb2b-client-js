@@ -157,7 +157,7 @@ export type RunwayId = string;
 
 export type TerminalProcedure =
   | { id: RouteId }
-  | { DCT: void }
+  | { DCT: Record<string, never> }
   | { pointId: PublishedPointId };
 
 export interface ReferenceLocationAerodrome {

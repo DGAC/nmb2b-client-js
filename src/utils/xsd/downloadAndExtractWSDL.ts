@@ -50,7 +50,7 @@ export async function downloadAndExtractWSDL(
       throw new Error(`Invalid Content-Type: ${contentType}`);
     }
 
-    return new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       res.data
         .pipe(extract({ cwd: outputDir, strip: 1 }))
         .on('error', reject)

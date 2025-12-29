@@ -58,7 +58,7 @@ describe('SoapDeserializer', () => {
     type T = SoapDeserializer<{ foo: Array<string> }>;
     // type T = SoapDeserializer<{ foo: { bar: { baz: Array<string> } } }>;
 
-    expectTypeOf<null>().toMatchTypeOf<T>();
+    expectTypeOf<null>().toExtend<T>();
   });
 
   test('should collapse nested objects recursively', () => {
@@ -67,7 +67,7 @@ describe('SoapDeserializer', () => {
       second?: { first?: string };
     }>;
 
-    expectTypeOf<null>().toMatchTypeOf<T>();
+    expectTypeOf<null>().toExtend<T>();
   });
 
   test('should collapse arrays', () => {
@@ -75,7 +75,7 @@ describe('SoapDeserializer', () => {
       foo: Array<string>;
     }>;
 
-    expectTypeOf<null>().toMatchTypeOf<T>();
+    expectTypeOf<null>().toExtend<T>();
   });
 
   test('should keep non optional objects in array', () => {
@@ -85,6 +85,6 @@ describe('SoapDeserializer', () => {
 
     expectTypeOf<{
       foo: Array<{ required: string }> | null;
-    }>().toMatchTypeOf<T>();
+    }>().toExtend<T>();
   });
 });

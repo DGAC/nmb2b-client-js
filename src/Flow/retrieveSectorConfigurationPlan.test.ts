@@ -55,7 +55,7 @@ describe('retrieveSectorConfigurationPlan', async () => {
         expect(Array.isArray(v)).toBe(true);
       }
 
-      const testSchedule = (conf: any) => {
+      const testSchedule = (conf: Record<string, unknown>) => {
         expect(conf).toMatchObject({
           applicabilityPeriod: {
             wef: expect.any(Date),

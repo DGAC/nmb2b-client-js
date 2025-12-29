@@ -25,7 +25,7 @@ const outputBase = {
     // eslint-disable-next-line prefer-const
     let [date, time] = text.split(' ');
 
-    if (!time) {
+    if (date === undefined || time === undefined) {
       return new Date(text);
     }
 
@@ -39,8 +39,8 @@ const outputBase = {
 
 interface SerDe {
   [key: string]: {
-    input: null | ((input: any, ctx?: any) => any);
-    output: null | ((input: any, ctx?: any) => any);
+    input: null | ((input: never) => unknown);
+    output: null | ((input: never) => unknown);
   };
 }
 
@@ -54,7 +54,9 @@ export const types = {
       const totalMinutes = Math.floor(d / 60);
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
-      return `${hours}`.padStart(2, '0') + `${minutes}`.padStart(2, '0');
+      return (
+        hours.toFixed(0).padStart(2, '0') + minutes.toFixed(0).padStart(2, '0')
+      );
     },
     output: (s: string): number => {
       const hours = parseInt(s.slice(0, 2), 10);
@@ -68,10 +70,12 @@ export const types = {
       const totalMinutes = Math.floor(d / 60);
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
+      const seconds = d % 60;
+
       return (
-        `${hours}`.padStart(2, '0') +
-        `${minutes}`.padStart(2, '0') +
-        `${d % 60}`.padStart(2, '0')
+        hours.toFixed(0).padStart(2, '0') +
+        minutes.toFixed(0).padStart(2, '0') +
+        seconds.toFixed(0).padStart(2, '0')
       );
     },
     output: (s: string): number => {

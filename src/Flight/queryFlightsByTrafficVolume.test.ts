@@ -54,7 +54,7 @@ describe('queryFlightsByTrafficVolume', async () => {
         continue;
       }
 
-      const flightKeysMatcher: Record<string, any> = {
+      const flightKeysMatcher: Record<string, unknown> = {
         aircraftId: expect.any(String),
         nonICAOAerodromeOfDeparture: expect.any(Boolean),
         nonICAOAerodromeOfDestination: expect.any(Boolean),

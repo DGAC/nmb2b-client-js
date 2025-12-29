@@ -7,7 +7,11 @@ export const logHook = createHook(({ service, query, input }) => {
   debug(`Called with input %o`, input);
 
   return {
-    onRequestError: ({ error }) => debug(`Failed: ${error.message}`),
-    onRequestSuccess: () => debug('Succeded'),
+    onRequestError: ({ error }) => {
+      debug(`Failed: ${error.message}`);
+    },
+    onRequestSuccess: () => {
+      debug('Succeded');
+    },
   };
 });

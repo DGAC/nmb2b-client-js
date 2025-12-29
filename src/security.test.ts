@@ -1,5 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { clearCache, fromEnv } from './security.js';
 
 const usedEnvKeys = [
@@ -11,17 +10,18 @@ const usedEnvKeys = [
   'B2B_API_SECRET_KEY',
 ];
 
-describe('fromEnv', () => {
-  const OLD_ENV = process.env;
+const EXISTING_FILE = import.meta.filename;
 
+describe(fromEnv, () => {
   beforeEach(() => {
-    process.env = { ...OLD_ENV };
-    usedEnvKeys.forEach((k) => delete process.env[k]);
-  });
+    for (const envKey of usedEnvKeys) {
+      vi.stubEnv(envKey, undefined);
+    }
 
-  afterEach(() => {
-    process.env = OLD_ENV;
-    clearCache();
+    return () => {
+      vi.unstubAllEnvs();
+      clearCache();
+    };
   });
 
   test('without env variables', () => {
@@ -29,12 +29,12 @@ describe('fromEnv', () => {
   });
 
   test('with a cert file that does not exist', () => {
-    process.env.B2B_CERT = 'non-existent-file';
+    vi.stubEnv('B2B_CERT', 'non-existent-file');
     expect(fromEnv).toThrow(/non-existent-file/);
   });
 
   test('with a cert file that exists', () => {
-    process.env.B2B_CERT = __filename;
+    vi.stubEnv('B2B_CERT', EXISTING_FILE);
     expect(fromEnv).not.toThrow();
 
     const security = fromEnv();
@@ -47,29 +47,29 @@ describe('fromEnv', () => {
   });
 
   test('should reject unknown format', () => {
-    process.env.B2B_CERT = __filename;
-    process.env.B2B_CERT_FORMAT = 'non-existent-format';
+    vi.stubEnv('B2B_CERT', EXISTING_FILE);
+    vi.stubEnv('B2B_CERT_FORMAT', 'non-existent-format');
     expect(fromEnv).toThrow(/B2B_CERT_FORMAT/);
   });
 
   describe('PEM format', () => {
     test('without a key file', () => {
-      process.env.B2B_CERT = __filename;
-      process.env.B2B_CERT_FORMAT = 'pem';
+      vi.stubEnv('B2B_CERT', EXISTING_FILE);
+      vi.stubEnv('B2B_CERT_FORMAT', 'pem');
       expect(fromEnv).toThrow(/B2B_CERT_KEY/);
     });
 
     test('with a non existent key file', () => {
-      process.env.B2B_CERT = __filename;
-      process.env.B2B_CERT_FORMAT = 'pem';
-      process.env.B2B_CERT_KEY = 'non-existent-file';
+      vi.stubEnv('B2B_CERT', EXISTING_FILE);
+      vi.stubEnv('B2B_CERT_FORMAT', 'pem');
+      vi.stubEnv('B2B_CERT_KEY', 'non-existent-file');
       expect(fromEnv).toThrow(/B2B_CERT_KEY/);
     });
 
     test('with a proper key file', () => {
-      process.env.B2B_CERT = __filename;
-      process.env.B2B_CERT_FORMAT = 'pem';
-      process.env.B2B_CERT_KEY = __filename;
+      vi.stubEnv('B2B_CERT', EXISTING_FILE);
+      vi.stubEnv('B2B_CERT_FORMAT', 'pem');
+      vi.stubEnv('B2B_CERT_KEY', EXISTING_FILE);
       expect(fromEnv).not.toThrow();
 
       const security = fromEnv();
