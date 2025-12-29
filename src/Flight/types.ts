@@ -44,6 +44,8 @@ import type {
   ReceivedOrSent,
   ReplyWithData,
   ShiftHourMinute,
+  SignedDistanceNM,
+  SignedDurationHourMinute,
   SignedDurationHourMinuteSecond,
   TimeHourMinutePeriod,
   WeightKg,
@@ -63,6 +65,7 @@ import type {
   RegulationCause,
   RegulationId,
   ReroutingId,
+  ReroutingPurpose,
   TrafficVolumeScenarios,
 } from '../Flow/types.js';
 
@@ -262,9 +265,12 @@ export type FlightField =
   | 'alternateAerodromes'
   | 'flightCriticality'
   | 'oceanicReroute'
-  | 'visibility';
-
-export type FlightPlanOutput = { structured: StructuredFlightPlan };
+  | 'visibility'
+  | 'iataFlightDesignator'
+  | 'activeACDMAlerts'
+  | 'aoReroutingFeedbacks'
+  | 'atcCoordinatedRoute'
+  | 'reroutingOpportunities';
 
 export interface BasicTrajectoryData {
   takeOffWeight?: WeightKg;
@@ -343,7 +349,7 @@ export interface Flight {
   estimatedTimeOfArrival?: DateTimeMinute;
   calculatedTimeOfArrival?: DateTimeMinute;
   actualTimeOfArrival?: DateTimeMinute;
-  lateFilter?: boolean;
+  lateFiler?: boolean;
   lateUpdater?: boolean;
   suspensionStatus?: SuspensionStatus;
   suspensionInfo?: string;
@@ -357,14 +363,14 @@ export interface Flight {
   cdm?: CDM;
   slotIssued?: boolean;
   proposalInformation?: ProposalInformation;
+  bestReroutingIndicator?: GroupReroutingSummary;
   timeAtReferenceLocationEntry?: TimeAndModel;
-  timeAdReferenceLocationExit?: TimeAndModel;
+  timeAtReferenceLocationExit?: TimeAndModel;
   flightLevelAtReferenceLocationEntry?: FlightLevel;
   flightLevelAtReferenceLocationExit?: FlightLevel;
   trendAtReferenceLocationEntry?: FlightTrend;
   trendAtReferenceLocationExit?: FlightTrend;
   trendAtReferenceLocationMiddle?: FlightTrend;
-  bestReroutingIndicator?: GroupReroutingSummary;
   exemptedFromRegulations?: boolean;
   delay?: DurationHourMinute;
   delayCharacteristics?: 'ADJUSTED_TO_CLOCK' | 'EXCEEDS_DELAY_CONFIRMATION';
@@ -400,14 +406,15 @@ export interface Flight {
   ftfmAirspaceProfile?: FlightAirspace[];
   rtfmAirspaceProfile?: FlightAirspace[];
   ctfmAirspaceProfile?: FlightAirspace[];
-  ftfmRequestedFlightLevels?: RequestedFlightLevel[];
-  rtfmRequestedFlightLevels?: RequestedFlightLevel[];
-  ctfmRequestedFlightLevels?: RequestedFlightLevel[];
   ftfmTrafficVolumeProfile?: FlightTrafficVolume[];
   rtfmTrafficVolumeProfile?: FlightTrafficVolume[];
   ctfmTrafficVolumeProfile?: FlightTrafficVolume[];
+  ftfmRequestedFlightLevels?: RequestedFlightLevel[];
+  rtfmRequestedFlightLevels?: RequestedFlightLevel[];
+  ctfmRequestedFlightLevels?: RequestedFlightLevel[];
   flightHistory?: FlightEvent[];
   operationalLog?: FlightOperationalLogEntry[];
+  reroutingOpportunities?: NMSet<ReroutingOpportunities>;
   equipmentCapabilityAndStatus?: EquipmentCapabilityAndStatus;
   ftfmRestrictionProfile?: FlightRestriction[];
   rtfmRestrictionProfile?: FlightRestriction[];
@@ -416,10 +423,9 @@ export interface Flight {
   ccamsSSRCode?: SSRCode;
   filedRegistrationMark?: AircraftRegistrationMark;
   isProposalFlight?: boolean;
-  proposalExists?: boolean;
   hasBeenForced?: boolean;
   caughtInHotspots?: number;
-  hotspots?: FlightHotspotLocation[];
+  hotspots?: NMSet<FlightHotspotLocation>;
   mcdmInfo?: FlightMCDMInfo;
   worstLoadStateAtReferenceLocation?: LoadStateAtReferenceLocation;
   compareWithOtherTrafficType?: DeltaEntry;
@@ -459,12 +465,38 @@ export interface Flight {
   wakeTurbulenceCategory?: WakeTurbulenceCategory;
   alternateAerodromes?: NMList<AerodromeICAOId>;
   flightCriticality?: FlightCriticalityIndicator;
-  oceanicRoute?: boolean;
+  oceanicReroute?: boolean;
   visibility?: FlightVisibility;
   iataFlightDesignator?: AircraftIATAIdFromDataSource;
   activeACDMAlerts?: NMList<ACDMAlertData>;
   aoReroutingFeedbacks?: NMList<ReroutingFeedback>;
+  atcCoordinatedRoute?: boolean;
 }
+
+export type ReroutingOpportunities = {
+  oplogTimestamp: DateTimeSecond;
+  reroutingId: ReroutingId;
+  offBlockTimeValidity?: DateTimeMinutePeriod;
+  reroutingNote: string;
+  reroutingPurpose: ReroutingPurpose;
+  opportunities?: NMSet<AlternativeRouteInfo>;
+};
+
+export type AlternativeRouteInfo = {
+  routeId: ReroutingRouteId;
+  icaoRoute: string;
+  duration?: DurationHourMinute;
+  deltaDuration?: SignedDurationHourMinute;
+  length?: DistanceNM;
+  deltaLength?: SignedDistanceNM;
+  delay?: SignedDurationHourMinute;
+  deltaDelay?: SignedDurationHourMinute;
+  routeChargeIndicator?: Cost;
+  deltaRouteChargeIndicator?: Cost;
+  consumedFuelIndicator?: WeightKg;
+  deltaConsumedFuelIndicator?: WeightKg;
+  totalCost: Cost;
+};
 
 export type ReroutingFeedbackKind = 'LIKE' | 'DISLIKE';
 export type ReroutingFeedbackReason =
@@ -1292,7 +1324,7 @@ export type FlightListByLocationRequest = FlightListRequest & {
   includeInvisibleFlights?: boolean;
 };
 
-export type FlightListByAirspaceRequest = FlightListRequest & {
+export type FlightListByAirspaceRequest = FlightListByLocationRequest & {
   calculationType?: CountsCalculationType;
   airspace: AirspaceId;
 };
@@ -1361,8 +1393,7 @@ export type FlightListByAirspaceReply =
   ReplyWithData<FlightListByAirspaceReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FlightListByAirspaceReplyData
-  extends FlightListByLocationReplyData {}
+export interface FlightListByAirspaceReplyData extends FlightListByLocationReplyData {}
 
 export type FlightPlanListRequest = B2BRequest & {
   aircraftId?: string;
@@ -1391,7 +1422,6 @@ export type FlightRetrievalRequest = B2BRequest & {
 export type FlightRetrievalReply = ReplyWithData<FlightRetrievalReplyData>;
 
 export type FlightRetrievalReplyData = {
-  latestFlightPlan?: FlightPlanOutput;
   flightPlanHistory?: FlightPlanHistory;
   flight?: Flight;
   structuredFlightPlan?: StructuredFlightPlan;
@@ -1407,8 +1437,7 @@ export type FlightListByTrafficVolumeReply =
   ReplyWithData<FlightListByTrafficVolumeReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FlightListByTrafficVolumeReplyData
-  extends FlightListByLocationReplyData {}
+export interface FlightListByTrafficVolumeReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByMeasureRequest = FlightListByLocationRequest & {
   measure: MeasureId;
@@ -1423,8 +1452,7 @@ export type FlightListByMeasureReply =
   ReplyWithData<FlightListByMeasureReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FlightListByMeasureReplyData
-  extends FlightListByLocationReplyData {}
+export interface FlightListByMeasureReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByAerodromeRequest = FlightListByLocationRequest & {
   aerodrome: AerodromeICAOId;
@@ -1453,8 +1481,7 @@ export type FlightListByAerodromeReply =
   ReplyWithData<FlightListByAerodromeReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FlightListByAerodromeReplyData
-  extends FlightListByLocationReplyData {}
+export interface FlightListByAerodromeReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByAerodromeSetRequest = FlightListByLocationRequest & {
   aerodromeSet: AerodromeSetId;
@@ -1465,8 +1492,7 @@ export type FlightListByAerodromeSetReply =
   ReplyWithData<FlightListByAerodromeSetReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FlightListByAerodromeSetReplyData
-  extends FlightListByLocationReplyData {}
+export interface FlightListByAerodromeSetReplyData extends FlightListByLocationReplyData {}
 
 export type FlightListByAircraftOperatorRequest =
   FlightListByLocationRequest & {
@@ -1477,5 +1503,4 @@ export type FlightListByAircraftOperatorReply =
   ReplyWithData<FlightListByAircraftOperatorReplyData>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FlightListByAircraftOperatorReplyData
-  extends FlightListByLocationReplyData {}
+export interface FlightListByAircraftOperatorReplyData extends FlightListByLocationReplyData {}

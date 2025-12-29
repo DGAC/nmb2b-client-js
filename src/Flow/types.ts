@@ -225,10 +225,6 @@ export interface SectorConfigurationPlan extends TacticalConfigurationPlan {
   clientSchedule?: NMSet<PlannedSectorConfigurationActivation>; // Set<PlannedSectorConfigurationActivation>
 }
 
-export interface CapacityPlans extends TacticalConfigurationPlan {
-  tvCapacities: NMMap<TrafficVolumeId, PlannedCapacities>;
-}
-
 export interface PlannedSectorConfigurationActivation {
   applicabilityPeriod: DateTimeMinutePeriod;
   dataSource: PlanDataSource;
@@ -415,14 +411,12 @@ export type RegulationListRequest = RegulationOrMCDMOnlyListRequest & {
 
 export type RegulationListReply = ReplyWithData<RegulationListReplyData>;
 
-export interface RegulationListReplyData
-  extends RegulationOrMCDMOnlyListReplyData {
+export interface RegulationListReplyData extends RegulationOrMCDMOnlyListReplyData {
   regulations: NMSet<Regulation>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface RegulationOrMCDMOnlyListReplyData
-  extends MeasureListReplyData {}
+export interface RegulationOrMCDMOnlyListReplyData extends MeasureListReplyData {}
 
 export interface MeasureListReplyData {
   planTransferred?: boolean;
@@ -443,7 +437,7 @@ export type MeasureListRequest = B2BRequest & {
 };
 
 export type Regulation = RegulationOrMCDMOnly & {
-  regulationState: RegulationState;
+  regulationState?: RegulationState;
 };
 
 export type TrafficVolumeScenarios = {
@@ -469,6 +463,7 @@ export interface IRegulationOrMCDMOnly extends Measure {
   autolink?: boolean;
   linkedRegulations?: NMSet<RegulationId>;
   noDelayWindow?: DurationHourMinute;
+  occupancyDuration?: DurationHourMinute;
   updateCapacityRequired?: boolean;
   updateTCActivationRequired?: boolean;
   delayTVSet?: TrafficVolumeSetId;
@@ -652,7 +647,7 @@ export interface HotspotPlans {
   dataset: Dataset;
   day: DateYearMonthDay;
   planTransferred?: boolean;
-  planCutOffreached?: boolean;
+  planCutOffReached?: boolean;
   hotspotKind: HotspotKind;
   schedules: NMMap<TrafficVolumeId, NMMap<DurationHourMinute, NMSet<Hotspot>>>;
 }
@@ -663,15 +658,15 @@ export interface OTMVWithDuration {
 }
 
 export type OTMVPlanRetrievalRequest = TacticalConfigurationRetrievalRequest & {
-  otmvsWithDuration: NMSet<OTMVWithDuration>;
+  otmvsWithDuration?: NMSet<OTMVWithDuration>;
 };
 
-export interface OTMVPlans extends TacticalConfigurationPlan {
+export type OTMVPlans = TacticalConfigurationPlan & {
   tvsOTMVs: NMMap<
     TrafficVolumeId,
     NMMap<DurationHourMinute, OTMVPlanForDuration>
   >;
-}
+};
 
 export interface OTMVPlanForDuration {
   nmSchedule?: NMSet<PlannedOTMV>;
@@ -722,7 +717,7 @@ export interface OTMVPlanUpdateReplyData {
 
 export type CapacityPlanRetrievalRequest =
   TacticalConfigurationRetrievalRequest & {
-    trafficVolumes: NMSet<TrafficVolumeId>;
+    trafficVolumes?: NMSet<TrafficVolumeId>;
   };
 
 export type CapacityPlanRetrievalReply =
@@ -732,9 +727,9 @@ export interface CapacityPlanRetrievalReplyData {
   plans: CapacityPlans;
 }
 
-export interface CapacityPlans extends TacticalConfigurationPlan {
+export type CapacityPlans = TacticalConfigurationPlan & {
   tvCapacities: NMMap<TrafficVolumeId, PlannedCapacities>;
-}
+};
 
 export interface PlannedCapacities {
   nmSchedule?: NMSet<PlannedCapacity>;

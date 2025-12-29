@@ -23,7 +23,9 @@ describe('retrieveAUP', async () => {
           (b.lastUpdate?.timestamp.valueOf() ?? 0),
       );
 
-    AUPSummaryIds = summaries?.map(({ id }) => id);
+    AUPSummaryIds = summaries
+      ?.map(({ id }) => id)
+      .filter((id) => id !== undefined);
   });
 
   test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {
