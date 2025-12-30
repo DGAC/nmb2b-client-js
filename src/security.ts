@@ -104,7 +104,26 @@ export function fromEnv(): Security {
     return envSecurity;
   }
 
-  const { B2B_CERT, B2B_API_KEY_ID, B2B_API_SECRET_KEY } = process.env;
+  envSecurity = fromValues(process.env);
+
+  return envSecurity;
+}
+
+/**
+ * Convenience function to clear the cached security objet
+ */
+export function clearCache(): void {
+  envSecurity = undefined;
+}
+
+/**
+ * Create a security objet from an environment-like object
+ *
+ * @param env Environment variables
+ * @returns Security configuration
+ */
+export function fromValues(env: Record<string, string | undefined>): Security {
+  const { B2B_CERT, B2B_API_KEY_ID, B2B_API_SECRET_KEY } = env;
 
   if (!B2B_CERT && !B2B_API_KEY_ID) {
     throw new Error(
@@ -135,42 +154,29 @@ export function fromEnv(): Security {
 
   const pfxOrPem = fs.readFileSync(B2B_CERT);
 
-  if (!process.env.B2B_CERT_FORMAT || process.env.B2B_CERT_FORMAT === 'pfx') {
-    envSecurity = {
+  if (!env.B2B_CERT_FORMAT || env.B2B_CERT_FORMAT === 'pfx') {
+    return {
       pfx: pfxOrPem,
-      passphrase: process.env.B2B_CERT_PASSPHRASE ?? '',
+      passphrase: env.B2B_CERT_PASSPHRASE ?? '',
     };
-
-    return envSecurity;
-  } else if (process.env.B2B_CERT_FORMAT === 'pem') {
-    if (!process.env.B2B_CERT_KEY || !fs.existsSync(process.env.B2B_CERT_KEY)) {
+  } else if (env.B2B_CERT_FORMAT === 'pem') {
+    if (!env.B2B_CERT_KEY || !fs.existsSync(env.B2B_CERT_KEY)) {
       throw new Error(
         'Please define a valid B2B_CERT_KEY environment variable',
       );
     }
 
-    envSecurity = {
+    const security: PemSecurity = {
       cert: pfxOrPem,
-      key: fs.readFileSync(process.env.B2B_CERT_KEY),
+      key: fs.readFileSync(env.B2B_CERT_KEY),
     };
 
-    if (process.env.B2B_CERT_PASSPHRASE) {
-      envSecurity = {
-        ...envSecurity,
-        passphrase: process.env.B2B_CERT_PASSPHRASE,
-      };
-      return envSecurity;
+    if (env.B2B_CERT_PASSPHRASE) {
+      security.passphrase = env.B2B_CERT_PASSPHRASE;
     }
 
-    return envSecurity;
+    return security;
   }
 
   throw new Error('Unsupported B2B_CERT_FORMAT, must be pfx or pem');
-}
-
-/**
- * Convenience function to clear the cached security objet
- */
-export function clearCache(): void {
-  envSecurity = undefined;
 }

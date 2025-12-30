@@ -24,7 +24,13 @@ export async function WSDLExists(
   return files.length > 0;
 }
 
-export async function download(config: Config): Promise<void> {
+export type DownloadOptions = Pick<
+  Config,
+  'flavour' | 'security' | 'XSD_PATH'
+> &
+  Partial<Pick<Config, 'xsdEndpoint' | 'ignoreWSDLCache'>>;
+
+export async function download(config: DownloadOptions): Promise<void> {
   const outputDir = getXSDCacheDirectory(config);
 
   if (!(await dirExists(outputDir))) {

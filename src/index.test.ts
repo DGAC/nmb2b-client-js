@@ -32,6 +32,7 @@ describe('Main API', () => {
 
   describe('soap query options', () => {
     describe('timeout', () => {
+      // TODO: This test should be a unit test using a mock backend (nock) instead of a real B2B connection.
       test.runIf(shouldUseRealB2BConnection)(
         'should allow a timeout option to be set on methods',
         async () => {
