@@ -1,12 +1,16 @@
-import { downloadWSDL } from '../tests/setup_hook.ts';
+import { fromValues } from '../src/security.js';
+import { download } from '../src/utils/xsd/index.js';
+import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
 
 async function main() {
-  if (process.env.CI && !process.env.REAL_B2B_CONNECTIONS) {
-    console.log(`CI detected, no real B2B connection, disable XSD download`);
-    return;
-  }
+  const b2bEnv = resolveB2BEnvironment();
 
-  await downloadWSDL();
+  await download({
+    flavour: b2bEnv.B2B_FLAVOUR,
+    XSD_PATH: b2bEnv.B2B_XSD_PATH,
+    xsdEndpoint: b2bEnv.B2B_XSD_REMOTE_URL,
+    security: fromValues(b2bEnv),
+  });
 }
 
-await main();
+main().catch(console.error);

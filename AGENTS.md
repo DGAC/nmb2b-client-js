@@ -24,7 +24,8 @@ You must respect the existing modular structure:
   - Pattern: `src/<Domain>/types.ts`
   - Example: `src/Flow/types.ts`
 - **Tests**: Tests are co-located with the source file.
-  - Pattern: `src/<Domain>/<Action>.test.ts`
+  - **Unit Tests**: `src/**/*.test.ts` (Must be fully mocked, no real network calls).
+  - **E2E Tests**: `src/**/*.e2e.test.ts` (Integration tests with real B2B connection).
 
 ## 4. Technical Conventions
 
@@ -35,10 +36,12 @@ You must respect the existing modular structure:
 
 ### Testing
 
-- **Hybrid Mode**: Tests must support running both with mocks (default) and with a real B2B connection (if configured).
-- **Implementation Details**:
+- **Project Separation**:
+  - Use the `unit` project for logic that doesn't require a B2B connection.
+  - Use the `e2e` project for integration tests.
+- **Implementation Details (E2E only)**:
   - Import `shouldUseRealB2BConnection` from `tests/utils.ts`.
-  - Use `test.runIf(shouldUseRealB2BConnection)` to condition integration tests.
+  - Use `test.runIf(shouldUseRealB2BConnection)` to condition tests in `*.e2e.test.ts` files.
   - Use `TEST_B2B_CONFIG` from `tests/options.ts` to initialize clients.
 - **Security**:
   - ❌ NEVER hardcode secrets or certificates in test files.
@@ -58,6 +61,12 @@ pnpm typecheck
 # 3. Run all tests
 pnpm test --no-watch
 
-# 4. Run tests for a specific file
+# 4. Run unit tests only
+pnpm test:unit --no-watch
+
+# 5. Run E2E tests only
+pnpm test:e2e --no-watch
+
+# 6. Run tests for a specific file
 pnpm test --no-watch <filename>
 ```
