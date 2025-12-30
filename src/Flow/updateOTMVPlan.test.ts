@@ -55,6 +55,7 @@ describe('updateOTMVPlan', async () => {
         return plan;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await Flow.updateOTMVPlan(clearNmSchedules(planBefore) as any);
     } catch (err) {
       console.warn('Error resetting otmv plan after test');

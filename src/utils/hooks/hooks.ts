@@ -14,7 +14,7 @@
  */
 export type SoapQueryHook = (
   hookParameters: OnRequestStartParameters,
-) => void | OnRequestEndHooks | Promise<OnRequestEndHooks>;
+) => undefined | OnRequestEndHooks | Promise<OnRequestEndHooks>;
 
 type HookParameters = {
   /**

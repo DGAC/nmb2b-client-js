@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -68,8 +69,8 @@ function prepareTransformer(schema: Schema): null | Transformer {
   }, null);
 }
 
-export function reorderKeys<T extends Schema, O extends { [key: string]: any }>(
-  schema: T,
+export function reorderKeys<O extends { [key: string]: any }>(
+  schema: Schema,
 ): (obj: O) => O {
   return (obj: O): O => {
     // console.log(JSON.stringify(schema, null, 2));

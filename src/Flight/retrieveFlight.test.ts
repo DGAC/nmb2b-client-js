@@ -36,7 +36,7 @@ describe('retrieveFlight', async () => {
     }
 
     const flights = res.data.flights.filter(
-      (f): f is Extract<typeof f, { flight: any }> => {
+      (f): f is Extract<typeof f, { flight: unknown }> => {
         if ('flightPlan' in f || !f.flight) {
           return false;
         }

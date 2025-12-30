@@ -223,7 +223,10 @@ describe('error handling', () => {
     test('should throw an AssertionError', async () => {
       const { soapService, executeQuery } = withMockedSoapService();
 
-      executeQuery.mockResolvedValueOnce([null as any]);
+      executeQuery.mockResolvedValueOnce([
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        null as any,
+      ]);
 
       await expect(() => soapService.soapQuery({ foo: 'bar' })).rejects.toEqual(
         expect.any(AssertionError),

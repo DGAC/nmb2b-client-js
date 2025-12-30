@@ -17,7 +17,11 @@ describe('serialization', () => {
       input: new Date('2018-07-01T17:55:13-07:00'),
       expected: '2018-07-02 00:55:13',
     },
-  ] satisfies Array<{ type: keyof typeof types; expected: any; input: any }>;
+  ] satisfies Array<{
+    type: keyof typeof types;
+    expected: unknown;
+    input: unknown;
+  }>;
 
   test.each(serialization)(
     '$type .input($input) => $expected',
@@ -57,7 +61,11 @@ describe('deserialization', () => {
       input: '2018-07-02',
       expected: new Date('2018-07-02T00:00:00Z'),
     },
-  ] satisfies Array<{ type: keyof typeof types; input: any; expected: any }>;
+  ] satisfies Array<{
+    type: keyof typeof types;
+    input: unknown;
+    expected: unknown;
+  }>;
 
   test.each(deserialization)(
     '$type .output($input) => $expected',

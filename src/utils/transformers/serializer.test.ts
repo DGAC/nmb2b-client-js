@@ -71,7 +71,7 @@ describe('reorderKeys', () => {
       // Expected output
       { a: [{ foo: 'foo', bar: 'bar' }] },
     ],
-  ] satisfies Array<[any, any, any]>;
+  ] satisfies Array<[unknown, unknown, unknown]>;
 
   test.each(testCases)(
     'reorderKeys(%j)(%j) => %j',

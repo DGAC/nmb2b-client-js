@@ -22,7 +22,7 @@ export function assertOkReply<T extends Reply>(
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Just in case the response is completely broken.
       reply !== null &&
       'status' in reply,
-    `Invalid NM B2B Response:\n` + `${JSON.stringify(reply)}`,
+    `Invalid NM B2B Response:\n` + JSON.stringify(reply),
   );
 
   if (reply.status !== 'OK') {
