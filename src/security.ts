@@ -10,24 +10,76 @@ import {
 } from 'soap';
 import fs from 'node:fs';
 
+/**
+ * Security configuration using a PFX / PKCS #12 certificate.
+ * Used to authenticate with the B2B services using a client certificate.
+ */
 interface PfxSecurity {
+  /**
+   * The content of the PFX / PKCS #12 file.
+   */
   pfx: Buffer;
+
+  /**
+   * The passphrase for the PFX / PKCS #12 container.
+   */
   passphrase: string;
 }
 
+/**
+ * Security configuration using PEM certificate and key.
+ * Used to authenticate with the B2B services using a client certificate.
+ */
 interface PemSecurity {
+  /**
+   * The content of the PEM certificate file.
+   */
   cert: Buffer;
+
+  /**
+   * The content of the PEM key file.
+   */
   key: Buffer;
+
+  /**
+   * The passphrase for the PEM key.
+   * Can be omitted if the key is not encrypted.
+   */
   passphrase?: string;
 }
 
+/**
+ * Security configuration using API Gateway credentials.
+ * Used to authenticate with the B2B services using an API Key ID and Secret Key.
+ * These credentials will be sent as Basic Authentication headers.
+ */
 interface ApiGwSecurity {
+  /**
+   * The API Key ID (used as username for Basic Auth).
+   */
   apiKeyId: string;
+
+  /**
+   * The API Secret Key (used as password for Basic Auth).
+   */
   apiSecretKey: string;
 }
 
+/**
+ * Supported authentication methods.
+ * Used in the `Config` object to specify how the client should authenticate with the B2B services.
+ */
 export type Security = PfxSecurity | PemSecurity | ApiGwSecurity;
 
+/**
+ * Type guard to validate if an unknown object is a valid {@link Security} configuration.
+ * Checks for the presence and validity of required fields for each security type.
+ *
+ * @param obj - The object to validate.
+ * @returns `true` if the object is a valid `Security` configuration, throws an error assertion otherwise.
+ *
+ * @deprecated TODO: Implement assertValidSecurity() with the correct return type
+ */
 export function isValidSecurity(obj: unknown): obj is Security {
   assert(!!obj && typeof obj === 'object', 'Must be an object');
 
@@ -65,6 +117,9 @@ export function isValidSecurity(obj: unknown): obj is Security {
   return true;
 }
 
+/**
+ * @internal
+ */
 export function prepareSecurity(config: Config): ISecurity {
   const { security } = config;
 

@@ -49,6 +49,15 @@ export interface Config {
   hooks: Array<SoapQueryHook>;
 }
 
+/**
+ * Type guard to validate a {@link Config} object.
+ * Checks for required fields and validity of nested objects like {@link Security}.
+ *
+ * @param args - The object to validate.
+ * @returns `true` if the object is a valid `Config`, throws an error assertion otherwise.
+ *
+ * @deprecated TODO: Implement assertValidConfig() with the correct return type
+ */
 export function isConfigValid(args: unknown): args is Config {
   assert(!!args && typeof args === 'object', 'Invalid config');
 
@@ -87,6 +96,18 @@ const B2B_ROOTS = {
   PREOPS: 'https://www.b2b.preops.nm.eurocontrol.int',
 };
 
+/**
+ * Constructs the full URL for the B2B SOAP Gateway (Specification Endpoint).
+ *
+ * The URL is built using the correct context (`B2B_OPS` or `B2B_PREOPS`) and version.
+ *
+ * @param config - Configuration object.
+ * @param config.endpoint - Optional base URL override.
+ * @param config.flavour - Target environment ('OPS' or 'PREOPS').
+ * @returns The full SOAP Gateway URL (e.g. `https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/27.0.0`).
+ *
+ * @deprecated TODO: Implement getSoapEndpoint()
+ */
 export function getEndpoint(
   config: { endpoint?: string; flavour?: B2BFlavour } = {},
 ): string {
@@ -101,6 +122,10 @@ export function getEndpoint(
   return `${endpoint ?? B2B_ROOTS.OPS}/B2B_OPS/gateway/spec/${B2B_VERSION}`;
 }
 
+/**
+ * @internal
+ * @deprecated Use {@link getFileUrl} instead.
+ */
 export function getFileEndpoint(
   config: { endpoint?: string; flavour?: B2BFlavour } = {},
 ): string {
@@ -113,6 +138,14 @@ export function getFileEndpoint(
   return `${endpoint ?? B2B_ROOTS.OPS}/FILE_OPS/gateway/spec`;
 }
 
+/**
+ * Constructs the absolute URL to download a specific file from the B2B Gateway.
+ * Handles different environments (OPS/PREOPS) and custom endpoints.
+ *
+ * @param path - The relative file path (usually returned by a SOAP response).
+ * @param config - Configuration object.
+ * @returns The complete, absolute URL to the file.
+ */
 export function getFileUrl(
   path: string,
   config: { flavour?: B2BFlavour; endpoint?: string } = {},
@@ -131,6 +164,13 @@ export function getFileUrl(
   );
 }
 
+/**
+ * Creates a safe copy of the configuration object for logging purposes.
+ * Masks all sensitive security credentials (passwords, keys, secrets) with 'xxxxxxxxxxxxxxxx'.
+ *
+ * @param config - The configuration object to obfuscate.
+ * @returns A new configuration object with sensitive data masked.
+ */
 export function obfuscate(config: Config) {
   return {
     ...config,
