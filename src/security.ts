@@ -72,15 +72,13 @@ interface ApiGwSecurity {
 export type Security = PfxSecurity | PemSecurity | ApiGwSecurity;
 
 /**
- * Type guard to validate if an unknown object is a valid {@link Security} configuration.
+ * Asserts that the provided object is a valid {@link Security} configuration.
  * Checks for the presence and validity of required fields for each security type.
  *
  * @param obj - The object to validate.
- * @returns `true` if the object is a valid `Security` configuration, throws an error assertion otherwise.
- *
- * @deprecated TODO: Implement assertValidSecurity() with the correct return type
+ * @throws {AssertionError} If the object is not a valid `Security` configuration.
  */
-export function isValidSecurity(obj: unknown): obj is Security {
+export function assertValidSecurity(obj: unknown): asserts obj is Security {
   assert(!!obj && typeof obj === 'object', 'Must be an object');
 
   if ('apiKeyId' in obj) {
@@ -98,7 +96,7 @@ export function isValidSecurity(obj: unknown): obj is Security {
       'security.apiSecretKey must be defined when using security.apiKeyId',
     );
 
-    return true;
+    return;
   }
 
   assert(
@@ -113,7 +111,13 @@ export function isValidSecurity(obj: unknown): obj is Security {
       'security.key must be a buffer if security.pem is defined',
     );
   }
+}
 
+/**
+ * @deprecated Use {@link assertValidSecurity} instead.
+ */
+export function isValidSecurity(obj: unknown): obj is Security {
+  assertValidSecurity(obj);
   return true;
 }
 
