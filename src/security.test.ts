@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   assertValidSecurity,
+  isValidSecurity,
   clearCache,
   fromEnv,
   fromValues,
@@ -118,6 +119,24 @@ describe(assertValidSecurity, () => {
         assertValidSecurity(security);
       }).toThrowError(errorMessage);
     });
+  });
+});
+
+// eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+describe(isValidSecurity, () => {
+  test('should return true for valid security', () => {
+    expect(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+      isValidSecurity({
+        apiKeyId: 'id',
+        apiSecretKey: 'secret',
+      }),
+    ).toBe(true);
+  });
+
+  test('should throw for invalid security (backward compatibility)', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+    expect(() => isValidSecurity({})).toThrow();
   });
 });
 
