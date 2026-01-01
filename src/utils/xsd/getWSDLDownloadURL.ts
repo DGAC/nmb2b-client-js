@@ -1,7 +1,7 @@
 import { UTCDateMini } from '@date-fns/utc';
 import axios from 'axios';
 import { format } from 'date-fns';
-import { getEndpoint, getFileUrl } from '../../config.js';
+import { getFileUrl, getSoapEndpoint } from '../../config.js';
 import type { B2BFlavour } from '../../constants.js';
 import { B2B_VERSION } from '../../constants.js';
 import type { Security } from '../../security.js';
@@ -45,7 +45,7 @@ export async function getWSDLDownloadURL({
   }
 
   const res = await axios<string>({
-    url: getEndpoint({ flavour }),
+    url: getSoapEndpoint({ flavour }),
     method: 'POST',
     data: makeQuery({ version: B2B_VERSION }),
     responseType: 'text',

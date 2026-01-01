@@ -1,5 +1,5 @@
 import type { Security } from './security.js';
-import { isValidSecurity } from './security.js';
+import { assertValidSecurity } from './security.js';
 import type { B2BFlavour } from './constants.js';
 import { B2B_VERSION, B2BFlavours } from './constants.js';
 import { assert } from './utils/assert.js';
@@ -50,29 +50,33 @@ export interface Config {
 }
 
 /**
+ * @deprecated Use {@link assertValidConfig} instead.
+ */
+export function isConfigValid(args: unknown): args is Config {
+  assertValidConfig(args);
+  return true;
+}
+
+/**
  * Type guard to validate a {@link Config} object.
  * Checks for required fields and validity of nested objects like {@link Security}.
  *
- * @param args - The object to validate.
- * @returns `true` if the object is a valid `Config`, throws an error assertion otherwise.
- *
- * @deprecated TODO: Implement assertValidConfig() with the correct return type
+ * @param args - The config object to validate.
  */
-export function isConfigValid(args: unknown): args is Config {
+export function assertValidConfig(args: unknown): asserts args is Config {
   assert(!!args && typeof args === 'object', 'Invalid config');
 
   assert(
-    'security' in args && isValidSecurity(args.security),
+    'security' in args && typeof args.security === 'object' && !!args.security,
     'Please provide a valid security option',
   );
 
-  assert(
-    'flavour' in args && typeof args.flavour === 'string',
-    `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
-  );
+  assertValidSecurity(args.security);
 
   assert(
-    B2BFlavours.includes(args.flavour),
+    'flavour' in args &&
+      typeof args.flavour === 'string' &&
+      B2BFlavours.includes(args.flavour as B2BFlavour),
     `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
@@ -87,8 +91,6 @@ export function isConfigValid(args: unknown): args is Config {
       `When using an config.security.apiKeyId, config.xsdEndpoint must be defined`,
     );
   }
-
-  return true;
 }
 
 const B2B_ROOTS = {
@@ -105,21 +107,29 @@ const B2B_ROOTS = {
  * @param config.endpoint - Optional base URL override.
  * @param config.flavour - Target environment ('OPS' or 'PREOPS').
  * @returns The full SOAP Gateway URL (e.g. `https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/27.0.0`).
- *
- * @deprecated TODO: Implement getSoapEndpoint()
+ */
+export function getSoapEndpoint(
+  config: { endpoint?: string; flavour?: B2BFlavour } = {},
+): string {
+  const { endpoint, flavour } = config;
+  const isPreops = flavour === 'PREOPS';
+
+  const root = endpoint ?? (isPreops ? B2B_ROOTS.PREOPS : B2B_ROOTS.OPS);
+  const context = isPreops ? 'B2B_PREOPS' : 'B2B_OPS';
+
+  // Ensure we don't have double slashes when concatenating the path
+  const normalizedRoot = root.replace(/\/$/, '');
+
+  return `${normalizedRoot}/${context}/gateway/spec/${B2B_VERSION}`;
+}
+
+/**
+ * @deprecated Use {@link getSoapEndpoint} instead.
  */
 export function getEndpoint(
   config: { endpoint?: string; flavour?: B2BFlavour } = {},
 ): string {
-  const { endpoint, flavour } = config;
-
-  if (flavour && flavour === 'PREOPS') {
-    return `${
-      endpoint ?? B2B_ROOTS.PREOPS
-    }/B2B_PREOPS/gateway/spec/${B2B_VERSION}`;
-  }
-
-  return `${endpoint ?? B2B_ROOTS.OPS}/B2B_OPS/gateway/spec/${B2B_VERSION}`;
+  return getSoapEndpoint(config);
 }
 
 /**

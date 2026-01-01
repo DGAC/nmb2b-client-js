@@ -1,7 +1,7 @@
 import type { SetOptional } from 'type-fest';
 import type { AirspaceService } from './Airspace/index.js';
 import { getAirspaceClient } from './Airspace/index.js';
-import { isConfigValid, obfuscate, type Config } from './config.js';
+import { assertValidConfig, obfuscate, type Config } from './config.js';
 import type { B2BFlavour } from './constants.js';
 import type { FlightService } from './Flight/index.js';
 import { getFlightClient } from './Flight/index.js';
@@ -169,10 +169,7 @@ export async function createGeneralInformationClient(
 function prepareConfig(options: CreateB2BClientOptions): Config {
   const config = { ...CONFIG_DEFAULTS, ...options };
 
-  if (!isConfigValid(config)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  assertValidConfig(config);
 
   debug('Config is %o', obfuscate(config));
 
