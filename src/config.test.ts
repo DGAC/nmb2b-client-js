@@ -194,42 +194,50 @@ describe(getEndpoint, () => {
 describe(getFileEndpoint, () => {
   test('without flavour', () => {
     // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
-    expect(getFileEndpoint()).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec"`,
+    expect(getFileEndpoint()).toBe(
+      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec',
     );
   });
 
   test('with flavour', () => {
     // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
-    expect(getFileEndpoint({ flavour: 'OPS' })).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec"`,
+    expect(getFileEndpoint({ flavour: 'OPS' })).toBe(
+      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec',
     );
   });
 });
 
 describe(getFileUrl, () => {
   test('without flavour', () => {
-    expect(getFileUrl('bla')).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla"`,
+    expect(getFileUrl('bla')).toBe(
+      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla',
     );
   });
 
   test('with flavour', () => {
-    expect(getFileUrl('bla', { flavour: 'OPS' })).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla"`,
+    expect(getFileUrl('bla', { flavour: 'OPS' })).toBe(
+      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla',
+    );
+  });
+
+  test('with PREOPS flavour', () => {
+    expect(getFileUrl('bla', { flavour: 'PREOPS' })).toBe(
+      'https://www.b2b.preops.nm.eurocontrol.int/FILE_PREOPS/gateway/spec/bla',
     );
   });
 
   test('with leading slash', () => {
-    expect(getFileUrl('/bla')).toMatchInlineSnapshot(
-      `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla"`,
+    expect(getFileUrl('/bla')).toBe(
+      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla',
     );
   });
 
   test('with overriden endpoint', () => {
-    expect(
+    expect(() =>
       getFileUrl('/bla', { endpoint: 'https://blabla' }),
-    ).toMatchInlineSnapshot(`"https://blabla/bla"`);
+    ).toThrowError(
+      'File download URL is not supported when config.endpoint is overriden',
+    );
   });
 });
 
