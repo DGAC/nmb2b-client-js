@@ -160,18 +160,17 @@ export function getFileUrl(
   path: string,
   config: { flavour?: B2BFlavour; endpoint?: string } = {},
 ): string {
-  if (config.endpoint) {
-    return new URL(
-      (path[0] && path.startsWith('/') ? '' : '/') + path,
-      config.endpoint,
-    ).toString();
-  }
-
-  return (
-    getFileEndpoint(config) +
-    (path[0] && path.startsWith('/') ? '' : '/') +
-    path
+  assert(
+    config.endpoint === undefined,
+    'File download URL is not supported when config.endpoint is overriden',
   );
+
+  const baseUrl =
+    config.flavour === 'PREOPS'
+      ? `${B2B_ROOTS.PREOPS}/FILE_PREOPS/gateway/spec`
+      : `${B2B_ROOTS.OPS}/FILE_OPS/gateway/spec`;
+
+  return baseUrl + (path[0] && path.startsWith('/') ? '' : '/') + path;
 }
 
 /**

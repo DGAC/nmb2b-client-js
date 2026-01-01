@@ -165,33 +165,42 @@ describe(getSoapEndpoint, () => {
   });
 });
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
 describe(isConfigValid, () => {
   test('should return true for valid config', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(isConfigValid(VALID_BASE_CONFIG)).toBe(true);
   });
 
   test('should throw for invalid config (backward compatibility)', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(() => isConfigValid({})).toThrow();
   });
 });
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
 describe(getEndpoint, () => {
   test('should be an alias to getSoapEndpoint', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(getEndpoint()).toBe(getSoapEndpoint());
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(getEndpoint({ flavour: 'PREOPS' })).toBe(
       getSoapEndpoint({ flavour: 'PREOPS' }),
     );
   });
 });
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
 describe(getFileEndpoint, () => {
   test('without flavour', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(getFileEndpoint()).toMatchInlineSnapshot(
       `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec"`,
     );
   });
 
   test('with flavour', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(getFileEndpoint({ flavour: 'OPS' })).toMatchInlineSnapshot(
       `"https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec"`,
     );
