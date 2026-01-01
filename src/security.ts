@@ -10,25 +10,75 @@ import {
 } from 'soap';
 import fs from 'node:fs';
 
+/**
+ * Security configuration using a PFX / PKCS #12 certificate.
+ * Used to authenticate with the B2B services using a client certificate.
+ */
 interface PfxSecurity {
+  /**
+   * The content of the PFX / PKCS #12 file.
+   */
   pfx: Buffer;
+
+  /**
+   * The passphrase for the PFX / PKCS #12 container.
+   */
   passphrase: string;
 }
 
+/**
+ * Security configuration using PEM certificate and key.
+ * Used to authenticate with the B2B services using a client certificate.
+ */
 interface PemSecurity {
+  /**
+   * The content of the PEM certificate file.
+   */
   cert: Buffer;
+
+  /**
+   * The content of the PEM key file.
+   */
   key: Buffer;
+
+  /**
+   * The passphrase for the PEM key.
+   * Can be omitted if the key is not encrypted.
+   */
   passphrase?: string;
 }
 
+/**
+ * Security configuration using API Gateway credentials.
+ * Used to authenticate with the B2B services using an API Key ID and Secret Key.
+ * These credentials will be sent as Basic Authentication headers.
+ */
 interface ApiGwSecurity {
+  /**
+   * The API Key ID (used as username for Basic Auth).
+   */
   apiKeyId: string;
+
+  /**
+   * The API Secret Key (used as password for Basic Auth).
+   */
   apiSecretKey: string;
 }
 
+/**
+ * Supported authentication methods.
+ * Used in the `Config` object to specify how the client should authenticate with the B2B services.
+ */
 export type Security = PfxSecurity | PemSecurity | ApiGwSecurity;
 
-export function isValidSecurity(obj: unknown): obj is Security {
+/**
+ * Asserts that the provided object is a valid {@link Security} configuration.
+ * Checks for the presence and validity of required fields for each security type.
+ *
+ * @param obj - The object to validate.
+ * @throws {AssertionError} If the object is not a valid `Security` configuration.
+ */
+export function assertValidSecurity(obj: unknown): asserts obj is Security {
   assert(!!obj && typeof obj === 'object', 'Must be an object');
 
   if ('apiKeyId' in obj) {
@@ -46,7 +96,7 @@ export function isValidSecurity(obj: unknown): obj is Security {
       'security.apiSecretKey must be defined when using security.apiKeyId',
     );
 
-    return true;
+    return;
   }
 
   assert(
@@ -61,10 +111,19 @@ export function isValidSecurity(obj: unknown): obj is Security {
       'security.key must be a buffer if security.pem is defined',
     );
   }
+}
 
+/**
+ * @deprecated Use {@link assertValidSecurity} instead.
+ */
+export function isValidSecurity(obj: unknown): obj is Security {
+  assertValidSecurity(obj);
   return true;
 }
 
+/**
+ * @internal
+ */
 export function prepareSecurity(config: Config): ISecurity {
   const { security } = config;
 

@@ -1,7 +1,7 @@
 import type { SetOptional } from 'type-fest';
 import type { AirspaceService } from './Airspace/index.js';
 import { getAirspaceClient } from './Airspace/index.js';
-import { isConfigValid, obfuscate, type Config } from './config.js';
+import { assertValidConfig, obfuscate, type Config } from './config.js';
 import type { B2BFlavour } from './constants.js';
 import type { FlightService } from './Flight/index.js';
 import { getFlightClient } from './Flight/index.js';
@@ -14,6 +14,9 @@ import { download as downloadWSDLIfNeeded } from './utils/xsd/index.js';
 
 const debug = d();
 
+/**
+ * Main client object grouping all available B2B domains (Airspace, Flight, Flow, GeneralInformation).
+ */
 export interface B2BClient {
   Airspace: AirspaceService;
   Flight: FlightService;
@@ -34,11 +37,21 @@ const CONFIG_DEFAULTS = {
   hooks: [],
 } satisfies Partial<Config>;
 
+/**
+ * Options for initializing the B2B client.
+ */
 export type CreateB2BClientOptions = SetOptional<
   Config,
   keyof typeof CONFIG_DEFAULTS
 >;
 
+/**
+ * Main factory to create a fully initialized B2B client.
+ * Handles WSDL downloading (if needed) and initializes all sub-services.
+ *
+ * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
+ * @returns The initialized {@link B2BClient} instance.
+ */
 export async function createB2BClient(
   options: CreateB2BClientOptions,
 ): Promise<B2BClient> {
@@ -65,6 +78,12 @@ export async function createB2BClient(
   };
 }
 
+/**
+ * Factory to create a standalone client for the Airspace domain.
+ *
+ * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
+ * @returns The initialized {@link AirspaceService} instance.
+ */
 export async function createAirspaceClient(
   options: CreateB2BClientOptions,
 ): Promise<AirspaceService> {
@@ -81,6 +100,12 @@ export async function createAirspaceClient(
   return client;
 }
 
+/**
+ * Factory to create a standalone client for the Flight domain.
+ *
+ * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
+ * @returns The initialized {@link FlightService} instance.
+ */
 export async function createFlightClient(
   options: CreateB2BClientOptions,
 ): Promise<FlightService> {
@@ -97,6 +122,12 @@ export async function createFlightClient(
   return client;
 }
 
+/**
+ * Factory to create a standalone client for the Flow domain.
+ *
+ * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
+ * @returns The initialized {@link FlowService} instance.
+ */
 export async function createFlowClient(
   options: CreateB2BClientOptions,
 ): Promise<FlowService> {
@@ -113,6 +144,12 @@ export async function createFlowClient(
   return client;
 }
 
+/**
+ * Factory to create a standalone client for the GeneralInformation domain.
+ *
+ * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
+ * @returns The initialized {@link GeneralInformationService} instance.
+ */
 export async function createGeneralInformationClient(
   options: CreateB2BClientOptions,
 ): Promise<GeneralInformationService> {
@@ -132,10 +169,7 @@ export async function createGeneralInformationClient(
 function prepareConfig(options: CreateB2BClientOptions): Config {
   const config = { ...CONFIG_DEFAULTS, ...options };
 
-  if (!isConfigValid(config)) {
-    debug('Invalid options provided');
-    throw new Error('Invalid options provided');
-  }
+  assertValidConfig(config);
 
   debug('Config is %o', obfuscate(config));
 
