@@ -1,5 +1,6 @@
 import { configDefaults, defineConfig } from 'vitest/config';
 import { resolveB2BEnvironment } from './tests/resolveB2BEnvironment.js';
+import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from './tests/constants.js';
 
 const b2bEnv = resolveB2BEnvironment();
 
@@ -18,10 +19,11 @@ export default defineConfig({
           exclude: ['src/**/*.e2e.test.ts', ...configDefaults.exclude],
           env: removeUndefined({
             ...b2bEnv,
-            // Isolation: Mock security for unit tests to prevent real connection attempts
             B2B_API_KEY_ID: 'mock-api-key-id',
             B2B_API_SECRET_KEY: 'mock-api-secret-key',
-            B2B_ENDPOINT: 'https://fake-b2b.test',
+            B2B_ENDPOINT: MOCK_B2B_ENDPOINT,
+            B2B_XSD_REMOTE_URL: MOCK_B2B_XSD_ENDPOINT,
+
             B2B_CERT: undefined,
             B2B_CERT_KEY: undefined,
             B2B_CERT_PASSPHRASE: undefined,
