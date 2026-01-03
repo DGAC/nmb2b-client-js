@@ -26,6 +26,9 @@ You must respect the existing modular structure:
 - **Tests**: Tests are co-located with the source file.
   - **Unit Tests**: `src/**/*.test.ts` (Must be fully mocked, no real network calls).
   - **E2E Tests**: `src/**/*.e2e.test.ts` (Integration tests with real B2B connection).
+  - **Fixtures**: Scenarios for recording and replaying SOAP interactions.
+    - Pattern: `src/<Domain>/__fixtures__/<Action>.ts`
+    - Sidecar Artifacts: `src/<Domain>/__fixtures__/<Action>/<scenario>.*` (JSON context, XML mock, JSON result snapshot).
 
 ## 4. Technical Conventions
 
@@ -69,4 +72,29 @@ pnpm test:e2e --no-watch
 
 # 6. Run tests for a specific file
 pnpm test --no-watch <filename>
+
+# 7. Record or update fixtures from real B2B API
+pnpm update-fixtures
 ```
+
+## 6. Unit Testing with Fixtures
+
+We use a custom framework to record real API interactions and replay them deterministically in unit tests.
+
+- **Definition**: Use `defineFixture<TVariables>(serviceMethod)` in `src/<Domain>/__fixtures__/<Action>.ts`.
+  - `.setup()`: Optional. Only runs during recording. Used to find/prepare live data (e.g., finding a valid flight ID).
+  - `.run()`: Mandatory. Logic to execute the SOAP call. Runs during recording (real API) and testing (mocked API).
+  - `.test()`: One or more Vitest assertions. Use `expectSnapshot(result)` to validate the JSON output.
+- **Recording**: To capture artifacts from the real B2B API:
+  ```bash
+  pnpm update-fixtures
+  ```
+  _Requires valid B2B credentials in `.env`._
+- **Registration**: Domain-level tests (`src/<Domain>/<Domain>.test.ts`) must use `registerAutoTests`:
+
+  ```typescript
+  import { collectFixtures } from '../../tests/utils/runner';
+  import { registerAutoTests } from '../../tests/utils/runner';
+
+  registerAutoTests(collectFixtures(import.meta.url));
+  ```

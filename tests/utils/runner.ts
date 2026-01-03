@@ -5,7 +5,9 @@ import { createB2BClient } from '../../src/index.js';
 import { TEST_B2B_OPTIONS } from '../options.js';
 import { Fixture } from './fixtures.js';
 import fs from 'node:fs/promises';
+import { readdirSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 interface FixtureContext {
   meta?: {
@@ -14,17 +16,41 @@ interface FixtureContext {
   variables: unknown;
 }
 
-export function registerAutoTests(modules: Record<string, unknown>) {
+/**
+ * Collects all fixture files in the __fixtures__ directory relative to the caller.
+ * @param importMetaUrl - The import.meta.url of the caller.
+ */
+export function collectFixtures(importMetaUrl: string): string[] {
+  const callerPath = fileURLToPath(importMetaUrl);
+  const callerDir = path.dirname(callerPath);
+  const fixturesDir = path.join(callerDir, '__fixtures__');
+
+  try {
+    return readdirSync(fixturesDir)
+      .filter((file) => file.endsWith('.ts') && !file.endsWith('.test.ts'))
+      .map((file) => path.join(fixturesDir, file));
+  } catch (_err) {
+    // If __fixtures__ doesn't exist, return empty array
+    return [];
+  }
+}
+
+/**
+ * Registers tests for each fixture in the provided paths.
+ */
+export async function registerAutoTests(fixturePaths: string[]) {
   // The test client uses mock options (MSW)
   const clientPromise = createB2BClient(TEST_B2B_OPTIONS);
 
-  for (const [fileRelativePath, mod] of Object.entries(modules)) {
-    const fixtureFileName = path.basename(fileRelativePath, '.ts');
-    const fixturesDir = path.dirname(fileRelativePath);
+  for (const fixturePath of fixturePaths) {
+    const fixtureFileName = path.basename(fixturePath, '.ts');
+    const fixturesDir = path.dirname(fixturePath);
 
-    if (typeof mod !== 'object' || mod === null) {
-      continue;
-    }
+    // Dynamic import of the fixture module
+    const mod = (await import(pathToFileURL(fixturePath).href)) as Record<
+      string,
+      unknown
+    >;
 
     for (const [fixtureId, fixture] of Object.entries(mod)) {
       if (!(fixture instanceof Fixture)) continue;
@@ -76,7 +102,7 @@ export function registerAutoTests(modules: Record<string, unknown>) {
           test(name, async () => {
             await fn({
               expect,
-              result,
+              result: result as never,
               expectSnapshot: async (data) => {
                 await expect(data).toMatchFileSnapshot(
                   path.join(

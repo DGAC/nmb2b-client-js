@@ -57,6 +57,7 @@
     "test:unit": "vitest --project=unit",
     "test:e2e": "vitest --project=e2e",
     "test:ci": "vitest --watch=false --reporter=default --reporter=junit --outputFile.junit=junit.xml --coverage.enabled --typecheck",
+    "update-fixtures": "tsx ./scripts/update-fixtures.ts",
     "typecheck": "tsc --noEmit"
   },
   "files": [

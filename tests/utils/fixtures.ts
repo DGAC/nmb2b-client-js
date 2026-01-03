@@ -9,7 +9,8 @@ export type B2BMethodResult<
   TService extends B2BService,
   TMethod extends B2BServiceMethod<TService>,
 > = B2BClient[TService][TMethod] extends (
-  ...args: never[]
+  ...args: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any[]
 ) => Promise<infer TResult>
   ? TResult
   : unknown;
@@ -46,20 +47,6 @@ export type FixtureTestFn<TResult> = (
 ) => Promise<void> | void;
 
 /**
- * The final Fixture object consumed by the runner.
- */
-export class Fixture<TVariables = unknown, TResult = unknown> {
-  public _description: string;
-  public _setup?: FixtureSetupFn<TVariables>;
-  public _run?: FixtureRunFn<TVariables, TResult>;
-  public _tests: Array<{ name: string; fn: FixtureTestFn<TResult> }> = [];
-
-  constructor(public readonly info: { service: B2BService; method: string }) {
-    this._description = `${info.service}.${info.method}`;
-  }
-}
-
-/**
  * Builder interfaces to enforce call order and mandatory run().
  */
 export interface IFixtureInitial<TVariables, TResult> {
@@ -79,37 +66,44 @@ export interface IFixtureRunnable<TResult> {
   test(name: string, fn: FixtureTestFn<TResult>): this;
 }
 
-class FixtureBuilder<TVariables = never, TResult = unknown>
+/**
+ * The final Fixture object consumed by the runner.
+ * It also acts as its own builder via interface casting.
+ */
+export class Fixture<TVariables = unknown, TResult = unknown>
   implements
     IFixtureInitial<TVariables, TResult>,
     IFixtureDefined<TVariables, TResult>,
     IFixtureRunnable<TResult>
 {
-  private readonly fixture: Fixture;
+  public _description: string;
+  public _setup?: FixtureSetupFn<TVariables>;
+  public _run?: FixtureRunFn<TVariables, TResult>;
+  public _tests: Array<{ name: string; fn: FixtureTestFn<TResult> }> = [];
 
-  constructor(info: { service: B2BService; method: string }) {
-    this.fixture = new Fixture(info);
+  constructor(public readonly info: { service: B2BService; method: string }) {
+    this._description = `${info.service}.${info.method}`;
   }
 
   description(text: string): this {
-    this.fixture._description = text;
+    this._description = text;
     return this;
   }
 
   setup<TNewVars>(
     fn: FixtureSetupFn<TNewVars>,
   ): IFixtureDefined<TNewVars, TResult> {
-    this.fixture._setup = fn;
+    this._setup = fn as unknown as FixtureSetupFn<TVariables>;
     return this as unknown as IFixtureDefined<TNewVars, TResult>;
   }
 
   run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult> {
-    this.fixture._run = fn as FixtureRunFn<unknown, unknown>;
+    this._run = fn;
     return this as unknown as IFixtureRunnable<TResult>;
   }
 
   test(name: string, fn: FixtureTestFn<TResult>): this {
-    this.fixture._tests.push({ name, fn: fn as FixtureTestFn<unknown> });
+    this._tests.push({ name, fn });
     return this;
   }
 }
@@ -123,5 +117,5 @@ export function defineFixture<
 >(
   info: FixtureServiceMethod<TService, TMethod>,
 ): IFixtureInitial<never, B2BMethodResult<TService, TMethod>> {
-  return new FixtureBuilder<never, B2BMethodResult<TService, TMethod>>(info);
+  return new Fixture<never, B2BMethodResult<TService, TMethod>>(info);
 }
