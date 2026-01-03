@@ -17,6 +17,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           exclude: ['src/**/*.e2e.test.ts', ...configDefaults.exclude],
+          setupFiles: ['./tests/setupMsw.ts'],
           env: removeUndefined({
             ...b2bEnv,
             B2B_API_KEY_ID: 'mock-api-key-id',
