@@ -11,7 +11,7 @@ if (flavour !== 'OPS' && flavour !== 'PREOPS') {
   );
 }
 
-const ex = {
+export const TEST_B2B_OPTIONS = {
   XSD_PATH: process.env.B2B_XSD_PATH,
   security: fromEnv(),
   flavour,
@@ -20,7 +20,3 @@ const ex = {
     xsdEndpoint: process.env.B2B_XSD_REMOTE_URL,
   }),
 } as const;
-
-export const TEST_B2B_CONFIG = ex;
-
-export default ex;

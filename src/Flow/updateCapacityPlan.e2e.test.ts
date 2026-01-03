@@ -1,11 +1,11 @@
 import { add, startOfDay } from 'date-fns';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { NMB2BError, createFlowClient } from '../index.js';
 
 describe('updateCapacityPlan', async () => {
-  const Flow = await createFlowClient(b2bOptions);
+  const Flow = await createFlowClient(TEST_B2B_OPTIONS);
 
   test.skip('LFERMS', async () => {
     try {
@@ -19,7 +19,7 @@ describe('updateCapacityPlan', async () => {
 
       expect(plan.data).toBeDefined();
 
-      if (b2bOptions.flavour !== 'PREOPS') {
+      if (TEST_B2B_OPTIONS.flavour !== 'PREOPS') {
         console.warn('B2B_FLAVOUR is not PREOPS, skipping test');
         return;
       }

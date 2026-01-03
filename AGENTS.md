@@ -42,10 +42,10 @@ You must respect the existing modular structure:
 - **Implementation Details (E2E only)**:
   - Import `shouldUseRealB2BConnection` from `tests/utils.ts`.
   - Use `test.runIf(shouldUseRealB2BConnection)` to condition tests in `*.e2e.test.ts` files.
-  - Use `TEST_B2B_CONFIG` from `tests/options.ts` to initialize clients.
+  - Use `TEST_B2B_OPTIONS` from `tests/options.ts` to initialize clients.
 - **Security**:
   - ❌ NEVER hardcode secrets or certificates in test files.
-  - ✅ Always rely on `TEST_B2B_CONFIG` which loads from environment variables.
+  - ✅ Always rely on `TEST_B2B_OPTIONS` which loads from environment variables.
 
 ## 5. Verification Commands
 

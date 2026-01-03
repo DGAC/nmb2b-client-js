@@ -1,12 +1,12 @@
 import { UTCDateMini } from '@date-fns/utc';
 import { add, startOfDay } from 'date-fns';
 import { afterAll, assert, beforeAll, describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { createFlowClient } from '../index.js';
 import type { OTMVPlanRetrievalReply } from './types.js';
 
 describe('updateOTMVPlan', async () => {
-  const Flow = await createFlowClient(b2bOptions);
+  const Flow = await createFlowClient(TEST_B2B_OPTIONS);
 
   let planBefore: OTMVPlanRetrievalReply['data'] | undefined;
 
@@ -28,7 +28,7 @@ describe('updateOTMVPlan', async () => {
 
   afterAll(async () => {
     try {
-      if (b2bOptions.flavour !== 'PREOPS' || !planBefore) {
+      if (TEST_B2B_OPTIONS.flavour !== 'PREOPS' || !planBefore) {
         return;
       }
 
@@ -68,7 +68,7 @@ describe('updateOTMVPlan', async () => {
     try {
       assert(planBefore);
 
-      if (b2bOptions.flavour !== 'PREOPS') {
+      if (TEST_B2B_OPTIONS.flavour !== 'PREOPS') {
         console.warn('B2B_FLAVOUR is not PREOPS, skipping test');
         return;
       }

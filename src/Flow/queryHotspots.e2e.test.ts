@@ -1,11 +1,11 @@
 import { inspect } from 'util';
 import { describe, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { createFlowClient, NMB2BError } from '../index.js';
 
 describe('queryHotspots', async () => {
-  const Flow = await createFlowClient(b2bOptions);
+  const Flow = await createFlowClient(TEST_B2B_OPTIONS);
 
   // Not authorised with this certificate in OPS
   test.runIf(shouldUseRealB2BConnection)('List all hotspots', async () => {
