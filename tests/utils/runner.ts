@@ -7,19 +7,30 @@ import { Fixture } from './fixtures.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-export function registerAutoTests(modules: Record<string, any>) {
+interface FixtureContext {
+  meta?: {
+    mockDate?: string;
+  };
+  variables: unknown;
+}
+
+export function registerAutoTests(modules: Record<string, unknown>) {
   // The test client uses mock options (MSW)
   const clientPromise = createB2BClient(TEST_B2B_OPTIONS);
 
-  for (const [fileRelativePath, module] of Object.entries(modules)) {
+  for (const [fileRelativePath, mod] of Object.entries(modules)) {
     const fixtureFileName = path.basename(fileRelativePath, '.ts');
     const fixturesDir = path.dirname(fileRelativePath);
 
-    for (const [fixtureId, fixture] of Object.entries(module)) {
+    if (typeof mod !== 'object' || mod === null) {
+      continue;
+    }
+
+    for (const [fixtureId, fixture] of Object.entries(mod)) {
       if (!(fixture instanceof Fixture)) continue;
 
-      describe(`${fixtureFileName} > ${fixtureId}`, () => {
-        let result: any;
+      describe(`${fixture._description} [${fixtureId}]`, () => {
+        let result: unknown;
 
         beforeAll(async () => {
           const client = await clientPromise;
@@ -30,7 +41,9 @@ export function registerAutoTests(modules: Record<string, any>) {
             fixtureFileName,
             `${fixtureId}.context.json`,
           );
-          const context = JSON.parse(await fs.readFile(contextPath, 'utf-8'));
+          const context = JSON.parse(
+            await fs.readFile(contextPath, 'utf-8'),
+          ) as FixtureContext;
 
           // 2. Mock time
           if (context.meta?.mockDate) {
