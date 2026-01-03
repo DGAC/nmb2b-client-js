@@ -1,6 +1,7 @@
+import { delay, http, HttpResponse } from 'msw';
 import { assert, describe, expect, test } from 'vitest';
 import b2bOptions from '../tests/options.js';
-import { shouldUseRealB2BConnection } from '../tests/utils.js';
+import { server, SOAP_ENDPOINT } from '../tests/utils/msw.js';
 import {
   createAirspaceClient,
   createB2BClient,
@@ -32,21 +33,24 @@ describe('Main API', () => {
 
   describe('soap query options', () => {
     describe('timeout', () => {
-      // TODO: This test should be a unit test using a mock backend (nock) instead of a real B2B connection.
-      test.runIf(shouldUseRealB2BConnection)(
-        'should allow a timeout option to be set on methods',
-        async () => {
-          const client = await createGeneralInformationClient(b2bOptions);
+      test('should allow a timeout option to be set on methods', async () => {
+        server.use(
+          http.post(SOAP_ENDPOINT, async () => {
+            await delay(100);
+            return HttpResponse.xml('<foo/>');
+          }),
+        );
 
-          try {
-            await client.retrieveUserInformation({}, { timeout: 10 });
-            expect.unreachable('This query should timeout');
-          } catch (err) {
-            assert.instanceOf(err, Error);
-            expect(err.message).toMatch(/timeout/i);
-          }
-        },
-      );
+        const client = await createGeneralInformationClient(b2bOptions);
+
+        try {
+          await client.retrieveUserInformation({}, { timeout: 10 });
+          expect.unreachable('This query should timeout');
+        } catch (err) {
+          assert.instanceOf(err, Error);
+          expect(err.message).toMatch(/timeout/i);
+        }
+      });
     });
   });
 });
