@@ -50,7 +50,7 @@ export type FixtureTestFn<TResult> = (
  * Builder interfaces to enforce call order and mandatory run().
  */
 export interface IFixtureInitial<TVariables, TResult> {
-  description(text: string): this;
+  describe(text: string): this;
   setup<TNewVars>(
     fn: FixtureSetupFn<TNewVars>,
   ): IFixtureDefined<TNewVars, TResult>;
@@ -58,12 +58,24 @@ export interface IFixtureInitial<TVariables, TResult> {
 }
 
 export interface IFixtureDefined<TVariables, TResult> {
-  description(text: string): this;
+  describe(text: string): this;
   run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult>;
 }
 
 export interface IFixtureRunnable<TResult> {
   test(name: string, fn: FixtureTestFn<TResult>): this;
+}
+
+/**
+ * Public interface for the Runner/Recorder
+ */
+export interface FixtureDefinition<TVariables, TResult> {
+  service: B2BService;
+  method: string;
+  description: string;
+  setupRecording?: FixtureSetupFn<TVariables>;
+  executeOperation?: FixtureRunFn<TVariables, TResult>;
+  tests: Array<{ name: string; fn: FixtureTestFn<TResult> }>;
 }
 
 /**
@@ -74,36 +86,52 @@ export class Fixture<TVariables = unknown, TResult = unknown>
   implements
     IFixtureInitial<TVariables, TResult>,
     IFixtureDefined<TVariables, TResult>,
-    IFixtureRunnable<TResult>
+    IFixtureRunnable<TResult>,
+    FixtureDefinition<TVariables, TResult>
 {
-  public _description: string;
-  public _setup?: FixtureSetupFn<TVariables>;
-  public _run?: FixtureRunFn<TVariables, TResult>;
-  public _tests: Array<{ name: string; fn: FixtureTestFn<TResult> }> = [];
+  /**
+   * Used by the recorder to access the correct internal SOAP client.
+   */
+  public readonly service: B2BService;
+  /**
+   * Used by the recorder to identify the method being tested.
+   */
+  public readonly method: string;
 
-  constructor(public readonly info: { service: B2BService; method: string }) {
-    this._description = `${info.service}.${info.method}`;
+  public description: string;
+
+  public setupRecording?: FixtureSetupFn<TVariables>;
+  public executeOperation?: FixtureRunFn<TVariables, TResult>;
+
+  public readonly tests: Array<{ name: string; fn: FixtureTestFn<TResult> }>;
+
+  constructor(info: { service: B2BService; method: string }) {
+    this.service = info.service;
+    this.method = info.method;
+    this.description = `${info.service}.${info.method}`;
+    this.tests = [];
   }
 
-  description(text: string): this {
-    this._description = text;
+  describe(text: string): this {
+    this.description = text;
     return this;
   }
 
   setup<TNewVars>(
     fn: FixtureSetupFn<TNewVars>,
   ): IFixtureDefined<TNewVars, TResult> {
-    this._setup = fn as unknown as FixtureSetupFn<TVariables>;
-    return this as unknown as IFixtureDefined<TNewVars, TResult>;
+    const that = this as unknown as Fixture<TNewVars, TResult>;
+    that.setupRecording = fn;
+    return that;
   }
 
   run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult> {
-    this._run = fn;
+    this.executeOperation = fn;
     return this as unknown as IFixtureRunnable<TResult>;
   }
 
   test(name: string, fn: FixtureTestFn<TResult>): this {
-    this._tests.push({ name, fn });
+    this.tests.push({ name, fn });
     return this;
   }
 }

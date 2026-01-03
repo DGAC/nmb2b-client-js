@@ -4,17 +4,10 @@ import { server, SOAP_ENDPOINT } from './msw.js';
 import { createB2BClient } from '../../src/index.js';
 import { TEST_B2B_OPTIONS } from '../options.js';
 import { Fixture } from './fixtures.js';
-import fs from 'node:fs/promises';
+import { FixtureArtifacts } from './artifacts.js';
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-
-interface FixtureContext {
-  meta?: {
-    mockDate?: string;
-  };
-  variables: unknown;
-}
 
 /**
  * Collects all fixture files in the __fixtures__ directory relative to the caller.
@@ -43,9 +36,6 @@ export async function registerAutoTests(fixturePaths: string[]) {
   const clientPromise = createB2BClient(TEST_B2B_OPTIONS);
 
   for (const fixturePath of fixturePaths) {
-    const fixtureFileName = path.basename(fixturePath, '.ts');
-    const fixturesDir = path.dirname(fixturePath);
-
     // Dynamic import of the fixture module
     const mod = (await import(pathToFileURL(fixturePath).href)) as Record<
       string,
@@ -55,62 +45,48 @@ export async function registerAutoTests(fixturePaths: string[]) {
     for (const [fixtureId, fixture] of Object.entries(mod)) {
       if (!(fixture instanceof Fixture)) continue;
 
-      describe(`${fixture._description} [${fixtureId}]`, () => {
+      const artifacts = new FixtureArtifacts(fixture, {
+        filePath: fixturePath,
+        fixtureId,
+      });
+
+      describe(`${fixture.description} [${fixtureId}]`, () => {
         let result: unknown;
 
         beforeAll(async () => {
           const client = await clientPromise;
 
-          // 1. Load context (.context.json)
-          const contextPath = path.join(
-            fixturesDir,
-            fixtureFileName,
-            `${fixtureId}.context.json`,
-          );
-          const context = JSON.parse(
-            await fs.readFile(contextPath, 'utf-8'),
-          ) as FixtureContext;
-
-          // 2. Mock time
-          if (context.meta?.mockDate) {
+          // 1. Load context and mock time
+          const context = await artifacts.readContext();
+          if (context.meta.mockDate) {
             vi.setSystemTime(new Date(context.meta.mockDate));
           }
 
-          // 3. Load network mock (.mock.xml)
-          const mockPath = path.join(
-            fixturesDir,
-            fixtureFileName,
-            `${fixtureId}.mock.xml`,
-          );
-          const xmlResponse = await fs.readFile(mockPath, 'utf-8');
-
+          // 2. Load network mock and register MSW handler
+          const xmlResponse = await artifacts.readMock();
           server.use(
             http.post(SOAP_ENDPOINT, () => {
               return HttpResponse.xml(xmlResponse);
             }),
           );
 
-          // 4. Execute logic
-          if (!fixture._run) {
-            throw new Error(`Fixture ${fixtureId} has no run() function`);
+          // 3. Execute logic
+          if (!fixture.executeOperation) {
+            throw new Error(
+              `Fixture ${fixtureId} has no executeOperation defined`,
+            );
           }
-          result = await fixture._run(client, context.variables);
+          result = await fixture.executeOperation(client, context.variables);
         });
 
-        // 5. Register tests
-        for (const { name, fn } of fixture._tests) {
+        // 4. Register tests
+        for (const { name, fn } of fixture.tests) {
           test(name, async () => {
             await fn({
               expect,
               result: result as never,
-              expectSnapshot: async (data) => {
-                await expect(data).toMatchFileSnapshot(
-                  path.join(
-                    fixturesDir,
-                    fixtureFileName,
-                    `${fixtureId}.result.json`,
-                  ),
-                );
+              expectSnapshot: async (data: unknown) => {
+                await expect(data).toMatchFileSnapshot(artifacts.snapshotPath);
               },
             });
           });

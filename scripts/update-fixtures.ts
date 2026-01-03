@@ -1,9 +1,10 @@
-import { readdir, mkdir, writeFile } from 'node:fs/promises';
-import { join, dirname, basename, relative } from 'node:path';
+import { readdir, mkdir } from 'node:fs/promises';
+import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createB2BClient } from '../src/index.js';
 import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
 import { Fixture } from '../tests/utils/fixtures.js';
+import { FixtureArtifacts } from '../tests/utils/artifacts.js';
 import { fromValues } from '../src/security.js';
 import type { CreateB2BClientOptions } from '../src/index.js';
 
@@ -49,70 +50,59 @@ async function record() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const module = await import(filePath);
-      const fixtureName = basename(filePath, '.ts');
-      const fixturesDir = dirname(filePath);
-      const artifactsDir = join(fixturesDir, fixtureName);
-
-      // Ensure artifacts directory exists
-      await mkdir(artifactsDir, { recursive: true });
 
       for (const [exportName, fixture] of Object.entries(module)) {
         if (!(fixture instanceof Fixture)) {
           continue;
         }
 
+        const artifacts = new FixtureArtifacts(fixture, {
+          filePath,
+          fixtureId: exportName,
+        });
+
         console.log(
-          `  - Recording fixture: ${exportName} (${fixture._description})...`,
+          `  - Recording fixture: ${exportName} (${fixture.description})...`,
         );
 
         try {
           const setupStart = new Date();
-          const variables = fixture._setup
-            ? await fixture._setup(client)
+          const variables = fixture.setupRecording
+            ? await fixture.setupRecording(client)
             : undefined;
 
           // Capture mock date (ensure it matches the execution time)
           const mockDate = setupStart.toISOString();
 
-          if (!fixture._run) {
+          if (!fixture.executeOperation) {
             console.warn(
-              `    ⚠️  Skipping ${exportName}: No run function defined.`,
+              `    ⚠️  Skipping ${exportName}: No executeOperation defined.`,
             );
             continue;
           }
 
-          const result = await fixture._run(client, variables);
+          await fixture.executeOperation(client, variables);
 
           // Capture XML response
           // We need to cast to access the internal soap client properties
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const serviceClient = (client as any)[fixture.info.service];
+          const serviceClient = (client as any)[fixture.service];
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const lastResponse = (serviceClient as any).__soapClient.lastResponse;
 
           if (!lastResponse) {
             throw new Error(
-              'No SOAP response captured. Did the run function execute a SOAP query?',
+              'No SOAP response captured. Did the executeOperation execute a SOAP query?',
             );
           }
 
           // Write Artifacts
-
-          // 1. Context
-          const context = {
+          await artifacts.ensureDirectory();
+          await artifacts.saveContext({
             meta: { mockDate },
             variables,
-          };
-          await writeFile(
-            join(artifactsDir, `${exportName}.context.json`),
-            JSON.stringify(context, null, 2),
-          );
-
-          // 2. Mock XML
-          await writeFile(
-            join(artifactsDir, `${exportName}.mock.xml`),
-            lastResponse,
-          );
+          });
+          await artifacts.saveMock(lastResponse);
 
           console.log(`    ✅ Success`);
         } catch (err) {

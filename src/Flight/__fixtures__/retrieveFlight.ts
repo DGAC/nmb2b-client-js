@@ -11,7 +11,7 @@ export const nominal = defineFixture({
   service: 'Flight',
   method: 'retrieveFlight',
 })
-  .description('Nominal retrieval of a flight by its keys')
+  .describe('Nominal retrieval of a flight by its keys')
   .setup(async (client) => {
     // Look for a real flight in LFEERMS airspace
     const res = await client.Flight.queryFlightsByAirspace({
