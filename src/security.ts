@@ -1,6 +1,6 @@
 import { assert } from './utils/assert.js';
-import d from './utils/debug.js';
-const debug = d('security');
+import { createDebugLogger } from './utils/debug.js';
+const debug = createDebugLogger('security');
 import type { Config } from './config.js';
 import type { ISecurity } from 'soap';
 import {

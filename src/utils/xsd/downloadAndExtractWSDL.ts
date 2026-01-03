@@ -1,11 +1,11 @@
 import axios, { AxiosHeaders } from 'axios';
 import { extract } from 'tar';
 import type { Security } from '../../security.js';
-import d from '../debug.js';
+import { createDebugLogger } from '../debug.js';
 import { createAxiosConfig } from './createAxiosConfig.js';
 import type { Readable } from 'stream';
 import { assert } from '../assert.js';
-const debug = d('wsdl-downloader');
+const debug = createDebugLogger('wsdl-downloader');
 
 export async function downloadAndExtractWSDL(
   url: string,
