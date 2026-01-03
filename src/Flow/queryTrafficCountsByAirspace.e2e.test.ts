@@ -1,12 +1,12 @@
 import { add, startOfHour, sub } from 'date-fns';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { NMB2BError, createFlowClient } from '../index.js';
 
 describe('queryTrafficCountsByAirspace', async () => {
-  const Flow = await createFlowClient(b2bOptions);
+  const Flow = await createFlowClient(TEST_B2B_OPTIONS);
 
   test.runIf(shouldUseRealB2BConnection)('LFEE5R, aggregated', async () => {
     try {

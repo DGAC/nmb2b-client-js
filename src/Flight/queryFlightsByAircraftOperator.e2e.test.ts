@@ -1,11 +1,11 @@
 import { add, sub } from 'date-fns';
 import { assert, describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { createFlightClient } from '../createB2BClient.js';
 
 describe('queryFlightsByAircraftOperator', async () => {
-  const Flight = await createFlightClient(b2bOptions);
+  const Flight = await createFlightClient(TEST_B2B_OPTIONS);
 
   test.runIf(shouldUseRealB2BConnection)(
     'query Aircraft Operators',

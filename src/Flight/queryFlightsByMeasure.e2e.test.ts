@@ -1,7 +1,7 @@
 import { add, startOfHour, sub } from 'date-fns';
 import { inspect } from 'util';
 import { assert, beforeAll, describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import type { Regulation } from '../Flow/types.js';
 import { NMB2BError, createFlightClient, createFlowClient } from '../index.js';
@@ -11,8 +11,8 @@ describe('queryFlightsByMeasure', async () => {
   let measure: undefined | SafeB2BDeserializedResponse<Regulation>;
 
   const [Flight, Flow] = await Promise.all([
-    createFlightClient(b2bOptions),
-    createFlowClient(b2bOptions),
+    createFlightClient(TEST_B2B_OPTIONS),
+    createFlowClient(TEST_B2B_OPTIONS),
   ]);
 
   const window = {

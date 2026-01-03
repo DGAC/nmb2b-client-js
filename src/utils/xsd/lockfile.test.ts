@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { rm } from 'node:fs/promises';
 import path from 'node:path';
 import { beforeEach, test } from 'vitest';
-import { TEST_B2B_CONFIG } from '../../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../../tests/options.js';
 import { createMockArchive } from '../../../tests/utils.js';
 import { server } from '../../../tests/utils/msw.js';
 import { getFileUrl, getSoapEndpoint } from '../../config.js';
@@ -28,7 +28,7 @@ test('should prevent concurrent downloads', async () => {
    * We need to create a config without this override.
    */
   const testConfig = {
-    ...TEST_B2B_CONFIG,
+    ...TEST_B2B_OPTIONS,
     endpoint: undefined,
     XSD_PATH: OUTPUT_DIR,
   };

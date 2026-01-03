@@ -1,11 +1,11 @@
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { createAirspaceClient } from '../index.js';
 import { sub } from 'date-fns';
 import { describe, test, expect, assert } from 'vitest';
 
 describe('queryCompleteAIXMDatasets', async () => {
-  const Airspace = await createAirspaceClient(b2bOptions);
+  const Airspace = await createAirspaceClient(TEST_B2B_OPTIONS);
 
   test.runIf(shouldUseRealB2BConnection)('Complete dataset', async () => {
     const res = await Airspace.queryCompleteAIXMDatasets({

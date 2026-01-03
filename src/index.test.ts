@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse } from 'msw';
 import { assert, describe, expect, test } from 'vitest';
-import { TEST_B2B_CONFIG } from '../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../tests/options.js';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.js';
 import {
   createAirspaceClient,
@@ -12,7 +12,7 @@ import {
 
 describe('Main API', () => {
   test(createB2BClient, async () => {
-    const b2bClient = await createB2BClient(TEST_B2B_CONFIG);
+    const b2bClient = await createB2BClient(TEST_B2B_OPTIONS);
     expect(b2bClient).toBeDefined();
     expect(b2bClient.Airspace).toBeDefined();
     expect(b2bClient.Flight).toBeDefined();
@@ -26,9 +26,9 @@ describe('Main API', () => {
     createAirspaceClient,
     createGeneralInformationClient,
   ])('%O', async (fn) => {
-    const res = await fn(TEST_B2B_CONFIG);
+    const res = await fn(TEST_B2B_OPTIONS);
     expect(res).toBeDefined();
-    expect(res.config).toEqual(expect.objectContaining(TEST_B2B_CONFIG));
+    expect(res.config).toEqual(expect.objectContaining(TEST_B2B_OPTIONS));
   });
 
   describe('soap query options', () => {
@@ -41,7 +41,7 @@ describe('Main API', () => {
           }),
         );
 
-        const client = await createGeneralInformationClient(TEST_B2B_CONFIG);
+        const client = await createGeneralInformationClient(TEST_B2B_OPTIONS);
 
         try {
           await client.retrieveUserInformation({}, { timeout: 10 });

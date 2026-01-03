@@ -21,6 +21,4 @@ const ex = {
   }),
 } as const;
 
-export const TEST_B2B_CONFIG = ex;
-
-export default ex;
+export const TEST_B2B_OPTIONS = ex;

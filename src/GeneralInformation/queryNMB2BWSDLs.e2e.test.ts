@@ -1,10 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import b2bOptions from '../../tests/options.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.js';
 import { shouldUseRealB2BConnection } from '../../tests/utils.js';
 import { createGeneralInformationClient } from '../index.js';
 
 describe('queryNMB2BWSDLs', async () => {
-  const GeneralInformation = await createGeneralInformationClient(b2bOptions);
+  const GeneralInformation =
+    await createGeneralInformationClient(TEST_B2B_OPTIONS);
 
   test.runIf(shouldUseRealB2BConnection)('Version 27.0.0', async () => {
     const res = await GeneralInformation.queryNMB2BWSDLs({
