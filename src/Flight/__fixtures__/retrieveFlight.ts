@@ -4,8 +4,6 @@ import {
   expectSnapshot,
 } from '../../../tests/utils/fixtures.js';
 import { assert } from '../../utils/assert.js';
-import path from 'node:path';
-import { FixtureArtifacts } from '../../../tests/utils/artifacts.js';
 
 /**
  * Fixture for testing nominal flight retrieval.
