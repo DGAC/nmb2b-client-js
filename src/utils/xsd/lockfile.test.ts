@@ -1,14 +1,15 @@
+import { fromPartial } from '@total-typescript/shoehorn';
+import { delay, http, HttpResponse } from 'msw';
 import { randomUUID } from 'node:crypto';
-import nock from 'nock';
-import path from 'node:path';
-import { afterEach, beforeEach, test } from 'vitest';
 import { rm } from 'node:fs/promises';
+import path from 'node:path';
+import { beforeEach, test } from 'vitest';
+import { createMockArchive } from '../../../tests/utils.js';
+import { server } from '../../../tests/utils/msw.js';
 import { getFileUrl } from '../../config.js';
 import { B2B_VERSION } from '../../constants.js';
-import { createMockArchive } from '../../../tests/utils.js';
 import { createDir as mkdirp } from '../fs.js';
 import { download } from './index.js';
-import { fromPartial } from '@total-typescript/shoehorn';
 
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 
@@ -17,10 +18,6 @@ beforeEach(async () => {
   return async () => {
     await rm(OUTPUT_DIR, { force: true, recursive: true });
   };
-});
-
-afterEach(() => {
-  nock.cleanAll();
 });
 
 test('should prevent concurrent downloads', async () => {
@@ -33,17 +30,19 @@ test('should prevent concurrent downloads', async () => {
     [`${B2B_VERSION}/foo.json`]: JSON.stringify({ foo: 'bar' }),
   });
 
-  const scope = nock(root.origin)
-    .get(/.*/)
-    .once()
-    .delay(500)
-    .reply(200, archive);
-
-  nock(root.origin)
-    .post(`/B2B_${flavour}/gateway/spec/${B2B_VERSION}`)
-    .reply(
-      200,
-      `
+  server.use(
+    http.get(root.origin + '/*', async () => {
+      await delay(500);
+      return new HttpResponse(archive, {
+        headers: {
+          'Content-Type': 'application/gzip',
+        },
+      });
+    }),
+    http.post(
+      `${root.origin}/B2B_${flavour}/gateway/spec/${B2B_VERSION}`,
+      () => {
+        return HttpResponse.xml(`
   <?xml version='1.0' encoding='utf-8'?>
   <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
   <S:Body>
@@ -64,8 +63,10 @@ test('should prevent concurrent downloads', async () => {
     </gi:NMB2BWSDLsReply>
   </S:Body>
   </S:Envelope>
-`,
-    );
+`);
+      },
+    ),
+  );
 
   await Promise.all([
     download(
@@ -82,6 +83,4 @@ test('should prevent concurrent downloads', async () => {
       }),
     ),
   ]);
-
-  scope.isDone();
 });

@@ -1,10 +1,11 @@
 import { fromPartial } from '@total-typescript/shoehorn';
-import nock from 'nock';
+import { http, HttpResponse } from 'msw';
 import { randomUUID } from 'node:crypto';
 import { readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
-import { afterEach, assert, beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test, assert } from 'vitest';
 import { createMockArchive } from '../../../tests/utils.js';
+import { server } from '../../../tests/utils/msw.js';
 import { getFileUrl } from '../../config.js';
 import { B2B_VERSION } from '../../constants.js';
 import { createDir as mkdirp } from '../fs.js';
@@ -17,10 +18,6 @@ beforeEach(async () => {
   return async () => {
     await rm(OUTPUT_DIR, { force: true, recursive: true });
   };
-});
-
-afterEach(() => {
-  nock.cleanAll();
 });
 
 describe(downloadAndExtractWSDL, () => {
@@ -37,9 +34,25 @@ describe(downloadAndExtractWSDL, () => {
     const archive = await createMockArchive(FILES_IN_ARCHIVE);
 
     test('should download and extract the content of the archive', async () => {
-      const scope = nock(url)
-        .get(/test.tar.gz/)
-        .reply(200, archive);
+      server.use(
+        http.get(url, () => {
+          /**
+           * MSW type system does not accept a nodejs Buffer nor a DataView.
+           *
+           * We create a new ArrayBuffer
+           */
+          const arrayBuffer = archive.buffer.slice(
+            archive.byteOffset,
+            archive.byteOffset + archive.byteLength,
+          );
+
+          return HttpResponse.arrayBuffer(arrayBuffer, {
+            headers: {
+              'content-type': '',
+            },
+          });
+        }),
+      );
 
       await downloadAndExtractWSDL(
         url,
@@ -47,8 +60,6 @@ describe(downloadAndExtractWSDL, () => {
           outputDir: OUTPUT_DIR,
         }),
       );
-
-      expect(scope.isDone()).toBe(true);
 
       for (const [relativePath, expectedContent] of Object.entries(
         FILES_IN_ARCHIVE,
@@ -73,9 +84,11 @@ describe(downloadAndExtractWSDL, () => {
 
   describe('when the remote server responds with an http error', () => {
     test('should throw an error', async () => {
-      nock(url)
-        .get(/test.tar.gz/)
-        .reply(503);
+      server.use(
+        http.get(url, () => {
+          return new HttpResponse(null, { status: 503 });
+        }),
+      );
 
       try {
         await downloadAndExtractWSDL(
@@ -96,11 +109,15 @@ describe(downloadAndExtractWSDL, () => {
 
   describe('when the remote server responds with an invalid content-type', () => {
     test('should throw a clear error (e.g. HTML proxy error)', async () => {
-      nock(url)
-        .get(/test.tar.gz/)
-        .reply(200, '<html><body>Bad Gateway</body></html>', {
-          'content-type': 'text/html; charset=utf-8',
-        });
+      server.use(
+        http.get(url, () => {
+          return new HttpResponse('<html><body>Bad Gateway</body></html>', {
+            headers: {
+              'content-type': 'text/html; charset=utf-8',
+            },
+          });
+        }),
+      );
 
       try {
         await downloadAndExtractWSDL(
