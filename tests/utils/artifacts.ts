@@ -1,7 +1,6 @@
-import path from 'node:path';
-import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import type { Fixture } from './fixtures.js';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 export interface FixtureContext<TVariables = unknown> {
   meta: {
@@ -10,16 +9,17 @@ export interface FixtureContext<TVariables = unknown> {
   variables: TVariables;
 }
 
+export type FixtureLocation = {
+  filePath: string;
+  exportName: string;
+};
+
 export class FixtureArtifacts<TVariables> {
   private readonly dir: string;
   private readonly id: string;
 
-  constructor(
-    // Used for type inference
-    _fixture: Fixture<TVariables>,
-    location: { filePath: string; fixtureId: string },
-  ) {
-    this.id = location.fixtureId;
+  constructor(location: FixtureLocation) {
+    this.id = location.exportName;
 
     const fixtureDir = path.dirname(location.filePath);
     const fixtureFileName = path.basename(location.filePath, '.ts');

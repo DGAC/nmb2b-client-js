@@ -56,10 +56,7 @@ async function record() {
           continue;
         }
 
-        const artifacts = new FixtureArtifacts(fixture, {
-          filePath,
-          fixtureId: exportName,
-        });
+        const artifacts = new FixtureArtifacts({ filePath, exportName });
 
         console.log(
           `  - Recording fixture: ${exportName} (${fixture.description})...`,

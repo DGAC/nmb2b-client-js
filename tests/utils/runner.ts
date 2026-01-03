@@ -1,97 +1,102 @@
-import { describe, test, expect, beforeAll, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { server, SOAP_ENDPOINT } from './msw.js';
-import { createB2BClient } from '../../src/index.js';
-import { TEST_B2B_OPTIONS } from '../options.js';
-import { Fixture } from './fixtures.js';
-import { FixtureArtifacts } from './artifacts.js';
-import { readdirSync } from 'node:fs';
+import assert from 'node:assert';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { createB2BClient, type B2BClient } from '../../src/index.js';
+import { TEST_B2B_OPTIONS } from '../options.js';
+import { FixtureArtifacts, type FixtureLocation } from './artifacts.js';
+import { Fixture } from './fixtures.js';
+import { server, SOAP_ENDPOINT } from './msw.js';
 
 /**
- * Collects all fixture files in the __fixtures__ directory relative to the caller.
- * @param importMetaUrl - The import.meta.url of the caller.
+ * Registers tests for fixtures loaded via import.meta.glob.
+ * @param fixtureModules - The result of import.meta.glob('./__fixtures__/*.ts', { eager: true })
+ * @param baseUrl - The import.meta.url of the test file, used to resolve absolute paths
  */
-export function collectFixtures(importMetaUrl: string): string[] {
-  const callerPath = fileURLToPath(importMetaUrl);
-  const callerDir = path.dirname(callerPath);
-  const fixturesDir = path.join(callerDir, '__fixtures__');
+export async function registerFixtures(
+  fixtureModules: Record<string, unknown>,
+  baseUrl: string,
+) {
+  const b2bClient = await createB2BClient(TEST_B2B_OPTIONS);
+  const baseDir = path.dirname(fileURLToPath(baseUrl));
 
-  try {
-    return readdirSync(fixturesDir)
-      .filter((file) => file.endsWith('.ts') && !file.endsWith('.test.ts'))
-      .map((file) => path.join(fixturesDir, file));
-  } catch (_err) {
-    // If __fixtures__ doesn't exist, return empty array
-    return [];
+  for (const [relativePath, mod] of Object.entries(fixtureModules)) {
+    const fixturePath = path.resolve(baseDir, relativePath);
+    assert(mod !== null && typeof mod === 'object');
+
+    for (const [fixtureId, fixture] of Object.entries(mod)) {
+      assert(
+        fixture instanceof Fixture,
+        `Export ${fixtureId} of module ${relativePath} is not a fixture`,
+      );
+
+      const fixtureLocation = {
+        filePath: fixturePath,
+        exportName: fixtureId,
+      };
+      const artifacts = new FixtureArtifacts(fixtureLocation);
+
+      describe(`[${fixtureId}] ${fixture.description}`, async () => {
+        const context = await artifacts.readContext();
+        const xmlResponse = await artifacts.readMock();
+
+        beforeAll(() => {
+          if (!context.meta.mockDate) {
+            return;
+          }
+
+          vi.setSystemTime(new Date(context.meta.mockDate));
+          return () => {
+            vi.useRealTimers();
+          };
+        });
+
+        runFixtureTests({
+          b2bClient,
+          fixture,
+          variables: context.variables,
+          xmlResponse,
+          fixtureLocation,
+        });
+      });
+    }
   }
 }
 
-/**
- * Registers tests for each fixture in the provided paths.
- */
-export async function registerAutoTests(fixturePaths: string[]) {
-  // The test client uses mock options (MSW)
-  const clientPromise = createB2BClient(TEST_B2B_OPTIONS);
+function runFixtureTests<TVariables, TResult>({
+  b2bClient,
+  fixture,
+  variables,
+  xmlResponse,
+  fixtureLocation,
+}: {
+  b2bClient: B2BClient;
+  fixture: Fixture<TVariables, TResult>;
+  variables: TVariables;
+  xmlResponse: string;
+  fixtureLocation: FixtureLocation;
+}) {
+  for (const { name, fn } of fixture.tests) {
+    test(
+      name,
+      server.boundary(async () => {
+        server.use(
+          http.post(SOAP_ENDPOINT, () => {
+            return HttpResponse.xml(xmlResponse);
+          }),
+        );
 
-  for (const fixturePath of fixturePaths) {
-    // Dynamic import of the fixture module
-    const mod = (await import(pathToFileURL(fixturePath).href)) as Record<
-      string,
-      unknown
-    >;
+        assert(fixture.executeOperation, 'Incomplete fixture');
 
-    for (const [fixtureId, fixture] of Object.entries(mod)) {
-      if (!(fixture instanceof Fixture)) continue;
+        const result = await fixture.executeOperation(b2bClient, variables);
 
-      const artifacts = new FixtureArtifacts(fixture, {
-        filePath: fixturePath,
-        fixtureId,
-      });
-
-      describe(`${fixture.description} [${fixtureId}]`, () => {
-        let result: unknown;
-
-        beforeAll(async () => {
-          const client = await clientPromise;
-
-          // 1. Load context and mock time
-          const context = await artifacts.readContext();
-          if (context.meta.mockDate) {
-            vi.setSystemTime(new Date(context.meta.mockDate));
-          }
-
-          // 2. Load network mock and register MSW handler
-          const xmlResponse = await artifacts.readMock();
-          server.use(
-            http.post(SOAP_ENDPOINT, () => {
-              return HttpResponse.xml(xmlResponse);
-            }),
-          );
-
-          // 3. Execute logic
-          if (!fixture.executeOperation) {
-            throw new Error(
-              `Fixture ${fixtureId} has no executeOperation defined`,
-            );
-          }
-          result = await fixture.executeOperation(client, context.variables);
+        await fn({
+          expect,
+          result,
+          fixtureLocation,
         });
-
-        // 4. Register tests
-        for (const { name, fn } of fixture.tests) {
-          test(name, async () => {
-            await fn({
-              expect,
-              result: result as never,
-              expectSnapshot: async (data: unknown) => {
-                await expect(data).toMatchFileSnapshot(artifacts.snapshotPath);
-              },
-            });
-          });
-        }
-      });
-    }
+      }),
+    );
   }
 }

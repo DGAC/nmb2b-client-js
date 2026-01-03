@@ -1,5 +1,6 @@
 import type { B2BClient } from '../../src/index.js';
 import type { ExpectStatic } from 'vitest';
+import { FixtureArtifacts, type FixtureLocation } from './artifacts.js';
 
 type B2BService = keyof B2BClient;
 type B2BServiceMethod<TService extends B2BService> = keyof B2BClient[TService] &
@@ -9,8 +10,7 @@ export type B2BMethodResult<
   TService extends B2BService,
   TMethod extends B2BServiceMethod<TService>,
 > = B2BClient[TService][TMethod] extends (
-  ...args: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any[]
+  ...args: never[]
 ) => Promise<infer TResult>
   ? TResult
   : unknown;
@@ -32,7 +32,7 @@ export interface FixtureServiceMethod<
 export interface FixtureTestContext<TResult> {
   expect: ExpectStatic;
   result: TResult;
-  expectSnapshot: (data: unknown) => Promise<void>;
+  fixtureLocation: FixtureLocation;
 }
 
 export type FixtureSetupFn<TVariables> = (
@@ -120,9 +120,8 @@ export class Fixture<TVariables = unknown, TResult = unknown>
   setup<TNewVars>(
     fn: FixtureSetupFn<TNewVars>,
   ): IFixtureDefined<TNewVars, TResult> {
-    const that = this as unknown as Fixture<TNewVars, TResult>;
-    that.setupRecording = fn;
-    return that;
+    (this as unknown as Fixture<TNewVars, TResult>).setupRecording = fn;
+    return this as unknown as Fixture<TNewVars, TResult>;
   }
 
   run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult> {
@@ -146,4 +145,11 @@ export function defineFixture<
   info: FixtureServiceMethod<TService, TMethod>,
 ): IFixtureInitial<never, B2BMethodResult<TService, TMethod>> {
   return new Fixture<never, B2BMethodResult<TService, TMethod>>(info);
+}
+
+export function expectSnapshot<TResult>(): FixtureTestFn<TResult> {
+  return async ({ expect, fixtureLocation, result }) => {
+    const artifacts = new FixtureArtifacts(fixtureLocation);
+    await expect(result).toMatchFileSnapshot(artifacts.snapshotPath);
+  };
 }

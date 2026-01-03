@@ -82,19 +82,28 @@ pnpm update-fixtures
 We use a custom framework to record real API interactions and replay them deterministically in unit tests.
 
 - **Definition**: Use `defineFixture<TVariables>(serviceMethod)` in `src/<Domain>/__fixtures__/<Action>.ts`.
+  - `.describe(text)`: Mandatory. Description of the scenario.
   - `.setup()`: Optional. Only runs during recording. Used to find/prepare live data (e.g., finding a valid flight ID).
   - `.run()`: Mandatory. Logic to execute the SOAP call. Runs during recording (real API) and testing (mocked API).
-  - `.test()`: One or more Vitest assertions. Use `expectSnapshot(result)` to validate the JSON output.
+  - `.test()`: One or more Vitest assertions. Use `expectSnapshot()` helper for standard snapshot validation.
 - **Recording**: To capture artifacts from the real B2B API:
   ```bash
   pnpm update-fixtures
   ```
   _Requires valid B2B credentials in `.env`._
-- **Registration**: Domain-level tests (`src/<Domain>/<Domain>.test.ts`) must use `registerAutoTests`:
+- **Registration**: Domain-level tests (`src/<Domain>/<Domain>.test.ts`) must use `registerFixtures`:
 
   ```typescript
-  import { collectFixtures } from '../../tests/utils/runner';
-  import { registerAutoTests } from '../../tests/utils/runner';
+  /// <reference types="vite/client" />
+  import { registerFixtures } from '../../tests/utils/runner';
+  import { describe } from 'vitest';
 
-  registerAutoTests(collectFixtures(import.meta.url));
+  describe('MyDomain Fixtures', async () => {
+    // Load all fixtures in the directory (Eager load required)
+    const fixtures = import.meta.glob('./__fixtures__/*.ts', {
+      eager: true,
+    });
+
+    await registerFixtures(fixtures, import.meta.url);
+  });
   ```

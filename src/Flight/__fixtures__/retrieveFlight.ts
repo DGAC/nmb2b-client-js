@@ -1,6 +1,11 @@
 import { sub, add } from 'date-fns';
-import { defineFixture } from '../../../tests/utils/fixtures.js';
+import {
+  defineFixture,
+  expectSnapshot,
+} from '../../../tests/utils/fixtures.js';
 import { assert } from '../../utils/assert.js';
+import path from 'node:path';
+import { FixtureArtifacts } from '../../../tests/utils/artifacts.js';
 
 /**
  * Fixture for testing nominal flight retrieval.
@@ -50,6 +55,4 @@ export const nominal = defineFixture({
   .test('should have a valid flight ID', ({ expect, result }) => {
     expect(result.data?.flight?.flightId?.id).toMatch(/^(AA|AT|PO)[0-9]{8}$/);
   })
-  .test('matches snapshot', async ({ expectSnapshot, result }) => {
-    await expectSnapshot(result);
-  });
+  .test('should match snapshot', expectSnapshot());
