@@ -38,11 +38,12 @@ export class FixtureArtifacts<TVariables> {
     return path.join(this.dir, `${this.id}.result.json`);
   }
 
-  async ensureDirectory(): Promise<void> {
+  private async ensureDirectory(): Promise<void> {
     await fs.mkdir(this.dir, { recursive: true });
   }
 
   async saveContext(context: FixtureContext<TVariables>): Promise<void> {
+    await this.ensureDirectory();
     await fs.writeFile(this.contextPath, JSON.stringify(context, null, 2));
   }
 
@@ -55,6 +56,7 @@ export class FixtureArtifacts<TVariables> {
   }
 
   async saveMock(xml: string): Promise<void> {
+    await this.ensureDirectory();
     await fs.writeFile(this.mockPath, xml);
   }
 

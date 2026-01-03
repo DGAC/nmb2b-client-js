@@ -1,28 +1,24 @@
-import { readdir, mkdir } from 'node:fs/promises';
-import { join, dirname, relative } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { createB2BClient } from '../src/index.js';
-import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
-import { Fixture } from '../tests/utils/fixtures.js';
-import { FixtureArtifacts } from '../tests/utils/artifacts.js';
-import { fromValues } from '../src/security.js';
+import assert from 'node:assert';
+import { glob } from 'node:fs/promises';
+import { join, relative } from 'node:path';
 import type { CreateB2BClientOptions } from '../src/index.js';
+import { createB2BClient } from '../src/index.js';
+import { fromValues } from '../src/security.js';
+import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
+import { FixtureArtifacts } from '../tests/utils/artifacts.js';
+import { Fixture } from '../tests/utils/fixtures.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const ROOT_DIR = join(__dirname, '..');
+const ROOT_DIR = join(import.meta.dirname, '..');
 
-async function findFixtureFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { withFileTypes: true, recursive: true });
-  return entries
-    .filter(
-      (entry) =>
-        entry.isFile() &&
-        entry.name.endsWith('.ts') &&
-        !entry.name.endsWith('.test.ts') &&
-        entry.parentPath.includes('__fixtures__'),
-    )
-    .map((entry) => join(entry.parentPath, entry.name));
+async function findFixtureFiles(baseDirectory: string): Promise<string[]> {
+  const files: string[] = [];
+  const pattern = join(baseDirectory, '**', '__fixtures__', '*.ts');
+  for await (const entry of glob(pattern)) {
+    if (!entry.endsWith('.test.ts')) {
+      files.push(entry);
+    }
+  }
+  return files;
 }
 
 async function record() {
@@ -33,7 +29,7 @@ async function record() {
   const options: CreateB2BClientOptions = {
     flavour: env.B2B_FLAVOUR,
     XSD_PATH: env.B2B_XSD_PATH,
-    security: fromValues(env as Record<string, string | undefined>),
+    security: fromValues(env),
     ...(env.B2B_ENDPOINT && { endpoint: env.B2B_ENDPOINT }),
     ...(env.B2B_XSD_REMOTE_URL && { xsdEndpoint: env.B2B_XSD_REMOTE_URL }),
   };
@@ -47,75 +43,56 @@ async function record() {
     const relativePath = relative(ROOT_DIR, filePath);
     console.log(`\nProcessing ${relativePath}...`);
 
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const module = await import(filePath);
+    const fixtureModule = (await import(filePath)) as unknown;
+    assert(fixtureModule !== null && typeof fixtureModule === 'object');
 
-      for (const [exportName, fixture] of Object.entries(module)) {
-        if (!(fixture instanceof Fixture)) {
-          continue;
-        }
+    for (const [exportName, fixture] of Object.entries(fixtureModule)) {
+      assert(
+        fixture instanceof Fixture,
+        `Module ${filePath}, export ${exportName} is not a Fixture instance.`,
+      );
 
-        const artifacts = new FixtureArtifacts({ filePath, exportName });
+      const artifacts = new FixtureArtifacts({ filePath, exportName });
 
-        console.log(
-          `  - Recording fixture: ${exportName} (${fixture.description})...`,
-        );
+      console.log(
+        `  - Recording fixture: ${exportName} (${fixture.description})...`,
+      );
 
-        try {
-          const setupStart = new Date();
-          const variables = fixture.setupRecording
-            ? await fixture.setupRecording(client)
-            : undefined;
+      const setupStart = new Date();
+      const variables = fixture.setupRecording
+        ? await fixture.setupRecording(client)
+        : undefined;
 
-          // Capture mock date (ensure it matches the execution time)
-          const mockDate = setupStart.toISOString();
+      // Capture mock date (ensure it matches the execution time)
+      const mockDate = setupStart.toISOString();
 
-          if (!fixture.executeOperation) {
-            console.warn(
-              `    ⚠️  Skipping ${exportName}: No executeOperation defined.`,
-            );
-            continue;
-          }
+      assert(
+        fixture.executeOperation,
+        `Module ${filePath}, export ${exportName} is not a complete fixture.`,
+      );
 
-          await fixture.executeOperation(client, variables);
+      await fixture.executeOperation(client, variables);
 
-          // Capture XML response
-          // We need to cast to access the internal soap client properties
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const serviceClient = (client as any)[fixture.service];
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const lastResponse = (serviceClient as any).__soapClient.lastResponse;
+      const serviceClient = client[fixture.service];
+      const lastResponse = serviceClient.__soapClient.lastResponse;
 
-          if (!lastResponse) {
-            throw new Error(
-              'No SOAP response captured. Did the executeOperation execute a SOAP query?',
-            );
-          }
+      assert(
+        lastResponse,
 
-          // Write Artifacts
-          await artifacts.ensureDirectory();
-          await artifacts.saveContext({
-            meta: { mockDate },
-            variables,
-          });
-          await artifacts.saveMock(lastResponse);
+        'No SOAP response captured. Did the executeOperation execute a SOAP query?',
+      );
 
-          console.log(`    ✅ Success`);
-        } catch (err) {
-          console.error(`    ❌ Failed to record ${exportName}:`, err);
-          // We don't stop the whole process, just this fixture
-        }
-      }
-    } catch (err) {
-      console.error(`Failed to load module ${relativePath}:`, err);
+      await artifacts.saveContext({
+        meta: { mockDate },
+        variables,
+      });
+      await artifacts.saveMock(lastResponse);
+
+      console.log(`    ✅ Success`);
     }
   }
 
   console.log('\n✨ Recording complete.');
 }
 
-record().catch((err) => {
-  console.error('Fatal error during recording:', err);
-  process.exit(1);
-});
+await record();
