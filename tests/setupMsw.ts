@@ -1,7 +1,9 @@
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { server } from './utils/msw.js';
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'error' });
+});
 
 afterEach(() => {
   server.resetHandlers();
