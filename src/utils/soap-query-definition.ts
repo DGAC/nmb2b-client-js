@@ -8,7 +8,7 @@ import {
   type WithInjectedSendTime,
 } from './internals.js';
 import { prepareSerializer } from './transformers/serializer.js';
-import type { Config } from '../config.js';
+import { getSoapEndpoint, type Config } from '../config.js';
 import { getServiceWSDLFilePath } from './xsd/paths.js';
 import { prepareSecurity } from '../security.js';
 import { deserializer as customDeserializer } from '../utils/transformers/index.js';
@@ -80,6 +80,9 @@ export async function createSoapService<
 
   const client = await createClientAsync(WSDL, { customDeserializer });
   client.setSecurity(security);
+  if (config.endpoint) {
+    client.setEndpoint(getSoapEndpoint(config));
+  }
 
   return createSoapServiceFromSoapClient({ config, client, queryDefinitions });
 }
