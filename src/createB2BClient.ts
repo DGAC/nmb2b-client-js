@@ -9,10 +9,10 @@ import type { FlowService } from './Flow/index.js';
 import { getFlowClient } from './Flow/index.js';
 import type { GeneralInformationService } from './GeneralInformation/index.js';
 import { getGeneralInformationClient } from './GeneralInformation/index.js';
-import d from './utils/debug.js';
+import { createDebugLogger } from './utils/debug.js';
 import { download as downloadWSDLIfNeeded } from './utils/xsd/index.js';
 
-const debug = d();
+const debug = createDebugLogger();
 
 /**
  * Main client object grouping all available B2B domains (Airspace, Flight, Flow, GeneralInformation).

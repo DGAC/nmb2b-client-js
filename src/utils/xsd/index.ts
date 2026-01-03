@@ -1,13 +1,13 @@
 import { readdir } from 'node:fs/promises';
 import lockfile from 'proper-lockfile';
 import type { Config } from '../../config.js';
-import d from '../debug.js';
+import { createDebugLogger } from '../debug.js';
 import { createDir, dirExists } from '../fs.js';
 import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.js';
 import { getWSDLDownloadURL } from './getWSDLDownloadURL.js';
 import { getXSDCacheDirectory } from './paths.js';
 
-const debug = d('wsdl');
+const debug = createDebugLogger('wsdl');
 
 export async function WSDLExists(
   config: Pick<Config, 'XSD_PATH' | 'xsdEndpoint'>,
