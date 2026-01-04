@@ -6,7 +6,7 @@ import { createB2BClient } from '../src/index.js';
 import { fromValues } from '../src/security.js';
 import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
 import { FixtureArtifacts } from '../tests/utils/artifacts.js';
-import { Fixture } from '../tests/utils/fixtures.js';
+import { assertIsFixture } from '../tests/utils/fixtures.js';
 
 const ROOT_DIR = join(import.meta.dirname, '..');
 
@@ -47,8 +47,8 @@ async function record() {
     assert(fixtureModule !== null && typeof fixtureModule === 'object');
 
     for (const [exportName, fixture] of Object.entries(fixtureModule)) {
-      assert(
-        fixture instanceof Fixture,
+      assertIsFixture(
+        fixture,
         `Module ${filePath}, export ${exportName} is not a Fixture instance.`,
       );
 

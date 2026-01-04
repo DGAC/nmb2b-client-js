@@ -66,7 +66,11 @@ export async function registerFixtures(
   }
 }
 
-function runFixtureTests<TVariables, TResult>({
+function runFixtureTests<
+  TB2BService extends keyof B2BClient,
+  TVariables,
+  TResult,
+>({
   b2bClient,
   fixture,
   variables,
@@ -74,7 +78,7 @@ function runFixtureTests<TVariables, TResult>({
   fixtureLocation,
 }: {
   b2bClient: B2BClient;
-  fixture: Fixture<TVariables, TResult>;
+  fixture: Fixture<TB2BService, TVariables, TResult>;
   variables: TVariables;
   xmlResponse: string;
   fixtureLocation: FixtureLocation;
