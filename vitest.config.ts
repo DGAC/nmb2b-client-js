@@ -9,7 +9,11 @@ export default defineConfig({
     globalSetup: ['./tests/ensureWSDLPresence.ts'],
     coverage: {
       include: ['src/**/*'],
-      exclude: [...(configDefaults.coverage.exclude ?? []), '**/*.test-d.ts'],
+      exclude: [
+        ...(configDefaults.coverage.exclude ?? []),
+        '**/*.test-d.ts',
+        '**/__fixtures__/**',
+      ],
     },
     projects: [
       {

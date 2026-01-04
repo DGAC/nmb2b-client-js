@@ -57,6 +57,7 @@
     "test:unit": "vitest --project=unit",
     "test:e2e": "vitest --project=e2e",
     "test:ci": "vitest --watch=false --reporter=default --reporter=junit --outputFile.junit=junit.xml --coverage.enabled --typecheck",
+    "update-fixtures": "tsx ./scripts/update-fixtures.ts",
     "typecheck": "tsc --noEmit"
   },
   "files": [
@@ -68,7 +69,7 @@
     "@eslint/js": "^9.39.2",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
-    "@types/node": "^20.19.27",
+    "@types/node": "^22.19.3",
     "@types/proper-lockfile": "^4.1.4",
     "@vitest/coverage-v8": "^4.0.16",
     "dotenv": "^17.2.3",
@@ -80,6 +81,7 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0",
+    "vite": "*",
     "vitest": "^4.0.16"
   },
   "dependencies": {

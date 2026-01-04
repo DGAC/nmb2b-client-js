@@ -26,6 +26,9 @@ You must respect the existing modular structure:
 - **Tests**: Tests are co-located with the source file.
   - **Unit Tests**: `src/**/*.test.ts` (Must be fully mocked, no real network calls).
   - **E2E Tests**: `src/**/*.e2e.test.ts` (Integration tests with real B2B connection).
+  - **Fixtures**: Scenarios for recording and replaying SOAP interactions.
+    - Pattern: `src/<Domain>/__fixtures__/<Action>.ts`
+    - Sidecar Artifacts: `src/<Domain>/__fixtures__/<Action>/<scenario>.*` (JSON context, XML mock, JSON result snapshot).
 
 ## 4. Technical Conventions
 
@@ -69,4 +72,38 @@ pnpm test:e2e --no-watch
 
 # 6. Run tests for a specific file
 pnpm test --no-watch <filename>
+
+# 7. Record or update fixtures from real B2B API
+pnpm update-fixtures
 ```
+
+## 6. Unit Testing with Fixtures
+
+We use a custom framework to record real API interactions and replay them deterministically in unit tests.
+
+- **Definition**: Use `defineFixture(serviceMethod)` in `src/<Domain>/__fixtures__/<Action>.ts`.
+  - `.describe(text)`: Mandatory. Description of the scenario.
+  - `.setup()`: Optional. Only runs during recording. Used to find/prepare live data (e.g., finding a valid flight ID). It returns an object of `variables`.
+  - `.run()`: Mandatory. Logic to execute the SOAP call. Receives `variables` from setup.
+  - `.test()`: One or more Vitest assertions. Receives a context object containing `{ expect, result, variables }`. Use `expectSnapshot()` helper for standard snapshot validation.
+- **Recording**: To capture artifacts from the real B2B API:
+  ```bash
+  pnpm update-fixtures
+  ```
+  _Requires valid B2B credentials in `.env`._
+- **Registration**: Domain-level tests (`src/<Domain>/<Domain>.test.ts`) must use `registerFixtures`:
+
+  ```typescript
+  /// <reference types="vite/client" />
+  import { registerFixtures } from '../../tests/utils/runner';
+  import { describe } from 'vitest';
+
+  describe('MyDomain Fixtures', async () => {
+    // Load all fixtures in the directory (Eager load required)
+    const fixtures = import.meta.glob('./__fixtures__/*.ts', {
+      eager: true,
+    });
+
+    await registerFixtures(fixtures, import.meta.url);
+  });
+  ```

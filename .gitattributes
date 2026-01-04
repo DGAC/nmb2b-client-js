@@ -1,1 +1,6 @@
 CHANGELOG.md merge=union
+
+# Mark generated files to hide them from diffs by default on GitHub
+pnpm-lock.yaml linguist-generated
+src/**/__fixtures__/**/*.xml linguist-generated
+src/**/__fixtures__/**/*.json linguist-generated

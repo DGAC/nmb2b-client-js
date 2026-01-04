@@ -119,9 +119,17 @@ export function createSoapServiceFromSoapClient<
 export type SoapService<TDefinitions extends ServiceDefinition> = {
   readonly __soapClient: SoapClient;
   readonly config: Config;
+  /** @internal */
+  readonly __definitions: TDefinitions;
 } & {
   [TKey in keyof TDefinitions]: ExtractSoapQuery<TDefinitions[TKey]>;
 };
+
+export type ExtractQueryDefinitions<TService> = TService extends {
+  readonly __definitions: infer TDefinitions;
+}
+  ? TDefinitions
+  : never;
 
 function buildQueryFunctionFromSoapDefinition<
   TInput extends B2BRequest,
