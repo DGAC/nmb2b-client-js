@@ -81,11 +81,11 @@ pnpm update-fixtures
 
 We use a custom framework to record real API interactions and replay them deterministically in unit tests.
 
-- **Definition**: Use `defineFixture<TVariables>(serviceMethod)` in `src/<Domain>/__fixtures__/<Action>.ts`.
+- **Definition**: Use `defineFixture(serviceMethod)` in `src/<Domain>/__fixtures__/<Action>.ts`.
   - `.describe(text)`: Mandatory. Description of the scenario.
-  - `.setup()`: Optional. Only runs during recording. Used to find/prepare live data (e.g., finding a valid flight ID).
-  - `.run()`: Mandatory. Logic to execute the SOAP call. Runs during recording (real API) and testing (mocked API).
-  - `.test()`: One or more Vitest assertions. Use `expectSnapshot()` helper for standard snapshot validation.
+  - `.setup()`: Optional. Only runs during recording. Used to find/prepare live data (e.g., finding a valid flight ID). It returns an object of `variables`.
+  - `.run()`: Mandatory. Logic to execute the SOAP call. Receives `variables` from setup.
+  - `.test()`: One or more Vitest assertions. Receives a context object containing `{ expect, result, variables }`. Use `expectSnapshot()` helper for standard snapshot validation.
 - **Recording**: To capture artifacts from the real B2B API:
   ```bash
   pnpm update-fixtures
