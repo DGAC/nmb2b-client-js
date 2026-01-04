@@ -1,5 +1,50 @@
 # @dgac/nmb2b-client
 
+## 2.2.0
+
+### Minor Changes
+
+- [#231](https://github.com/DGAC/nmb2b-client-js/pull/231) [`a0d26bd`](https://github.com/DGAC/nmb2b-client-js/commit/a0d26bd7a866e8c4c27ee74e43fb220bfb0756c6) Thanks [@kouak](https://github.com/kouak)! - Corrected typos and type errors across multiple domain definitions to strictly align with Eurocontrol NM B2B v27.0.0 Business Documentation and XSD schemas.
+
+  Modified types:
+  - AlternativeRouteInfo
+  - AUPSummary
+  - CapacityPlanRetrievalRequest
+  - CapacityPlans
+  - CompleteAIXMDatasetRequest
+  - Flight
+  - FlightField
+  - FlightListByAirspaceRequest
+  - FlightRetrievalReplyData
+  - HotspotPlans
+  - IRegulationOrMCDMOnly
+  - OTMVPlanRetrievalRequest
+  - OTMVPlans
+  - Regulation
+  - ReroutingOpportunities
+  - SignedDistanceNM
+  - SignedDurationHourMinute
+
+- [#235](https://github.com/DGAC/nmb2b-client-js/pull/235) [`340091b`](https://github.com/DGAC/nmb2b-client-js/commit/340091b72db65047745b5d5380cbf292ded39a70) Thanks [@kouak](https://github.com/kouak)! - - Refactor configuration validation using assertion functions.
+  - Rename `getEndpoint` to `getSoapEndpoint`.
+  - Deprecate `isConfigValid`, `isValidSecurity`, and `getEndpoint`.
+  - Enforce strict `xsdEndpoint` requirement when using custom endpoints.
+  - Add TSDoc to public API.
+
+### Patch Changes
+
+- [#240](https://github.com/DGAC/nmb2b-client-js/pull/240) [`2109151`](https://github.com/DGAC/nmb2b-client-js/commit/21091513f5fe7e7a91e12b3f98e31911153ac5e4) Thanks [@kouak](https://github.com/kouak)! - Added internal testing utilities for fixture-based SOAP testing.
+
+  Fixtures capture real SOAP interactions and store them as reproducible test artifacts (XML requests/responses with context variables). These artifacts enable deterministic unit testing without requiring a live B2B connection.
+
+- [#229](https://github.com/DGAC/nmb2b-client-js/pull/229) [`72bc9e2`](https://github.com/DGAC/nmb2b-client-js/commit/72bc9e2d32611574cacc2a7aa3c3ae20976e42d7) Thanks [@kouak](https://github.com/kouak)! - Implement isolated WSDL caching for custom `xsdEndpoint` configurations.
+  - **Feature**: When `xsdEndpoint` is configured, WSDL files are now stored in a unique cache directory derived from the endpoint URL. This prevents cache corruption when switching between different sources (e.g. official NM B2B vs internal proxy).
+  - **Migration**: The default cache directory (used when no `xsdEndpoint` is provided) has been renamed from `{version}` to `{version}-network-manager` to ensure isolation from legacy caches. **This will trigger a one-time automatic re-download of WSDL files.**
+
+- [#228](https://github.com/DGAC/nmb2b-client-js/pull/228) [`d4ebb33`](https://github.com/DGAC/nmb2b-client-js/commit/d4ebb33761cecc3a4250d37238429553c9d5943b) Thanks [@kouak](https://github.com/kouak)! - Ensure valid http response headers for WSDL download
+
+- [#226](https://github.com/DGAC/nmb2b-client-js/pull/226) [`5b18de0`](https://github.com/DGAC/nmb2b-client-js/commit/5b18de0bc7fb8daaf83d2d24578e8112bdc42623) Thanks [@kouak](https://github.com/kouak)! - Improved error handling for SOAP queries: unexpected errors thrown during SOAP query execution are now wrapped in a standard `Error` object. This new error includes a descriptive message identifying the failing service and query (e.g., `[Query service.query] Error thrown during query execution...`) and preserves the original error as the `cause`.
+
 ## 2.1.3
 
 ### Patch Changes
