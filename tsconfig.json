@@ -17,6 +17,7 @@
   "include": [
     "src/**/*",
     "tests/**/*",
+    "scripts/**/*",
     "vitest.config.ts",
     "tsdown.config.ts"
     // "eslint.config.mjs"
