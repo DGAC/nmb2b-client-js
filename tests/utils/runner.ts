@@ -1,8 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import assert from 'node:assert';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { assert, beforeAll, describe, expect, test, vi } from 'vitest';
 import { createB2BClient, type B2BClient } from '../../src/index.js';
 import { TEST_B2B_OPTIONS } from '../options.js';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.js';
@@ -24,43 +23,46 @@ export async function registerFixtures(
   for (const [relativePath, mod] of Object.entries(fixtureModules)) {
     const fixturePath = path.resolve(baseDir, relativePath);
     assert(mod !== null && typeof mod === 'object');
+    const fixtureName = path.basename(fixturePath);
 
-    for (const [fixtureId, fixture] of Object.entries(mod)) {
-      assert(
-        fixture instanceof Fixture,
-        `Export ${fixtureId} of module ${relativePath} is not a fixture`,
-      );
+    describe(fixtureName, () => {
+      for (const [fixtureId, fixture] of Object.entries(mod)) {
+        assert(
+          fixture instanceof Fixture,
+          `Export ${fixtureId} of module ${relativePath} is not a fixture`,
+        );
 
-      const fixtureLocation = {
-        filePath: fixturePath,
-        exportName: fixtureId,
-      };
-      const artifacts = new FixtureArtifacts(fixtureLocation);
+        const fixtureLocation = {
+          filePath: fixturePath,
+          exportName: fixtureId,
+        };
+        const artifacts = new FixtureArtifacts(fixtureLocation);
 
-      describe(`[${fixtureId}] ${fixture.description}`, async () => {
-        const context = await artifacts.readContext();
-        const xmlResponse = await artifacts.readMock();
+        describe(`[${fixtureId}] ${fixture.description}`, async () => {
+          const context = await artifacts.readContext();
+          const xmlResponse = await artifacts.readMock();
 
-        beforeAll(() => {
-          if (!context.meta.mockDate) {
-            return;
-          }
+          beforeAll(() => {
+            if (!context.meta.mockDate) {
+              return;
+            }
 
-          vi.setSystemTime(new Date(context.meta.mockDate));
-          return () => {
-            vi.useRealTimers();
-          };
+            vi.setSystemTime(new Date(context.meta.mockDate));
+            return () => {
+              vi.useRealTimers();
+            };
+          });
+
+          runFixtureTests({
+            b2bClient,
+            fixture,
+            variables: context.variables,
+            xmlResponse,
+            fixtureLocation,
+          });
         });
-
-        runFixtureTests({
-          b2bClient,
-          fixture,
-          variables: context.variables,
-          xmlResponse,
-          fixtureLocation,
-        });
-      });
-    }
+      }
+    });
   }
 }
 
@@ -95,6 +97,7 @@ function runFixtureTests<TVariables, TResult>({
           expect,
           result,
           fixtureLocation,
+          variables,
         });
       }),
     );

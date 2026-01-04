@@ -78,7 +78,6 @@ async function record() {
 
       assert(
         lastResponse,
-
         'No SOAP response captured. Did the executeOperation execute a SOAP query?',
       );
 

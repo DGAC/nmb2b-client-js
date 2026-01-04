@@ -1,5 +1,5 @@
-import type { B2BClient } from '../../src/index.js';
 import type { ExpectStatic } from 'vitest';
+import type { B2BClient } from '../../src/index.js';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.js';
 
 type B2BService = keyof B2BClient;
@@ -29,10 +29,11 @@ export interface FixtureServiceMethod<
 /**
  * Context provided to fixture tests.
  */
-export interface FixtureTestContext<TResult> {
+export interface FixtureTestContext<TVariables, TResult> {
   expect: ExpectStatic;
   result: TResult;
   fixtureLocation: FixtureLocation;
+  variables: TVariables;
 }
 
 export type FixtureSetupFn<TVariables> = (
@@ -42,8 +43,8 @@ export type FixtureRunFn<TVariables, TResult> = (
   client: B2BClient,
   variables: TVariables,
 ) => Promise<TResult>;
-export type FixtureTestFn<TResult> = (
-  ctx: FixtureTestContext<TResult>,
+export type FixtureTestFn<TVariables, TResult> = (
+  ctx: FixtureTestContext<TVariables, TResult>,
 ) => Promise<void> | void;
 
 /**
@@ -54,16 +55,20 @@ export interface IFixtureInitial<TVariables, TResult> {
   setup<TNewVars>(
     fn: FixtureSetupFn<TNewVars>,
   ): IFixtureDefined<TNewVars, TResult>;
-  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult>;
+  run(
+    fn: FixtureRunFn<TVariables, TResult>,
+  ): IFixtureRunnable<TVariables, TResult>;
 }
 
 export interface IFixtureDefined<TVariables, TResult> {
   describe(text: string): this;
-  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult>;
+  run(
+    fn: FixtureRunFn<TVariables, TResult>,
+  ): IFixtureRunnable<TVariables, TResult>;
 }
 
-export interface IFixtureRunnable<TResult> {
-  test(name: string, fn: FixtureTestFn<TResult>): this;
+export interface IFixtureRunnable<TVariables, TResult> {
+  test(name: string, fn: FixtureTestFn<TVariables, TResult>): this;
 }
 
 /**
@@ -75,7 +80,7 @@ export interface FixtureDefinition<TVariables, TResult> {
   description: string;
   setupRecording?: FixtureSetupFn<TVariables>;
   executeOperation?: FixtureRunFn<TVariables, TResult>;
-  tests: Array<{ name: string; fn: FixtureTestFn<TResult> }>;
+  tests: Array<{ name: string; fn: FixtureTestFn<TVariables, TResult> }>;
 }
 
 /**
@@ -86,7 +91,7 @@ export class Fixture<TVariables = unknown, TResult = unknown>
   implements
     IFixtureInitial<TVariables, TResult>,
     IFixtureDefined<TVariables, TResult>,
-    IFixtureRunnable<TResult>,
+    IFixtureRunnable<TVariables, TResult>,
     FixtureDefinition<TVariables, TResult>
 {
   /**
@@ -103,7 +108,10 @@ export class Fixture<TVariables = unknown, TResult = unknown>
   public setupRecording?: FixtureSetupFn<TVariables>;
   public executeOperation?: FixtureRunFn<TVariables, TResult>;
 
-  public readonly tests: Array<{ name: string; fn: FixtureTestFn<TResult> }>;
+  public readonly tests: Array<{
+    name: string;
+    fn: FixtureTestFn<TVariables, TResult>;
+  }>;
 
   constructor(info: { service: B2BService; method: string }) {
     this.service = info.service;
@@ -124,12 +132,14 @@ export class Fixture<TVariables = unknown, TResult = unknown>
     return this as unknown as Fixture<TNewVars, TResult>;
   }
 
-  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TResult> {
+  run(
+    fn: FixtureRunFn<TVariables, TResult>,
+  ): IFixtureRunnable<TVariables, TResult> {
     this.executeOperation = fn;
-    return this as unknown as IFixtureRunnable<TResult>;
+    return this as unknown as IFixtureRunnable<TVariables, TResult>;
   }
 
-  test(name: string, fn: FixtureTestFn<TResult>): this {
+  test(name: string, fn: FixtureTestFn<TVariables, TResult>): this {
     this.tests.push({ name, fn });
     return this;
   }
@@ -147,7 +157,10 @@ export function defineFixture<
   return new Fixture<never, B2BMethodResult<TService, TMethod>>(info);
 }
 
-export function expectSnapshot<TResult>(): FixtureTestFn<TResult> {
+export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<
+  TVariables,
+  TResult
+> {
   return async ({ expect, fixtureLocation, result }) => {
     const artifacts = new FixtureArtifacts(fixtureLocation);
     await expect(result).toMatchFileSnapshot(artifacts.snapshotPath);

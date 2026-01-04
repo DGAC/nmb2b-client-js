@@ -1,0 +1,2718 @@
+{
+  "data": {
+    "effectiveTrafficWindow": {
+      "unt": 2026-01-04T09:32:00.000Z,
+      "wef": 2026-01-04T08:32:00.000Z,
+    },
+    "flights": [
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774396",
+            "keys": {
+              "aerodromeOfDeparture": "LSGG",
+              "aerodromeOfDestination": "EGKK",
+              "airFiled": false,
+              "aircraftId": "SWR2PC",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769675",
+            "keys": {
+              "aerodromeOfDeparture": "LPFR",
+              "aerodromeOfDestination": "EDDK",
+              "airFiled": false,
+              "aircraftId": "RYR36EJ",
+              "estimatedOffBlockTime": 2026-01-04T06:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768086",
+            "keys": {
+              "aerodromeOfDeparture": "EGSS",
+              "aerodromeOfDestination": "LIME",
+              "airFiled": false,
+              "aircraftId": "RYR42PV",
+              "estimatedOffBlockTime": 2026-01-04T07:43:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766284",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "EDDM",
+              "airFiled": false,
+              "aircraftId": "DLH55N",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768260",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "EPGD",
+              "airFiled": false,
+              "aircraftId": "RYR92ER",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768260",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "EPGD",
+              "airFiled": false,
+              "aircraftId": "RYR92ER",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762264",
+            "keys": {
+              "aerodromeOfDeparture": "EGLL",
+              "aerodromeOfDestination": "LFSB",
+              "airFiled": false,
+              "aircraftId": "BAW754B",
+              "estimatedOffBlockTime": 2026-01-04T07:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762264",
+            "keys": {
+              "aerodromeOfDeparture": "EGLL",
+              "aerodromeOfDestination": "LFSB",
+              "airFiled": false,
+              "aircraftId": "BAW754B",
+              "estimatedOffBlockTime": 2026-01-04T07:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02760995",
+            "keys": {
+              "aerodromeOfDeparture": "LGAV",
+              "aerodromeOfDestination": "EGLL",
+              "airFiled": false,
+              "aircraftId": "BAW66GA",
+              "estimatedOffBlockTime": 2026-01-04T06:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765474",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LSGG",
+              "airFiled": false,
+              "aircraftId": "BEL4FR",
+              "estimatedOffBlockTime": 2026-01-04T07:01:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02778469",
+            "keys": {
+              "aerodromeOfDeparture": "LFST",
+              "aerodromeOfDestination": "LFBO",
+              "airFiled": false,
+              "aircraftId": "VOE4CK",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762138",
+            "keys": {
+              "aerodromeOfDeparture": "HECA",
+              "aerodromeOfDestination": "EBOS",
+              "airFiled": false,
+              "aircraftId": "MSR524",
+              "estimatedOffBlockTime": 2026-01-04T04:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768365",
+            "keys": {
+              "aerodromeOfDeparture": "GMTT",
+              "aerodromeOfDestination": "EBBR",
+              "airFiled": false,
+              "aircraftId": "MAC113N",
+              "estimatedOffBlockTime": 2026-01-04T06:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762663",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "OCN4WJ",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762663",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "OCN4WJ",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775631",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "ENGM",
+              "airFiled": false,
+              "aircraftId": "SAS830",
+              "estimatedOffBlockTime": 2026-01-04T07:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774548",
+            "keys": {
+              "aerodromeOfDeparture": "DTTJ",
+              "aerodromeOfDestination": "LFQQ",
+              "airFiled": false,
+              "aircraftId": "LBT762",
+              "estimatedOffBlockTime": 2026-01-04T06:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767589",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "KJFK",
+              "airFiled": false,
+              "aircraftId": "AFR002",
+              "estimatedOffBlockTime": 2026-01-04T07:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767589",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "KJFK",
+              "airFiled": false,
+              "aircraftId": "AFR002",
+              "estimatedOffBlockTime": 2026-01-04T07:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762577",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "GCTS",
+              "airFiled": false,
+              "aircraftId": "OCN42F",
+              "estimatedOffBlockTime": 2026-01-04T07:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762577",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "GCTS",
+              "airFiled": false,
+              "aircraftId": "OCN42F",
+              "estimatedOffBlockTime": 2026-01-04T07:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762780",
+            "keys": {
+              "aerodromeOfDeparture": "LFPB",
+              "aerodromeOfDestination": "EDDN",
+              "airFiled": false,
+              "aircraftId": "DAXEO",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764078",
+            "keys": {
+              "aerodromeOfDeparture": "ELLX",
+              "aerodromeOfDestination": "LIML",
+              "airFiled": false,
+              "aircraftId": "EJU71HA",
+              "estimatedOffBlockTime": 2026-01-04T08:34:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769944",
+            "keys": {
+              "aerodromeOfDeparture": "LEMG",
+              "aerodromeOfDestination": "EDLV",
+              "airFiled": false,
+              "aircraftId": "RYR46VZ",
+              "estimatedOffBlockTime": 2026-01-04T06:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761507",
+            "keys": {
+              "aerodromeOfDeparture": "EHEH",
+              "aerodromeOfDestination": "GMMX",
+              "airFiled": false,
+              "aircraftId": "TRA42B",
+              "estimatedOffBlockTime": 2026-01-04T06:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766967",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "RYR26JG",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759913",
+            "keys": {
+              "aerodromeOfDeparture": "EVRA",
+              "aerodromeOfDestination": "GCTS",
+              "airFiled": false,
+              "aircraftId": "BTI761",
+              "estimatedOffBlockTime": 2026-01-04T06:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775515",
+            "keys": {
+              "aerodromeOfDeparture": "EDDK",
+              "aerodromeOfDestination": "GCFV",
+              "airFiled": false,
+              "aircraftId": "CXI8G",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766051",
+            "keys": {
+              "aerodromeOfDeparture": "EDDG",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "RYR5ZK",
+              "estimatedOffBlockTime": 2026-01-04T07:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762924",
+            "keys": {
+              "aerodromeOfDeparture": "EGLL",
+              "aerodromeOfDestination": "LBSF",
+              "airFiled": false,
+              "aircraftId": "BAW890",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764859",
+            "keys": {
+              "aerodromeOfDeparture": "EGSS",
+              "aerodromeOfDestination": "LBSF",
+              "airFiled": false,
+              "aircraftId": "RYR7JE",
+              "estimatedOffBlockTime": 2026-01-04T07:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02756175",
+            "keys": {
+              "aerodromeOfDeparture": "EDDH",
+              "aerodromeOfDestination": "GCTS",
+              "airFiled": false,
+              "aircraftId": "EWG7532",
+              "estimatedOffBlockTime": 2026-01-04T06:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02756679",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "LEZL",
+              "airFiled": false,
+              "aircraftId": "DLH29M",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764133",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LSGK",
+              "airFiled": false,
+              "aircraftId": "PGC27F",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766966",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "LOWW",
+              "airFiled": false,
+              "aircraftId": "RYR86CF",
+              "estimatedOffBlockTime": 2026-01-04T08:17:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02770383",
+            "keys": {
+              "aerodromeOfDeparture": "EIDW",
+              "aerodromeOfDestination": "LIMF",
+              "airFiled": false,
+              "aircraftId": "RYR69WG",
+              "estimatedOffBlockTime": 2026-01-04T06:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761996",
+            "keys": {
+              "aerodromeOfDeparture": "LSZH",
+              "aerodromeOfDestination": "ELLX",
+              "airFiled": false,
+              "aircraftId": "SWR7TH",
+              "estimatedOffBlockTime": 2026-01-04T07:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774381",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LSGG",
+              "airFiled": false,
+              "aircraftId": "SWR791T",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762404",
+            "keys": {
+              "aerodromeOfDeparture": "EGCC",
+              "aerodromeOfDestination": "LIMF",
+              "airFiled": false,
+              "aircraftId": "EZY78AC",
+              "estimatedOffBlockTime": 2026-01-04T07:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761379",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "LROP",
+              "airFiled": false,
+              "aircraftId": "WMT1SV",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765030",
+            "keys": {
+              "aerodromeOfDeparture": "KJFK",
+              "aerodromeOfDestination": "LSZH",
+              "airFiled": false,
+              "aircraftId": "SWR15X",
+              "estimatedOffBlockTime": 2026-01-04T02:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774046",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "LIPZ",
+              "airFiled": false,
+              "aircraftId": "AFR16FX",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764245",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LIRF",
+              "airFiled": false,
+              "aircraftId": "EJU61FR",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774078",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "ESSA",
+              "airFiled": false,
+              "aircraftId": "AFR73HX",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767459",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "RYR2BQ",
+              "estimatedOffBlockTime": 2026-01-04T08:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761359",
+            "keys": {
+              "aerodromeOfDeparture": "EDDV",
+              "aerodromeOfDestination": "GCTS",
+              "airFiled": false,
+              "aircraftId": "TUI6BM",
+              "estimatedOffBlockTime": 2026-01-04T07:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765032",
+            "keys": {
+              "aerodromeOfDeparture": "HECA",
+              "aerodromeOfDestination": "EGLL",
+              "airFiled": false,
+              "aircraftId": "BAW403",
+              "estimatedOffBlockTime": 2026-01-04T04:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762136",
+            "keys": {
+              "aerodromeOfDeparture": "HECA",
+              "aerodromeOfDestination": "EBOS",
+              "airFiled": false,
+              "aircraftId": "MSR522",
+              "estimatedOffBlockTime": 2026-01-04T04:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02760975",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "LHBP",
+              "airFiled": false,
+              "aircraftId": "WZZ89NP",
+              "estimatedOffBlockTime": 2026-01-04T08:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774358",
+            "keys": {
+              "aerodromeOfDeparture": "LSGG",
+              "aerodromeOfDestination": "KEWR",
+              "airFiled": false,
+              "aircraftId": "UAL957",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765311",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "EFRO",
+              "airFiled": false,
+              "aircraftId": "TVF1302",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765311",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "EFRO",
+              "airFiled": false,
+              "aircraftId": "TVF1302",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762430",
+            "keys": {
+              "aerodromeOfDeparture": "EDDL",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "VLG3YW",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762283",
+            "keys": {
+              "aerodromeOfDeparture": "LDZA",
+              "aerodromeOfDestination": "LFPG",
+              "airFiled": false,
+              "aircraftId": "CTN25F",
+              "estimatedOffBlockTime": 2026-01-04T07:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773225",
+            "keys": {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "EHAM",
+              "airFiled": false,
+              "aircraftId": "AEA23MJ",
+              "estimatedOffBlockTime": 2026-01-04T06:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773783",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "LIMC",
+              "airFiled": false,
+              "aircraftId": "AFR14DR",
+              "estimatedOffBlockTime": 2026-01-04T08:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759633",
+            "keys": {
+              "aerodromeOfDeparture": "EVRA",
+              "aerodromeOfDestination": "LEMG",
+              "airFiled": false,
+              "aircraftId": "BTI8KA",
+              "estimatedOffBlockTime": 2026-01-04T05:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02756614",
+            "keys": {
+              "aerodromeOfDeparture": "LFLP",
+              "aerodromeOfDestination": "EDDG",
+              "airFiled": false,
+              "aircraftId": "DIDAL",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761484",
+            "keys": {
+              "aerodromeOfDeparture": "LPPR",
+              "aerodromeOfDestination": "LSZH",
+              "airFiled": false,
+              "aircraftId": "EJU37AL",
+              "estimatedOffBlockTime": 2026-01-04T07:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766197",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "LHBP",
+              "airFiled": false,
+              "aircraftId": "RYR7RA",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766197",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "LHBP",
+              "airFiled": false,
+              "aircraftId": "RYR7RA",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02748574",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "LFSB",
+              "airFiled": false,
+              "aircraftId": "AFR12QK",
+              "estimatedOffBlockTime": 2026-01-04T07:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767455",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "EPPO",
+              "airFiled": false,
+              "aircraftId": "RYR2VD",
+              "estimatedOffBlockTime": 2026-01-04T08:36:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767455",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "EPPO",
+              "airFiled": false,
+              "aircraftId": "RYR2VD",
+              "estimatedOffBlockTime": 2026-01-04T08:36:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02770252",
+            "keys": {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "EDDV",
+              "airFiled": false,
+              "aircraftId": "ABR402",
+              "estimatedOffBlockTime": 2026-01-04T07:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765270",
+            "keys": {
+              "aerodromeOfDeparture": "KIAD",
+              "aerodromeOfDestination": "LSZH",
+              "airFiled": false,
+              "aircraftId": "SWR2K",
+              "estimatedOffBlockTime": 2026-01-04T01:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02760873",
+            "keys": {
+              "aerodromeOfDeparture": "EGGW",
+              "aerodromeOfDestination": "LIPO",
+              "airFiled": false,
+              "aircraftId": "JFA67V",
+              "estimatedOffBlockTime": 2026-01-04T07:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775110",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "KSFO",
+              "airFiled": false,
+              "aircraftId": "UAL984",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02721511",
+            "keys": {
+              "aerodromeOfDeparture": "EBAW",
+              "aerodromeOfDestination": "LSGS",
+              "airFiled": false,
+              "aircraftId": "AGR0600",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763904",
+            "keys": {
+              "aerodromeOfDeparture": "EGLL",
+              "aerodromeOfDestination": "LIPE",
+              "airFiled": false,
+              "aircraftId": "BAW5B",
+              "estimatedOffBlockTime": 2026-01-04T08:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764206",
+            "keys": {
+              "aerodromeOfDeparture": "LSGG",
+              "aerodromeOfDestination": "EGGW",
+              "airFiled": false,
+              "aircraftId": "EZY86PL",
+              "estimatedOffBlockTime": 2026-01-04T08:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769155",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LEAL",
+              "airFiled": false,
+              "aircraftId": "BEL2RD",
+              "estimatedOffBlockTime": 2026-01-04T08:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767228",
+            "keys": {
+              "aerodromeOfDeparture": "EDDW",
+              "aerodromeOfDestination": "LEAL",
+              "airFiled": false,
+              "aircraftId": "LTC101",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773965",
+            "keys": {
+              "aerodromeOfDeparture": "EHRD",
+              "aerodromeOfDestination": "LEAL",
+              "airFiled": false,
+              "aircraftId": "TRA083",
+              "estimatedOffBlockTime": 2026-01-04T06:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765118",
+            "keys": {
+              "aerodromeOfDeparture": "LEMG",
+              "aerodromeOfDestination": "EHAM",
+              "airFiled": false,
+              "aircraftId": "VLG8365",
+              "estimatedOffBlockTime": 2026-01-04T06:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02770028",
+            "keys": {
+              "aerodromeOfDeparture": "LIPY",
+              "aerodromeOfDestination": "EBCI",
+              "airFiled": false,
+              "aircraftId": "RYR8043",
+              "estimatedOffBlockTime": 2026-01-04T07:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02771492",
+            "keys": {
+              "aerodromeOfDeparture": "EGSS",
+              "aerodromeOfDestination": "LSZB",
+              "airFiled": false,
+              "aircraftId": "N737M",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763121",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "VLG4LK",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769568",
+            "keys": {
+              "aerodromeOfDeparture": "KJFK",
+              "aerodromeOfDestination": "LSZH",
+              "airFiled": false,
+              "aircraftId": "DAL52",
+              "estimatedOffBlockTime": 2026-01-04T02:03:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761227",
+            "keys": {
+              "aerodromeOfDeparture": "EKCH",
+              "aerodromeOfDestination": "GCLP",
+              "airFiled": false,
+              "aircraftId": "JTD207",
+              "estimatedOffBlockTime": 2026-01-04T07:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759083",
+            "keys": {
+              "aerodromeOfDeparture": "ELLX",
+              "aerodromeOfDestination": "LOWS",
+              "airFiled": false,
+              "aircraftId": "JFA94W",
+              "estimatedOffBlockTime": 2026-01-04T09:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759083",
+            "keys": {
+              "aerodromeOfDeparture": "ELLX",
+              "aerodromeOfDestination": "LOWS",
+              "airFiled": false,
+              "aircraftId": "JFA94W",
+              "estimatedOffBlockTime": 2026-01-04T09:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762653",
+            "keys": {
+              "aerodromeOfDeparture": "MUHG",
+              "aerodromeOfDestination": "LKPR",
+              "airFiled": false,
+              "aircraftId": "WFL8548",
+              "estimatedOffBlockTime": 2026-01-04T00:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765327",
+            "keys": {
+              "aerodromeOfDeparture": "EFHK",
+              "aerodromeOfDestination": "LSGG",
+              "airFiled": false,
+              "aircraftId": "FIN5R",
+              "estimatedOffBlockTime": 2026-01-04T06:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02723394",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LSGK",
+              "airFiled": false,
+              "aircraftId": "PGC85Q",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763090",
+            "keys": {
+              "aerodromeOfDeparture": "LSGG",
+              "aerodromeOfDestination": "EGLL",
+              "airFiled": false,
+              "aircraftId": "BAW73B",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02756799",
+            "keys": {
+              "aerodromeOfDeparture": "EDDB",
+              "aerodromeOfDestination": "GCLP",
+              "airFiled": false,
+              "aircraftId": "EWG5402",
+              "estimatedOffBlockTime": 2026-01-04T06:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761065",
+            "keys": {
+              "aerodromeOfDeparture": "EKCH",
+              "aerodromeOfDestination": "LEMD",
+              "airFiled": false,
+              "aircraftId": "NSZ3704",
+              "estimatedOffBlockTime": 2026-01-04T07:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02757772",
+            "keys": {
+              "aerodromeOfDeparture": "EDDL",
+              "aerodromeOfDestination": "LEMG",
+              "airFiled": false,
+              "aircraftId": "EWG9534",
+              "estimatedOffBlockTime": 2026-01-04T07:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762403",
+            "keys": {
+              "aerodromeOfDeparture": "HTDA",
+              "aerodromeOfDestination": "EHAM",
+              "airFiled": false,
+              "aircraftId": "KLM569",
+              "estimatedOffBlockTime": 2026-01-04T00:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763865",
+            "keys": {
+              "aerodromeOfDeparture": "EGLL",
+              "aerodromeOfDestination": "LIRN",
+              "airFiled": false,
+              "aircraftId": "BAW53YR",
+              "estimatedOffBlockTime": 2026-01-04T07:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02771907",
+            "keys": {
+              "aerodromeOfDeparture": "EIDW",
+              "aerodromeOfDestination": "LIME",
+              "airFiled": false,
+              "aircraftId": "RYR4799",
+              "estimatedOffBlockTime": 2026-01-04T07:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762529",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "LLBG",
+              "airFiled": false,
+              "aircraftId": "TVF3456",
+              "estimatedOffBlockTime": 2026-01-04T08:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759559",
+            "keys": {
+              "aerodromeOfDeparture": "LEBL",
+              "aerodromeOfDestination": "EKCH",
+              "airFiled": false,
+              "aircraftId": "NSZ5510",
+              "estimatedOffBlockTime": 2026-01-04T06:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762698",
+            "keys": {
+              "aerodromeOfDeparture": "EGBB",
+              "aerodromeOfDestination": "LIMF",
+              "airFiled": false,
+              "aircraftId": "TOM7XG",
+              "estimatedOffBlockTime": 2026-01-04T07:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02750349",
+            "keys": {
+              "aerodromeOfDeparture": "ELLX",
+              "aerodromeOfDestination": "LJLJ",
+              "airFiled": false,
+              "aircraftId": "LGL51JL",
+              "estimatedOffBlockTime": 2026-01-04T08:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766050",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "GMFF",
+              "airFiled": false,
+              "aircraftId": "RYR5072",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759368",
+            "keys": {
+              "aerodromeOfDeparture": "ENGM",
+              "aerodromeOfDestination": "LFMN",
+              "airFiled": false,
+              "aircraftId": "NOZ1JG",
+              "estimatedOffBlockTime": 2026-01-04T07:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764799",
+            "keys": {
+              "aerodromeOfDeparture": "KORD",
+              "aerodromeOfDestination": "LSZH",
+              "airFiled": false,
+              "aircraftId": "SWR9G",
+              "estimatedOffBlockTime": 2026-01-04T00:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764388",
+            "keys": {
+              "aerodromeOfDeparture": "LSGG",
+              "aerodromeOfDestination": "EGKK",
+              "airFiled": false,
+              "aircraftId": "EZY51ZP",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774356",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "EGCC",
+              "airFiled": false,
+              "aircraftId": "AFR24XP",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02771956",
+            "keys": {
+              "aerodromeOfDeparture": "LPPR",
+              "aerodromeOfDestination": "ELLX",
+              "airFiled": false,
+              "aircraftId": "RYR41ST",
+              "estimatedOffBlockTime": 2026-01-04T07:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02761917",
+            "keys": {
+              "aerodromeOfDeparture": "MDLR",
+              "aerodromeOfDestination": "EDDF",
+              "airFiled": false,
+              "aircraftId": "OCN2003",
+              "estimatedOffBlockTime": 2026-01-04T01:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773612",
+            "keys": {
+              "aerodromeOfDeparture": "LIME",
+              "aerodromeOfDestination": "EGSS",
+              "airFiled": false,
+              "aircraftId": "RYR61RD",
+              "estimatedOffBlockTime": 2026-01-04T08:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762959",
+            "keys": {
+              "aerodromeOfDeparture": "LMML",
+              "aerodromeOfDestination": "EGLL",
+              "airFiled": false,
+              "aircraftId": "KMM100A",
+              "estimatedOffBlockTime": 2026-01-04T06:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769824",
+            "keys": {
+              "aerodromeOfDeparture": "LFTW",
+              "aerodromeOfDestination": "EBCI",
+              "airFiled": false,
+              "aircraftId": "RYR566D",
+              "estimatedOffBlockTime": 2026-01-04T07:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02758863",
+            "keys": {
+              "aerodromeOfDeparture": "DTTA",
+              "aerodromeOfDestination": "EBBR",
+              "airFiled": false,
+              "aircraftId": "TAR954",
+              "estimatedOffBlockTime": 2026-01-04T07:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02756318",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "LEMG",
+              "airFiled": false,
+              "aircraftId": "DLH06E",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767442",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "RYR2BQP",
+              "estimatedOffBlockTime": 2026-01-04T08:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773059",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "GMMX",
+              "airFiled": false,
+              "aircraftId": "RYR29PM",
+              "estimatedOffBlockTime": 2026-01-04T08:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02776476",
+            "keys": {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "EFRO",
+              "airFiled": false,
+              "aircraftId": "IBE09YR",
+              "estimatedOffBlockTime": 2026-01-04T07:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773803",
+            "keys": {
+              "aerodromeOfDeparture": "EHAM",
+              "aerodromeOfDestination": "LIML",
+              "airFiled": false,
+              "aircraftId": "KLM89Q",
+              "estimatedOffBlockTime": 2026-01-04T07:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02778735",
+            "keys": {
+              "aerodromeOfDeparture": "DTTA",
+              "aerodromeOfDestination": "EBBR",
+              "airFiled": false,
+              "aircraftId": "LBT396",
+              "estimatedOffBlockTime": 2026-01-04T07:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764096",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LIML",
+              "airFiled": false,
+              "aircraftId": "EJU67KM",
+              "estimatedOffBlockTime": 2026-01-04T08:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767980",
+            "keys": {
+              "aerodromeOfDeparture": "EDDK",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "RYR158E",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759864",
+            "keys": {
+              "aerodromeOfDeparture": "VIDP",
+              "aerodromeOfDestination": "LFPG",
+              "airFiled": false,
+              "aircraftId": "AIC147",
+              "estimatedOffBlockTime": 2026-01-03T22:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768380",
+            "keys": {
+              "aerodromeOfDeparture": "GMTT",
+              "aerodromeOfDestination": "EBBR",
+              "airFiled": false,
+              "aircraftId": "MAC147K",
+              "estimatedOffBlockTime": 2026-01-04T06:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773807",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LPPT",
+              "airFiled": false,
+              "aircraftId": "RYR372F",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02785215",
+            "keys": {
+              "aerodromeOfDeparture": "LSGS",
+              "aerodromeOfDestination": "EHRD",
+              "airFiled": false,
+              "aircraftId": "NJE9YU",
+              "estimatedOffBlockTime": 2026-01-04T09:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773091",
+            "keys": {
+              "aerodromeOfDeparture": "EGCC",
+              "aerodromeOfDestination": "LIRA",
+              "airFiled": false,
+              "aircraftId": "RYR9439",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763956",
+            "keys": {
+              "aerodromeOfDeparture": "LEBL",
+              "aerodromeOfDestination": "EHAM",
+              "airFiled": false,
+              "aircraftId": "VLG11YB",
+              "estimatedOffBlockTime": 2026-01-04T07:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02770959",
+            "keys": {
+              "aerodromeOfDeparture": "LEMG",
+              "aerodromeOfDestination": "EKCH",
+              "airFiled": false,
+              "aircraftId": "RYR45SM",
+              "estimatedOffBlockTime": 2026-01-04T07:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764056",
+            "keys": {
+              "aerodromeOfDeparture": "EGLL",
+              "aerodromeOfDestination": "LIMC",
+              "airFiled": false,
+              "aircraftId": "BAW582",
+              "estimatedOffBlockTime": 2026-01-04T08:15:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02770175",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "LIBD",
+              "airFiled": false,
+              "aircraftId": "RYR93BH",
+              "estimatedOffBlockTime": 2026-01-04T08:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02770479",
+            "keys": {
+              "aerodromeOfDeparture": "EDDF",
+              "aerodromeOfDestination": "LEMG",
+              "airFiled": false,
+              "aircraftId": "DLH06EP",
+              "estimatedOffBlockTime": 2026-01-04T07:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02773842",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LPPT",
+              "airFiled": false,
+              "aircraftId": "RYR372V",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02778270",
+            "keys": {
+              "aerodromeOfDeparture": "LSZH",
+              "aerodromeOfDestination": "KORD",
+              "airFiled": false,
+              "aircraftId": "UAL12",
+              "estimatedOffBlockTime": 2026-01-04T08:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774412",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "LHBP",
+              "airFiled": false,
+              "aircraftId": "AFR93LT",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766243",
+            "keys": {
+              "aerodromeOfDeparture": "LFOB",
+              "aerodromeOfDestination": "LICC",
+              "airFiled": false,
+              "aircraftId": "RYR26",
+              "estimatedOffBlockTime": 2026-01-04T08:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02751052",
+            "keys": {
+              "aerodromeOfDeparture": "EGNV",
+              "aerodromeOfDestination": "EDNY",
+              "airFiled": false,
+              "aircraftId": "PVD448V",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762932",
+            "keys": {
+              "aerodromeOfDeparture": "LMML",
+              "aerodromeOfDestination": "EHAM",
+              "airFiled": false,
+              "aircraftId": "KMM394",
+              "estimatedOffBlockTime": 2026-01-04T06:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02752239",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LEVC",
+              "airFiled": false,
+              "aircraftId": "RYR42ZQ",
+              "estimatedOffBlockTime": 2026-01-04T08:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767804",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "EFKT",
+              "airFiled": false,
+              "aircraftId": "TVF96KK",
+              "estimatedOffBlockTime": 2026-01-04T08:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762132",
+            "keys": {
+              "aerodromeOfDeparture": "HECA",
+              "aerodromeOfDestination": "EGLL",
+              "airFiled": false,
+              "aircraftId": "MSR783",
+              "estimatedOffBlockTime": 2026-01-04T05:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763901",
+            "keys": {
+              "aerodromeOfDeparture": "LFPO",
+              "aerodromeOfDestination": "LTFJ",
+              "airFiled": false,
+              "aircraftId": "TVF3308",
+              "estimatedOffBlockTime": 2026-01-04T08:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02764516",
+            "keys": {
+              "aerodromeOfDeparture": "LFLL",
+              "aerodromeOfDestination": "EGKK",
+              "airFiled": false,
+              "aircraftId": "EZY85QX",
+              "estimatedOffBlockTime": 2026-01-04T08:40:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765996",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "GMFF",
+              "airFiled": false,
+              "aircraftId": "RYR507T",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768663",
+            "keys": {
+              "aerodromeOfDeparture": "LIME",
+              "aerodromeOfDestination": "EGBB",
+              "airFiled": false,
+              "aircraftId": "RYR34ZD",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02752571",
+            "keys": {
+              "aerodromeOfDeparture": "MDPC",
+              "aerodromeOfDestination": "EDDF",
+              "airFiled": false,
+              "aircraftId": "OCN857",
+              "estimatedOffBlockTime": 2026-01-03T23:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02753754",
+            "keys": {
+              "aerodromeOfDeparture": "EDDH",
+              "aerodromeOfDestination": "GCLP",
+              "airFiled": false,
+              "aircraftId": "MBU3SN",
+              "estimatedOffBlockTime": 2026-01-04T07:20:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02768350",
+            "keys": {
+              "aerodromeOfDeparture": "GCTS",
+              "aerodromeOfDestination": "EBCI",
+              "airFiled": false,
+              "aircraftId": "RYR7097",
+              "estimatedOffBlockTime": 2026-01-04T05:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767977",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LEVC",
+              "airFiled": false,
+              "aircraftId": "RYR42ZN",
+              "estimatedOffBlockTime": 2026-01-04T08:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02762343",
+            "keys": {
+              "aerodromeOfDeparture": "LFPB",
+              "aerodromeOfDestination": "EKBI",
+              "airFiled": false,
+              "aircraftId": "RHH009",
+              "estimatedOffBlockTime": 2026-01-04T09:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02782347",
+            "keys": {
+              "aerodromeOfDeparture": "LFLB",
+              "aerodromeOfDestination": "EIDW",
+              "airFiled": false,
+              "aircraftId": "EIAER",
+              "estimatedOffBlockTime": 2026-01-04T08:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774527",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LEVC",
+              "airFiled": false,
+              "aircraftId": "BEL7JV",
+              "estimatedOffBlockTime": 2026-01-04T08:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02724131",
+            "keys": {
+              "aerodromeOfDeparture": "EBCI",
+              "aerodromeOfDestination": "LFTZ",
+              "airFiled": false,
+              "aircraftId": "PGC45X",
+              "estimatedOffBlockTime": 2026-01-04T08:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763868",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "LIMC",
+              "airFiled": false,
+              "aircraftId": "EJU87HR",
+              "estimatedOffBlockTime": 2026-01-04T08:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774558",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "LOWW",
+              "airFiled": false,
+              "aircraftId": "AFR32DM",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02758620",
+            "keys": {
+              "aerodromeOfDeparture": "EDDL",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "EWG9580",
+              "estimatedOffBlockTime": 2026-01-04T08:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775315",
+            "keys": {
+              "aerodromeOfDeparture": "EDDL",
+              "aerodromeOfDestination": "GMAD",
+              "airFiled": false,
+              "aircraftId": "CFG138",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02759244",
+            "keys": {
+              "aerodromeOfDeparture": "EDDL",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "EWG8XP",
+              "estimatedOffBlockTime": 2026-01-04T08:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775552",
+            "keys": {
+              "aerodromeOfDeparture": "LFLB",
+              "aerodromeOfDestination": "EGKB",
+              "airFiled": false,
+              "aircraftId": "NJE086G",
+              "estimatedOffBlockTime": 2026-01-04T08:55:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775508",
+            "keys": {
+              "aerodromeOfDeparture": "LIML",
+              "aerodromeOfDestination": "KBED",
+              "airFiled": false,
+              "aircraftId": "N688CB",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02760336",
+            "keys": {
+              "aerodromeOfDeparture": "EKCH",
+              "aerodromeOfDestination": "GCLP",
+              "airFiled": false,
+              "aircraftId": "NSZ3692",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02771285",
+            "keys": {
+              "aerodromeOfDeparture": "LIMF",
+              "aerodromeOfDestination": "EGSS",
+              "airFiled": false,
+              "aircraftId": "RYR14DT",
+              "estimatedOffBlockTime": 2026-01-04T08:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02750001",
+            "keys": {
+              "aerodromeOfDeparture": "LFPG",
+              "aerodromeOfDestination": "EDDM",
+              "airFiled": false,
+              "aircraftId": "AFR53BP",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02777616",
+            "keys": {
+              "aerodromeOfDeparture": "LSZS",
+              "aerodromeOfDestination": "KBGR",
+              "airFiled": false,
+              "aircraftId": "N313RG",
+              "estimatedOffBlockTime": 2026-01-04T09:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02767960",
+            "keys": {
+              "aerodromeOfDeparture": "EDDK",
+              "aerodromeOfDestination": "LEBL",
+              "airFiled": false,
+              "aircraftId": "RYR158Y",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02763010",
+            "keys": {
+              "aerodromeOfDeparture": "KBOS",
+              "aerodromeOfDestination": "LSZH",
+              "airFiled": false,
+              "aircraftId": "SWR4Y",
+              "estimatedOffBlockTime": 2026-01-04T03:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02766240",
+            "keys": {
+              "aerodromeOfDeparture": "EDDH",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "RYR16LJ",
+              "estimatedOffBlockTime": 2026-01-04T08:05:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02776154",
+            "keys": {
+              "aerodromeOfDeparture": "EHAM",
+              "aerodromeOfDestination": "LEMD",
+              "airFiled": false,
+              "aircraftId": "IBE07SR",
+              "estimatedOffBlockTime": 2026-01-04T08:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769686",
+            "keys": {
+              "aerodromeOfDeparture": "EBBR",
+              "aerodromeOfDestination": "LFML",
+              "airFiled": false,
+              "aircraftId": "BEL9KU",
+              "estimatedOffBlockTime": 2026-01-04T08:35:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02779628",
+            "keys": {
+              "aerodromeOfDeparture": "LSZH",
+              "aerodromeOfDestination": "SKBO",
+              "airFiled": false,
+              "aircraftId": "EDW92",
+              "estimatedOffBlockTime": 2026-01-04T08:25:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02776905",
+            "keys": {
+              "aerodromeOfDeparture": "LEMD",
+              "aerodromeOfDestination": "EDDL",
+              "airFiled": false,
+              "aircraftId": "IBE07CY",
+              "estimatedOffBlockTime": 2026-01-04T07:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02765883",
+            "keys": {
+              "aerodromeOfDeparture": "EGSS",
+              "aerodromeOfDestination": "LIRQ",
+              "airFiled": false,
+              "aircraftId": "CFE735",
+              "estimatedOffBlockTime": 2026-01-04T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02775527",
+            "keys": {
+              "aerodromeOfDeparture": "EDDL",
+              "aerodromeOfDestination": "GCLP",
+              "airFiled": false,
+              "aircraftId": "CFG1434",
+              "estimatedOffBlockTime": 2026-01-04T08:45:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02774438",
+            "keys": {
+              "aerodromeOfDeparture": "LSGG",
+              "aerodromeOfDestination": "ESGG",
+              "airFiled": false,
+              "aircraftId": "SWR7330",
+              "estimatedOffBlockTime": 2026-01-04T09:00:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02754659",
+            "keys": {
+              "aerodromeOfDeparture": "EDDP",
+              "aerodromeOfDestination": "GCLP",
+              "airFiled": false,
+              "aircraftId": "MBU3WL",
+              "estimatedOffBlockTime": 2026-01-04T08:10:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+      {
+        "flight": {
+          "flightId": {
+            "id": "PO02769274",
+            "keys": {
+              "aerodromeOfDeparture": "EDLV",
+              "aerodromeOfDestination": "LEPA",
+              "airFiled": false,
+              "aircraftId": "RYR2YY",
+              "estimatedOffBlockTime": 2026-01-04T08:50:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+        },
+      },
+    ],
+  },
+  "requestId": "B2B_CUR1:28855931",
+  "requestReceptionTime": 2026-01-04T09:02:24.000Z,
+  "sendTime": 2026-01-04T09:02:24.000Z,
+  "status": "OK",
+}
