@@ -43,10 +43,6 @@ export async function registerFixtures(
           const xmlResponse = await artifacts.readMock();
 
           beforeAll(() => {
-            if (!context.meta.mockDate) {
-              return;
-            }
-
             vi.setSystemTime(new Date(context.meta.mockDate));
             return () => {
               vi.useRealTimers();
