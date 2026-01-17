@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 2.2.1
+
+### Patch Changes
+
+- [#242](https://github.com/DGAC/nmb2b-client-js/pull/242) [`db2d67f`](https://github.com/DGAC/nmb2b-client-js/commit/db2d67fb3ba316aa84fbf59bf08dbb5bb46f6dc3) Thanks [@kouak](https://github.com/kouak)! - node-tar 7.5.3 (fix CVE)
+
 ## 2.2.0
 
 ### Minor Changes
