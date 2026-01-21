@@ -30,8 +30,8 @@ importers:
         specifier: ^1.6.1
         version: 1.6.1
       tar:
-        specifier: ^7.5.3
-        version: 7.5.3
+        specifier: ^7.5.6
+        version: 7.5.6
       type-fest:
         specifier: ^5.3.1
         version: 5.3.1
@@ -1835,8 +1835,8 @@ packages:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
     engines: {node: '>=20'}
 
-  tar@7.5.3:
-    resolution: {integrity: sha512-ENg5JUHUm2rDD7IvKNFGzyElLXNjachNLp6RaGf4+JOgxXHkqA+gq81ZAMCUmtMtqBsoU62lcp6S27g1LCYGGQ==}
+  tar@7.5.6:
+    resolution: {integrity: sha512-xqUeu2JAIJpXyvskvU3uvQW8PAmHrtXp2KDuMJwQqW8Sqq0CaZBAQ+dKS3RBXVhU4wC5NjAdKrmh84241gO9cA==}
     engines: {node: '>=18'}
 
   term-size@2.2.1:
@@ -3824,7 +3824,7 @@ snapshots:
 
   tagged-tag@1.0.0: {}
 
-  tar@7.5.3:
+  tar@7.5.6:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
