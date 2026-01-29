@@ -1,5 +1,16 @@
 # @dgac/nmb2b-client
 
+## 2.2.3
+
+### Patch Changes
+
+- [#251](https://github.com/DGAC/nmb2b-client-js/pull/251) [`0ab9490`](https://github.com/DGAC/nmb2b-client-js/commit/0ab94904b54ac0f013514108c0817e1680a0a015) Thanks [@kouak](https://github.com/kouak)! - chore: update dependencies
+  - axios: 1.13.2 -> 1.13.4
+  - remeda: 2.32.0 -> 2.33.4
+  - soap: 1.6.1 -> 1.6.4
+  - tar: 7.5.6 -> 7.5.7
+  - type-fest: 5.3.1 -> 5.4.2
+
 ## 2.2.2
 
 ### Patch Changes
