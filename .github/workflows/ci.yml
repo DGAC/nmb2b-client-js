@@ -140,7 +140,7 @@ jobs:
 
       - name: Cache B2B XSD
         id: cache-xsd
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: b2b-xsd
           key: ${{ runner.os }}-b2b-xsd-${{ hashFiles('scripts/downloadWSDL.ts') }}-${{ env.B2B_XSD_REMOTE_URL }}
