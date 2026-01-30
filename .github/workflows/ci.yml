@@ -153,15 +153,8 @@ jobs:
         env:
           REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '22' && env.B2B_API_KEY_ID != '' && '1' || '' }}
 
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-results-${{ matrix.node-version }}
-          path: junit.xml
-
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: matrix.node-version == '22' && env.B2B_API_KEY_ID != ''
         with:
           fail_ci_if_error: true
