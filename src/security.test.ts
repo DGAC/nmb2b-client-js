@@ -122,11 +122,11 @@ describe(assertValidSecurity, () => {
   });
 });
 
-// eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+// oxlint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
 describe(isValidSecurity, () => {
   test('should return true for valid security', () => {
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+      // oxlint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
       isValidSecurity({
         apiKeyId: 'id',
         apiSecretKey: 'secret',
@@ -135,7 +135,7 @@ describe(isValidSecurity, () => {
   });
 
   test('should throw for invalid security (backward compatibility)', () => {
-    // eslint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
+    // oxlint-disable-next-line @typescript-eslint/no-deprecated -- Legacy API
     expect(() => isValidSecurity({})).toThrow();
   });
 });

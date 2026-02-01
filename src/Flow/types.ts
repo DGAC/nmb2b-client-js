@@ -415,7 +415,6 @@ export interface RegulationListReplyData extends RegulationOrMCDMOnlyListReplyDa
   regulations: NMSet<Regulation>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface RegulationOrMCDMOnlyListReplyData extends MeasureListReplyData {}
 
 export interface MeasureListReplyData {

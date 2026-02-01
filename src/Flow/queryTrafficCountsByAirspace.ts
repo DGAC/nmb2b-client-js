@@ -11,7 +11,7 @@ export const queryTrafficCountsByAirspace = createSoapQueryDefinition<
   service: 'Flow',
   query: 'queryTrafficCountsByAirspace',
   getSchema: (client) =>
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+    // oxlint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().TrafficCountsService.TrafficCountsPort
       .queryTrafficCountsByAirspace.input,
 });

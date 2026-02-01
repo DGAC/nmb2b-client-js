@@ -6,10 +6,11 @@
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
+    "erasableSyntaxOnly": true,
+    "allowUnreachableCode": false,
     "verbatimModuleSyntax": true,
     "strict": true,
     "esModuleInterop": true,
-    // Vite/vitest error :
     "skipLibCheck": true,
     "pretty": true,
     "noUncheckedIndexedAccess": true
@@ -20,6 +21,5 @@
     "scripts/**/*",
     "vitest.config.ts",
     "tsdown.config.ts"
-    // "eslint.config.mjs"
   ]
 }

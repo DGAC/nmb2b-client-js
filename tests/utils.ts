@@ -23,7 +23,11 @@ export async function createMockArchive(
   try {
     for (const [filePath, content] of Object.entries(files)) {
       const absolutePath = path.join(tempDir, filePath);
+
+      // oxlint-disable-next-line no-await-in-loop
       await mkdir(path.dirname(absolutePath), { recursive: true });
+
+      // oxlint-disable-next-line no-await-in-loop
       await writeFile(absolutePath, content);
     }
 

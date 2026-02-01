@@ -13,12 +13,13 @@ export const nominal = defineFixture({
   method: 'queryFlightsByAirspace',
 })
   .describe('Nominal query of flights by airspace (LFEERMS)')
-  .setup(() => {
+  // oxlint-disable-next-line require-await
+  .setup(async () => {
     const now = startOfMinute(new Date());
-    return Promise.resolve({
+    return {
       wef: sub(now, { minutes: 30 }).toISOString(),
       unt: add(now, { minutes: 30 }).toISOString(),
-    });
+    };
   })
   .run(async (client, variables) => {
     return await client.Flight.queryFlightsByAirspace({
@@ -55,7 +56,7 @@ export const nominal = defineFixture({
     expect(flights.length).toBeGreaterThan(0);
 
     for (const flight of flights) {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+      /* oxlint-disable @typescript-eslint/no-unsafe-assignment */
       expect(flight).toEqual({
         flight: {
           flightId: {
@@ -78,6 +79,6 @@ export const nominal = defineFixture({
           },
         },
       });
-      /* eslint-enable @typescript-eslint/no-unsafe-assignment */
+      /* oxlint-enable @typescript-eslint/no-unsafe-assignment */
     }
   });

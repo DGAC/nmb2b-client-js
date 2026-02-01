@@ -1,14 +1,14 @@
+import fs from 'node:fs';
+import type { ISecurity } from 'soap';
+import {
+  BasicAuthSecurity,
+  ClientSSLSecurity,
+  ClientSSLSecurityPFX,
+} from 'soap';
+import type { Config } from './config.js';
 import { assert } from './utils/assert.js';
 import { createDebugLogger } from './utils/debug.js';
 const debug = createDebugLogger('security');
-import type { Config } from './config.js';
-import type { ISecurity } from 'soap';
-import {
-  ClientSSLSecurity,
-  ClientSSLSecurityPFX,
-  BasicAuthSecurity,
-} from 'soap';
-import fs from 'node:fs';
 
 /**
  * Security configuration using a PFX / PKCS #12 certificate.

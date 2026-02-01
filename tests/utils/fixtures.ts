@@ -140,16 +140,23 @@ export class Fixture<
   setup<TNewVars>(
     fn: FixtureSetupFn<TNewVars>,
   ): IFixtureDefined<TNewVars, TResult> {
-    (
-      this as unknown as Fixture<TB2BService, TNewVars, TResult>
-    ).setupRecording = fn;
-    return this as unknown as Fixture<TB2BService, TNewVars, TResult>;
+    // oxlint-disable-next-line no-unsafe-type-assertion
+    const typedThis = this as unknown as Fixture<
+      TB2BService,
+      TNewVars,
+      TResult
+    >;
+
+    typedThis.setupRecording = fn;
+
+    return typedThis;
   }
 
   run(
     fn: FixtureRunFn<TVariables, TResult>,
   ): IFixtureRunnable<TVariables, TResult> {
     this.executeOperation = fn;
+    // oxlint-disable-next-line no-unsafe-type-assertion
     return this as unknown as IFixtureRunnable<TVariables, TResult>;
   }
 
