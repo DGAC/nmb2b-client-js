@@ -10,6 +10,7 @@ import {
 } from './config.js';
 
 import { describe, expect, test } from 'vitest';
+import { beforeEach } from 'node:test';
 
 const VALID_SECURITY_MOCK = {
   apiKeyId: 'valid-id',
