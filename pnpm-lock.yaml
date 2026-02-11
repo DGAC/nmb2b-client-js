@@ -25,7 +25,7 @@ importers:
         version: 4.1.2
       remeda:
         specifier: ^2.33.4
-        version: 2.33.4
+        version: 2.33.6
       soap:
         specifier: ^1.6.4
         version: 1.6.4
@@ -1716,8 +1716,8 @@ packages:
     resolution: {integrity: sha512-VIMnQi/Z4HT2Fxuwg5KrY174U1VdUIASQVWXXyqtNRtxSr9IYkn1rsI6Tb6HsrHCmB7gVpNwX6JxPTHcH6IoTA==}
     engines: {node: '>=6'}
 
-  remeda@2.33.4:
-    resolution: {integrity: sha512-ygHswjlc/opg2VrtiYvUOPLjxjtdKvjGz1/plDhkG66hjNjFr1xmfrs2ClNFo/E6TyUFiwYNh53bKV26oBoMGQ==}
+  remeda@2.33.6:
+    resolution: {integrity: sha512-tazDGH7s75kUPGBKLvhgBEHMgW+TdDFhjUAMdQj57IoWz6HsGa5D2RX5yDUz6IIqiRRvZiaEHzCzWdTeixc/Kg==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -3695,7 +3695,7 @@ snapshots:
       pify: 4.0.1
       strip-bom: 3.0.0
 
-  remeda@2.33.4: {}
+  remeda@2.33.6: {}
 
   require-directory@2.1.1: {}
 
