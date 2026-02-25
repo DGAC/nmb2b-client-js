@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 2.2.5
+
+### Patch Changes
+
+- [#265](https://github.com/DGAC/nmb2b-client-js/pull/265) [`83e7443`](https://github.com/DGAC/nmb2b-client-js/commit/83e744353a75c771f26c05c649eecbbaca4e997e) Thanks [@kouak](https://github.com/kouak)! - Update dependencies, fix CVEs in axios, tar
+
 ## 2.2.4
 
 ### Patch Changes
