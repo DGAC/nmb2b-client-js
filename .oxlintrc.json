@@ -182,29 +182,29 @@
     "typescript/prefer-return-this-type": "error"
   },
   "overrides": [
-    // {
-    //   "files": ["src/**/*.test.ts"],
-    //   "plugins": [
-    //     "oxc",
-    //     "typescript",
-    //     "import",
-    //     "vitest",
-    //     "unicorn",
-    //     "oxc",
-    //     "promise"
-    //   ],
-    //   "rules": {
-    //     "typescript/no-unsafe-assignment": "off",
-    //     "typescript/no-unsafe-member-access": "off",
-    //     "typescript/no-unsafe-argument": "off"
-    //   }
-    // },
-    // {
-    //   "files": ["src/**/*.test.ts", "scripts/**/*"],
-    //   "rules": {
-    //     "eslint/no-console": "off"
-    //   }
-    // },
+    {
+      "files": ["src/**/*.test.ts"],
+      "plugins": [
+        "oxc",
+        "typescript",
+        "import",
+        "vitest",
+        "unicorn",
+        "oxc",
+        "promise"
+      ],
+      "rules": {
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-member-access": "off",
+        "typescript/no-unsafe-argument": "off"
+      }
+    },
+    {
+      "files": ["src/**/*.test.ts", "scripts/**/*"],
+      "rules": {
+        "eslint/no-console": "off"
+      }
+    },
     {
       "files": [
         "vitest.config.ts",

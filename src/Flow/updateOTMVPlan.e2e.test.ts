@@ -45,6 +45,7 @@ describe('updateOTMVPlan', async () => {
             continue;
           }
 
+          // oxlint-disable-next-line no-shadow
           for (const { value } of v) {
             if (value?.nmSchedule) {
               delete value.nmSchedule;
