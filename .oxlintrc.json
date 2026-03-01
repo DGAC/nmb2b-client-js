@@ -1,0 +1,217 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "oxc",
+    "typescript",
+    "import",
+    "vitest",
+    "unicorn",
+    "oxc",
+    "promise"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "pedantic": "error"
+  },
+  "env": {
+    "builtin": true,
+    "node": true
+  },
+  "ignorePatterns": ["coverage/", "dist/"],
+  "settings": {
+    "vitest": {
+      "typecheck": true
+    }
+  },
+  "rules": {
+    /**
+     * Rules which are active but need a configuration override.
+     */
+    "eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "_",
+        "ignoreRestSiblings": true
+      }
+    ],
+
+    "typescript/restrict-template-expressions": [
+      "error",
+      {
+        "allowAny": false,
+        "allowBoolean": true,
+        "allowNever": false,
+        "allowNullish": false,
+        "allowNumber": true,
+        "allowRegExp": false
+      }
+    ],
+
+    /**
+     * Disabled `pedantic` rules
+     */
+    "eslint/max-lines": "off",
+    "eslint/max-lines-per-function": "off",
+    "eslint/no-inline-comments": "off",
+    "eslint/no-inner-declarations": "off",
+    "eslint/no-negated-condition": "off",
+    "eslint/no-warning-comments": "off",
+    "eslint/require-await": "off",
+
+    "import/max-dependencies": "off",
+
+    "unicorn/consistent-assert": "off",
+    "unicorn/no-useless-undefined": "off",
+
+    /**
+     * Rules that should be active but we're not there yet.
+     */
+    "typescript/strict-boolean-expressions": "off",
+
+    /**
+     * Nursery rules
+     */
+    "eslint/getter-return": "error",
+    "promise/no-return-in-finally": "error",
+    "typescript/prefer-optional-chain": "error",
+
+    /**
+     * Restrictions rules enabled on a case by case basis
+     */
+    "eslint/no-console": "error",
+    "eslint/no-empty": "error",
+    "eslint/no-regex-spaces": "error",
+
+    "import/extensions": "error",
+    "import/no-amd": "error",
+    "import/no-common-js": "error",
+    "import/no-cycle": "error",
+    "import/no-default-export": "error",
+
+    "promise/catch-or-return": "error",
+
+    "typescript/no-dynamic-delete": "error",
+    "typescript/no-empty-object-type": [
+      "error",
+      {
+        "allowInterfaces": "always"
+      }
+    ],
+    "typescript/no-explicit-any": "error",
+    "typescript/no-import-type-side-effects": "error",
+    "typescript/no-namespace": "error",
+    "typescript/no-non-null-asserted-nullish-coalescing": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/no-require-imports": "error",
+    "typescript/non-nullable-type-assertion-style": "error",
+    "typescript/prefer-literal-enum-member": "error",
+    "typescript/promise-function-async": "error",
+    "typescript/use-unknown-in-catch-callback-variable": "error",
+
+    /**
+     * Pedantic rules enabled on a case by case basis
+     */
+    "typescript/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": true,
+        "ts-nocheck": true,
+        "ts-check": true,
+        "minimumDescriptionLength": 10
+      }
+    ],
+    "typescript/restrict-plus-operands": [
+      "error",
+      {
+        "allowAny": false,
+        "allowBoolean": false,
+        "allowNullish": false,
+        "allowNumberAndString": false,
+        "allowRegExp": false
+      }
+    ],
+    "typescript/return-await": ["error", "error-handling-correctness-only"],
+
+    /**
+     * Style rules enabled on a case by case basis.
+     */
+    "eslint/curly": "error",
+    "eslint/default-cast-last": "error",
+    "eslint/default-param-last": "error",
+    "eslint/grouped-accessor-pairs": "error",
+    "eslint/guard-for-in": "error",
+    "eslint/no-duplicate-imports": [
+      "error",
+      { "allowSeparateTypeImports": true }
+    ],
+    "eslint/no-labels": "error",
+    // Labels are forbidden, no need to check if they are used or not.
+    "eslint/no-unused-labels": "off",
+    "eslint/no-lone-blocks": "error",
+    "eslint/no-multi-assign": "error",
+    "eslint/no-new-func": "error",
+    "eslint/no-return-assign": "error",
+    "eslint/no-template-curly-in-string": "error",
+    "eslint/operator-assignment": ["error", "always"],
+    "eslint/prefer-numeric-literals": "error",
+    "eslint/prefer-object-has-own": "error",
+    "eslint/prefer-object-spread": "error",
+    "eslint/prefer-rest-params": "error",
+    "eslint/prefer-spread": "error",
+
+    "import/first": "error",
+    "import/no-duplicate": "error",
+    "import/no-mutable-exports": "error",
+
+    "vitest/consistent-vitest-vi": "error",
+    "vitest/no-import-node-test": "error",
+    "vitest/no-unneeded-async-expect-function": "error",
+    "vitest/prefer-called-once": "error",
+    "vitest/prefer-describe-function-title": "error",
+
+    "typescript/consistent-type-imports": "error",
+    "typescript/prefer-reduce-type-parameter": "error",
+    "typescript/prefer-return-this-type": "error"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.ts"],
+      "plugins": [
+        "oxc",
+        "typescript",
+        "import",
+        "vitest",
+        "unicorn",
+        "oxc",
+        "promise"
+      ],
+      "rules": {
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-member-access": "off",
+        "typescript/no-unsafe-argument": "off"
+      }
+    },
+    {
+      "files": ["src/**/*.test.ts", "scripts/**/*"],
+      "rules": {
+        "eslint/no-console": "off"
+      }
+    },
+    {
+      "files": [
+        "vitest.config.ts",
+        "tsdown.config.ts",
+        "tests/ensureWSDLPresence.ts"
+      ],
+      "rules": { "import/no-default-export": "off" }
+    }
+  ]
+}

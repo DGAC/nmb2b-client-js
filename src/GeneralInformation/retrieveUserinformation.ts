@@ -8,7 +8,7 @@ export const retrieveUserInformation = createSoapQueryDefinition<
   service: 'GeneralInformation',
   query: 'retrieveUserInformation',
   getSchema: (client) =>
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+    // oxlint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     client.describe().NMB2BInfoService.NMB2BInfoPort.retrieveUserInformation
       .input,
 });

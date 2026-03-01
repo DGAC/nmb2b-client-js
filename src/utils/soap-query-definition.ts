@@ -113,6 +113,7 @@ export function createSoapServiceFromSoapClient<
     __soapClient: client,
     config,
     ...soapQueryFunctions,
+    // oxlint-disable-next-line no-unsafe-type-assertion
   } as SoapService<TDefinitions>;
 }
 
@@ -157,7 +158,8 @@ function buildQueryFunctionFromSoapDefinition<
 
   let queryFn = queryDefinition.executeQuery
     ? queryDefinition.executeQuery(client)
-    : (client[`${queryDefinition.query}Async`] as
+    : // oxlint-disable-next-line no-unsafe-type-assertion
+      (client[`${queryDefinition.query}Async`] as
         | undefined
         | ((values: TInput, options?: SoapOptions) => Promise<[TResult]>));
 
@@ -194,7 +196,7 @@ function buildQueryFunctionFromSoapDefinition<
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line @typescript-eslint/no-explicit-any
 type ServiceDefinition = Record<string, SoapQueryDefinition<any, any>>;
 
 type ExtractSoapQuery<T extends SoapQueryDefinition<B2BRequest, Reply>> =

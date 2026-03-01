@@ -22,6 +22,7 @@ export function applyHooks<TInput, TOutput>({
     const onErrorHooks = [];
 
     for (const onRequestStart of hooks) {
+      // oxlint-disable-next-line no-await-in-loop
       const hookResult = await onRequestStart({ service, query, input });
 
       if (hookResult?.onRequestSuccess) {
@@ -48,6 +49,7 @@ export function applyHooks<TInput, TOutput>({
       const result = await queryFn(input, options);
 
       for (const onSuccess of onSuccessHooks) {
+        // oxlint-disable-next-line no-await-in-loop
         await onSuccess({
           service,
           query,
@@ -58,6 +60,7 @@ export function applyHooks<TInput, TOutput>({
       return result;
     } catch (err: unknown) {
       for (const onError of onErrorHooks) {
+        // oxlint-disable-next-line no-await-in-loop
         await onError({
           service,
           query,

@@ -37,7 +37,6 @@ export async function getWSDLDownloadURL({
     return xsdEndpoint;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!!security && 'apiKeyId' in security) {
     throw new Error(
       'Should never happen, config.xsdEndpoint should be defined',

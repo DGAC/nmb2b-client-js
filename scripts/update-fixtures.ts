@@ -43,6 +43,7 @@ async function record() {
     const relativePath = relative(ROOT_DIR, filePath);
     console.log(`\nProcessing ${relativePath}...`);
 
+    // oxlint-disable-next-line no-await-in-loop
     const fixtureModule = (await import(filePath)) as unknown;
     assert(fixtureModule !== null && typeof fixtureModule === 'object');
 
@@ -60,7 +61,8 @@ async function record() {
 
       const setupStart = new Date();
       const variables = fixture.setupRecording
-        ? await fixture.setupRecording(client)
+        ? // oxlint-disable-next-line no-await-in-loop
+          await fixture.setupRecording(client)
         : undefined;
 
       // Capture mock date (ensure it matches the execution time)
@@ -71,20 +73,28 @@ async function record() {
         `Module ${filePath}, export ${exportName} is not a complete fixture.`,
       );
 
+      // oxlint-disable-next-line no-await-in-loop
       await fixture.executeOperation(client, variables);
 
       const serviceClient = client[fixture.service];
-      const lastResponse = serviceClient.__soapClient.lastResponse;
+
+      // oxlint-disable-next-line no-unsafe-type-assertion
+      const lastResponse = serviceClient.__soapClient.lastResponse as
+        | string
+        | undefined;
 
       assert(
         lastResponse,
         'No SOAP response captured. Did the executeOperation execute a SOAP query?',
       );
 
+      // oxlint-disable-next-line no-await-in-loop
       await artifacts.saveContext({
         meta: { mockDate },
         variables,
       });
+
+      // oxlint-disable-next-line no-await-in-loop
       await artifacts.saveMock(lastResponse);
 
       console.log(`    ✅ Success`);

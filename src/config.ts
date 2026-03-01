@@ -76,6 +76,7 @@ export function assertValidConfig(args: unknown): asserts args is Config {
   assert(
     'flavour' in args &&
       typeof args.flavour === 'string' &&
+      // oxlint-disable-next-line no-unsafe-type-assertion
       B2BFlavours.includes(args.flavour as B2BFlavour),
     `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );

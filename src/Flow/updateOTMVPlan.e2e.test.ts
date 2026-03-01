@@ -45,6 +45,7 @@ describe('updateOTMVPlan', async () => {
             continue;
           }
 
+          // oxlint-disable-next-line no-shadow
           for (const { value } of v) {
             if (value?.nmSchedule) {
               delete value.nmSchedule;
@@ -55,12 +56,11 @@ describe('updateOTMVPlan', async () => {
         return plan;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // oxlint-disable-next-line no-unsafe-type-assertion no-explicit-any
       await Flow.updateOTMVPlan(clearNmSchedules(planBefore) as any);
     } catch (err) {
       console.warn('Error resetting otmv plan after test');
       console.log(JSON.stringify(err, null, 2));
-      return;
     }
   });
 
