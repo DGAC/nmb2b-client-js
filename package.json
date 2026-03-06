@@ -65,11 +65,11 @@
   ],
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
+    "@changesets/cli": "^2.30.0",
     "@eslint/js": "^9.39.3",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.12",
-    "@types/node": "^22.19.11",
+    "@types/node": "^22.19.15",
     "@types/proper-lockfile": "^4.1.4",
     "@vitest/coverage-v8": "^4.0.18",
     "dotenv": "^17.3.1",
@@ -86,13 +86,13 @@
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.1",
-    "axios": "^1.13.5",
+    "axios": "^1.13.6",
     "date-fns": "^4.1.0",
     "debug": "^4.4.3",
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.33.6",
     "soap": "^1.7.1",
-    "tar": "^7.5.9",
+    "tar": "^7.5.10",
     "type-fest": "^5.4.4"
   },
   "publishConfig": {
