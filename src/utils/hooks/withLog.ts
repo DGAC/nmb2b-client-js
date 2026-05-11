@@ -1,5 +1,5 @@
-import { createDebugLogger } from '../debug.js';
-import { createHook } from './hooks.js';
+import { createDebugLogger } from '../debug.ts';
+import { createHook } from './hooks.ts';
 
 export const logHook = createHook(({ service, query, input }) => {
   const debug = createDebugLogger(`${service}:${query}`);

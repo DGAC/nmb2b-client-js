@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import path from 'node:path';
-import { B2B_VERSION } from '../../constants.js';
-import { getServiceWSDLFilePath, getXSDCacheDirectory } from './paths.js';
+import { B2B_VERSION } from '../../constants.ts';
+import { getServiceWSDLFilePath, getXSDCacheDirectory } from './paths.ts';
 
 const XSD_CACHE_PATH = '/tmp/b2b-xsd';
 

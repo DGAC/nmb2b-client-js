@@ -1,5 +1,5 @@
-import { assert } from '../src/utils/assert.js';
-import { fromEnv } from '../src/security.js';
+import { assert } from '../src/utils/assert.ts';
+import { fromEnv } from '../src/security.ts';
 
 assert(process.env.B2B_XSD_PATH, 'B2B_XSD_PATH is not defined');
 assert(process.env.B2B_FLAVOUR, 'B2B_FLAVOUR is not defined');

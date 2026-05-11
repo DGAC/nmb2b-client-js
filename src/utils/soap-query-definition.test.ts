@@ -2,9 +2,9 @@ import { fromPartial } from '@total-typescript/shoehorn';
 import { AssertionError } from 'node:assert';
 import type { Client as SoapClient } from 'soap';
 import { assert, describe, expect, test, vi } from 'vitest';
-import { createHook, NMB2BError } from '../index.js';
-import type { B2BRequest, ReplyWithData } from '../types.js';
-import type { SoapQueryHook } from '../utils/hooks/hooks.js';
+import { createHook, NMB2BError } from '../index.ts';
+import type { B2BRequest, ReplyWithData } from '../types.ts';
+import type { SoapQueryHook } from '../utils/hooks/hooks.ts';
 import {
   createSoapQueryDefinition,
   createSoapServiceFromSoapClient,

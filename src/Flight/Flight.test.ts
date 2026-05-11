@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { registerFixtures } from '../../tests/utils/runner.js';
+import { registerFixtures } from '../../tests/utils/runner.ts';
 import { describe } from 'vitest';
 
 describe('Flight Fixtures', async () => {

@@ -3,13 +3,15 @@
     "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "outDir": "dist",
-    "declaration": true,
-    "sourceMap": true,
+
     "verbatimModuleSyntax": true,
     "strict": true,
-    "esModuleInterop": true,
-    // Vite/vitest error :
+
+    "types": ["node"],
+
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+
     "skipLibCheck": true,
     "pretty": true,
     "noUncheckedIndexedAccess": true

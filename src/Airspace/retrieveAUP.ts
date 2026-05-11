@@ -1,5 +1,5 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
-import type { AUPRetrievalReply, AUPRetrievalRequest } from './types.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
+import type { AUPRetrievalReply, AUPRetrievalRequest } from './types.ts';
 
 export const retrieveAUP = createSoapQueryDefinition<
   AUPRetrievalRequest,

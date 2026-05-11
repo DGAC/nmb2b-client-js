@@ -3,7 +3,7 @@ import {
   defineFixture,
   expectSnapshot,
 } from '../../../tests/utils/fixtures.js';
-import { assert } from '../../utils/assert.js';
+import { assert } from '../../utils/assert.ts';
 
 /**
  * Fixture for testing nominal flight retrieval.

@@ -8,7 +8,7 @@ export default defineConfig({
     'src/security.ts',
     'src/config.ts',
   ],
-  target: 'node20',
+  target: 'node22',
   clean: true,
   sourcemap: true,
   dts: true,

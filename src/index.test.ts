@@ -1,7 +1,7 @@
 import { delay, http, HttpResponse } from 'msw';
 import { assert, describe, expect, test } from 'vitest';
-import { TEST_B2B_OPTIONS } from '../tests/options.js';
-import { server, SOAP_ENDPOINT } from '../tests/utils/msw.js';
+import { TEST_B2B_OPTIONS } from '../tests/options.ts';
+import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
 import {
   createAirspaceClient,
   createB2BClient,

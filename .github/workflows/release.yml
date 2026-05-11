@@ -33,10 +33,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Setup Node.js 24
+      - name: Setup Node.js 26
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
@@ -44,7 +44,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Create Release Pull Request
-        uses: changesets/action@v1.6.0
+        uses: changesets/action@v1.8.0
         with:
           publish: pnpm release
         env:

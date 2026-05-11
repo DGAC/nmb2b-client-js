@@ -1,11 +1,11 @@
 import { readdir } from 'node:fs/promises';
 import lockfile from 'proper-lockfile';
-import type { Config } from '../../config.js';
-import { createDebugLogger } from '../debug.js';
-import { createDir, dirExists } from '../fs.js';
-import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.js';
-import { getWSDLDownloadURL } from './getWSDLDownloadURL.js';
-import { getXSDCacheDirectory } from './paths.js';
+import type { Config } from '../../config.ts';
+import { createDebugLogger } from '../debug.ts';
+import { createDir, dirExists } from '../fs.ts';
+import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.ts';
+import { getWSDLDownloadURL } from './getWSDLDownloadURL.ts';
+import { getXSDCacheDirectory } from './paths.ts';
 
 const debug = createDebugLogger('wsdl');
 

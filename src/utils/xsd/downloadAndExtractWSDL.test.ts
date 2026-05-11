@@ -4,12 +4,12 @@ import { randomUUID } from 'node:crypto';
 import { readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { beforeEach, describe, expect, test, assert } from 'vitest';
-import { createMockArchive } from '../../../tests/utils.js';
-import { server } from '../../../tests/utils/msw.js';
-import { getFileUrl } from '../../config.js';
-import { B2B_VERSION } from '../../constants.js';
-import { createDir as mkdirp } from '../fs.js';
-import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.js';
+import { createMockArchive } from '../../../tests/utils.ts';
+import { server } from '../../../tests/utils/msw.ts';
+import { getFileUrl } from '../../config.ts';
+import { B2B_VERSION } from '../../constants.ts';
+import { createDir as mkdirp } from '../fs.ts';
+import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.ts';
 
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 

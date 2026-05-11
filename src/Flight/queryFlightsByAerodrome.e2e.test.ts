@@ -1,7 +1,7 @@
 import { add, sub } from 'date-fns';
-import { createFlightClient } from '../index.js';
-import { TEST_B2B_OPTIONS } from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
+import { createFlightClient } from '../index.ts';
+import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 import { describe, test, expect, assert } from 'vitest';
 
 describe('queryFlightsByAirspace', async () => {

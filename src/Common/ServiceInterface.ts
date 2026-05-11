@@ -1,4 +1,4 @@
-import type { Config } from '../config.js';
+import type { Config } from '../config.ts';
 
 export interface BaseServiceInterface {
   __soapClient: object;

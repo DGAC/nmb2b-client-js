@@ -1,6 +1,6 @@
 import { UTCDate } from '@date-fns/utc';
 import { format } from 'date-fns';
-import * as timeFormats from '../timeFormats.js';
+import * as timeFormats from '../timeFormats.ts';
 
 const outputBase = {
   integer: (text: string) => {

@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 import fs from 'node:fs/promises';
-import { getXSDCacheDirectory } from '../src/utils/xsd/paths.js';
-import { WSDLExists } from '../src/utils/xsd/index.js';
-import { resolveB2BEnvironment } from './resolveB2BEnvironment.js';
-import { MOCK_B2B_XSD_ENDPOINT } from './constants.js';
+import { getXSDCacheDirectory } from '../src/utils/xsd/paths.ts';
+import { WSDLExists } from '../src/utils/xsd/index.ts';
+import { resolveB2BEnvironment } from './resolveB2BEnvironment.ts';
+import { MOCK_B2B_XSD_ENDPOINT } from './constants.ts';
 
 export default async function setup() {
   const env = resolveB2BEnvironment();

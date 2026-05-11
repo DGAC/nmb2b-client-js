@@ -1,9 +1,9 @@
 import { add, startOfHour, sub } from 'date-fns';
 import { inspect } from 'util';
 import { describe, expect, test } from 'vitest';
-import { TEST_B2B_OPTIONS } from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { NMB2BError, createFlowClient } from '../index.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
+import { NMB2BError, createFlowClient } from '../index.ts';
 
 describe('queryTrafficCountsByAirspace', async () => {
   const Flow = await createFlowClient(TEST_B2B_OPTIONS);
