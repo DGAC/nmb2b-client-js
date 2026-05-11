@@ -116,7 +116,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20, 22, 24]
+        node-version: [22, 24, 26]
     env:
       B2B_API_KEY_ID: ${{ secrets.B2B_API_KEY_ID }}
       B2B_API_SECRET_KEY: ${{ secrets.B2B_API_SECRET_KEY }}
@@ -151,11 +151,11 @@ jobs:
       - name: Run test suite
         run: pnpm test:ci
         env:
-          REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '22' && env.B2B_API_KEY_ID != '' && '1' || '' }}
+          REAL_B2B_CONNECTIONS: ${{ matrix.node-version == '24' && env.B2B_API_KEY_ID != '' && '1' || '' }}
 
       - name: Upload coverage
         uses: codecov/codecov-action@v5
-        if: matrix.node-version == '22' && env.B2B_API_KEY_ID != ''
+        if: matrix.node-version == '24' && env.B2B_API_KEY_ID != ''
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
