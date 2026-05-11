@@ -8,7 +8,7 @@ import type { SoapQueryHook } from '../utils/hooks/hooks.ts';
 import {
   createSoapQueryDefinition,
   createSoapServiceFromSoapClient,
-} from './soap-query-definition.js';
+} from './soap-query-definition.ts';
 
 describe('hooks', () => {
   describe('when a request starts', () => {

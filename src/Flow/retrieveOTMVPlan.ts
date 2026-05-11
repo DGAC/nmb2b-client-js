@@ -2,7 +2,7 @@ import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   OTMVPlanRetrievalRequest,
   OTMVPlanRetrievalReply,
-} from './types.js';
+} from './types.ts';
 
 export const retrieveOTMVPlan = createSoapQueryDefinition<
   OTMVPlanRetrievalRequest,

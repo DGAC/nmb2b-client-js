@@ -11,7 +11,7 @@ import type {
   LastUpdate,
   Position,
   ReplyWithData,
-} from '../Common/types.js';
+} from '../Common/types.ts';
 
 export type RouteId = string; // (UALPHA|DIGIT){1,7}
 export type PublishedPointId = string; // (UALPHA|DIGIT){1,5}

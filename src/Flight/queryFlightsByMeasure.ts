@@ -2,7 +2,7 @@ import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   FlightListByMeasureRequest,
   FlightListByMeasureReply,
-} from './types.js';
+} from './types.ts';
 
 export const queryFlightsByMeasure = createSoapQueryDefinition<
   FlightListByMeasureRequest,

@@ -6,7 +6,7 @@ import type {
   SectorConfigurationId,
   SectorConfigurationPlanRetrievalReply,
   SectorConfigurationPlanRetrievalRequest,
-} from './types.js';
+} from './types.ts';
 
 export const retrieveSectorConfigurationPlan = createSoapQueryDefinition<
   SectorConfigurationPlanRetrievalRequest,

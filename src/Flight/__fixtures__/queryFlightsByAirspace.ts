@@ -3,7 +3,7 @@ import { assert } from 'vitest';
 import {
   defineFixture,
   expectSnapshot,
-} from '../../../tests/utils/fixtures.js';
+} from '../../../tests/utils/fixtures.ts';
 
 /**
  * Fixture for testing queryFlightsByAirspace.

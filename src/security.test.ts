@@ -5,7 +5,7 @@ import {
   clearCache,
   fromEnv,
   fromValues,
-} from './security.js';
+} from './security.ts';
 
 const usedEnvKeys = [
   'B2B_CERT',

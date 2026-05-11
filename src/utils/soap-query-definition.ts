@@ -6,7 +6,7 @@ import {
   assertOkReply,
   injectSendTime,
   type WithInjectedSendTime,
-} from './internals.js';
+} from './internals.ts';
 import { prepareSerializer } from './transformers/serializer.ts';
 import { getSoapEndpoint, type Config } from '../config.ts';
 import { getServiceWSDLFilePath } from './xsd/paths.ts';

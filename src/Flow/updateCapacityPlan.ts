@@ -2,7 +2,7 @@ import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   CapacityPlanUpdateReply,
   CapacityPlanUpdateRequest,
-} from './types.js';
+} from './types.ts';
 
 export const updateCapacityPlan = createSoapQueryDefinition<
   CapacityPlanUpdateRequest,
