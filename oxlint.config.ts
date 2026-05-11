@@ -6,6 +6,7 @@ import vitest from 'oxlint-config-presets/@vitest/recommended.json' with { type:
 
 export default defineConfig({
   extends: [eslintRecommended, tsStrict, tsStylistic, vitest],
+  plugins: ['import'],
   options: {
     typeAware: true,
   },
@@ -20,6 +21,15 @@ export default defineConfig({
     },
   },
   rules: {
+    'import/extensions': [
+      'error',
+      'always',
+      {
+        js: 'never',
+        ts: 'always',
+        ignorePackages: true,
+      },
+    ],
     'typescript/array-type': 'off',
     'typescript/consistent-indexed-object-style': 'off',
     'typescript/consistent-type-definitions': 'off',
