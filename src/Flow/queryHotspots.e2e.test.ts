@@ -1,8 +1,8 @@
 import { inspect } from 'util';
 import { describe, test } from 'vitest';
-import { TEST_B2B_OPTIONS } from '../../tests/options.js';
-import { shouldUseRealB2BConnection } from '../../tests/utils.js';
-import { createFlowClient, NMB2BError } from '../index.js';
+import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
+import { createFlowClient, NMB2BError } from '../index.ts';
 
 describe('queryHotspots', async () => {
   const Flow = await createFlowClient(TEST_B2B_OPTIONS);

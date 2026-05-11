@@ -1,10 +1,10 @@
 import axios, { AxiosHeaders } from 'axios';
 import { extract } from 'tar';
-import type { Security } from '../../security.js';
-import { createDebugLogger } from '../debug.js';
-import { createAxiosConfig } from './createAxiosConfig.js';
+import type { Security } from '../../security.ts';
+import { createDebugLogger } from '../debug.ts';
+import { createAxiosConfig } from './createAxiosConfig.ts';
 import type { Readable } from 'stream';
-import { assert } from '../assert.js';
+import { assert } from '../assert.ts';
 const debug = createDebugLogger('wsdl-downloader');
 
 export async function downloadAndExtractWSDL(

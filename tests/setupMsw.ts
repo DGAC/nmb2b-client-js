@@ -1,5 +1,5 @@
 import { afterAll, afterEach, beforeAll } from 'vitest';
-import { server } from './utils/msw.js';
+import { server } from './utils/msw.ts';
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });

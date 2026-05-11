@@ -1,6 +1,6 @@
-import type { B2BRequest, Reply, ReplyStatus } from '../Common/types.js';
-import { assert } from './assert.js';
-import { NMB2BError } from './NMB2BError.js';
+import type { B2BRequest, Reply, ReplyStatus } from '../Common/types.ts';
+import { assert } from './assert.ts';
+import { NMB2BError } from './NMB2BError.ts';
 
 export type WithInjectedSendTime<T extends B2BRequest> = Omit<T, 'sendTime'> & {
   sendTime?: Date | undefined;

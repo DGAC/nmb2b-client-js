@@ -1,5 +1,5 @@
 import { describe, test, expectTypeOf } from 'vitest';
-import type { SoapDeserializer, EmptyObjectToNullish } from './types.js';
+import type { SoapDeserializer, EmptyObjectToNullish } from './types.ts';
 
 describe('EmptyObjectToNullish', () => {
   test('should not modify an object with a required key', () => {

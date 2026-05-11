@@ -1,12 +1,12 @@
 import assert from 'node:assert';
 import { glob } from 'node:fs/promises';
 import { join, relative } from 'node:path';
-import type { CreateB2BClientOptions } from '../src/index.js';
-import { createB2BClient } from '../src/index.js';
-import { fromValues } from '../src/security.js';
-import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
-import { FixtureArtifacts } from '../tests/utils/artifacts.js';
-import { assertIsFixture } from '../tests/utils/fixtures.js';
+import type { CreateB2BClientOptions } from '../src/index.ts';
+import { createB2BClient } from '../src/index.ts';
+import { fromValues } from '../src/security.ts';
+import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.ts';
+import { FixtureArtifacts } from '../tests/utils/artifacts.ts';
+import { assertIsFixture } from '../tests/utils/fixtures.ts';
 
 const ROOT_DIR = join(import.meta.dirname, '..');
 

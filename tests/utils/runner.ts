@@ -2,11 +2,11 @@ import { http, HttpResponse } from 'msw';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, beforeAll, describe, expect, test, vi } from 'vitest';
-import { createB2BClient, type B2BClient } from '../../src/index.js';
-import { TEST_B2B_OPTIONS } from '../options.js';
-import { FixtureArtifacts, type FixtureLocation } from './artifacts.js';
-import { Fixture } from './fixtures.js';
-import { server, SOAP_ENDPOINT } from './msw.js';
+import { createB2BClient, type B2BClient } from '../../src/index.ts';
+import { TEST_B2B_OPTIONS } from '../options.ts';
+import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
+import { Fixture } from './fixtures.ts';
+import { server, SOAP_ENDPOINT } from './msw.ts';
 
 /**
  * Registers tests for fixtures loaded via import.meta.glob.

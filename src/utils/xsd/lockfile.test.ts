@@ -4,13 +4,13 @@ import { randomUUID } from 'node:crypto';
 import { rm } from 'node:fs/promises';
 import path from 'node:path';
 import { beforeEach, test } from 'vitest';
-import { TEST_B2B_OPTIONS } from '../../../tests/options.js';
-import { createMockArchive } from '../../../tests/utils.js';
-import { server } from '../../../tests/utils/msw.js';
-import { getFileUrl, getSoapEndpoint } from '../../config.js';
-import { B2B_VERSION } from '../../constants.js';
-import { createDir as mkdirp } from '../fs.js';
-import { download } from './index.js';
+import { TEST_B2B_OPTIONS } from '../../../tests/options.ts';
+import { createMockArchive } from '../../../tests/utils.ts';
+import { server } from '../../../tests/utils/msw.ts';
+import { getFileUrl, getSoapEndpoint } from '../../config.ts';
+import { B2B_VERSION } from '../../constants.ts';
+import { createDir as mkdirp } from '../fs.ts';
+import { download } from './index.ts';
 
 const OUTPUT_DIR = path.join('/tmp', `b2b-client-test-${randomUUID()}`);
 

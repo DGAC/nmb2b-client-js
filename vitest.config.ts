@@ -1,6 +1,6 @@
 import { configDefaults, defineConfig } from 'vitest/config';
-import { resolveB2BEnvironment } from './tests/resolveB2BEnvironment.js';
-import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from './tests/constants.js';
+import { resolveB2BEnvironment } from './tests/resolveB2BEnvironment.ts';
+import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from './tests/constants.ts';
 
 const b2bEnv = resolveB2BEnvironment();
 

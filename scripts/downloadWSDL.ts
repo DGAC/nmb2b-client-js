@@ -1,6 +1,6 @@
-import { fromValues } from '../src/security.js';
-import { download } from '../src/utils/xsd/index.js';
-import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.js';
+import { fromValues } from '../src/security.ts';
+import { download } from '../src/utils/xsd/index.ts';
+import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.ts';
 
 async function main() {
   const b2bEnv = resolveB2BEnvironment();

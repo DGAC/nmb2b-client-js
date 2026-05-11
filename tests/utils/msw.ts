@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node';
-import { getSoapEndpoint } from '../../src/config.js';
-import { MOCK_B2B_ENDPOINT } from '../constants.js';
+import { getSoapEndpoint } from '../../src/config.ts';
+import { MOCK_B2B_ENDPOINT } from '../constants.ts';
 import assert from 'node:assert';
 
 const B2B_FLAVOUR = process.env.B2B_FLAVOUR;

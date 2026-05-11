@@ -1,7 +1,7 @@
 import { AssertionError } from 'node:assert';
 import type { ExpectStatic } from 'vitest';
-import type { B2BClient } from '../../src/index.js';
-import { FixtureArtifacts, type FixtureLocation } from './artifacts.js';
+import type { B2BClient } from '../../src/index.ts';
+import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
 
 type B2BService = keyof B2BClient;
 type B2BServiceMethod<TService extends B2BService> = keyof B2BClient[TService] &

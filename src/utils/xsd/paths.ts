@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import type { Config } from '../../config.js';
-import { B2B_VERSION, type B2BFlavour } from '../../constants.js';
+import type { Config } from '../../config.ts';
+import { B2B_VERSION, type B2BFlavour } from '../../constants.ts';
 
 function getEndpointHash(endpoint: string): string {
   return createHash('sha256').update(endpoint).digest('hex').slice(0, 8);

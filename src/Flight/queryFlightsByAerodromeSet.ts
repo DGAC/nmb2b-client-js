@@ -1,4 +1,4 @@
-import { createSoapQueryDefinition } from '../utils/soap-query-definition.js';
+import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   FlightListByAerodromeSetReply,
   FlightListByAerodromeSetRequest,
