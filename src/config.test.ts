@@ -118,7 +118,7 @@ describe(assertValidConfig, () => {
     test('should throw error', () => {
       expect(() => {
         assertValidConfig(config);
-      }).toThrowError(errorMessage);
+      }).toThrow(errorMessage);
     });
   });
 });
@@ -233,9 +233,7 @@ describe(getFileUrl, () => {
   });
 
   test('with overriden endpoint', () => {
-    expect(() =>
-      getFileUrl('/bla', { endpoint: 'https://blabla' }),
-    ).toThrowError(
+    expect(() => getFileUrl('/bla', { endpoint: 'https://blabla' })).toThrow(
       'File download URL is not supported when config.endpoint is overriden',
     );
   });

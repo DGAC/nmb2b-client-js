@@ -150,7 +150,7 @@ export class Fixture<
     fn: FixtureRunFn<TVariables, TResult>,
   ): IFixtureRunnable<TVariables, TResult> {
     this.executeOperation = fn;
-    return this as unknown as IFixtureRunnable<TVariables, TResult>;
+    return this;
   }
 
   test(name: string, fn: FixtureTestFn<TVariables, TResult>): this {
