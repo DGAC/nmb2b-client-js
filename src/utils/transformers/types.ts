@@ -22,7 +22,7 @@ const outputBase = {
    * @returns Parsed Date instance
    */
   date: (text: string) => {
-    // eslint-disable-next-line prefer-const
+    // oxlint-disable-next-line prefer-const
     let [date, time] = text.split(' ');
 
     if (date === undefined || time === undefined) {

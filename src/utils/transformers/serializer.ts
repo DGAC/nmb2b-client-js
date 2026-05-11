@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* oxlint-disable typescript/no-explicit-any */
+/* oxlint-disable typescript/no-unsafe-return */
+/* oxlint-disable typescript/no-unsafe-argument */
+/* oxlint-disable typescript/no-unsafe-assignment */
+/* oxlint-disable typescript/no-unsafe-member-access */
 import { types } from './types.ts';
 import { piped, identity, evolve, map } from 'remeda';
 
@@ -19,7 +19,7 @@ export function prepareSerializer<T>(schema: any): (input: T) => T {
 }
 
 function reduceXSDType(str: string): string {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // oxlint-disable-next-line typescript/no-non-null-assertion
   return str.split('|')[0]!;
 }
 
@@ -28,7 +28,7 @@ interface Schema {
 }
 
 interface Transformer {
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  // oxlint-disable-next-line typescript/no-redundant-type-constituents
   [k: string]: (input: any) => any | Transformer;
 }
 

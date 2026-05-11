@@ -194,7 +194,7 @@ function buildQueryFunctionFromSoapDefinition<
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line typescript/no-explicit-any
 type ServiceDefinition = Record<string, SoapQueryDefinition<any, any>>;
 
 type ExtractSoapQuery<T extends SoapQueryDefinition<B2BRequest, Reply>> =
