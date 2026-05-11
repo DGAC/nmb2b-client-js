@@ -2,7 +2,7 @@ import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   CompleteAIXMDatasetReply,
   CompleteAIXMDatasetRequest,
-} from './types.js';
+} from './types.ts';
 
 export const queryCompleteAIXMDatasets = createSoapQueryDefinition<
   CompleteAIXMDatasetRequest,

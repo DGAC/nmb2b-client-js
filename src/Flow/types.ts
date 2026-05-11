@@ -10,7 +10,7 @@ import type {
   TrafficVolumeSetIdWildcard,
   WithReferenceLocationOnPrefix,
   WithReferenceLocationOnPrefixOptional,
-} from '../Airspace/types.js';
+} from '../Airspace/types.ts';
 
 import type {
   AirNavigationUnitId,
@@ -27,14 +27,14 @@ import type {
   PlanDataId,
   ReplyWithData,
   UserId,
-} from '../Common/types.js';
+} from '../Common/types.ts';
 
 import type {
   FlightKeys,
   GroupReroutingIndicator,
   IFPLId,
   TrafficType,
-} from '../Flight/types.js';
+} from '../Flight/types.ts';
 
 export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
 export type RegulationId = string; // UALPHA(UALPHA|DIGIT){0,5}DIGIT{2}UALPHA{0,1}

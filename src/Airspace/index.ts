@@ -2,7 +2,7 @@ import type { Config } from '../config.ts';
 import {
   createSoapService,
   type SoapService,
-} from '../utils/soap-query-definition.js';
+} from '../utils/soap-query-definition.ts';
 import { queryCompleteAIXMDatasets } from './queryCompleteAIXMDatasets.ts';
 import { retrieveAUP } from './retrieveAUP.ts';
 import { retrieveAUPChain } from './retrieveAUPChain.ts';

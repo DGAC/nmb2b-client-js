@@ -2,7 +2,7 @@ import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
 import type {
   FlightListByAerodromeSetReply,
   FlightListByAerodromeSetRequest,
-} from './types.js';
+} from './types.ts';
 
 export const queryFlightsByAerodromeSet = createSoapQueryDefinition<
   FlightListByAerodromeSetRequest,

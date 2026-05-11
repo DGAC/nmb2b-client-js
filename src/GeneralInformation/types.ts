@@ -3,7 +3,7 @@ import type {
   File,
   NMB2BVersion,
   ReplyWithData,
-} from '../Common/types.js';
+} from '../Common/types.ts';
 
 export type NMB2BWSDLsRequest = B2BRequest & {
   version: NMB2BVersion;

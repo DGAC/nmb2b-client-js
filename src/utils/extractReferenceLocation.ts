@@ -2,7 +2,7 @@ import type {
   ReferenceLocation,
   WithReferenceLocationOnPrefixOptional,
   WithReferenceLocationOnPrefix,
-} from '../Airspace/types.js';
+} from '../Airspace/types.ts';
 
 const keys = [
   'ReferenceLocationAirspace',

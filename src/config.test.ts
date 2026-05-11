@@ -7,7 +7,7 @@ import {
   getSoapEndpoint,
   isConfigValid,
   obfuscate,
-} from './config.js';
+} from './config.ts';
 
 import { describe, expect, test } from 'vitest';
 

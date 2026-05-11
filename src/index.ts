@@ -12,6 +12,6 @@ export {
   type FlightService,
   type FlowService,
   type GeneralInformationService,
-} from './createB2BClient.js';
+} from './createB2BClient.ts';
 
 export { createHook } from './utils/hooks/hooks.ts';

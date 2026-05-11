@@ -8,7 +8,7 @@ import {
   createFlightClient,
   createFlowClient,
   createGeneralInformationClient,
-} from './index.js';
+} from './index.ts';
 
 describe('Main API', () => {
   test(createB2BClient, async () => {
