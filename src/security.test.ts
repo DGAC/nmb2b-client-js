@@ -117,7 +117,7 @@ describe(assertValidSecurity, () => {
     test('should throw an error', () => {
       expect(() => {
         assertValidSecurity(security);
-      }).toThrowError(errorMessage);
+      }).toThrow(errorMessage);
     });
   });
 });

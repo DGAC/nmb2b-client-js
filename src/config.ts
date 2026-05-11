@@ -76,7 +76,7 @@ export function assertValidConfig(args: unknown): asserts args is Config {
   assert(
     'flavour' in args &&
       typeof args.flavour === 'string' &&
-      B2BFlavours.includes(args.flavour as B2BFlavour),
+      B2BFlavours.includes(args.flavour),
     `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
