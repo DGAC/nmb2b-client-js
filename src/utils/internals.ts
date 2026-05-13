@@ -18,10 +18,8 @@ export function assertOkReply<T extends Reply>(
   reply: T,
 ): asserts reply is T & { status: 'OK' } {
   assert(
-    typeof reply === 'object' &&
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Just in case the response is completely broken.
-      reply !== null &&
-      'status' in reply,
+    // oxlint-disable-next-line typescript/no-unnecessary-condition -- Just in case the response is completely broken.
+    typeof reply === 'object' && reply !== null && 'status' in reply,
     `Invalid NM B2B Response:\n` + JSON.stringify(reply),
   );
 

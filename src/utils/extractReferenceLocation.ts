@@ -31,7 +31,7 @@ const keys = [
  */
 export function extractReferenceLocation<
   const TPrefix extends string,
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  // oxlint-disable-next-line typescript/no-unnecessary-type-parameters
   TInput extends WithReferenceLocationOnPrefix<TPrefix>,
 >(prefix: TPrefix, input: TInput): ReferenceLocation;
 
@@ -54,7 +54,7 @@ export function extractReferenceLocation<
  */
 export function extractReferenceLocation<
   const TPrefix extends string,
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  // oxlint-disable-next-line typescript/no-unnecessary-type-parameters
   TInput extends undefined | WithReferenceLocationOnPrefixOptional<TPrefix>,
 >(prefix: TPrefix, input: TInput): undefined | ReferenceLocation;
 

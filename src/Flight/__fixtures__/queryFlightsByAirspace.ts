@@ -55,7 +55,7 @@ export const nominal = defineFixture({
     expect(flights.length).toBeGreaterThan(0);
 
     for (const flight of flights) {
-      /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+      /* oxlint-disable typescript/no-unsafe-assignment */
       expect(flight).toEqual({
         flight: {
           flightId: {
@@ -78,6 +78,6 @@ export const nominal = defineFixture({
           },
         },
       });
-      /* eslint-enable @typescript-eslint/no-unsafe-assignment */
+      /* oxlint-enable typescript/no-unsafe-assignment */
     }
   });

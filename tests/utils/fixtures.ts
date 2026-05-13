@@ -170,7 +170,7 @@ export class Fixture<
  */
 export function assertIsFixture(
   fixture: unknown,
-  message: string = 'Not a Fixture instance',
+  message = 'Not a Fixture instance',
 ): asserts fixture is Fixture {
   if (!(fixture instanceof Fixture)) {
     throw new AssertionError({

@@ -55,7 +55,7 @@ describe('updateOTMVPlan', async () => {
         return plan;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // oxlint-disable-next-line typescript/no-explicit-any
       await Flow.updateOTMVPlan(clearNmSchedules(planBefore) as any);
     } catch (err) {
       console.warn('Error resetting otmv plan after test');
@@ -64,6 +64,7 @@ describe('updateOTMVPlan', async () => {
     }
   });
 
+  // oxlint-disable-next-line vitest/no-disabled-tests -- Do not run theses tests in CI
   test.skip('LFERMS', async () => {
     try {
       assert(planBefore);

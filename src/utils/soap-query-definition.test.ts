@@ -224,7 +224,7 @@ describe('error handling', () => {
       const { soapService, executeQuery } = withMockedSoapService();
 
       executeQuery.mockResolvedValueOnce([
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // oxlint-disable-next-line typescript/no-explicit-any
         null as any,
       ]);
 

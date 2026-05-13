@@ -74,10 +74,10 @@ async function record() {
       await fixture.executeOperation(client, variables);
 
       const serviceClient = client[fixture.service];
-      const lastResponse = serviceClient.__soapClient.lastResponse;
+      const lastResponse = serviceClient.__soapClient.lastResponse as unknown;
 
       assert(
-        lastResponse,
+        lastResponse && typeof lastResponse === 'string',
         'No SOAP response captured. Did the executeOperation execute a SOAP query?',
       );
 

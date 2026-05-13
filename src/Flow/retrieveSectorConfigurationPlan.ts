@@ -15,7 +15,7 @@ export const retrieveSectorConfigurationPlan = createSoapQueryDefinition<
   service: 'Flow',
   query: 'retrieveSectorConfigurationPlan',
   getSchema: (client) =>
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+    // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
     client.describe().TacticalUpdatesService.TacticalUpdatesPort
       .retrieveSectorConfigurationPlan.input,
 });
@@ -33,7 +33,7 @@ export function knownConfigurationsToMap(
 
   const { item } = knownConfigurations;
 
-  const map: Map<SectorConfigurationId, AirspaceId[]> = new Map();
+  const map = new Map<SectorConfigurationId, AirspaceId[]>();
   item.forEach(({ key, value }) => {
     if (!value?.item) {
       return;

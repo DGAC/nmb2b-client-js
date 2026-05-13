@@ -6,6 +6,8 @@
 
     "verbatimModuleSyntax": true,
     "strict": true,
+    "erasableSyntaxOnly": true,
+    "allowUnreachableCode": false,
 
     "types": ["node"],
 
@@ -22,6 +24,5 @@
     "scripts/**/*",
     "vitest.config.ts",
     "tsdown.config.ts"
-    // "eslint.config.mjs"
   ]
 }
