@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 3.0.0
+
+### Major Changes
+
+- [#283](https://github.com/DGAC/nmb2b-client-js/pull/283) [`7349352`](https://github.com/DGAC/nmb2b-client-js/commit/73493527c5a157b511ea274dea5968cd0ca02f81) Thanks [@kouak](https://github.com/kouak)! - Drop node v20 support, add node v26 support
+
 ## 2.2.7
 
 ### Patch Changes
