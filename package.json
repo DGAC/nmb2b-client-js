@@ -46,7 +46,6 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "prepack": "pnpm build",
     "downloadWSDL": "node ./scripts/downloadWSDL.ts",
     "clean": "rimraf dist",
@@ -69,39 +68,34 @@
     "@changesets/cli": "^2.31.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.13",
-    "@types/node": "^22.19.19",
+    "@types/node": "^22.20.0",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^4.1.6",
+    "@vitest/coverage-v8": "^4.1.9",
     "dotenv": "^17.4.2",
     "msw": "^2.14.6",
-    "oxlint": "^1.64.0",
-    "oxlint-config-presets": "^0.1.10",
+    "oxlint": "^1.70.0",
+    "oxlint-config-presets": "^0.1.13",
     "oxlint-tsgolint": "^0.22.1",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "rimraf": "^6.1.3",
-    "tsdown": "^0.22.0",
+    "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
-    "vite": "^8.0.12",
-    "vitest": "^4.1.6"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9"
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.1",
-    "axios": "^1.16.0",
-    "date-fns": "^4.1.0",
+    "axios": "^1.18.0",
+    "date-fns": "^4.4.0",
     "debug": "^4.4.3",
     "proper-lockfile": "^4.1.2",
-    "remeda": "^2.34.0",
-    "soap": "^1.9.1",
-    "tar": "^7.5.15",
-    "type-fest": "^5.6.0"
+    "remeda": "^2.39.0",
+    "soap": "^1.9.3",
+    "tar": "^7.5.16",
+    "type-fest": "^5.7.0"
   },
   "publishConfig": {
     "provenance": true
   },
-  "packageManager": "pnpm@11.0.9+sha512.34ce82e6780233cf9cad8685029a8f81d2e06196c5a9bad98879f7424940c6817c4e4524fb7d38b8553ceed48b9758b8ebaf1abd3600c232c4c8cf7366086f38",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "msw"
-    ]
-  }
+  "packageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26"
 }
