@@ -7,235 +7,117 @@
 ![Test](https://github.com/DGAC/nmb2b-client-js/workflows/Build,%20test,%20publish/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/DGAC/nmb2b-client-js/branch/master/graph/badge.svg)](https://codecov.io/gh/DGAC/nmb2b-client-js)
 
-Exposes a general purpose Javascript library to interact with NM B2B web services. The idea is to abstract pain points while offering an API that maps the NM B2B WS API.
+A TypeScript client for the **EUROCONTROL Network Manager B2B** web services.
+The library wraps the NM SOAP API and removes most of its pain points: it
+downloads and caches the WSDL/XSD automatically, serializes/deserializes awkward
+XSD types into idiomatic JavaScript values, reorders request keys to satisfy
+SOAP ordering rules, and exposes a fully typed, promise-based API.
 
-NM target version: **27.0.0**
+NM target version: **27.0.0** · Node `>=22` · ESM-only
 
-## Simple usage example
+## Documentation
 
-https://github.com/DGAC/nmb2b-client-js-example
+Full guides live in [`docs/`](./docs/README.md). Start with the one that matches
+what you are trying to do:
 
-# Features
+| If you are…                                      | Read this                                    |
+| ------------------------------------------------ | -------------------------------------------- |
+| **Consuming the library** in your app            | [API & Usage Guide](./docs/api-reference.md) |
+| **Contributing / onboarding** to the repo        | [Getting Started](./docs/getting-started.md) |
+| **Maintaining internals** / curious how it works | [Architecture](./docs/architecture.md)       |
 
-- No WSDL/XSD dependency. The library will download and cache those on start up.
-- Natural serialization/deserialization of certain types.
+A runnable example project: <https://github.com/DGAC/nmb2b-client-js-example>.
 
-For instance, the Flow.retrieveOTMVPlan query expects a `day` attribute with the XSD type `DateYearMonthDay`. This type is a string, representing a date in the `YYYY-MM-DD` format. This library allows you to pass a traditional JS Date object instead.
-
-```typescript
-const res = await Flow.retrieveOTMVPlan({
-  dataset: { type: 'OPERATIONAL' },
-  day: new Date(),
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
-});
-```
-
-- Request object key reordering when needed.
-
-In SOAP, key order matters.
-
-```typescript
-// OK
-await Flow.retrieveOTMVPlan({
-  dataset: { type: 'OPERATIONAL' },
-  day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
-});
-
-// Would normally fail
-await const Flow.retrieveOTMVPlan({
-  day: moment.utc().toDate(),
-  dataset: { type: 'OPERATIONAL' },
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
-});
-```
-
-The library reorder request object keys to match what's expressed in the XSD/WSDL. Therefore, the second example works fine.
-
-- TypeScript support.
-
-The following example will raise a type error.
-
-```typescript
-// Raises a type error
-await Flow.retrieveOTMVPlan({
-  dataset: { type: 'OPERATIONNAL' }, // Notice the typo
-  day: moment.utc().toDate(),
-  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
-});
-```
-
-- Debug output
-
-Debug output is controlled via the [`debug`](https://npmjs.com/package/debug) package. All debug output from this library is scoped under `@dgac/nmb2b-client` namespace.
-
-Just set a `DEBUG=@dgac/nmb2b-client*` environment variable :
-[![asciicast](https://asciinema.org/a/xWovjkKlkqePBolRl3OqAFBi8.svg)](https://asciinema.org/a/xWovjkKlkqePBolRl3OqAFBi8)
-
-- Hooks
-
-Custom user provided callbacks to be executed when a SOAP query is either started or completed.
-
-# Usage
-
-## Main service
+## 60-second example
 
 ```typescript
 import { createB2BClient } from '@dgac/nmb2b-client';
+import fs from 'node:fs';
 
-// See below for more information about the security argument
-const client = await createB2BClient({ security });
+const client = await createB2BClient({
+  security: {
+    pfx: fs.readFileSync('/path/to/cert.p12'),
+    passphrase: 'your-passphrase',
+  },
+});
 
 const res = await client.Airspace.queryCompleteAIXMDatasets();
+console.log(res.data.datasetSummaries);
 ```
 
-## Per domain service
+## Features
+
+- **No WSDL/XSD dependency.** The schema is fetched from NM at startup and cached
+  on disk, so the package stays small and always matches the targeted NM version.
+- **Natural (de)serialization.** Pass JS `Date`s, get `Date`s back; durations
+  become seconds; numeric strings become integers. See
+  [API & Usage Guide → Natural (de)serialization](./docs/api-reference.md#natural-deserialization).
+- **Request key reordering.** SOAP is order-sensitive; the library reorders
+  request keys to match the WSDL schema, so key order in your code doesn't matter.
+- **Fully typed.** Input typos are compile errors; response shapes are derived
+  from each operation's query definition.
+- **Typed errors.** A non-`OK` SOAP reply throws an `NMB2BError` carrying the NM
+  status code and validation details.
+- **Hooks.** User callbacks run around every query for logging, metrics, tracing.
+- **Tree-shakeable subpath exports.** Besides the main entry, the package exposes
+  `/security`, `/config`, `/types`, and `/utils`.
+
+## Authentication
+
+Provide **one** of three shapes via the `security` option — PFX certificate, PEM
+certificate + key, or API-gateway credentials. See
+[API & Usage Guide → Authentication](./docs/api-reference.md#authentication-security)
+for the full details and env-based loading (`fromEnv()`).
 
 ```typescript
-import { createAirspaceClient } from '@dgac/nmb2b-client';
-
-// See below for more information about the security argument
-const Airspace = await createAirspaceClient({ security });
-
-const res = await Airspace.queryCompleteAIXMDatasets();
-```
-
-## Error handling
-
-```typescript
-import { createAirspaceClient, NMB2BError } from '@dgac/nmb2b-client';
-
-try {
-  const Airspace = await createAirspaceClient({ security });
-
-  const res = await Airspace.queryCompleteAIXMDatasets();
-} catch (err) {
-  if (err instanceof NMB2BError) {
-    if (err.status === 'OBJECT_NOT_FOUND') {
-      // ...
-    }
-  }
-
-  // ...
-}
-```
-
-## B2B Security
-
-Every request to the NM B2B web services must be authenticated using a client certificate. This library needs to be initialized with a `security` object, containing the certificate, key and passphrase associated.
-
-### With P12 certificate
-
-```javascript
-import fs from 'fs';
-
+// PFX / PKCS#12
 const security = {
   pfx: fs.readFileSync('/path/to/cert.p12'),
   passphrase: 'your-passphrase',
 };
 
-createB2BClient({ security }).then((client) => {
-  client.Airspace.queryCompleteAIXMDatasets().then(() => {});
-});
-```
-
-### With PEM certificate
-
-```javascript
-import fs from 'fs';
-
+// PEM certificate + key
 const security = {
-  pem: fs.readFileSync('/path/to/cert.pem'),
+  cert: fs.readFileSync('/path/to/cert.pem'),
   key: fs.readFileSync('/path/to/cert.key'),
-  passphrase: 'your-passphrase',
+  passphrase: 'your-passphrase', // optional if the key is not encrypted
 };
 
-createB2BClient({ security }).then((client) => {
-  client.Airspace.queryCompleteAIXMDatasets().then(() => {});
-});
+// API-gateway credentials (requires endpoint + xsdEndpoint in config)
+const security = {
+  apiKeyId: process.env.B2B_API_KEY_ID!,
+  apiSecretKey: process.env.B2B_API_SECRET_KEY!,
+};
 ```
 
-## Hooks
+## Error handling
 
-Hooks are user provided callbacks which will be executed during the SOAP query process.
-
-Basic example :
+A non-`OK` reply is thrown as an `NMB2BError` with the NM `status`, `reason`, and
+validation details. See
+[API & Usage Guide → Error handling](./docs/api-reference.md#error-handling)
+for the full field reference and status code list.
 
 ```typescript
-const client = await createB2BClient({
-  // ... other options,
-  hooks: [
-    function onRequestStart({ service, query, input }) {
-      console.log(`Query ${query} of service ${service} was invoked with input`, input)
-    }
-  ]
-})
+import { NMB2BError } from '@dgac/nmb2b-client';
+
+try {
+  const res = await client.Airspace.queryCompleteAIXMDatasets();
+} catch (err) {
+  if (err instanceof NMB2BError) {
+    console.error(err.status, err.reason);
+  } else {
+    throw err; // transport / unexpected error
+  }
+}
 ```
 
-A hook can return an optional object containing success / error hooks :
+## Debug output
 
-```typescript
-const client = await createB2BClient({
-  // ... other options,
-  hooks: [
-    function onRequestStart({ service, query, input }) {
-      const startTime = new Date();
+Tracing uses the [`debug`](https://npmjs.com/package/debug) package under the
+`@dgac/nmb2b-client` namespace:
 
-      console.log(
-        `Query ${query} of service ${service} was invoked with input:`,
-        input,
-      );
-
-      return {
-        onRequestSuccess: ({ response }) => {
-          const durationMs = new Date().valueOf() - startTime;
-          console.log(`Query took ${durationMs}ms`);
-          console.log(`Query responded with`, response);
-        },
-        onRequestError: ({ error }) => {
-          const durationMs = new Date().valueOf() - startTime;
-          console.log(`Query took ${durationMs}ms`);
-          console.log(`Query failed with error ${error.message}`);
-        },
-      };
-    },
-  ],
-});
+```bash
+DEBUG='@dgac/nmb2b-client*' node your-app.js
 ```
 
-Hooks can also be async :
-
-```typescript
-const client = await createB2BClient({
-  // ... other options,
-  hooks: [
-    async function onRequestStart({ service, query, input }) {
-      await sendLog(`Query ${query} of service ${service} was invoked`);
-    },
-  ],
-});
-```
-
-To get proper typescript support when creating custom hooks, a `createHook()` function helper is now exported :
-
-```typescript
-import { createHook } from '@dgac/nmb2b-client';
-
-const withPrometheusMetrics = createHook(({ service, query }) => {
-  prometheusCounter.inc({ service, query, status: 'started' });
-
-  return {
-    onRequestSuccess: () =>
-      prometheusCounter.inc({ service, query, status: 'completed' }),
-    onRequestError: () =>
-      prometheusCounter.inc({ service, query, status: 'completed' }),
-  };
-});
-
-// ... in another file
-
-const b2bClient = await createB2BClient({
-  // ... other options
-  hooks: [withPrometheusMetrics],
-});
-```
+[![asciicast](https://asciinema.org/a/xWovjkKlkqePBolRl3OqAFBi8.svg)](https://asciinema.org/a/xWovjkKlkqePBolRl3OqAFBi8)

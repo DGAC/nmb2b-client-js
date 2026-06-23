@@ -28,13 +28,13 @@ A runnable example project: <https://github.com/DGAC/nmb2b-client-js-example>.
 
 ## Package exports
 
-| Import path                     | Contents                                                        |
-| ------------------------------- | --------------------------------------------------------------- |
-| `@dgac/nmb2b-client`            | `createB2BClient`, the four per-domain factories, `NMB2BError`, `createHook`, and the main types |
-| `@dgac/nmb2b-client/security`   | `Security` type and helpers (`fromEnv`, `fromValues`, `clearCache`, `assertValidSecurity`) |
-| `@dgac/nmb2b-client/config`     | `Config` type, `assertValidConfig`, `getSoapEndpoint`, `getFileUrl`, `obfuscate` |
-| `@dgac/nmb2b-client/types`      | All domain request/reply types + `SafeB2BDeserializedResponse`   |
-| `@dgac/nmb2b-client/utils`      | `NMB2BError`, `extractReferenceLocation`                         |
+| Import path                   | Contents                                                                                         |
+| ----------------------------- | ------------------------------------------------------------------------------------------------ |
+| `@dgac/nmb2b-client`          | `createB2BClient`, the four per-domain factories, `NMB2BError`, `createHook`, and the main types |
+| `@dgac/nmb2b-client/security` | `Security` type and helpers (`fromEnv`, `fromValues`, `clearCache`, `assertValidSecurity`)       |
+| `@dgac/nmb2b-client/config`   | `Config` type, `assertValidConfig`, `getSoapEndpoint`, `getFileUrl`, `obfuscate`                 |
+| `@dgac/nmb2b-client/types`    | All domain request/reply types + `SafeB2BDeserializedResponse`                                   |
+| `@dgac/nmb2b-client/utils`    | `NMB2BError`, `extractReferenceLocation`                                                         |
 
 ---
 
@@ -88,14 +88,14 @@ const security = fromEnv(); // cached after first call; clearCache() to reset
 
 Recognised variables:
 
-| Variable               | Meaning                                              |
-| ---------------------- | ---------------------------------------------------- |
-| `B2B_CERT`             | Path to a PFX or PEM certificate file                |
-| `B2B_CERT_FORMAT`      | `pfx` (default) or `pem`                             |
-| `B2B_CERT_KEY`         | Path to the PEM key (required when format is `pem`)  |
-| `B2B_CERT_PASSPHRASE`  | Passphrase for the cert/key                          |
-| `B2B_API_KEY_ID`       | API-gateway key id                                   |
-| `B2B_API_SECRET_KEY`   | API-gateway secret (required with `B2B_API_KEY_ID`)  |
+| Variable              | Meaning                                             |
+| --------------------- | --------------------------------------------------- |
+| `B2B_CERT`            | Path to a PFX or PEM certificate file               |
+| `B2B_CERT_FORMAT`     | `pfx` (default) or `pem`                            |
+| `B2B_CERT_KEY`        | Path to the PEM key (required when format is `pem`) |
+| `B2B_CERT_PASSPHRASE` | Passphrase for the cert/key                         |
+| `B2B_API_KEY_ID`      | API-gateway key id                                  |
+| `B2B_API_SECRET_KEY`  | API-gateway secret (required with `B2B_API_KEY_ID`) |
 
 ---
 
@@ -141,21 +141,21 @@ the SOAP client(s) asynchronously.
 
 Passed to every factory. Only `security` is required.
 
-| Option            | Type                  | Default          | Description                                                                 |
-| ----------------- | --------------------- | ---------------- | --------------------------------------------------------------------------- |
-| `security`        | `Security`            | — (required)     | Authentication; see above.                                                  |
-| `flavour`         | `'OPS' \| 'PREOPS'`   | `'OPS'`          | Target NM environment (production vs pre-ops).                              |
-| `XSD_PATH`        | `string`              | `'/tmp/b2b-xsd'` | Directory where the WSDL/XSD cache is stored.                              |
-| `hooks`           | `SoapQueryHook[]`     | `[]`             | Callbacks run around every query (logging, metrics…).                      |
-| `endpoint`        | `string`              | public NM host   | Override the SOAP gateway base URL.                                         |
-| `xsdEndpoint`     | `string`              | —                | Override where the WSDL tarball is fetched from. Required with `apiKeyId`. |
-| `ignoreWSDLCache` | `boolean`             | `false`          | Force re-download of the WSDL even if cached.                              |
+| Option            | Type                | Default          | Description                                                                |
+| ----------------- | ------------------- | ---------------- | -------------------------------------------------------------------------- |
+| `security`        | `Security`          | — (required)     | Authentication; see above.                                                 |
+| `flavour`         | `'OPS' \| 'PREOPS'` | `'OPS'`          | Target NM environment (production vs pre-ops).                             |
+| `XSD_PATH`        | `string`            | `'/tmp/b2b-xsd'` | Directory where the WSDL/XSD cache is stored.                              |
+| `hooks`           | `SoapQueryHook[]`   | `[]`             | Callbacks run around every query (logging, metrics…).                      |
+| `endpoint`        | `string`            | public NM host   | Override the SOAP gateway base URL.                                        |
+| `xsdEndpoint`     | `string`            | —                | Override where the WSDL tarball is fetched from. Required with `apiKeyId`. |
+| `ignoreWSDLCache` | `boolean`           | `false`          | Force re-download of the WSDL even if cached.                              |
 
 Per-call options (second argument to any operation) are `SoapOptions`:
 
-| Option    | Type     | Description                            |
-| --------- | -------- | -------------------------------------- |
-| `timeout` | `number` | Max request duration in milliseconds.  |
+| Option    | Type     | Description                           |
+| --------- | -------- | ------------------------------------- |
+| `timeout` | `number` | Max request duration in milliseconds. |
 
 ```typescript
 await client.Flight.retrieveFlight(input, { timeout: 30_000 });
@@ -175,40 +175,40 @@ request/reply shapes come from `@dgac/nmb2b-client/types` and the per-domain
 
 ### `Airspace` — `AirspaceServices`
 
-| Operation                   | Purpose                                            |
-| --------------------------- | -------------------------------------------------- |
-| `queryCompleteAIXMDatasets` | List/query complete AIXM datasets.                 |
-| `retrieveAUP`               | Retrieve an Airspace Use Plan.                      |
-| `retrieveAUPChain`          | Retrieve the chain of AUPs.                         |
-| `retrieveEAUPChain`         | Retrieve the European AUP chain.                   |
+| Operation                   | Purpose                            |
+| --------------------------- | ---------------------------------- |
+| `queryCompleteAIXMDatasets` | List/query complete AIXM datasets. |
+| `retrieveAUP`               | Retrieve an Airspace Use Plan.     |
+| `retrieveAUPChain`          | Retrieve the chain of AUPs.        |
+| `retrieveEAUPChain`         | Retrieve the European AUP chain.   |
 
 ### `Flight` — `FlightServices`
 
-| Operation                       | Purpose                                          |
-| ------------------------------- | ------------------------------------------------ |
-| `queryFlightPlans`              | Query flight plans.                              |
-| `queryFlightsByAerodrome`       | Flights for a single aerodrome.                  |
-| `queryFlightsByAerodromeSet`    | Flights for a set of aerodromes.                 |
-| `queryFlightsByAircraftOperator`| Flights for an aircraft operator.                |
-| `queryFlightsByAirspace`        | Flights crossing an airspace.                    |
-| `queryFlightsByMeasure`         | Flights impacted by a measure.                   |
-| `queryFlightsByTrafficVolume`   | Flights through a traffic volume.                |
-| `retrieveFlight`                | Retrieve a single flight by id.                  |
+| Operation                        | Purpose                           |
+| -------------------------------- | --------------------------------- |
+| `queryFlightPlans`               | Query flight plans.               |
+| `queryFlightsByAerodrome`        | Flights for a single aerodrome.   |
+| `queryFlightsByAerodromeSet`     | Flights for a set of aerodromes.  |
+| `queryFlightsByAircraftOperator` | Flights for an aircraft operator. |
+| `queryFlightsByAirspace`         | Flights crossing an airspace.     |
+| `queryFlightsByMeasure`          | Flights impacted by a measure.    |
+| `queryFlightsByTrafficVolume`    | Flights through a traffic volume. |
+| `retrieveFlight`                 | Retrieve a single flight by id.   |
 
 ### `Flow` — `FlowServices`
 
-| Operation                          | Purpose                                       |
-| ---------------------------------- | --------------------------------------------- |
-| `queryHotspots`                    | Query hotspots.                               |
-| `queryRegulations`                 | Query regulations.                            |
-| `queryTrafficCountsByAirspace`     | Traffic counts for an airspace.               |
-| `queryTrafficCountsByTrafficVolume`| Traffic counts for a traffic volume.          |
-| `retrieveCapacityPlan`             | Retrieve a capacity plan.                     |
-| `retrieveOTMVPlan`                 | Retrieve an OTMV plan.                         |
-| `retrieveRunwayConfigurationPlan`  | Retrieve a runway configuration plan.         |
-| `retrieveSectorConfigurationPlan`  | Retrieve a sector configuration plan.         |
-| `updateCapacityPlan`               | **Write** — update a capacity plan.           |
-| `updateOTMVPlan`                   | **Write** — update an OTMV plan.              |
+| Operation                           | Purpose                               |
+| ----------------------------------- | ------------------------------------- |
+| `queryHotspots`                     | Query hotspots.                       |
+| `queryRegulations`                  | Query regulations.                    |
+| `queryTrafficCountsByAirspace`      | Traffic counts for an airspace.       |
+| `queryTrafficCountsByTrafficVolume` | Traffic counts for a traffic volume.  |
+| `retrieveCapacityPlan`              | Retrieve a capacity plan.             |
+| `retrieveOTMVPlan`                  | Retrieve an OTMV plan.                |
+| `retrieveRunwayConfigurationPlan`   | Retrieve a runway configuration plan. |
+| `retrieveSectorConfigurationPlan`   | Retrieve a sector configuration plan. |
+| `updateCapacityPlan`                | **Write** — update a capacity plan.   |
+| `updateOTMVPlan`                    | **Write** — update an OTMV plan.      |
 
 ### `GeneralInformation` — `GeneralinformationServices`
 
@@ -258,6 +258,71 @@ await Flow.retrieveOTMVPlan({
 
 ---
 
+## Response shape
+
+Every operation returns a `Reply` envelope. On success, `status` is `'OK'` and
+the operation-specific payload lives under `data`. You never get a non-`OK`
+reply back as a return value — those throw as `NMB2BError` (see
+[Error handling](#error-handling)).
+
+### The `Reply` envelope
+
+All return types extend `Reply` ([`Common/types.ts`](../src/Common/types.ts)):
+
+| Field                  | Type             | Description                                         |
+| ---------------------- | ---------------- | --------------------------------------------------- |
+| `status`               | `ReplyStatus`    | Always `'OK'` on a successful return.               |
+| `requestId`            | `string`         | NM request id (unique with `requestReceptionTime`). |
+| `requestReceptionTime` | `DateTimeSecond` | UTC time NM received the request.                   |
+| `sendTime`             | `DateTimeSecond` | UTC time NM sent the reply.                         |
+| `warnings`             | `B2B_Error[]`    | Non-fatal warnings, if any.                         |
+| `reason`               | `string`         | Human-readable note, when provided.                 |
+
+### `res.data` holds the payload
+
+Operations that return data use `ReplyWithData<T> = Reply & { data: T }`. The
+`data` field is the typed, deserialized payload — the part you actually want.
+
+```typescript
+// Flow.retrieveOTMVPlan → OTMVPlanRetrievalReply = ReplyWithData<{ plans: OTMVPlans }>
+const res = await Flow.retrieveOTMVPlan({
+  dataset: { type: 'OPERATIONAL' },
+  day: new Date(),
+  otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
+});
+
+res.status; // 'OK'
+res.requestId; // NM request id
+res.data.plans; // the OTMV plans (the payload)
+```
+
+```typescript
+// Airspace.queryCompleteAIXMDatasets → ReplyWithData<{ datasetSummaries: CompleteDatasetSummary[] }>
+const ds = await client.Airspace.queryCompleteAIXMDatasets();
+ds.data.datasetSummaries; // CompleteDatasetSummary[]
+```
+
+The exact shape of `data` per operation is defined in the domain's `types.ts`
+(re-exported from `@dgac/nmb2b-client/types`). Inspect the `…Reply` type for the
+operation you're calling to see its `data` structure.
+
+### `SafeB2BDeserializedResponse<T>`
+
+Exported from `@dgac/nmb2b-client/types`. It is a helper alias for
+`SoapDeserializer<T>` — the type produced by the custom deserializer for a given
+response part. Reach for it when you manipulate a slice of a reply's `data` and
+want to keep it typed against the XSD-derived shape (e.g. when pulling a nested
+field out into a variable or a helper function).
+
+```typescript
+import type { SafeB2BDeserializedResponse } from '@dgac/nmb2b-client/types';
+import type { OTMVPlans } from '@dgac/nmb2b-client/types';
+
+const plans: SafeB2BDeserializedResponse<OTMVPlans> = res.data.plans;
+```
+
+---
+
 ## Error handling
 
 A non-`OK` reply is thrown as an `NMB2BError`:
@@ -283,17 +348,17 @@ try {
 
 `NMB2BError` fields:
 
-| Field                   | Description                                         |
-| ----------------------- | --------------------------------------------------- |
-| `status`                | NM status code (e.g. `OBJECT_NOT_FOUND`, `INVALID_INPUT`). |
-| `reason`                | Human-readable reason, when provided.               |
-| `requestId`             | NM request id (unique with `requestReceptionTime`). |
-| `requestReceptionTime`  | UTC time NM received the request.                   |
-| `sendTime`              | UTC time NM sent the reply.                         |
-| `inputValidationErrors` | Array of `B2B_Error` when `status` is `INVALID_INPUT`. |
-| `outputValidationErrors`| Array of `B2B_Error` when `status` is `INVALID_OUTPUT`. |
-| `warnings`              | Non-fatal warnings, if any.                         |
-| `slaError`              | Set when an SLA was violated.                       |
+| Field                    | Description                                                |
+| ------------------------ | ---------------------------------------------------------- |
+| `status`                 | NM status code (e.g. `OBJECT_NOT_FOUND`, `INVALID_INPUT`). |
+| `reason`                 | Human-readable reason, when provided.                      |
+| `requestId`              | NM request id (unique with `requestReceptionTime`).        |
+| `requestReceptionTime`   | UTC time NM received the request.                          |
+| `sendTime`               | UTC time NM sent the reply.                                |
+| `inputValidationErrors`  | Array of `B2B_Error` when `status` is `INVALID_INPUT`.     |
+| `outputValidationErrors` | Array of `B2B_Error` when `status` is `INVALID_OUTPUT`.    |
+| `warnings`               | Non-fatal warnings, if any.                                |
+| `slaError`               | Set when an SLA was violated.                              |
 
 Possible `status` values include: `OK`, `INVALID_INPUT`, `INVALID_OUTPUT`,
 `INTERNAL_ERROR`, `SERVICE_UNAVAILABLE`, `RESOURCE_OVERLOAD`,
@@ -344,7 +409,8 @@ import { createHook } from '@dgac/nmb2b-client';
 const withMetrics = createHook(({ service, query }) => {
   counter.inc({ service, query, status: 'started' });
   return {
-    onRequestSuccess: () => counter.inc({ service, query, status: 'completed' }),
+    onRequestSuccess: () =>
+      counter.inc({ service, query, status: 'completed' }),
     onRequestError: () => counter.inc({ service, query, status: 'failed' }),
   };
 });
@@ -379,7 +445,7 @@ Set `flavour` to choose the environment:
 
 ```typescript
 await createB2BClient({ security, flavour: 'PREOPS' }); // pre-operations
-await createB2BClient({ security, flavour: 'OPS' });     // production (default)
+await createB2BClient({ security, flavour: 'OPS' }); // production (default)
 ```
 
 This selects both the host and the URL context, and is stamped into the WSDL
