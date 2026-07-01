@@ -68,7 +68,7 @@ importers:
         version: 1.70.0(oxlint-tsgolint@0.22.1)
       oxlint-config-presets:
         specifier: ^0.1.13
-        version: 0.1.13(oxlint@1.70.0(oxlint-tsgolint@0.22.1))
+        version: 0.1.14(oxlint@1.70.0(oxlint-tsgolint@0.22.1))
       oxlint-tsgolint:
         specifier: ^0.22.1
         version: 0.22.1
@@ -1403,8 +1403,8 @@ packages:
   outvariant@1.4.3:
     resolution: {integrity: sha512-+Sl2UErvtsoajRDKCE5/dBz4DIvHXQQnAxtQTF04OJxY0+DyZXSo5P5Bb7XYWOh81syohlYL24hbDwxedPUJCA==}
 
-  oxlint-config-presets@0.1.13:
-    resolution: {integrity: sha512-qopLvWaGKE+/PBdDPj5IRzGY7brymaa/6lvX5gqRthXRFj3ZCNhLf/cyNIjX+2Br8dcB7KFJMHIc3zshBGxxMA==}
+  oxlint-config-presets@0.1.14:
+    resolution: {integrity: sha512-HKOkS+9kNb4O1hQY6VOWfnOqUpFeLiDGIMBgTYZjdXY8AHHvQ34Lt8kKOUD2owjxXS5gLwthRUHcKnPkSOgmTw==}
     peerDependencies:
       oxlint: '>=0.15.0'
     peerDependenciesMeta:
@@ -3108,7 +3108,7 @@ snapshots:
 
   outvariant@1.4.3: {}
 
-  oxlint-config-presets@0.1.13(oxlint@1.70.0(oxlint-tsgolint@0.22.1)):
+  oxlint-config-presets@0.1.14(oxlint@1.70.0(oxlint-tsgolint@0.22.1)):
     optionalDependencies:
       oxlint: 1.70.0(oxlint-tsgolint@0.22.1)
 
