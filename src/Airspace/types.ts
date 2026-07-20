@@ -51,6 +51,8 @@ export type SpeedUnit =
 
 export type AIRACId = string; // Pattern DIGIT{4}
 export type AerodromeICAOId = string;
+export type AerodromeICAOIdWildcard = string; // (UALPHA){3,4}|(UALPHA){1,3}*
+
 export interface AIXMFile {
   id: string;
   fileLength: number;

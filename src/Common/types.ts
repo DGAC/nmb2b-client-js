@@ -278,3 +278,12 @@ export type SubscriptionHistoryItem = {
   updatedComment?: string;
   hearbeatEnabled: boolean;
 };
+
+export type SubscriptionCreationRequest = B2BRequest & {
+  description?: string;
+  queueName?: QueueName;
+};
+
+export type Subscription = {
+  summary: SubscriptionSummary;
+};

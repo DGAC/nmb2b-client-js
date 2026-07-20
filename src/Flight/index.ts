@@ -12,8 +12,10 @@ import { queryFlightsByAirspace } from './queryFlightsByAirspace.ts';
 import { queryFlightsByMeasure } from './queryFlightsByMeasure.ts';
 import { queryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume.ts';
 import { retrieveFlight } from './retrieveFlight.ts';
+import { createFlightDataSubscription } from './createFlightDataSubscription.ts';
 
 const queryDefinitions = {
+  createFlightDataSubscription,
   retrieveFlight,
   queryFlightPlans,
   queryFlightsByAerodrome,
