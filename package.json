@@ -7,15 +7,15 @@
     "SOAP",
     "TypeScript"
   ],
-  "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "license": "MIT",
+  "author": "Benjamin BERET <benjamin.beret@aviation-civile.gouv.fr>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DGAC/nmb2b-client-js.git"
   },
-  "engines": {
-    "node": ">=22"
-  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -45,25 +45,36 @@
     },
     "./package.json": "./package.json"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
-    "prepack": "pnpm build",
-    "downloadWSDL": "node ./scripts/downloadWSDL.ts",
-    "clean": "rimraf dist",
     "build": "tsdown",
-    "release": "pnpm build && changeset publish",
+    "clean": "rimraf dist",
+    "downloadWSDL": "node ./scripts/downloadWSDL.ts",
+    "format:ci": "oxfmt --check .",
     "lint": "oxlint --type-aware --report-unused-disable-directives",
     "lint:ci": "oxlint --type-aware --report-unused-disable-directives --format=github",
-    "format:ci": "oxfmt --check .",
+    "prepack": "pnpm build",
+    "release": "pnpm build && changeset publish",
     "test": "vitest",
-    "test:unit": "vitest --project=unit",
-    "test:e2e": "vitest --project=e2e",
     "test:ci": "vitest --watch=false --reporter=default --reporter=junit --outputFile.junit=junit.xml --coverage.enabled --typecheck",
-    "update-fixtures": "node ./scripts/update-fixtures.ts",
-    "typecheck": "tsc --noEmit"
+    "test:e2e": "vitest --project=e2e",
+    "test:unit": "vitest --project=unit",
+    "typecheck": "tsc --noEmit",
+    "update-fixtures": "node ./scripts/update-fixtures.ts"
   },
-  "files": [
-    "dist"
-  ],
+  "dependencies": {
+    "@date-fns/utc": "^2.1.1",
+    "axios": "^1.18.1",
+    "date-fns": "^4.4.0",
+    "debug": "^4.4.3",
+    "proper-lockfile": "^4.1.2",
+    "remeda": "^2.39.0",
+    "soap": "^1.10.0",
+    "tar": "^7.5.20",
+    "type-fest": "^5.8.0"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.31.1",
@@ -84,19 +95,8 @@
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
   },
-  "dependencies": {
-    "@date-fns/utc": "^2.1.1",
-    "axios": "^1.18.1",
-    "date-fns": "^4.4.0",
-    "debug": "^4.4.3",
-    "proper-lockfile": "^4.1.2",
-    "remeda": "^2.39.0",
-    "soap": "^1.10.0",
-    "tar": "^7.5.20",
-    "type-fest": "^5.8.0"
-  },
-  "publishConfig": {
-    "provenance": true
+  "engines": {
+    "node": ">=22"
   },
   "packageManager": "pnpm@11.15.1+sha512.81350b07e53c9538a02f1f2303b4290fa2d7be04e56e2a970c4cc4b417dc761de196edabd49d55c7dc9580db81007c44143e4e3d7e462b3000d23c255122d065"
 }
