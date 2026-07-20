@@ -53,6 +53,7 @@
     "release": "pnpm build && changeset publish",
     "lint": "oxlint --type-aware --report-unused-disable-directives",
     "lint:ci": "oxlint --type-aware --report-unused-disable-directives --format=github",
+    "format:ci": "oxfmt --check .",
     "test": "vitest",
     "test:unit": "vitest --project=unit",
     "test:e2e": "vitest --project=e2e",
