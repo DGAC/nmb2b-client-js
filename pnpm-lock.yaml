@@ -13,13 +13,13 @@ importers:
         version: 2.1.1
       axios:
         specifier: ^1.18.1
-        version: 1.18.1(debug@4.4.3)
+        version: 1.18.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
       date-fns:
         specifier: ^4.4.0
         version: 4.4.0
       debug:
         specifier: ^4.4.3
-        version: 4.4.3
+        version: 4.4.3(supports-color@7.2.0)
       proper-lockfile:
         specifier: ^4.1.2
         version: 4.1.2
@@ -28,7 +28,7 @@ importers:
         version: 2.39.0
       soap:
         specifier: ^1.10.0
-        version: 1.10.0
+        version: 1.10.0(supports-color@7.2.0)
       tar:
         specifier: ^7.5.20
         version: 7.5.20
@@ -2690,9 +2690,9 @@ snapshots:
 
   '@yuku-toolchain/types@0.6.8': {}
 
-  agent-base@6.0.2:
+  agent-base@6.0.2(supports-color@7.2.0):
     dependencies:
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -2726,9 +2726,9 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios-ntlm@1.4.6(debug@4.4.3):
+  axios-ntlm@1.4.6(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0):
     dependencies:
-      axios: 1.18.1(debug@4.4.3)
+      axios: 1.18.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
       des.js: 1.1.0
       dev-null: 0.1.1
       js-md4: 0.3.2
@@ -2736,11 +2736,11 @@ snapshots:
       - debug
       - supports-color
 
-  axios@1.18.1(debug@4.4.3):
+  axios@1.18.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0):
     dependencies:
-      follow-redirects: 1.16.0(debug@4.4.3)
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@7.2.0))
       form-data: 4.0.6
-      https-proxy-agent: 5.0.1
+      https-proxy-agent: 5.0.1(supports-color@7.2.0)
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
@@ -2805,9 +2805,11 @@ snapshots:
 
   date-fns@4.4.0: {}
 
-  debug@4.4.3:
+  debug@4.4.3(supports-color@7.2.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 7.2.0
 
   defu@6.1.7: {}
 
@@ -2918,9 +2920,9 @@ snapshots:
       locate-path: 5.0.0
       path-exists: 4.0.0
 
-  follow-redirects@1.16.0(debug@4.4.3):
+  follow-redirects@1.16.0(debug@4.4.3(supports-color@7.2.0)):
     optionalDependencies:
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@7.2.0)
 
   form-data@4.0.6:
     dependencies:
@@ -3023,10 +3025,10 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  https-proxy-agent@5.0.1:
+  https-proxy-agent@5.0.1(supports-color@7.2.0):
     dependencies:
-      agent-base: 6.0.2
-      debug: 4.4.3
+      agent-base: 6.0.2(supports-color@7.2.0)
+      debug: 4.4.3(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3450,12 +3452,12 @@ snapshots:
 
   slash@3.0.0: {}
 
-  soap@1.10.0:
+  soap@1.10.0(supports-color@7.2.0):
     dependencies:
-      axios: 1.18.1(debug@4.4.3)
-      axios-ntlm: 1.4.6(debug@4.4.3)
-      debug: 4.4.3
-      follow-redirects: 1.16.0(debug@4.4.3)
+      axios: 1.18.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
+      axios-ntlm: 1.4.6(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
+      debug: 4.4.3(supports-color@7.2.0)
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@7.2.0))
       formidable: 3.5.4
       sax: 1.6.0
       whatwg-mimetype: 5.0.0
