@@ -145,7 +145,7 @@ createB2BClient({ security }).then((client) => {
 import fs from 'fs';
 
 const security = {
-  pem: fs.readFileSync('/path/to/cert.pem'),
+  cert: fs.readFileSync('/path/to/cert.pem'),
   key: fs.readFileSync('/path/to/cert.key'),
   passphrase: 'your-passphrase',
 };

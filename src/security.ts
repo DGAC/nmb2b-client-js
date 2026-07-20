@@ -108,7 +108,7 @@ export function assertValidSecurity(obj: unknown): asserts obj is Security {
   if ('cert' in obj && obj.cert) {
     assert(
       'key' in obj && obj.key && Buffer.isBuffer(obj.key),
-      'security.key must be a buffer if security.pem is defined',
+      'security.key must be a buffer if security.cert is defined',
     );
   }
 }
