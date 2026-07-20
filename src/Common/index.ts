@@ -5,11 +5,15 @@ import {
 } from '../utils/soap-query-definition.ts';
 import { deleteSubscription } from './deleteSubscription.ts';
 import { listSubscriptions } from './listSubscriptions.ts';
+import { pauseSubscription } from './pauseSubscription.ts';
+import { resumeSubscription } from './resumeSubscription.ts';
 import { subscriptionHistory } from './subscriptionHistory.ts';
 
 const queryDefinitions = {
   deleteSubscription,
   listSubscriptions,
+  pauseSubscription,
+  resumeSubscription,
   subscriptionHistory,
 };
 

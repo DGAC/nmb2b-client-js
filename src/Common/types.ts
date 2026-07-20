@@ -220,7 +220,7 @@ export type SubscriptionUpdateReason =
   | 'QUEUE_OVERFLOW';
 
 export type SubscriptionListRequest = B2BRequest & {
-  states?: Array<SubscriptionState>;
+  states?: NMSet<SubscriptionState>;
 };
 export type SubscriptionListReply = ReplyWithData<SubscriptionListReplyData>;
 
@@ -287,3 +287,21 @@ export type SubscriptionCreationRequest = B2BRequest & {
 export type Subscription = {
   summary: SubscriptionSummary;
 };
+
+export type SubscriptionResumeRequest = B2BRequest & {
+  uuid: UUID;
+};
+
+export type SubscriptionResumeReply =
+  ReplyWithData<SubscriptionResumeReplyData>;
+
+export type SubscriptionResumeReplyData = Record<string, never>;
+
+export type SubscriptionPauseRequest = B2BRequest & {
+  uuid: UUID;
+  heartbeatEnabled?: boolean;
+};
+
+export type SubscriptionPauseReply = ReplyWithData<SubscriptionPauseReplyData>;
+
+export type SubscriptionPauseReplyData = Record<string, never>;
