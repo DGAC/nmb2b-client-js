@@ -305,3 +305,18 @@ export type SubscriptionPauseRequest = B2BRequest & {
 export type SubscriptionPauseReply = ReplyWithData<SubscriptionPauseReplyData>;
 
 export type SubscriptionPauseReplyData = Record<string, never>;
+
+export type MessagePullRequest = B2BRequest & {
+  queueName: QueueName;
+  maxSize: number;
+  destructive: boolean;
+};
+
+export type MessagePullReply = ReplyWithData<MessagePullReplyData>;
+
+export type MessagePullReplyData = {
+  marshalledMessages: NMList<PSMessageElement>;
+  hasMoreMessages: boolean;
+};
+
+export type PSMessageElement = string;
