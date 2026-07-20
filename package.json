@@ -65,37 +65,37 @@
   ],
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^2.31.1",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.13",
-    "@types/node": "^22.20.0",
+    "@types/node": "^22.20.1",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.10",
     "dotenv": "^17.4.2",
-    "msw": "^2.14.6",
-    "oxlint": "^1.70.0",
-    "oxlint-config-presets": "^0.1.13",
+    "msw": "^2.15.0",
+    "oxlint": "^1.74.0",
+    "oxlint-config-presets": "^0.1.16",
     "oxlint-tsgolint": "^0.22.1",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.5",
     "rimraf": "^6.1.3",
-    "tsdown": "^0.22.3",
+    "tsdown": "^0.22.9",
     "typescript": "^6.0.3",
-    "vite": "^8.0.16",
-    "vitest": "^4.1.9"
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.1",
-    "axios": "^1.18.0",
+    "axios": "^1.18.1",
     "date-fns": "^4.4.0",
     "debug": "^4.4.3",
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.39.0",
-    "soap": "^1.9.3",
-    "tar": "^7.5.16",
-    "type-fest": "^5.7.0"
+    "soap": "^1.10.0",
+    "tar": "^7.5.20",
+    "type-fest": "^5.8.0"
   },
   "publishConfig": {
     "provenance": true
   },
-  "packageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26"
+  "packageManager": "pnpm@11.15.1+sha512.81350b07e53c9538a02f1f2303b4290fa2d7be04e56e2a970c4cc4b417dc761de196edabd49d55c7dc9580db81007c44143e4e3d7e462b3000d23c255122d065"
 }
