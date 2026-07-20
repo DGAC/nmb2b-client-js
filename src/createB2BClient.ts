@@ -11,6 +11,8 @@ import { getGeneralInformationClient } from './GeneralInformation/index.ts';
 import { createDebugLogger } from './utils/debug.ts';
 import type { Prettify } from './utils/types.ts';
 import { download as downloadWSDLIfNeeded } from './utils/xsd/index.ts';
+import { getCommonClient } from './Common/index.ts';
+import type { CommonService } from './Common/index.ts';
 
 const debug = createDebugLogger();
 
@@ -19,6 +21,7 @@ const debug = createDebugLogger();
  */
 export interface B2BClient {
   Airspace: AirspaceService;
+  Common: CommonService;
   Flight: FlightService;
   Flow: FlowService;
   GeneralInformation: GeneralInformationService;
@@ -26,6 +29,7 @@ export interface B2BClient {
 
 export type {
   AirspaceService,
+  CommonService,
   FlightService,
   FlowService,
   GeneralInformationService,
@@ -61,17 +65,20 @@ export async function createB2BClient(
 
   await downloadWSDLIfNeeded(config);
 
-  const [Airspace, Flight, Flow, GeneralInformation] = await Promise.all([
-    getAirspaceClient(config),
-    getFlightClient(config),
-    getFlowClient(config),
-    getGeneralInformationClient(config),
-  ]);
+  const [Airspace, Common, Flight, Flow, GeneralInformation] =
+    await Promise.all([
+      getAirspaceClient(config),
+      getCommonClient(config),
+      getFlightClient(config),
+      getFlowClient(config),
+      getGeneralInformationClient(config),
+    ]);
 
   debug('Successfully created B2B Client');
 
   return {
     Airspace,
+    Common,
     Flight,
     Flow,
     GeneralInformation,
@@ -96,6 +103,28 @@ export async function createAirspaceClient(
   const client = await getAirspaceClient(config);
 
   debug('Successfully created B2B Airspace client');
+
+  return client;
+}
+
+/**
+ * Factory to create a standalone client for the Common domain.
+ *
+ * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
+ * @returns The initialized {@link CommonService} instance.
+ */
+export async function createCommonClient(
+  options: CreateB2BClientOptions,
+): Promise<CommonService> {
+  debug('Creating B2B Common client ...');
+
+  const config = prepareConfig(options);
+
+  await downloadWSDLIfNeeded(config);
+
+  const client = await getCommonClient(config);
+
+  debug('Successfully created B2B Common client');
 
   return client;
 }

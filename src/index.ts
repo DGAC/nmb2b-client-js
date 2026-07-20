@@ -2,6 +2,7 @@ export { NMB2BError } from './utils/NMB2BError.ts';
 
 export {
   createAirspaceClient,
+  createCommonClient,
   createB2BClient,
   createFlightClient,
   createFlowClient,
