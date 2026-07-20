@@ -166,10 +166,13 @@ const client = await createB2BClient({
   // ... other options,
   hooks: [
     function onRequestStart({ service, query, input }) {
-      console.log(`Query ${query} of service ${service} was invoked with input`, input)
-    }
-  ]
-})
+      console.log(
+        `Query ${query} of service ${service} was invoked with input`,
+        input,
+      );
+    },
+  ],
+});
 ```
 
 A hook can return an optional object containing success / error hooks :

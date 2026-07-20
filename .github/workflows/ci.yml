@@ -19,6 +19,29 @@ env:
   B2B_XSD_REMOTE_URL: https://wsdl.b2B-proxy.4me.im/27.0.0.tar.gz
 
 jobs:
+  check_fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run oxfmt --check
+        run: pnpm format:ci
+
   lint:
     runs-on: ubuntu-latest
     steps:
