@@ -367,3 +367,8 @@ export type SubscriptionSynchronisationAbortReason =
   | 'USER_REQUEST'
   | 'MAINTENANCE'
   | 'SUBSCRIPTION_NOT_ACTIVE';
+
+export type SubscriptionRetrievalRequest = B2BRequest & {
+  uuid: UUID;
+  version?: VersionNumber;
+};

@@ -51,6 +51,8 @@ import type {
   SignedDurationHourMinuteSecond,
   Subscription,
   SubscriptionCreationRequest,
+  SubscriptionRetrievalRequest,
+  SubscriptionSynchronisationSummary,
   TimeHourMinutePeriod,
   WeightKg,
 } from '../Common/types.ts';
@@ -1614,3 +1616,14 @@ export type PSFlightField =
   | 'activeACDMAlerts'
   | 'routeChargeIndicator'
   | 'fuelConsumptionIndicator';
+
+export type FlightDataSubscriptionRetrievalRequest =
+  SubscriptionRetrievalRequest;
+
+export type FlightDataSubscriptionRetrievalReply =
+  ReplyWithData<FlightDataSubscriptionRetrievalReplyData>;
+
+export type FlightDataSubscriptionRetrievalReplyData = {
+  subscription: FlightDataSubscription;
+  synchronisationSummary?: SubscriptionSynchronisationSummary;
+};
