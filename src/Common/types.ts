@@ -372,3 +372,8 @@ export type SubscriptionRetrievalRequest = B2BRequest & {
   uuid: UUID;
   version?: VersionNumber;
 };
+
+export type SubscriptionUpdateRequest = B2BRequest & {
+  subscriptionUuid: UUID;
+  description?: string;
+};

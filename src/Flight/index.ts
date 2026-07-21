@@ -13,6 +13,7 @@ import { queryFlightsByMeasure } from './queryFlightsByMeasure.ts';
 import { queryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume.ts';
 import { retrieveFlight } from './retrieveFlight.ts';
 import { retrieveFlightDataSubscription } from './retrieveFlightDataSubscription.ts';
+import { updateFlightDataSubscription } from './updateFlightDataSubscription.ts';
 
 const queryDefinitions = {
   createFlightDataSubscription,
@@ -25,6 +26,7 @@ const queryDefinitions = {
   queryFlightsByTrafficVolume,
   retrieveFlight,
   retrieveFlightDataSubscription,
+  updateFlightDataSubscription,
 };
 
 export type FlightService = SoapService<typeof queryDefinitions>;

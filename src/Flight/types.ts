@@ -53,6 +53,7 @@ import type {
   SubscriptionCreationRequest,
   SubscriptionRetrievalRequest,
   SubscriptionSynchronisationSummary,
+  SubscriptionUpdateRequest,
   TimeHourMinutePeriod,
   WeightKg,
 } from '../Common/types.ts';
@@ -1626,4 +1627,16 @@ export type FlightDataSubscriptionRetrievalReply =
 export type FlightDataSubscriptionRetrievalReplyData = {
   subscription: FlightDataSubscription;
   synchronisationSummary?: SubscriptionSynchronisationSummary;
+};
+
+export type FlightDataSubscriptionUpdateRequest = SubscriptionUpdateRequest & {
+  messageFilter?: FlightDataMessageFilter;
+  payloadConfiguration: FlightDataPayloadConfiguration;
+};
+
+export type FlightDataSubscriptionUpdateReply =
+  ReplyWithData<FlightDataSubscriptionUpdateReplyData>;
+
+export type FlightDataSubscriptionUpdateReplyData = {
+  subscription: FlightDataSubscription;
 };
