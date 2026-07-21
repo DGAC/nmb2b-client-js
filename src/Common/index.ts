@@ -3,6 +3,7 @@ import {
   createSoapService,
   type SoapService,
 } from '../utils/soap-query-definition.ts';
+import { abortSubscriptionSynchronisation } from './abortSubscriptionSynchronisation.ts';
 import { deleteSubscription } from './deleteSubscription.ts';
 import { listSubscriptions } from './listSubscriptions.ts';
 import { pauseSubscription } from './pauseSubscription.ts';
@@ -12,6 +13,7 @@ import { subscriptionHistory } from './subscriptionHistory.ts';
 import { synchroniseSubscription } from './synchroniseSubscription.ts';
 
 const queryDefinitions = {
+  abortSubscriptionSynchronisation,
   deleteSubscription,
   listSubscriptions,
   pauseSubscription,

@@ -336,3 +336,34 @@ export type SubscriptionSynchronisationReplyData = {
   correlationId: CorrelationId;
   messagesCount: number;
 };
+
+export type SubscriptionSynchronisationAbortRequest = B2BRequest & {
+  subscriptionUuid: UUID;
+};
+
+export type SubscriptionSynchronisationAbortReply =
+  ReplyWithData<SubscriptionSynchronisationAbortReplyData>;
+
+export type SubscriptionSynchronisationAbortReplyData = {
+  synchronisationSummary: SubscriptionSynchronisationSummary;
+};
+
+export type SubscriptionSynchronisationSummary = {
+  subscriptionUuid: UUID;
+  correlationId: CorrelationId;
+  size: number;
+  startTime: DateTimeSecond;
+  endTime?: DateTimeSecond;
+  status: SubscriptionSynchronisationStatus;
+  abortReason?: SubscriptionSynchronisationAbortReason;
+};
+
+export type SubscriptionSynchronisationStatus =
+  | 'STARTED'
+  | 'COMPLETED'
+  | 'ABORTED';
+
+export type SubscriptionSynchronisationAbortReason =
+  | 'USER_REQUEST'
+  | 'MAINTENANCE'
+  | 'SUBSCRIPTION_NOT_ACTIVE';
