@@ -17,6 +17,11 @@ describe('serialization', () => {
       input: new Date('2018-07-01T17:55:13-07:00'),
       expected: '2018-07-02 00:55:13',
     },
+    {
+      type: 'Timestamp',
+      input: new Date('2018-07-01T17:55:13.125-07:00'),
+      expected: '2018-07-02 00:55:13 125',
+    },
   ] satisfies Array<{
     type: keyof typeof types;
     expected: unknown;
@@ -60,6 +65,11 @@ describe('deserialization', () => {
       type: 'DateTimeSecond',
       input: '2018-07-02',
       expected: new Date('2018-07-02T00:00:00Z'),
+    },
+    {
+      type: 'Timestamp',
+      input: '2026-07-20 23:15:10 125',
+      expected: new Date('2026-07-20T23:15:10.125Z'),
     },
   ] satisfies Array<{
     type: keyof typeof types;
