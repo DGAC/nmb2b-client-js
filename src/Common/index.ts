@@ -9,6 +9,7 @@ import { pauseSubscription } from './pauseSubscription.ts';
 import { pullMessages } from './pullMessages.ts';
 import { resumeSubscription } from './resumeSubscription.ts';
 import { subscriptionHistory } from './subscriptionHistory.ts';
+import { synchroniseSubscription } from './synchroniseSubscription.ts';
 
 const queryDefinitions = {
   deleteSubscription,
@@ -17,6 +18,7 @@ const queryDefinitions = {
   pullMessages,
   resumeSubscription,
   subscriptionHistory,
+  synchroniseSubscription,
 };
 
 export type CommonService = SoapService<typeof queryDefinitions>;

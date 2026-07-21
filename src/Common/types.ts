@@ -32,6 +32,8 @@ export type Colours = string; // TEXT{1,51}
 export type SignedDurationHourMinuteSecond = string; // +hhmmss / -hhmmss
 export type SignedDurationHourMinute = string;
 
+export type CorrelationId = string; // TEXT{1,256}
+
 export type NMInt = string;
 export interface NMSet<A> {
   item: A[];
@@ -320,3 +322,17 @@ export type MessagePullReplyData = {
 };
 
 export type PSMessageElement = string;
+
+export type SubscriptionSynchronisationRequest = B2BRequest & {
+  subscriptionUuid: UUID;
+  wef?: DateTimeMinute;
+  til?: DateTimeMinute;
+};
+
+export type SubscriptionSynchronisationReply =
+  ReplyWithData<SubscriptionSynchronisationReplyData>;
+
+export type SubscriptionSynchronisationReplyData = {
+  correlationId: CorrelationId;
+  messagesCount: number;
+};
