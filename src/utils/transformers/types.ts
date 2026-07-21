@@ -23,7 +23,7 @@ const outputBase = {
    */
   date: (text: string) => {
     // oxlint-disable-next-line prefer-const
-    let [date, time] = text.split(' ');
+    let [date, time, ms] = text.split(' ');
 
     if (date === undefined || time === undefined) {
       return new Date(text);
@@ -33,7 +33,7 @@ const outputBase = {
       time += ':00';
     }
 
-    return new Date(`${date}T${time}Z`);
+    return new Date(`${date}T${time}.${ms ?? '000'}Z`);
   },
 };
 
@@ -105,6 +105,11 @@ export const types = {
   DateTimeSecond: {
     input: (d: Date): string =>
       format(new UTCDate(d), timeFormats.timeFormatWithSeconds),
+    output: outputBase.date,
+  },
+  Timestamp: {
+    input: (d: Date): string =>
+      format(new UTCDate(d), timeFormats.timeFormatWithSecondsAndMilliseconds),
     output: outputBase.date,
   },
   DistanceNM: {
