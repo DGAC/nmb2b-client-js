@@ -20,7 +20,7 @@ https://github.com/DGAC/nmb2b-client-js-example
 - No WSDL/XSD dependency. The library will download and cache those on start up.
 - Natural serialization/deserialization of certain types.
 
-For instance, the Flow.retrieveOTMVPlan query expects a `day` attribute with the XSD type `DateYearMonthDay`. This type is a string, representing a date in the `YYYY-MM-DD` format. This library allows you to pass a traditional JS Date object instead.
+For instance, the `Flow.retrieveOTMVPlan` query expects a `day` attribute with the XSD type `DateYearMonthDay`. This type is a string, representing a date in the `YYYY-MM-DD` format. This library allows you to pass a traditional JS Date object instead.
 
 ```typescript
 const res = await Flow.retrieveOTMVPlan({
@@ -38,19 +38,19 @@ In SOAP, key order matters.
 // OK
 await Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONAL' },
-  day: moment.utc().toDate(),
+  day: new Date(),
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 
 // Would normally fail
-await const Flow.retrieveOTMVPlan({
-  day: moment.utc().toDate(),
+await Flow.retrieveOTMVPlan({
+  day: new Date(),
   dataset: { type: 'OPERATIONAL' },
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
 
-The library reorder request object keys to match what's expressed in the XSD/WSDL. Therefore, the second example works fine.
+The library reorders request object keys to match what's expressed in the XSD/WSDL. Therefore, the second example works fine.
 
 - TypeScript support.
 
@@ -60,7 +60,7 @@ The following example will raise a type error.
 // Raises a type error
 await Flow.retrieveOTMVPlan({
   dataset: { type: 'OPERATIONNAL' }, // Notice the typo
-  day: moment.utc().toDate(),
+  day: new Date(),
   otmvsWithDuration: { item: [{ trafficVolume: 'LFERMS' }] },
 });
 ```
@@ -127,22 +127,20 @@ Every request to the NM B2B web services must be authenticated using a client ce
 ### With P12 certificate
 
 ```javascript
-import fs from 'fs';
+import fs from 'node:fs';
 
 const security = {
   pfx: fs.readFileSync('/path/to/cert.p12'),
   passphrase: 'your-passphrase',
 };
 
-createB2BClient({ security }).then((client) => {
-  client.Airspace.queryCompleteAIXMDatasets().then(() => {});
-});
+const client = await createB2BClient({ security });
 ```
 
 ### With PEM certificate
 
 ```javascript
-import fs from 'fs';
+import fs from 'node:fs';
 
 const security = {
   cert: fs.readFileSync('/path/to/cert.pem'),
@@ -150,9 +148,7 @@ const security = {
   passphrase: 'your-passphrase',
 };
 
-createB2BClient({ security }).then((client) => {
-  client.Airspace.queryCompleteAIXMDatasets().then(() => {});
-});
+const client = await createB2BClient({ security });
 ```
 
 ## Hooks
@@ -191,12 +187,12 @@ const client = await createB2BClient({
 
       return {
         onRequestSuccess: ({ response }) => {
-          const durationMs = new Date().valueOf() - startTime;
+          const durationMs = Date.now() - startTime.getTime();
           console.log(`Query took ${durationMs}ms`);
           console.log(`Query responded with`, response);
         },
         onRequestError: ({ error }) => {
-          const durationMs = new Date().valueOf() - startTime;
+          const durationMs = Date.now() - startTime.getTime();
           console.log(`Query took ${durationMs}ms`);
           console.log(`Query failed with error ${error.message}`);
         },
