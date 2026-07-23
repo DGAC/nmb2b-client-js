@@ -1,3 +1,5 @@
+type Primitive = null | undefined | string | number | boolean | symbol | bigint;
+
 export type SoapDeserializer<TInput> = TInput extends Primitive | Date
   ? TInput
   : TInput extends Array<infer T>
@@ -21,6 +23,29 @@ type UndefinedKeysOf<T extends object> = keyof {
 type NullKeysOf<T extends object> = keyof {
   [TKey in keyof T as null extends T[TKey] ? TKey : never]: T[TKey];
 };
+
+/**
+ * NOTE: Pulled from `type-fest`
+ */
+type OptionalKeysOf<Type extends object> = Type extends unknown // For distributing `Type`
+  ? keyof {
+      [Key in keyof Type as IsOptionalKeyOf<Type, Key> extends false
+        ? never
+        : Key]: never;
+    } &
+      keyof Type // Intersect with `keyof Type` to ensure result of `OptionalKeysOf<Type>` is always assignable to `keyof Type`
+  : never; // Should never happen
+
+type IsOptionalKeyOf<Type extends object, Key extends keyof Type> =
+  IsAny<Type | Key> extends true
+    ? never
+    : Key extends keyof Type
+      ? Type extends Record<Key, Type[Key]>
+        ? false
+        : true
+      : false;
+
+type IsAny<T> = 0 extends 1 & NoInfer<T> ? true : false;
 
 // type UndefinedKeysToOptionals<T extends object> =
 /**
@@ -59,4 +84,6 @@ type NullKeysOf<T extends object> = keyof {
 //                     | undefined
 //               : never;
 
-import type { OptionalKeysOf, Primitive } from 'type-fest';
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
