@@ -1,4 +1,3 @@
-import type { SetOptional } from 'type-fest';
 import type { AirspaceService } from './Airspace/index.ts';
 import { getAirspaceClient } from './Airspace/index.ts';
 import { assertValidConfig, obfuscate, type Config } from './config.ts';
@@ -10,6 +9,7 @@ import { getFlowClient } from './Flow/index.ts';
 import type { GeneralInformationService } from './GeneralInformation/index.ts';
 import { getGeneralInformationClient } from './GeneralInformation/index.ts';
 import { createDebugLogger } from './utils/debug.ts';
+import type { Prettify } from './utils/types.ts';
 import { download as downloadWSDLIfNeeded } from './utils/xsd/index.ts';
 
 const debug = createDebugLogger();
@@ -40,9 +40,9 @@ const CONFIG_DEFAULTS = {
 /**
  * Options for initializing the B2B client.
  */
-export type CreateB2BClientOptions = SetOptional<
-  Config,
-  keyof typeof CONFIG_DEFAULTS
+export type CreateB2BClientOptions = Prettify<
+  Omit<Config, keyof typeof CONFIG_DEFAULTS> &
+    Partial<Pick<Config, keyof typeof CONFIG_DEFAULTS>>
 >;
 
 /**
