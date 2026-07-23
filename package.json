@@ -72,7 +72,7 @@
     "proper-lockfile": "^4.1.2",
     "remeda": "^2.39.0",
     "soap": "^1.10.0",
-    "tar": "^7.5.20",
+    "tar": "^7.5.21",
     "type-fest": "^5.8.0"
   },
   "devDependencies": {
@@ -85,13 +85,13 @@
     "@vitest/coverage-v8": "^4.1.10",
     "dotenv": "^17.4.2",
     "msw": "^2.15.0",
-    "oxfmt": "^0.59.0",
-    "oxlint": "^1.74.0",
+    "oxfmt": "^0.60.0",
+    "oxlint": "^1.75.0",
     "oxlint-config-presets": "^0.1.16",
-    "oxlint-tsgolint": "^0.25.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "rimraf": "^6.1.3",
-    "tsdown": "^0.22.12",
-    "typescript": "^6.0.3",
+    "tsdown": "^0.22.13",
+    "typescript": "^7.0.2",
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
   },
