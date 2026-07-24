@@ -3,27 +3,34 @@
 /* oxlint-disable typescript/no-unsafe-argument */
 /* oxlint-disable typescript/no-unsafe-assignment */
 /* oxlint-disable typescript/no-unsafe-member-access */
+import { evolve, map } from 'remeda';
+import { assert } from '../assert.ts';
 import { types } from './types.ts';
-import { piped, identity, evolve, map } from 'remeda';
 
-export function prepareSerializer<T>(schema: any): (input: T) => T {
+export function prepareSerializer<T extends Record<string, unknown>>(
+  schema: unknown,
+): (input: T) => T {
+  assertIsValidSchema(schema);
+
+  const fixKeyOrder = createKeyOrderTransformer<T>(schema);
   const transformer = prepareTransformer(schema);
-  return piped(
-    reorderKeys(schema),
-    transformer ? evolve(transformer) : identity,
-    // (obj) => {
-    //   console.log(JSON.stringify(obj, null, 2));
-    //   return obj;
-    // },
-  ) as any as (input: T) => T;
+
+  return function serialize(input: T): T {
+    const withCorrectKeyOrder = fixKeyOrder(input);
+
+    if (!transformer) {
+      return withCorrectKeyOrder;
+    }
+
+    return evolve(withCorrectKeyOrder, transformer as any) as T;
+  };
 }
 
 function reduceXSDType(str: string): string {
-  // oxlint-disable-next-line typescript/no-non-null-assertion
-  return str.split('|')[0]!;
+  return str.split('|')[0] ?? str;
 }
 
-interface Schema {
+export interface Schema {
   [k: string]: string | Schema;
 }
 
@@ -69,19 +76,16 @@ function prepareTransformer(schema: Schema): null | Transformer {
   }, null);
 }
 
-export function reorderKeys<O extends { [key: string]: any }>(
+export function createKeyOrderTransformer<O extends Record<string, unknown>>(
   schema: Schema,
-): (obj: O) => O {
-  return (obj: O): O => {
-    // console.log(JSON.stringify(schema, null, 2));
-    // console.log(JSON.stringify(obj, null, 2));
-
+) {
+  return function reorderSchemas(obj: O): O {
     // Loop through schema, pull property from Object
     return Object.keys(schema).reduce<any>((prev, curr) => {
-      const lookupKey: string = curr.replace(/\[\]$/, '');
-      const isArrayExpected: boolean = curr.endsWith('[]');
+      const lookupKey = curr.replace(/\[\]$/, '');
+      const isArrayExpected = curr.endsWith('[]');
 
-      if (!(lookupKey in obj)) {
+      if (typeof obj !== 'object' || !(lookupKey in obj)) {
         return prev;
       }
 
@@ -93,23 +97,71 @@ export function reorderKeys<O extends { [key: string]: any }>(
       }
 
       if (typeof currSchema === 'object') {
-        if (
-          Object.keys(currSchema).filter(
-            (k) => k !== 'targetNSAlias' && k !== 'targetNamespace',
-          ).length
-        ) {
-          prev[lookupKey] =
-            isArrayExpected && obj[lookupKey] && Array.isArray(obj[lookupKey])
-              ? obj[lookupKey].map(reorderKeys(currSchema))
-              : reorderKeys(currSchema)(obj[lookupKey]);
+        const candidatesKey = Object.keys(currSchema).filter(
+          (k) => k !== 'targetNSAlias' && k !== 'targetNamespace',
+        );
+
+        /**
+         * This branch should never happen.
+         * It means that the schema is of this form :
+         * ```typescript
+         * const schema = {
+         *   targetNSAlias: 'xxx',
+         *   targetNamespace: 'yyy',
+         *   // No other key
+         * }
+         * ```
+         *
+         * `node-soap` should collapse this type of schema into a string.
+         */
+        if (candidatesKey.length === 0) {
+          prev[lookupKey] = obj[lookupKey];
           return prev;
         }
 
-        prev[lookupKey] = obj[lookupKey];
+        /**
+         * If the value to transform is either null or undefined,
+         * do nothing.
+         */
+        if (obj[lookupKey] === null || obj[lookupKey] === undefined) {
+          prev[lookupKey] = obj[lookupKey];
+          return prev;
+        }
+
+        const transformer = createKeyOrderTransformer(currSchema);
+
+        /**
+         * If the value to transform is an array, apply
+         * the transformation to each item.
+         */
+        if (isArrayExpected && Array.isArray(obj[lookupKey])) {
+          prev[lookupKey] = obj[lookupKey].map(transformer);
+          return prev;
+        }
+
+        /**
+         * At this point, the value to transform is an object, and we
+         * need to apply a level a recursion.
+         */
+        prev[lookupKey] = transformer(
+          obj[lookupKey] as Record<string, unknown>,
+        );
         return prev;
       }
 
       return prev;
     }, {});
   };
+}
+
+export function assertIsValidSchema(input: unknown): asserts input is Schema {
+  assert(typeof input === 'object' && input !== null && !Array.isArray(input));
+
+  for (const value of Object.values(input)) {
+    if (typeof value === 'string') {
+      continue;
+    }
+
+    assertIsValidSchema(value);
+  }
 }
