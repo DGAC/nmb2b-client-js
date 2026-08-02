@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "mockDate": "2026-08-02T08:49:09.610Z"
+  },
+  "variables": {
+    "dataset": {
+      "type": "OPERATIONAL"
+    },
+    "queryPeriod": {
+      "wef": "2026-08-02T07:49:00.000Z",
+      "unt": "2026-08-02T09:49:00.000Z"
+    }
+  }
+}

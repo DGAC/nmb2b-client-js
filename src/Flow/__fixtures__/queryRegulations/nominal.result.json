@@ -1,0 +1,4116 @@
+{
+  "data": {
+    "dataset": {
+      "type": "OPERATIONAL",
+    },
+    "planCutOffReached": true,
+    "planTransferred": true,
+    "regulations": {
+      "item": [
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "LFSBBA + LFSBBC + LFSBBO",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 195,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFSBBACO",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFSBBABCBO",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEAPP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "LFSBC02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:00:00.000Z,
+            "wef": 2026-08-02T06:40:00.000Z,
+          },
+          "location": {
+            "description": "FROM ANY VIA LECMPAI EXCEPT FROM LE... TO LEMG
+NOT ALLOWED VIA LECMTLI
+SUGGESTED REROUTES VIA BNA-CJN-ANZAN-BLN
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "RR1TLI",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTLI",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RR1TLI02",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "LFPN DEPARTURES",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFPNDEP",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LFPN",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LFFFAD",
+              ],
+            },
+          },
+          "reason": "ENVIRONMENTAL_ISSUES",
+          "regulationId": "LFPND02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:40:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "LGRP (RODOS) ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGRPARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGRP",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGRPA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:30:00.000Z,
+            "wef": 2026-08-02T07:35:00.000Z,
+          },
+          "location": {
+            "description": "MARSEILLE SECTOR DL",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFMDL",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMMDL",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "MDL02",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: ANY
+TO: EGPH/PF/PK
+NOT ALLOWED VIA EGPXHUM SECTOR
+RE-FILE VIA M79(COMPULSORY IF AVAILABLE)OR L602.
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 55,
+                "unit": "F",
+              },
+            },
+            "id": "RR1HUM",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGPXHUM",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGPXSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RR1HUM02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:40:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "LFEE-EAST: KF/UF COMBINED SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 195,
+                "unit": "F",
+              },
+            },
+            "id": "LFE2F",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEE2F",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEFMP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "E2F02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "LIME78",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LIMME78",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LIMMFMPE",
+              ],
+            },
+          },
+          "reason": "WEATHER",
+          "regulationId": "LIME802",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T16:00:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "LZBB ALL 365-385",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 385,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "LZBBA78",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LZBBA78",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LZBBFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LZA7802",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T06:30:00.000Z,
+          },
+          "location": {
+            "description": "DOMINGO UPPER",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "LECMDGU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMDGU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "ODGU02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T07:20:00.000Z,
+          },
+          "location": {
+            "description": "EDJA ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "EDJAARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "EDJA",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "EDMMFMPA",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "EDJAA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T09:20:00.000Z,
+          },
+          "location": {
+            "description": "GO3",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "LECBGO3",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECBGO3",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECBFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "OLGO302M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:10:00.000Z,
+            "wef": 2026-08-02T09:10:00.000Z,
+          },
+          "location": {
+            "description": "EDUU: ERLANGEN 355-375",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "EDUERL2C",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDUUERL2C",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDUUFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "KERL202M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:40:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "DEP + ARR VIA GO1",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+            },
+            "id": "LECBG1EV",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECBGO1",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECBFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LEG1EV02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:00:00.000Z,
+            "wef": 2026-08-02T05:30:00.000Z,
+          },
+          "location": {
+            "description": "/FROM : LEMG
+TO : UK SOUTH
+NOT ALLOWED VIA LECM TOLEDO AND DOMINGO UPPER SECTORS
+FILE BELOW FL345 UNTIL CLEAR OF THE SECTOR AT BLV/DELOG
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL1TDU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTDU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL1TDU02",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:10:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "COLLAPSED SECTOR DINKELSBUEHL, HAMMELBURG, SPESSART,
+KITZINGEN AND KOENIG",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "EDGG4",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDGG4",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDGGFMP1",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "EDGG402M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T19:40:00.000Z,
+            "wef": 2026-08-02T07:40:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LGMW202",
+              "LGRDS202",
+            ],
+          },
+          "location": {
+            "description": "SITIA + KAVOS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGGSTKA2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LGGGSTKA",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "LGGSK02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T07:45:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: LEMG 
+TO: EG SOUTH  
+NOT VIA SECTOR:LECMTLU (FL345-UNL)
+FILE BELOW FL345 UNTIL CLEAR OF THE SECTOR
+SUGGESTED POINT FOR CLIMB: BUGIX/SIE/GASMO
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL1TLU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTLU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL1TLU02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "LFPN ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFPNARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LFPN",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LFFFAD",
+              ],
+            },
+          },
+          "reason": "ENVIRONMENTAL_ISSUES",
+          "regulationId": "LFPNA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:40:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LEAL ARRIVALS TWR-AD",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LEALTWR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LEAL",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LECLTAC",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LEALA02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:40:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "LIRI ARR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LIRIARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LIRI",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LIRRFMPO",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LIRI02A",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T13:00:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: EIDW
+TO: EGLL EGKK EGLC EBBR
+NOT ALLOWED VIA AS EGTTSTUP
+REFILE VIA EGPXIOM ENDEQ/BOFUM/DEXEN
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 155,
+                "unit": "F",
+              },
+            },
+            "id": "RR4STB",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGTTSTUP",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "SCENRR",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RR4STB02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:00:00.000Z,
+            "wef": 2026-08-02T05:00:00.000Z,
+          },
+          "location": {
+            "description": "LFMN CTA ONLY LFMN ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 175,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFMNARRT",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMNFCTA",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMAPPE",
+              ],
+            },
+          },
+          "protectedLocation-ReferenceLocationAerodrome": {
+            "id": "LFMN",
+            "type": "AERODROME",
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LFMNA02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LYTNE02E",
+              "LYLUW02E",
+            ],
+          },
+          "location": {
+            "description": "LOWER WEST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 335,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LYBALW",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBALW",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYLW02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "LFBB: LFBD TMA (NON-LFBD TRAFFIC)",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 145,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFBDSIV",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFBDTMA",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFBBAPP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LFBDTM02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T07:20:00.000Z,
+          },
+          "location": {
+            "description": "VALENCIA TMA",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LECLVAP",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECLVAP",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECLTAC",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "VAP02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "/FROM : LEMG
+TO : UK NORTH + EIRE
+NOT ALLOWED VIA LECM TOLEDO AND DOMINGO UPPER SECTORS
+FILE BELOW FL345 UNTIL CLEAR OF THE SECTOR AT BLV/DELOG
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL3TDU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTDU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL3TDU02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T08:10:00.000Z,
+          },
+          "location": {
+            "description": "LEBL XAL SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 305,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LEBLXAL",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LEBLXAL",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LEBLTMA",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LEXAL02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T21:00:00.000Z,
+            "wef": 2026-08-02T04:40:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LGMW202",
+              "LGRDS202",
+            ],
+          },
+          "location": {
+            "description": "LGAV ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGAVARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGAV",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGAVA02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LYLUW02E",
+            ],
+          },
+          "location": {
+            "description": "UPPER WEST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 335,
+                "unit": "F",
+              },
+            },
+            "id": "LYBAUW",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBAUW",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYUW02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T22:40:00.000Z,
+            "wef": 2026-08-02T03:20:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LGMW202",
+            ],
+          },
+          "location": {
+            "description": "LGIR ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGIRARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGIR",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LGIRA02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-03T02:00:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LLBG ARRIVALS VIA LCCCCTA",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LLBGARR1",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LLBG",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LLLLFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LLBGA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "GCRR ARRIVALS + DEPARTURES",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "GCRR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "GCRR",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "GCCCFMP",
+              ],
+            },
+          },
+          "reason": "ATC_INDUSTRIAL_ACTION",
+          "regulationId": "GCRR02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:20:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LSZH ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LSZHARR1",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LSZH",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LSAZFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LSZHA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T18:40:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "location": {
+            "description": "LGKL ARR EXCEPT MIL",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGKLARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGKL",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGKLA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:10:00.000Z,
+            "wef": 2026-08-02T09:40:00.000Z,
+          },
+          "location": {
+            "description": "GO2",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "LECBGO2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECBGO2",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECBFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "OLEGO02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: LONDON TMA , EGHH,HI,HL,LF,LK,TF,VO 
+TO: SCOTTISH TMA,EGA,EI..
+NOT ALLOWED VIA EGTT04LKS SECTOR
+REFILE BELOW FL335 UNTIL CLEAR OF SECTOR
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 335,
+                "unit": "F",
+              },
+            },
+            "id": "FL2LK4",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGTT04LKS",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGTTSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL2LK402",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:30:00.000Z,
+            "wef": 2026-08-02T09:30:00.000Z,
+          },
+          "location": {
+            "description": "DEST LMML",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LMMLARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LMML",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LMMMFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LMMLA02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:40:00.000Z,
+            "wef": 2026-08-02T07:20:00.000Z,
+          },
+          "location": {
+            "description": "LFMM - E2 SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 305,
+                "unit": "F",
+              },
+            },
+            "id": "LFME2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMME2",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "ME202",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T18:50:00.000Z,
+            "wef": 2026-08-02T06:40:00.000Z,
+          },
+          "location": {
+            "description": "NANTES LU + RS SECTORS",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 195,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFRSLRS",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFRSLRS",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFRRAPP",
+              ],
+            },
+          },
+          "reason": "ATC_EQUIPMENT",
+          "regulationId": "LFRSL02",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:40:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "location": {
+            "description": "EDUU ALPEN FL365-660",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "EDUL3C",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDUUALP3C",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDUUFMPS",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "KL3C02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:40:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "ARR LEPA VIA RIXOT/MORSS",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LECPAMX2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECPMXX",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECPFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "PAMX202M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LYTNE02E",
+              "LYLUW02E",
+              "LYLUNE02",
+            ],
+          },
+          "location": {
+            "description": "UPPER NORTH EAST : FL335-355",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 335,
+                "unit": "F",
+              },
+            },
+            "id": "LYBAUNE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBAUNE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYUNE02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T18:20:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LGGG: KERKIRA (UPPER/LOWER) SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGGKRK1",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LGGGKRK",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "LGGKR02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T07:45:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: LEAL/AM/MI/VC
+TO: ANY
+NOT VIA LECMTLU (FL345-UNL)
+FILE BELOW FL345 UNTIL CLEAR OF THE SECTOR
+SUGGESTED POINT FOR CLIMB: GASMO OR ZANKO
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL4TLU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTLU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL4TLU02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "/FROM :LEAL/AM/MI/VC
+TO : ANY
+NOT ALLOWED VIA LECM TOLEDO AND DOMINGO UPPER SECTORS
+EXCEPT TRAFFIC GOING INTO LECMZMI SECTOR
+FILE BELOW FL345 UNTIL CLEAR OF THE SECTOR AT BLV/DELOG",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL4TDU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTDU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL4TDU02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T07:55:00.000Z,
+            "wef": 2026-08-02T05:45:00.000Z,
+          },
+          "location": {
+            "description": "LGTS ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGTSARR1",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGTS",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGMDFMP",
+              ],
+            },
+          },
+          "reason": "ATC_EQUIPMENT",
+          "regulationId": "LGTSA02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "FROM: EB/ED/EP/LO..
+VIA IBROD/AMLAD/MIMKU/APSOV/KUGUR/GOMUP/ETILO
+TO: ANY
+NOT ALLOWED VIA EGPXHUM
+SUGGESTED REROUTE:MIMVA L602 EMLON M79 TENDO
+RAD EG3607 TO BE SUSPENDED TO ALLOW TRAFFIC VIA GOMUP/ETILO
+TO ROUTE MIMVA-TENDO
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 55,
+                "unit": "F",
+              },
+            },
+            "id": "RR2HUM",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGPXHUM",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGPXSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RR2HUM02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:50:00.000Z,
+            "wef": 2026-08-02T08:50:00.000Z,
+          },
+          "location": {
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 195,
+                "unit": "F",
+              },
+            },
+            "id": "LFBNH12",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFBBNH12",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFBBFMP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "OBNH202M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:00:00.000Z,
+            "wef": 2026-08-02T07:20:00.000Z,
+          },
+          "location": {
+            "description": "LGKR (KERKYRA) ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGKRARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGKR",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LGKRA02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T19:20:00.000Z,
+            "wef": 2026-08-02T05:40:00.000Z,
+          },
+          "location": {
+            "description": "LGGG:RODOS (UPPER/LOWER COMBINED) SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGGRDS2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LGGGRDS",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "LGRDS202",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T23:00:00.000Z,
+            "wef": 2026-08-02T04:40:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LGGSK02",
+            ],
+          },
+          "location": {
+            "description": "LGSA (CHANIA) ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGSAARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGSA",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGSAA02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LGKO (KOS) ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGKOARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGKO",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGKOA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:40:00.000Z,
+            "wef": 2026-08-02T09:40:00.000Z,
+          },
+          "location": {
+            "description": "LIRN ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LIRNARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LIRN",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LIRRFMPO",
+              ],
+            },
+          },
+          "reason": "ENVIRONMENTAL_ISSUES",
+          "regulationId": "LIRNA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:20:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "UH",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 315,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 195,
+                "unit": "F",
+              },
+            },
+            "id": "LFEUH",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEEUH",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EUH02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:00:00.000Z,
+            "wef": 2026-08-02T05:40:00.000Z,
+          },
+          "location": {
+            "description": "DEPS LFP.  DEST: ALL
+NOT ALLOWED VIA EDUUNTM3C
+REFILE BELOW FL355 UNTIL CLEAR OF THE SECTOR
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "FL10NTM",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDUUNTM3C",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "SCENFL1",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL10NT02",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T13:00:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "LFMM -  E3 SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LFME3",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMME3",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "ME302",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:20:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "TRAFFIC VIA BEGAR IN LFEEKHE",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "LFEBGARH",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEEKHE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EBGARH02",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "LFMM EAST : BASTIA/AJACCIO COMBINED SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFMBTAJ",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMMBTAJ",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "OMBTAJ02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:40:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "LOWW TMA WITH EXCLUDED FLOWS",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LOWWAPPY",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LOWWAPP",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LOVVFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LOWWY02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T05:00:00.000Z,
+          },
+          "location": {
+            "description": "SUPERTOP",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+            },
+            "id": "LYBAX",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBAX",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYX02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:40:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "EHAM ARRIVALS ENTRY CROSS BORDER AIRSPACE",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "EHFIRAM",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EHAACBAS",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EHAAFMP",
+              ],
+            },
+          },
+          "protectedLocation-ReferenceLocationAerodrome": {
+            "id": "EHAM",
+            "type": "AERODROME",
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "EHAMA02E",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LYTNE02E",
+              "LYLUW02E",
+              "LYLUNE02",
+            ],
+          },
+          "location": {
+            "description": "LOWER NORTH EAST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 335,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 125,
+                "unit": "F",
+              },
+            },
+            "id": "LYBALNE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBALNE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYLNE02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:50:00.000Z,
+            "wef": 2026-08-02T04:15:00.000Z,
+          },
+          "location": {
+            "description": "VIA LFBZFIS OR LESOTA WITH ARR LFBZ OR LESO",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 145,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFBZARR2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFBZLESO",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFBBAPP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "LFBZA02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:40:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "LFEE-NORTH : R SECTOR X LAYER",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 315,
+                "unit": "F",
+              },
+            },
+            "id": "LFEXR",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEEXR",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EXR02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:40:00.000Z,
+            "wef": 2026-08-02T05:20:00.000Z,
+          },
+          "location": {
+            "description": "EGTT: SECTOR 24 (LONDON UPPER SECTOR)",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 305,
+                "unit": "F",
+              },
+            },
+            "id": "EG24GLUN",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGTT24LUN",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGTTFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EG24G02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:10:00.000Z,
+            "wef": 2026-08-02T07:40:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: LIMC/ME/MF/ML
+TO: EG..
+NOT ALLOWED VIA LFEEKHNRDT SECTOR
+REFILE BELOW FL345 UNTIL CLEAR OF SECTOR 
+SUGGESTED ROUTES:
+UNKIR/N0441F340 DCT DJL DCT BRY DCT CLM
+ROTSI/N0458F340 DCT KOTUN DCT NURMO DCT VESAN DCT RATUK L613
+SOVAT
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL4KHNRD",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEEKHNRDT",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFDSNA",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL4HN02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "J LOW + MID SECTOR
+FL095-FL365",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 95,
+                "unit": "F",
+              },
+            },
+            "id": "EPWJY",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EPWWJLM",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EPWWFMP",
+              ],
+            },
+          },
+          "reason": "OTHERS",
+          "regulationId": "OEPWJY02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:50:00.000Z,
+            "wef": 2026-08-02T07:40:00.000Z,
+          },
+          "location": {
+            "description": "LEV SOUTH",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LECBLVS",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECBLVS",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECBFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "OLLVS02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:40:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "LOWER SECTOR DFL345-",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LWLOW345",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LWSS000345",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LWSSFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LWL34602",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LYTNE02E",
+            ],
+          },
+          "location": {
+            "description": "TOP NORTH",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LYBATN",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBATN",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYTN02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:20:00.000Z,
+            "wef": 2026-08-02T07:40:00.000Z,
+          },
+          "location": {
+            "description": "LFEE-EAST: 'HE' SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "LFEHE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEEHE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EHE02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:40:00.000Z,
+            "wef": 2026-08-02T09:20:00.000Z,
+          },
+          "location": {
+            "description": "LECM: TOLEDO-LOWER SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LECMTLL",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTLL",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "TLL02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "LFFF: UJ SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 385,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 195,
+                "unit": "F",
+              },
+            },
+            "id": "LFFUJ",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFFFUJ",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFFFFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FUJ02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:00:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LFMM: B2 SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 305,
+                "unit": "F",
+              },
+            },
+            "id": "LFMB2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMMB2",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "MB202",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T09:30:00.000Z,
+          },
+          "location": {
+            "description": "LFMMB3+LFMMB4",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LFMB34",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFMMB34",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFMMFMPE",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "OMB3402M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "LGPZ  ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGPZARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGPZ",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGPZA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:00:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "LIEO ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LIEOARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LIEO",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LIRRFMPO",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LIEOA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T05:00:00.000Z,
+          },
+          "location": {
+            "description": "LOWER UPPER NORTH EAST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 125,
+                "unit": "F",
+              },
+            },
+            "id": "LYBALUNE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBALUNE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYLUNE02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:40:00.000Z,
+            "wef": 2026-08-02T06:20:00.000Z,
+          },
+          "location": {
+            "description": "EDUU ALPEN FL315-FL365",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 315,
+                "unit": "F",
+              },
+            },
+            "id": "EDUL1C",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDUUALP1C",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDUUFMPS",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "KL1C02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:20:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "LEMG ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LEMGARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LEMG",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LECSFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LEMGA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:40:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "FUESSEN",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 315,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "EDMFUE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDMMFUE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDMMFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EDMFU02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:20:00.000Z,
+            "wef": 2026-08-02T05:40:00.000Z,
+          },
+          "location": {
+            "description": "SOELLINGEN FL355-375",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "EDUSLN23",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDUUSLN23",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDUUFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "KSLN202M",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T05:00:00.000Z,
+          },
+          "location": {
+            "description": "TOP WEST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LYBATW",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBATW",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYTW02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:20:00.000Z,
+          },
+          "location": {
+            "description": "LHCC: EAST AND NORTH 345 - 365",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "LHEN56",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LHCCEN56",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LHCCFMP",
+              ],
+            },
+          },
+          "reason": "OTHERS",
+          "regulationId": "LHEN5602",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:40:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "EDUU-WEST: TANGO TOP/MIDDLE LAYERS COMBINED
+FL355-UNL",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "EDUTGO2C",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EDUUTGO2C",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EDUUFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "KTGO202M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T12:20:00.000Z,
+            "wef": 2026-08-02T08:40:00.000Z,
+          },
+          "location": {
+            "description": "ATH KEFALLINIA UPPER 1",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "LGGKFNU1",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LGGGKFNU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGGKF02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T20:00:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "location": {
+            "description": "FROM: LEVC, LEAL 
+TO: EG.. EI.. 
+NOT ALLOWED VIA LFBBCTA
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 145,
+                "unit": "F",
+              },
+            },
+            "id": "RN2LFB1",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFBBCTA",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "PLAYBOOK",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RN2LFB02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:00:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "location": {
+            "description": "EGTT  :  SECTOR 01 (LONDON UPPER WEST)",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 295,
+                "unit": "F",
+              },
+            },
+            "id": "EG01GLUW",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGTT01LUW",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGTTFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EG01G02M",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T05:00:00.000Z,
+          },
+          "location": {
+            "description": "TOP NORTH EAST: FL355-375",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LYBATNE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBATNE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYTNE02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T19:00:00.000Z,
+            "wef": 2026-08-02T04:20:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LGGKR02",
+              "LGMW202",
+            ],
+          },
+          "location": {
+            "description": "KEFALLINIA + ZAKINTHOS ARR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGKFZARR",
+            "referenceLocation-ReferenceLocationAerodromeSet": {
+              "id": "LGKF/ZA",
+              "type": "AERODROME_SET",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LGKFZ02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T13:00:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "NE + WE 345-UNL",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "LIRNEW58",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LIRRNEW58",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LIRFMPN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LIRNE02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T19:00:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "UPPER SECTOR DFL365+",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "LWUPP365",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LWSSUPP365",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LWSSFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LWU34602",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T20:40:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LGRDS202",
+            ],
+          },
+          "location": {
+            "description": "MAKEDONIA WEST SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGMW2",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LGMDW",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LGMDFMP",
+              ],
+            },
+          },
+          "reason": "ATC_STAFFING",
+          "regulationId": "LGMW202",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T05:00:00.000Z,
+          },
+          "location": {
+            "description": "LOWER UPPER WEST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LYBALUW",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBALUW",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYLUW02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T15:00:00.000Z,
+            "wef": 2026-08-02T07:20:00.000Z,
+          },
+          "location": {
+            "description": "LEPA/LESJ ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LEPAARR",
+            "referenceLocation-ReferenceLocationAerodromeSet": {
+              "id": "LEPA/SJ",
+              "type": "AERODROME_SET",
+            },
+            "setIds": {
+              "item": [
+                "LECPFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LEPAA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T07:00:00.000Z,
+          },
+          "location": {
+            "description": "LFBD ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LFBDARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LFBD",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LFBBAPP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LFBDA02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "EGTT: SECTORS 08(STRUMBLE)+ 35(PEMBROKE) COMBINED",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 155,
+                "unit": "F",
+              },
+            },
+            "id": "EGSTUP",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGTTSTUP",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGTTFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EGSTP02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:20:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LSGL5C",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LSGL5C",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LSAGL5",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LSAGFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "GL5C02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:40:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "LSZH TMA TRANSIT TFC",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 125,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LSZHAORX",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LSZHTMA",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LSAZFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "ZHTMA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T08:00:00.000Z,
+          },
+          "location": {
+            "description": "DEPS FROM LEAL IN EAST CONFIG + ARRS TO LEIB",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 245,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LECLDEE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECLDEE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECLTAC",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "DEE02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "location": {
+            "description": "EGTT: LONDON UPPER-EAST SECTOR",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 305,
+                "unit": "F",
+              },
+            },
+            "id": "EG02GLUE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EGTT02LUE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EGTTFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "OEG02G02",
+          "regulationState": "CANCELLED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:40:00.000Z,
+            "wef": 2026-08-02T09:40:00.000Z,
+          },
+          "location": {
+            "description": "LGMK (MYKONOS) ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LGMKARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LGMK",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LGGGFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LGMKA02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T06:20:00.000Z,
+          },
+          "location": {
+            "description": "P2R",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 305,
+                "unit": "F",
+              },
+            },
+            "id": "LECBP2R",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECBP2R",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECBFMPW",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LEP2R02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T21:00:00.000Z,
+            "wef": 2026-08-02T06:00:00.000Z,
+          },
+          "location": {
+            "description": "FROM: EHAM, EGKK, EGLL, EGGP, EGNX, LOWW, EDDB, EDDV, EDDF, 
+EDDH, EDDP
+TO: LCLK, LCPH, LGKP, LGKO, LGRP,  HEMA, HEGN
+NOT ALLOWED VIA: LQ, LD, LGMDW, LWSSTOTAL, LYBALUTW, LYBAXW
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "RN2LGYWQ",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LGLWLYLQLD",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "PLAYBOOK",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RN2LGY02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T14:00:00.000Z,
+            "wef": 2026-08-02T04:30:00.000Z,
+          },
+          "location": {
+            "description": "LYTV ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LYTVARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LYTV",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LYTVA02E",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T07:40:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: LIMC/ME/MF/ML 
+TO: EG
+NOT ALLOWED VIA LSAGL5 SECTOR
+RE-FILE BELOW F345 UNTIL CLEAR OF SECTOR
+SUGGESTED ROUTE: AOSTA/F340 DCT ORSUD DCT MOLUS
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "FL1GL5",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LSAGL5",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "SCENFL",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL1L502M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T08:40:00.000Z,
+            "wef": 2026-08-02T07:20:00.000Z,
+          },
+          "location": {
+            "description": "LCLK ARRIVALS",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "LCLKARR",
+            "referenceLocation-ReferenceLocationAerodrome": {
+              "id": "LCLK",
+              "type": "AERODROME",
+            },
+            "setIds": {
+              "item": [
+                "LCCCFMP",
+              ],
+            },
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "LCLKA02M",
+          "regulationState": "TERMINATED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T09:00:00.000Z,
+            "wef": 2026-08-02T07:45:00.000Z,
+          },
+          "location": {
+            "description": "/FROM: LEMG 
+TO: EB../EH../ED../LFP.
+NOT ALLOWED VIA LECMTLU (FL345-UNL)
+REFILE BELOW FL345 UNTIL CLEAR OF SECTOR
+SUGGESTED POINT FOR CLIMB: GASMO
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 345,
+                "unit": "F",
+              },
+            },
+            "id": "FL2TLU",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LECMTLU",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LECMSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "FL2TLU02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T10:00:00.000Z,
+            "wef": 2026-08-02T09:20:00.000Z,
+          },
+          "location": {
+            "description": "/FROM:  LEPA
+TO:  LIP, LJ, LD, LO, LK, LZ, EP, EDDM, EDDB, EDDC
+NOT ALLOWED VIA POINT LUMAS
+REFILE VIA  MHN-MORSS / MHN-ISTER
+DELAY THRESHOLD 20 MIN",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "RR1LUMAS",
+            "referenceLocation-ReferenceLocationPublishedPoint": {
+              "id": "LUMAS",
+              "type": "PUBLISHED_POINT",
+            },
+            "setIds": {
+              "item": [
+                "LECBSCEN",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "RR1LMS02",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T15:00:00.000Z,
+            "wef": 2026-08-02T08:20:00.000Z,
+          },
+          "location": {
+            "description": "LFEE-NORTH : R SECTOR 'H'/'Y' LAYERS COMBINED",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 365,
+                "unit": "F",
+              },
+            },
+            "id": "LFEHYR",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LFEEHYR",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LFEEFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "EHYR02A",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T17:00:00.000Z,
+            "wef": 2026-08-02T09:00:00.000Z,
+          },
+          "linkedRegulations": {
+            "item": [
+              "LYTNE02E",
+            ],
+          },
+          "location": {
+            "description": "TOP EAST",
+            "flightLevels": {
+              "max": {
+                "ceiling": false,
+                "ground": false,
+                "level": 375,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": false,
+                "level": 355,
+                "unit": "F",
+              },
+            },
+            "id": "LYBATE",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "LYBATE",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "LYBAFMP",
+              ],
+            },
+          },
+          "reason": "ATC_CAPACITY",
+          "regulationId": "LYTE02M",
+          "regulationState": "APPLIED",
+        },
+        {
+          "applicability": {
+            "unt": 2026-08-02T11:40:00.000Z,
+            "wef": 2026-08-02T09:30:00.000Z,
+          },
+          "location": {
+            "description": "EHAM ARRIVALS ENTRY CROSS BORDER AIRSPACE",
+            "flightLevels": {
+              "max": {
+                "ceiling": true,
+                "ground": false,
+                "unit": "F",
+              },
+              "min": {
+                "ceiling": false,
+                "ground": true,
+                "unit": "F",
+              },
+            },
+            "id": "EHFIRAM",
+            "referenceLocation-ReferenceLocationAirspace": {
+              "id": "EHAACBAS",
+              "type": "AIRSPACE",
+            },
+            "setIds": {
+              "item": [
+                "EHAAFMP",
+              ],
+            },
+          },
+          "protectedLocation-ReferenceLocationAerodrome": {
+            "id": "EHAM",
+            "type": "AERODROME",
+          },
+          "reason": "AERODROME_CAPACITY",
+          "regulationId": "EHAMA02X",
+          "regulationState": "APPLIED",
+        },
+      ],
+    },
+  },
+  "requestId": "B2B_CUR1:871675985603417594",
+  "requestReceptionTime": 2026-08-02T08:49:09.000Z,
+  "sendTime": 2026-08-02T08:49:09.000Z,
+  "status": "OK",
+}

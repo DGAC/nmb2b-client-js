@@ -47,7 +47,7 @@ export default defineConfig({
   },
   overrides: [
     {
-      files: ['src/**/*.test.ts', 'tests/**/*'],
+      files: ['src/**/*.test.ts', 'tests/**/*', 'src/**/__fixtures__/**/*'],
       plugins: ['vitest'],
       rules: {
         'typescript/no-unsafe-assignment': 'off',
