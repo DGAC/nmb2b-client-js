@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "mockDate": "2026-08-02T16:00:55.974Z"
+  },
+  "variables": {
+    "dataset": {
+      "type": "OPERATIONAL"
+    },
+    "day": "2026-08-02T16:00:00.000Z",
+    "trafficVolumes": [
+      "LFEKD",
+      "LFEUH"
+    ]
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "data": {
+    "plans": {
+      "dataId": "O05450000214727",
+      "dataset": {
+        "type": "OPERATIONAL",
+      },
+      "day": 2026-08-02T00:00:00.000Z,
+      "planCutOffReached": true,
+      "planTransferred": true,
+      "tvsOTMVs": {
+        "item": [
+          {
+            "key": "LFEKD",
+            "value": {
+              "item": [
+                {
+                  "key": 60,
+                  "value": {
+                    "clientSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "TACTICAL",
+                          "otmv": {
+                            "otmvDuration": 60,
+                            "peak": {
+                              "threshold": 11,
+                            },
+                            "sustained": {
+                              "crossingOccurrences": 99,
+                              "elapsed": 5940,
+                              "threshold": 9,
+                            },
+                            "trafficVolume": "LFEKD",
+                          },
+                        },
+                      ],
+                    },
+                    "nmSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "TACTICAL",
+                          "otmv": {
+                            "otmvDuration": 60,
+                            "peak": {
+                              "threshold": 11,
+                            },
+                            "sustained": {
+                              "crossingOccurrences": 99,
+                              "elapsed": 5940,
+                              "threshold": 9,
+                            },
+                            "trafficVolume": "LFEKD",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                {
+                  "key": 660,
+                  "value": {
+                    "clientSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "TACTICAL",
+                          "otmv": {
+                            "otmvDuration": 660,
+                            "peak": {
+                              "threshold": 16,
+                            },
+                            "sustained": {
+                              "crossingOccurrences": 99,
+                              "elapsed": 5940,
+                              "threshold": 13,
+                            },
+                            "trafficVolume": "LFEKD",
+                          },
+                        },
+                      ],
+                    },
+                    "nmSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "TACTICAL",
+                          "otmv": {
+                            "otmvDuration": 660,
+                            "peak": {
+                              "threshold": 16,
+                            },
+                            "sustained": {
+                              "crossingOccurrences": 99,
+                              "elapsed": 5940,
+                              "threshold": 13,
+                            },
+                            "trafficVolume": "LFEKD",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          {
+            "key": "LFEUH",
+            "value": {
+              "item": [
+                {
+                  "key": 60,
+                  "value": {
+                    "clientSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "AIRSPACE",
+                        },
+                      ],
+                    },
+                    "nmSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "AIRSPACE",
+                          "otmv": {
+                            "otmvDuration": 60,
+                            "peak": {
+                              "threshold": 9,
+                            },
+                            "sustained": {
+                              "crossingOccurrences": 99,
+                              "elapsed": 5940,
+                              "threshold": 7,
+                            },
+                            "trafficVolume": "LFEUH",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+                {
+                  "key": 660,
+                  "value": {
+                    "clientSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "AIRSPACE",
+                        },
+                      ],
+                    },
+                    "nmSchedule": {
+                      "item": [
+                        {
+                          "applicabilityPeriod": {
+                            "unt": 2026-08-03T00:00:00.000Z,
+                            "wef": 2026-08-02T00:00:00.000Z,
+                          },
+                          "dataSource": "AIRSPACE",
+                          "otmv": {
+                            "otmvDuration": 660,
+                            "peak": {
+                              "threshold": 14,
+                            },
+                            "sustained": {
+                              "crossingOccurrences": 99,
+                              "elapsed": 5940,
+                              "threshold": 10,
+                            },
+                            "trafficVolume": "LFEUH",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  },
+  "requestId": "B2B_CUR2:871784645021185753",
+  "requestReceptionTime": 2026-08-02T16:00:56.000Z,
+  "sendTime": 2026-08-02T16:00:56.000Z,
+  "status": "OK",
+}
