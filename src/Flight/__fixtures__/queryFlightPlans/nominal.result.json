@@ -1,0 +1,27 @@
+{
+  "data": {
+    "summaries": [
+      {
+        "lastValidFlightPlan": {
+          "id": {
+            "id": "PO04104311",
+            "keys": {
+              "aerodromeOfDeparture": "LFPB",
+              "aerodromeOfDestination": "UDYZ",
+              "airFiled": false,
+              "aircraftId": "AXY607M",
+              "estimatedOffBlockTime": 2026-08-02T08:30:00.000Z,
+              "nonICAOAerodromeOfDeparture": false,
+              "nonICAOAerodromeOfDestination": false,
+            },
+          },
+          "status": "AIRBORNE",
+        },
+      },
+    ],
+  },
+  "requestId": "B2B_CUR1:871692098320029117",
+  "requestReceptionTime": 2026-08-02T09:53:11.000Z,
+  "sendTime": 2026-08-02T09:53:11.000Z,
+  "status": "OK",
+}
