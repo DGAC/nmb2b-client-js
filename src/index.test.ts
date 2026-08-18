@@ -4,6 +4,7 @@ import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
 import {
   createAirspaceClient,
+  createCommonClient,
   createB2BClient,
   createFlightClient,
   createFlowClient,
@@ -15,15 +16,17 @@ describe('Main API', () => {
     const b2bClient = await createB2BClient(TEST_B2B_OPTIONS);
     expect(b2bClient).toBeDefined();
     expect(b2bClient.Airspace).toBeDefined();
+    expect(b2bClient.Common).toBeDefined();
     expect(b2bClient.Flight).toBeDefined();
     expect(b2bClient.Flow).toBeDefined();
     expect(b2bClient.GeneralInformation).toBeDefined();
   });
 
   test.each([
-    createFlowClient,
-    createFlightClient,
     createAirspaceClient,
+    createCommonClient,
+    createFlightClient,
+    createFlowClient,
     createGeneralInformationClient,
   ])('%O', async (fn) => {
     const res = await fn(TEST_B2B_OPTIONS);

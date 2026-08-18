@@ -13,6 +13,16 @@ export const shouldUseRealB2BConnection =
   // ... unless explicity allowed
   !!process.env.REAL_B2B_CONNECTIONS;
 
+/**
+ * Boolean to indicate if tests requiring a real NM B2B subscription should
+ * be run.
+ */
+export const shouldCreateSubscriptions =
+  // Tests should be allowed to talk to the B2B
+  shouldUseRealB2BConnection &&
+  // Disable all subscription creation in CI for now
+  !process.env.CI;
+
 export async function createMockArchive(
   files: Record<string, string>,
 ): Promise<Buffer> {

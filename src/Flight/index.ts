@@ -3,7 +3,7 @@ import {
   createSoapService,
   type SoapService,
 } from '../utils/soap-query-definition.ts';
-
+import { createFlightDataSubscription } from './createFlightDataSubscription.ts';
 import { queryFlightPlans } from './queryFlightPlans.ts';
 import { queryFlightsByAerodrome } from './queryFlightsByAerodrome.ts';
 import { queryFlightsByAerodromeSet } from './queryFlightsByAerodromeSet.ts';
@@ -12,9 +12,11 @@ import { queryFlightsByAirspace } from './queryFlightsByAirspace.ts';
 import { queryFlightsByMeasure } from './queryFlightsByMeasure.ts';
 import { queryFlightsByTrafficVolume } from './queryFlightsByTrafficVolume.ts';
 import { retrieveFlight } from './retrieveFlight.ts';
+import { retrieveFlightDataSubscription } from './retrieveFlightDataSubscription.ts';
+import { updateFlightDataSubscription } from './updateFlightDataSubscription.ts';
 
 const queryDefinitions = {
-  retrieveFlight,
+  createFlightDataSubscription,
   queryFlightPlans,
   queryFlightsByAerodrome,
   queryFlightsByAerodromeSet,
@@ -22,6 +24,9 @@ const queryDefinitions = {
   queryFlightsByAirspace,
   queryFlightsByMeasure,
   queryFlightsByTrafficVolume,
+  retrieveFlight,
+  retrieveFlightDataSubscription,
+  updateFlightDataSubscription,
 };
 
 export type FlightService = SoapService<typeof queryDefinitions>;

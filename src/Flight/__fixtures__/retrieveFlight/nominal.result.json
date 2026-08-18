@@ -2,21 +2,21 @@
   "data": {
     "flight": {
       "flightId": {
-        "id": "PO02737421",
+        "id": "PO03621006",
         "keys": {
-          "aerodromeOfDeparture": "EGGD",
-          "aerodromeOfDestination": "LGAV",
+          "aerodromeOfDeparture": "LEBL",
+          "aerodromeOfDestination": "EGKK",
           "airFiled": false,
-          "aircraftId": "EZY2803",
-          "estimatedOffBlockTime": 2026-01-03T14:59:00.000Z,
+          "aircraftId": "EZY65HY",
+          "estimatedOffBlockTime": 2026-07-21T15:09:00.000Z,
           "nonICAOAerodromeOfDeparture": false,
           "nonICAOAerodromeOfDestination": false,
         },
       },
     },
   },
-  "requestId": "B2B_CUR2:25407266",
-  "requestReceptionTime": 2026-01-03T16:31:31.000Z,
-  "sendTime": 2026-01-03T16:31:31.000Z,
+  "requestId": "B2B_CUR2:867455600673751834",
+  "requestReceptionTime": 2026-07-21T17:18:51.000Z,
+  "sendTime": 2026-07-21T17:18:51.000Z,
   "status": "OK",
 }

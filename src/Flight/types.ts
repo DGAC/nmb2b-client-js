@@ -1,5 +1,6 @@
 import type {
   AerodromeICAOId,
+  AerodromeICAOIdWildcard,
   AerodromeOrPublishedPointId,
   AerodromeSetId,
   AirSpeed,
@@ -18,6 +19,7 @@ import type {
   RunwayId,
   TerminalProcedure,
   TrafficVolumeId,
+  TrafficVolumeSetId,
 } from '../Airspace/types.ts';
 
 import type {
@@ -47,6 +49,11 @@ import type {
   SignedDistanceNM,
   SignedDurationHourMinute,
   SignedDurationHourMinuteSecond,
+  Subscription,
+  SubscriptionCreationRequest,
+  SubscriptionRetrievalRequest,
+  SubscriptionSynchronisationSummary,
+  SubscriptionUpdateRequest,
   TimeHourMinutePeriod,
   WeightKg,
 } from '../Common/types.ts';
@@ -1504,3 +1511,132 @@ export type FlightListByAircraftOperatorReply =
 
 // oxlint-disable-next-line typescript/no-empty-object-type
 export interface FlightListByAircraftOperatorReplyData extends FlightListByLocationReplyData {}
+
+export type FlightDataSubscriptionCreationRequest =
+  SubscriptionCreationRequest & {
+    messageFilter?: unknown;
+    payloadConfiguration: FlightDataPayloadConfiguration;
+  };
+
+export type FlightDataSubscriptionCreationReply =
+  ReplyWithData<FlightDataSubscriptionCreationReplyData>;
+
+export type FlightDataSubscriptionCreationReplyData = {
+  subscription: FlightDataSubscription;
+};
+
+export type FlightDataSubscription = Subscription & {
+  messageFilter?: FlightDataMessageFilter;
+  payloadConfiguration: FlightDataPayloadConfiguration;
+};
+
+export type FlightDataPayloadConfiguration = {
+  flightFields: NMSet<PSFlightField>;
+  concernedUnits: boolean;
+  trafficVolumeSelection?: TrafficVolumeSelection;
+};
+
+export type TrafficVolumeSelection = {
+  includedTrafficVolumeSets: NMSet<TrafficVolumeSetId>;
+};
+
+export type FlightDataMessageFilter = {
+  includeProposalFlights: boolean;
+  flightSet: NMSet<FlightSetDefinitionElement>;
+};
+
+export type FlightSetDefinitionElement = {
+  aircraftOperators?: NMSet<AircraftOperatorICAOId>;
+  aircraftRegistrations?: NMSet<AircraftRegistrationMark>;
+  aerodromesOfDeparture?: NMSet<AerodromeICAOIdWildcard>;
+  aerodromesOfArrival?: NMSet<AerodromeICAOIdWildcard>;
+  alternateAerodromes?: NMSet<AerodromeICAOIdWildcard>;
+  anuIds?: NMSet<AirNavigationUnitId>;
+  flightPlanOriginators?: NMSet<AirNavigationUnitId>;
+};
+
+export type PSFlightField =
+  | 'aircraftType'
+  | 'aircraftOperator'
+  | 'operatingAircraftOperator'
+  | 'icaoRoute'
+  | 'routeLength'
+  | 'filedRegistrationMark'
+  | 'lateFiler'
+  | 'lateUpdater'
+  | 'cdmEstimatedOffBlockTime'
+  | 'calculatedOffBlockTime'
+  | 'actualOffBlockTime'
+  | 'estimatedTakeOffTime'
+  | 'calculatedTakeOffTime'
+  | 'actualTakeOffTime'
+  | 'ctotLimitReason'
+  | 'currentDepartureTaxiTimeAndProcedure'
+  | 'suspensionStatus'
+  | 'suspensionInfo'
+  | 'readyStatus'
+  | 'cdm'
+  | 'proposalInformation'
+  | 'bestReroutingIndicator'
+  | 'slotZone'
+  | 'slotSwapCounter'
+  | 'departureTolerance'
+  | 'exemptedFromRegulations'
+  | 'delay'
+  | 'delayCharacteristics'
+  | 'mostPenalisingRegulation'
+  | 'mostPenalisingRegulationCause'
+  | 'hasOtherRegulations'
+  | 'regulationLocations'
+  | 'targetTimeOverFix'
+  | 'excludedRegulations'
+  | 'reroutable'
+  | 'divertedAerodromeOfDestination'
+  | 'estimatedTimeOfArrival'
+  | 'calculatedTimeOfArrival'
+  | 'actualTimeOfArrival'
+  | 'arrivalInformation'
+  | 'apiSubmissionRules'
+  | 'flightState'
+  | 'confirmedCTFM'
+  | 'cfmuFlightType'
+  | 'isProposalFlight'
+  | 'profileValidity'
+  | 'lastKnownPosition'
+  | 'highestModelPointProfile'
+  | 'highestModelAirspaceProfile'
+  | 'highestModelTrafficVolumeProfile'
+  | 'aircraftAddress'
+  | 'flightDataVersionNr'
+  | 'minimumRequestedRVR'
+  | 'wakeTurbulenceCategory'
+  | 'alternateAerodromes'
+  | 'flightCriticality'
+  | 'oceanicReroute'
+  | 'iataFlightDesignator'
+  | 'activeACDMAlerts'
+  | 'routeChargeIndicator'
+  | 'fuelConsumptionIndicator';
+
+export type FlightDataSubscriptionRetrievalRequest =
+  SubscriptionRetrievalRequest;
+
+export type FlightDataSubscriptionRetrievalReply =
+  ReplyWithData<FlightDataSubscriptionRetrievalReplyData>;
+
+export type FlightDataSubscriptionRetrievalReplyData = {
+  subscription: FlightDataSubscription;
+  synchronisationSummary?: SubscriptionSynchronisationSummary;
+};
+
+export type FlightDataSubscriptionUpdateRequest = SubscriptionUpdateRequest & {
+  messageFilter?: FlightDataMessageFilter;
+  payloadConfiguration: FlightDataPayloadConfiguration;
+};
+
+export type FlightDataSubscriptionUpdateReply =
+  ReplyWithData<FlightDataSubscriptionUpdateReplyData>;
+
+export type FlightDataSubscriptionUpdateReplyData = {
+  subscription: FlightDataSubscription;
+};

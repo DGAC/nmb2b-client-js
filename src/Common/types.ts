@@ -32,6 +32,8 @@ export type Colours = string; // TEXT{1,51}
 export type SignedDurationHourMinuteSecond = string; // +hhmmss / -hhmmss
 export type SignedDurationHourMinute = string;
 
+export type CorrelationId = string; // TEXT{1,256}
+
 export type NMInt = string;
 export interface NMSet<A> {
   item: A[];
@@ -189,4 +191,189 @@ export type ErrorType =
   | 'UNKNOWN';
 
 export type UUID = string;
+export type VersionNumber = number;
 export type NMRelease = string;
+export type QueueName = string;
+export type SubscriptionTopic =
+  | 'ATM_INFORMATION'
+  | 'AIRSPACE_DATA'
+  | 'REGULATIONS'
+  | 'REROUTINGS'
+  | 'EAUP'
+  | 'FLIGHT_PLANS'
+  | 'FLIGHT_DATA'
+  | 'FLIGHT_FILING_RESULT'
+  | 'FFICE_PUBLICATION'
+  | 'FFICE_FLIGHT_FILING'
+  | 'MCDM';
+
+export type SubscriptionState =
+  | 'ACTIVE'
+  | 'PAUSED'
+  | 'SUSPENDED_ACTIVE'
+  | 'SUSPENDED_PAUSED'
+  | 'DELETED';
+
+export type SubscriptionUpdateReason =
+  | 'USER_REQUEST'
+  | 'MSG_EXPIRED'
+  | 'MAINTENANCE'
+  | 'NM_UPDATE'
+  | 'QUEUE_OVERFLOW';
+
+export type SubscriptionListRequest = B2BRequest & {
+  states?: NMSet<SubscriptionState>;
+};
+export type SubscriptionListReply = ReplyWithData<SubscriptionListReplyData>;
+
+export type SubscriptionListReplyData = {
+  subscriptions?: NMList<SubscriptionSummary>;
+};
+
+export type SubscriptionSummary = {
+  uuid: UUID;
+  version: VersionNumber;
+  release: NMRelease;
+  anuId: AirNavigationUnitId;
+  queueName: QueueName;
+  topic: SubscriptionTopic;
+  state: SubscriptionState;
+  description?: string;
+  creationDate: DateTimeSecond;
+  lastUpdatedBy: string;
+  lastUpdatedOn: Timestamp;
+  lastUpdateReason: SubscriptionUpdateReason;
+  lastUpdateComment?: string;
+  hearbeatEnabled: boolean;
+};
+
+export type SubscriptionDeletionRequest = B2BRequest & {
+  uuid: UUID;
+};
+
+export type SubscriptionDeletionReply =
+  ReplyWithData<SubscriptionDeletionReplyData>;
+
+export type SubscriptionDeletionReplyData = Record<string, never>;
+
+export type SubscriptionHistoryRequest = B2BRequest & {
+  uuid: UUID;
+  referenceTime?: DateTimeSecond;
+};
+
+export type SubscriptionHistoryReply =
+  ReplyWithData<SubscriptionHistoryReplyData>;
+
+export type SubscriptionHistoryReplyData = {
+  history: NMList<SubscriptionHistoryItem>;
+  hasMoreItems: boolean;
+};
+
+export type SubscriptionHistoryItem = {
+  uuid: UUID;
+  version: VersionNumber;
+  state: SubscriptionState;
+  description?: string;
+  updatedBy: string;
+  updatedOn: Timestamp;
+  updatedReason: SubscriptionUpdateReason;
+  updatedComment?: string;
+  hearbeatEnabled: boolean;
+};
+
+export type SubscriptionCreationRequest = B2BRequest & {
+  description?: string;
+  queueName?: QueueName;
+};
+
+export type Subscription = {
+  summary: SubscriptionSummary;
+};
+
+export type SubscriptionResumeRequest = B2BRequest & {
+  uuid: UUID;
+};
+
+export type SubscriptionResumeReply =
+  ReplyWithData<SubscriptionResumeReplyData>;
+
+export type SubscriptionResumeReplyData = Record<string, never>;
+
+export type SubscriptionPauseRequest = B2BRequest & {
+  uuid: UUID;
+  heartbeatEnabled?: boolean;
+};
+
+export type SubscriptionPauseReply = ReplyWithData<SubscriptionPauseReplyData>;
+
+export type SubscriptionPauseReplyData = Record<string, never>;
+
+export type MessagePullRequest = B2BRequest & {
+  queueName: QueueName;
+  maxSize: number;
+  destructive: boolean;
+};
+
+export type MessagePullReply = ReplyWithData<MessagePullReplyData>;
+
+export type MessagePullReplyData = {
+  marshalledMessages: NMList<PSMessageElement>;
+  hasMoreMessages: boolean;
+};
+
+export type PSMessageElement = string;
+
+export type SubscriptionSynchronisationRequest = B2BRequest & {
+  subscriptionUuid: UUID;
+  wef?: DateTimeMinute;
+  til?: DateTimeMinute;
+};
+
+export type SubscriptionSynchronisationReply =
+  ReplyWithData<SubscriptionSynchronisationReplyData>;
+
+export type SubscriptionSynchronisationReplyData = {
+  correlationId: CorrelationId;
+  messagesCount: number;
+};
+
+export type SubscriptionSynchronisationAbortRequest = B2BRequest & {
+  subscriptionUuid: UUID;
+};
+
+export type SubscriptionSynchronisationAbortReply =
+  ReplyWithData<SubscriptionSynchronisationAbortReplyData>;
+
+export type SubscriptionSynchronisationAbortReplyData = {
+  synchronisationSummary: SubscriptionSynchronisationSummary;
+};
+
+export type SubscriptionSynchronisationSummary = {
+  subscriptionUuid: UUID;
+  correlationId: CorrelationId;
+  size: number;
+  startTime: DateTimeSecond;
+  endTime?: DateTimeSecond;
+  status: SubscriptionSynchronisationStatus;
+  abortReason?: SubscriptionSynchronisationAbortReason;
+};
+
+export type SubscriptionSynchronisationStatus =
+  | 'STARTED'
+  | 'COMPLETED'
+  | 'ABORTED';
+
+export type SubscriptionSynchronisationAbortReason =
+  | 'USER_REQUEST'
+  | 'MAINTENANCE'
+  | 'SUBSCRIPTION_NOT_ACTIVE';
+
+export type SubscriptionRetrievalRequest = B2BRequest & {
+  uuid: UUID;
+  version?: VersionNumber;
+};
+
+export type SubscriptionUpdateRequest = B2BRequest & {
+  subscriptionUuid: UUID;
+  description?: string;
+};

@@ -1,16 +1,16 @@
 {
   "meta": {
-    "mockDate": "2026-01-03T16:31:30.966Z"
+    "mockDate": "2026-07-21T17:18:51.332Z"
   },
   "variables": {
     "keys": {
-      "aircraftId": "EZY2803",
-      "aerodromeOfDeparture": "EGGD",
+      "aircraftId": "EZY65HY",
+      "aerodromeOfDeparture": "LEBL",
       "nonICAOAerodromeOfDeparture": false,
       "airFiled": false,
-      "aerodromeOfDestination": "LGAV",
+      "aerodromeOfDestination": "EGKK",
       "nonICAOAerodromeOfDestination": false,
-      "estimatedOffBlockTime": "2026-01-03T14:59:00.000Z"
+      "estimatedOffBlockTime": "2026-07-21T15:09:00.000Z"
     }
   }
 }
