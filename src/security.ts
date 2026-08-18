@@ -3,11 +3,7 @@ import { createDebugLogger } from './utils/debug.ts';
 const debug = createDebugLogger('security');
 import type { Config } from './config.ts';
 import type { ISecurity } from 'soap';
-import {
-  ClientSSLSecurity,
-  ClientSSLSecurityPFX,
-  BasicAuthSecurity,
-} from 'soap';
+import { ClientSSLSecurity, ClientSSLSecurityPFX, BasicAuthSecurity } from 'soap';
 import fs from 'node:fs';
 
 /**
@@ -83,16 +79,12 @@ export function assertValidSecurity(obj: unknown): asserts obj is Security {
 
   if ('apiKeyId' in obj) {
     assert(
-      !!obj.apiKeyId &&
-        typeof obj.apiKeyId === 'string' &&
-        obj.apiKeyId.length > 0,
+      !!obj.apiKeyId && typeof obj.apiKeyId === 'string' && obj.apiKeyId.length > 0,
       'security.apiKeyId must be a string with a length > 0',
     );
 
     assert(
-      'apiSecretKey' in obj &&
-        typeof obj.apiSecretKey === 'string' &&
-        obj.apiSecretKey.length > 0,
+      'apiSecretKey' in obj && typeof obj.apiSecretKey === 'string' && obj.apiSecretKey.length > 0,
       'security.apiSecretKey must be defined when using security.apiKeyId',
     );
 
@@ -100,8 +92,7 @@ export function assertValidSecurity(obj: unknown): asserts obj is Security {
   }
 
   assert(
-    ('pfx' in obj && Buffer.isBuffer(obj.pfx)) ||
-      ('cert' in obj && Buffer.isBuffer(obj.cert)),
+    ('pfx' in obj && Buffer.isBuffer(obj.pfx)) || ('cert' in obj && Buffer.isBuffer(obj.cert)),
     'security.pfx or security.cert must be buffers',
   );
 
@@ -138,12 +129,7 @@ export function prepareSecurity(config: Config): ISecurity {
   } else if ('cert' in security) {
     debug('Using PEM certificates');
     const { key, cert, passphrase } = security;
-    return new ClientSSLSecurity(
-      key,
-      cert,
-      undefined,
-      passphrase ? { passphrase } : null,
-    );
+    return new ClientSSLSecurity(key, cert, undefined, passphrase ? { passphrase } : null);
   }
 
   throw new Error('Invalid security object');
@@ -185,16 +171,12 @@ export function fromValues(env: Record<string, string | undefined>): Security {
   const { B2B_CERT, B2B_API_KEY_ID, B2B_API_SECRET_KEY } = env;
 
   if (!B2B_CERT && !B2B_API_KEY_ID) {
-    throw new Error(
-      'Please define a B2B_CERT or a B2B_API_KEY_ID environment variable',
-    );
+    throw new Error('Please define a B2B_CERT or a B2B_API_KEY_ID environment variable');
   }
 
   if (B2B_API_KEY_ID) {
     if (!B2B_API_SECRET_KEY) {
-      throw new Error(
-        `When using B2B_API_KEY_ID, a B2B_API_SECRET_KEY must be defined`,
-      );
+      throw new Error(`When using B2B_API_KEY_ID, a B2B_API_SECRET_KEY must be defined`);
     }
 
     return {
@@ -220,9 +202,7 @@ export function fromValues(env: Record<string, string | undefined>): Security {
     };
   } else if (env.B2B_CERT_FORMAT === 'pem') {
     if (!env.B2B_CERT_KEY || !fs.existsSync(env.B2B_CERT_KEY)) {
-      throw new Error(
-        'Please define a valid B2B_CERT_KEY environment variable',
-      );
+      throw new Error('Please define a valid B2B_CERT_KEY environment variable');
     }
 
     const security: PemSecurity = {

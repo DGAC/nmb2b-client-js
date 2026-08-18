@@ -6,9 +6,7 @@ assert(process.env.B2B_FLAVOUR, 'B2B_FLAVOUR is not defined');
 
 const flavour = process.env.B2B_FLAVOUR;
 if (flavour !== 'OPS' && flavour !== 'PREOPS') {
-  throw new Error(
-    'Invalid B2B_FLAVOUR env variable. Must be either OPS or PREOPS.',
-  );
+  throw new Error('Invalid B2B_FLAVOUR env variable. Must be either OPS or PREOPS.');
 }
 
 export const TEST_B2B_OPTIONS = {

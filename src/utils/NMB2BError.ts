@@ -55,11 +55,7 @@ export class NMB2BError extends Error {
 
   declare reason?: string;
 
-  constructor({
-    reply,
-  }: {
-    reply: Reply & { status: Exclude<ReplyStatus, 'OK'> };
-  }) {
+  constructor({ reply }: { reply: Reply & { status: Exclude<ReplyStatus, 'OK'> } }) {
     super();
 
     if (reply.requestId) {

@@ -74,9 +74,7 @@ export function assertValidConfig(args: unknown): asserts args is Config {
   assertValidSecurity(args.security);
 
   assert(
-    'flavour' in args &&
-      typeof args.flavour === 'string' &&
-      B2BFlavours.includes(args.flavour),
+    'flavour' in args && typeof args.flavour === 'string' && B2BFlavours.includes(args.flavour),
     `Invalid config.flavour. Supported flavours: ${B2BFlavours.join(', ')}`,
   );
 
@@ -108,9 +106,7 @@ const B2B_ROOTS = {
  * @param config.flavour - Target environment ('OPS' or 'PREOPS').
  * @returns The full SOAP Gateway URL (e.g. `https://www.b2b.nm.eurocontrol.int/B2B_OPS/gateway/spec/27.0.0`).
  */
-export function getSoapEndpoint(
-  config: { endpoint?: string; flavour?: B2BFlavour } = {},
-): string {
+export function getSoapEndpoint(config: { endpoint?: string; flavour?: B2BFlavour } = {}): string {
   const { endpoint, flavour } = config;
   const isPreops = flavour === 'PREOPS';
 
@@ -126,9 +122,7 @@ export function getSoapEndpoint(
 /**
  * @deprecated Use {@link getSoapEndpoint} instead.
  */
-export function getEndpoint(
-  config: { endpoint?: string; flavour?: B2BFlavour } = {},
-): string {
+export function getEndpoint(config: { endpoint?: string; flavour?: B2BFlavour } = {}): string {
   return getSoapEndpoint(config);
 }
 
@@ -136,9 +130,7 @@ export function getEndpoint(
  * @internal
  * @deprecated Use {@link getFileUrl} instead.
  */
-export function getFileEndpoint(
-  config: { endpoint?: string; flavour?: B2BFlavour } = {},
-): string {
+export function getFileEndpoint(config: { endpoint?: string; flavour?: B2BFlavour } = {}): string {
   const { endpoint, flavour } = config;
 
   if (flavour && flavour === 'PREOPS') {

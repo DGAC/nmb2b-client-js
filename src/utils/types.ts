@@ -11,8 +11,7 @@ export type SoapDeserializer<TInput> = TInput extends Primitive | Date
 export type EmptyObjectToNullish<T extends object> =
   Exclude<keyof T, NullishKeysOf<T>> extends never ? T | null | undefined : T;
 
-type NullishKeysOf<T extends object> =
-  UndefinedKeysOf<T> | NullKeysOf<T> | OptionalKeysOf<T>;
+type NullishKeysOf<T extends object> = UndefinedKeysOf<T> | NullKeysOf<T> | OptionalKeysOf<T>;
 
 type UndefinedKeysOf<T extends object> = keyof {
   [TKey in keyof T as undefined extends T[TKey] ? TKey : never]: T[TKey];
@@ -27,11 +26,7 @@ type NullKeysOf<T extends object> = keyof {
  */
 type OptionalKeysOf<Type extends object> = Type extends unknown // For distributing `Type`
   ? keyof {
-      [
-        Key in keyof Type as IsOptionalKeyOf<Type, Key> extends false
-          ? never
-          : Key
-      ]: never;
+      [Key in keyof Type as IsOptionalKeyOf<Type, Key> extends false ? never : Key]: never;
     } &
       keyof Type // Intersect with `keyof Type` to ensure result of `OptionalKeysOf<Type>` is always assignable to `keyof Type`
   : never; // Should never happen

@@ -13,10 +13,7 @@ import { server, SOAP_ENDPOINT } from './msw.ts';
  * @param fixtureModules - The result of import.meta.glob('./__fixtures__/*.ts', { eager: true })
  * @param baseUrl - The import.meta.url of the test file, used to resolve absolute paths
  */
-export async function registerFixtures(
-  fixtureModules: Record<string, unknown>,
-  baseUrl: string,
-) {
+export async function registerFixtures(fixtureModules: Record<string, unknown>, baseUrl: string) {
   const b2bClient = await createB2BClient(TEST_B2B_OPTIONS);
   const baseDir = path.dirname(fileURLToPath(baseUrl));
 
@@ -62,11 +59,7 @@ export async function registerFixtures(
   }
 }
 
-function runFixtureTests<
-  TB2BService extends keyof B2BClient,
-  TVariables,
-  TResult,
->({
+function runFixtureTests<TB2BService extends keyof B2BClient, TVariables, TResult>({
   b2bClient,
   fixture,
   variables,

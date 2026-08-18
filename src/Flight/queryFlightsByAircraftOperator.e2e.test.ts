@@ -7,75 +7,64 @@ import { createFlightClient } from '../createB2BClient.ts';
 describe('queryFlightsByAircraftOperator', async () => {
   const Flight = await createFlightClient(TEST_B2B_OPTIONS);
 
-  test.runIf(shouldUseRealB2BConnection)(
-    'query Aircraft Operators',
-    async () => {
-      const trafficWindow = {
-        wef: sub(new Date(), { minutes: 10 }),
-        unt: add(new Date(), { minutes: 10 }),
-      };
+  test.runIf(shouldUseRealB2BConnection)('query Aircraft Operators', async () => {
+    const trafficWindow = {
+      wef: sub(new Date(), { minutes: 10 }),
+      unt: add(new Date(), { minutes: 10 }),
+    };
 
-      const res = await Flight.queryFlightsByAircraftOperator({
-        dataset: { type: 'OPERATIONAL' },
-        includeProposalFlights: false,
-        includeForecastFlights: false,
-        trafficType: 'LOAD',
-        trafficWindow,
-        aircraftOperators: ['AFR', 'RYR', 'UAE'],
-        calculationType: 'OCCUPANCY', // Optional, default: 'ENTRY',
-      });
+    const res = await Flight.queryFlightsByAircraftOperator({
+      dataset: { type: 'OPERATIONAL' },
+      includeProposalFlights: false,
+      includeForecastFlights: false,
+      trafficType: 'LOAD',
+      trafficWindow,
+      aircraftOperators: ['AFR', 'RYR', 'UAE'],
+      calculationType: 'OCCUPANCY', // Optional, default: 'ENTRY',
+    });
 
-      /**
-       * Here, we ensure the returned traffic window matches the supplied
-       * traffic window, with a 60s precision.
-       */
-      expect(
-        Math.abs(
-          res.data.effectiveTrafficWindow.wef.getTime() -
-            trafficWindow.wef.getTime(),
-        ),
-      ).toBeLessThan(60 * 1000);
+    /**
+     * Here, we ensure the returned traffic window matches the supplied
+     * traffic window, with a 60s precision.
+     */
+    expect(
+      Math.abs(res.data.effectiveTrafficWindow.wef.getTime() - trafficWindow.wef.getTime()),
+    ).toBeLessThan(60 * 1000);
 
-      expect(
-        Math.abs(
-          res.data.effectiveTrafficWindow.unt.getTime() -
-            trafficWindow.unt.getTime(),
-        ),
-      ).toBeLessThan(60 * 1000);
+    expect(
+      Math.abs(res.data.effectiveTrafficWindow.unt.getTime() - trafficWindow.unt.getTime()),
+    ).toBeLessThan(60 * 1000);
 
-      if (!res.data.flights) {
-        console.warn('No flights in the response.');
-        return;
+    if (!res.data.flights) {
+      console.warn('No flights in the response.');
+      return;
+    }
+
+    expect(res.data.flights).toEqual(expect.any(Array));
+
+    for (const flightOrFlightPlan of res.data.flights) {
+      assert('flight' in flightOrFlightPlan && !!flightOrFlightPlan.flight);
+
+      const flight = flightOrFlightPlan.flight;
+      assert(flight.flightId);
+
+      if (!flight.flightId.keys?.aerodromeOfDeparture) {
+        expect(flight.flightId.keys?.nonICAOAerodromeOfDeparture).toBe(true);
       }
 
-      expect(res.data.flights).toEqual(expect.any(Array));
+      if (!flight.flightId.keys?.aerodromeOfDestination) {
+        expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(true);
+      }
 
-      for (const flightOrFlightPlan of res.data.flights) {
-        assert('flight' in flightOrFlightPlan && !!flightOrFlightPlan.flight);
-
-        const flight = flightOrFlightPlan.flight;
-        assert(flight.flightId);
-
-        if (!flight.flightId.keys?.aerodromeOfDeparture) {
-          expect(flight.flightId.keys?.nonICAOAerodromeOfDeparture).toBe(true);
-        }
-
-        if (!flight.flightId.keys?.aerodromeOfDestination) {
-          expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(
-            true,
-          );
-        }
-
-        expect(flight).toMatchObject({
-          flightId: {
-            id: expect.any(String),
-            keys: {
-              aircraftId: expect.any(String),
-              estimatedOffBlockTime: expect.any(Date),
-            },
+      expect(flight).toMatchObject({
+        flightId: {
+          id: expect.any(String),
+          keys: {
+            aircraftId: expect.any(String),
+            estimatedOffBlockTime: expect.any(Date),
           },
-        });
-      }
-    },
-  );
+        },
+      });
+    }
+  });
 });

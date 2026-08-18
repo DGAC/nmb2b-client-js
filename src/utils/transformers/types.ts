@@ -54,9 +54,7 @@ export const types = {
       const totalMinutes = Math.floor(d / 60);
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
-      return (
-        hours.toFixed(0).padStart(2, '0') + minutes.toFixed(0).padStart(2, '0')
-      );
+      return hours.toFixed(0).padStart(2, '0') + minutes.toFixed(0).padStart(2, '0');
     },
     output: (s: string): number => {
       const hours = parseInt(s.slice(0, 2), 10);
@@ -103,8 +101,7 @@ export const types = {
     output: outputBase.date,
   },
   DateTimeSecond: {
-    input: (d: Date): string =>
-      format(new UTCDate(d), timeFormats.timeFormatWithSeconds),
+    input: (d: Date): string => format(new UTCDate(d), timeFormats.timeFormatWithSeconds),
     output: outputBase.date,
   },
   Timestamp: {

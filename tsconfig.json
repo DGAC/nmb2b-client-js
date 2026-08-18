@@ -18,11 +18,5 @@
     "pretty": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": [
-    "src/**/*",
-    "tests/**/*",
-    "scripts/**/*",
-    "vitest.config.ts",
-    "tsdown.config.ts"
-  ]
+  "include": ["src/**/*", "tests/**/*", "scripts/**/*", "vitest.config.ts", "tsdown.config.ts"]
 }

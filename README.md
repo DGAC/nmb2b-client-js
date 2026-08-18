@@ -162,10 +162,7 @@ const client = await createB2BClient({
   // ... other options,
   hooks: [
     function onRequestStart({ service, query, input }) {
-      console.log(
-        `Query ${query} of service ${service} was invoked with input`,
-        input,
-      );
+      console.log(`Query ${query} of service ${service} was invoked with input`, input);
     },
   ],
 });
@@ -180,10 +177,7 @@ const client = await createB2BClient({
     function onRequestStart({ service, query, input }) {
       const startTime = new Date();
 
-      console.log(
-        `Query ${query} of service ${service} was invoked with input:`,
-        input,
-      );
+      console.log(`Query ${query} of service ${service} was invoked with input:`, input);
 
       return {
         onRequestSuccess: ({ response }) => {
@@ -224,10 +218,8 @@ const withPrometheusMetrics = createHook(({ service, query }) => {
   prometheusCounter.inc({ service, query, status: 'started' });
 
   return {
-    onRequestSuccess: () =>
-      prometheusCounter.inc({ service, query, status: 'completed' }),
-    onRequestError: () =>
-      prometheusCounter.inc({ service, query, status: 'completed' }),
+    onRequestSuccess: () => prometheusCounter.inc({ service, query, status: 'completed' }),
+    onRequestError: () => prometheusCounter.inc({ service, query, status: 'completed' }),
   };
 });
 

@@ -9,9 +9,7 @@ export async function dirExists(
     writable: false,
   },
 ): Promise<boolean> {
-  debug(
-    `Testing if directory ${path} is readable ${writable ? 'and writable ' : ''}...`,
-  );
+  debug(`Testing if directory ${path} is readable ${writable ? 'and writable ' : ''}...`);
 
   try {
     const stats = await fs.stat(path);
@@ -21,10 +19,7 @@ export async function dirExists(
     }
 
     // Check that the directory is writable and readable
-    await fs.access(
-      path,
-      (writable ? fs.constants.W_OK : 0) | (readable ? fs.constants.R_OK : 0),
-    );
+    await fs.access(path, (writable ? fs.constants.W_OK : 0) | (readable ? fs.constants.R_OK : 0));
 
     debug(`Directory ${path} is accessible`);
 

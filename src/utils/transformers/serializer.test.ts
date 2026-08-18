@@ -1,10 +1,6 @@
 import { UTCDate } from '@date-fns/utc';
 import { describe, expect, test } from 'vitest';
-import {
-  assertIsValidSchema,
-  prepareSerializer,
-  createKeyOrderTransformer,
-} from './serializer.ts';
+import { assertIsValidSchema, prepareSerializer, createKeyOrderTransformer } from './serializer.ts';
 import { AssertionError } from 'node:assert';
 
 describe(createKeyOrderTransformer, () => {
@@ -49,10 +45,7 @@ describe(createKeyOrderTransformer, () => {
           expectedOutput: {},
         },
       ],
-      [
-        'should handle null value',
-        { input: { a: null }, expectedOutput: { a: null } },
-      ],
+      ['should handle null value', { input: { a: null }, expectedOutput: { a: null } }],
       [
         'should handle undefined value',
         { input: { a: undefined }, expectedOutput: { a: undefined } },
@@ -103,10 +96,7 @@ describe(createKeyOrderTransformer, () => {
           expectedOutput: { c: {} },
         },
       ],
-      [
-        'should handle null value',
-        { input: { c: null }, expectedOutput: { c: null } },
-      ],
+      ['should handle null value', { input: { c: null }, expectedOutput: { c: null } }],
       [
         'should handle undefined value',
         { input: { c: undefined }, expectedOutput: { c: undefined } },

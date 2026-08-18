@@ -31,9 +31,7 @@ describe('hooks', () => {
     test('should call `onRequestSuccess()` with the expected parameters', async () => {
       const onRequestSuccess = vi.fn();
       const onRequestError = vi.fn();
-      const onRequestStart = createHook(
-        vi.fn(() => ({ onRequestSuccess, onRequestError })),
-      );
+      const onRequestStart = createHook(vi.fn(() => ({ onRequestSuccess, onRequestError })));
 
       const { soapService, executeQuery } = withMockedSoapService({
         hooks: [onRequestStart],
@@ -60,9 +58,7 @@ describe('hooks', () => {
     test('should call `onRequestError()` with the expected parameters', async () => {
       const onRequestError = vi.fn();
       const onRequestSuccess = vi.fn();
-      const onRequestStart = createHook(
-        vi.fn(() => ({ onRequestSuccess, onRequestError })),
-      );
+      const onRequestStart = createHook(vi.fn(() => ({ onRequestSuccess, onRequestError })));
 
       const { soapService, executeQuery } = withMockedSoapService({
         hooks: [onRequestStart],
@@ -209,9 +205,7 @@ describe('error handling', () => {
     test('should throw a NMB2BError', async () => {
       const { soapService, executeQuery } = withMockedSoapService();
 
-      executeQuery.mockResolvedValueOnce([
-        fromPartial({ status: 'INVALID_INPUT' }),
-      ]);
+      executeQuery.mockResolvedValueOnce([fromPartial({ status: 'INVALID_INPUT' })]);
 
       await expect(() => soapService.soapQuery({ foo: 'bar' })).rejects.toEqual(
         new NMB2BError({ reply: { status: 'INVALID_INPUT' } }),
@@ -243,9 +237,7 @@ function withMockedSoapService({
   const client: SoapClient = fromPartial({});
 
   const executeQuery = vi.fn(
-    async (
-      input: B2BRequest & { foo: string },
-    ): Promise<[ReplyWithData<{ bar: string }>]> =>
+    async (input: B2BRequest & { foo: string }): Promise<[ReplyWithData<{ bar: string }>]> =>
       Promise.resolve([
         fromPartial({
           status: 'OK',

@@ -12,6 +12,6 @@ export const retrieveRunwayConfigurationPlan = createSoapQueryDefinition<
   query: 'retrieveRunwayConfigurationPlan',
   getSchema: (client) =>
     // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
-    client.describe().TacticalUpdatesService.TacticalUpdatesPort
-      .retrieveRunwayConfigurationPlan.input,
+    client.describe().TacticalUpdatesService.TacticalUpdatesPort.retrieveRunwayConfigurationPlan
+      .input,
 });

@@ -9,11 +9,7 @@ export default defineConfig({
     globalSetup: ['./tests/ensureWSDLPresence.ts'],
     coverage: {
       include: ['src/**/*'],
-      exclude: [
-        ...(configDefaults.coverage.exclude ?? []),
-        '**/*.test-d.ts',
-        '**/__fixtures__/**',
-      ],
+      exclude: [...(configDefaults.coverage.exclude ?? []), '**/*.test-d.ts', '**/__fixtures__/**'],
     },
     projects: [
       {
@@ -56,7 +52,5 @@ export default defineConfig({
  */
 // oxlint-disable-next-line @typescript-eslint/no-explicit-any
 export function removeUndefined<T extends Record<string, any>>(obj: T): T {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([_, v]) => v !== undefined),
-  ) as T;
+  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== undefined)) as T;
 }

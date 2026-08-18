@@ -80,9 +80,7 @@ describe('queryFlightsByMeasure', async () => {
         }
 
         if (!flight.flightId.keys?.aerodromeOfDestination) {
-          expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(
-            true,
-          );
+          expect(flight.flightId.keys?.nonICAOAerodromeOfDestination).toBe(true);
         }
 
         expect(flight).toMatchObject({

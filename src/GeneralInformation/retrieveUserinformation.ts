@@ -9,6 +9,5 @@ export const retrieveUserInformation = createSoapQueryDefinition<
   query: 'retrieveUserInformation',
   getSchema: (client) =>
     // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
-    client.describe().NMB2BInfoService.NMB2BInfoPort.retrieveUserInformation
-      .input,
+    client.describe().NMB2BInfoService.NMB2BInfoPort.retrieveUserInformation.input,
 });

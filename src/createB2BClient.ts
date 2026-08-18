@@ -24,12 +24,7 @@ export interface B2BClient {
   GeneralInformation: GeneralInformationService;
 }
 
-export type {
-  AirspaceService,
-  FlightService,
-  FlowService,
-  GeneralInformationService,
-};
+export type { AirspaceService, FlightService, FlowService, GeneralInformationService };
 
 const CONFIG_DEFAULTS = {
   flavour: 'OPS' as B2BFlavour,
@@ -41,8 +36,7 @@ const CONFIG_DEFAULTS = {
  * Options for initializing the B2B client.
  */
 export type CreateB2BClientOptions = Prettify<
-  Omit<Config, keyof typeof CONFIG_DEFAULTS> &
-    Partial<Pick<Config, keyof typeof CONFIG_DEFAULTS>>
+  Omit<Config, keyof typeof CONFIG_DEFAULTS> & Partial<Pick<Config, keyof typeof CONFIG_DEFAULTS>>
 >;
 
 /**
@@ -52,9 +46,7 @@ export type CreateB2BClientOptions = Prettify<
  * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
  * @returns The initialized {@link B2BClient} instance.
  */
-export async function createB2BClient(
-  options: CreateB2BClientOptions,
-): Promise<B2BClient> {
+export async function createB2BClient(options: CreateB2BClientOptions): Promise<B2BClient> {
   debug('Creating B2B Client ...');
 
   const config = prepareConfig(options);
@@ -106,9 +98,7 @@ export async function createAirspaceClient(
  * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
  * @returns The initialized {@link FlightService} instance.
  */
-export async function createFlightClient(
-  options: CreateB2BClientOptions,
-): Promise<FlightService> {
+export async function createFlightClient(options: CreateB2BClientOptions): Promise<FlightService> {
   debug('Creating B2B Flight client ...');
 
   const config = prepareConfig(options);
@@ -128,9 +118,7 @@ export async function createFlightClient(
  * @param options - Configuration options for the client. See {@link CreateB2BClientOptions}.
  * @returns The initialized {@link FlowService} instance.
  */
-export async function createFlowClient(
-  options: CreateB2BClientOptions,
-): Promise<FlowService> {
+export async function createFlowClient(options: CreateB2BClientOptions): Promise<FlowService> {
   debug('Creating B2B Flow client ...');
 
   const config = prepareConfig(options);

@@ -208,9 +208,7 @@ export type ReferenceLocationUnionWithPrefix<TPrefix extends string> = {
 
 export type ReferenceLocationUnionWithPrefixOptional<TPrefix extends string> = {
   [TKey in keyof ReferenceLocationMapper]: {
-    [TSubKey in `${TPrefix}-${TKey}`]?:
-      | undefined
-      | ReferenceLocationMapper[TKey];
+    [TSubKey in `${TPrefix}-${TKey}`]?: undefined | ReferenceLocationMapper[TKey];
   };
 }[keyof ReferenceLocationMapper];
 
@@ -231,12 +229,7 @@ export type FlightPlanProcessing =
   | 'SSR_CODE_ALLOCATION'
   | 'TP_AIRCRAFT_TYPE_CLASSIFICATION';
 
-export type LoadState =
-  | 'HIGH_THRESHOLD'
-  | 'LOW_THRESHOLD'
-  | 'NORMAL'
-  | 'OVERLOAD'
-  | 'UNDEFINED';
+export type LoadState = 'HIGH_THRESHOLD' | 'LOW_THRESHOLD' | 'NORMAL' | 'OVERLOAD' | 'UNDEFINED';
 
 export type RouteOrTerminalProcedure =
   | { DCT: null }

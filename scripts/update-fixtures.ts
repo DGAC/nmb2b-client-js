@@ -24,9 +24,7 @@ async function record() {
   const fixtureFiles = filterFixtures(allFixtureFiles, filters);
 
   if (fixtureFiles.length === 0) {
-    console.warn(
-      `⚠️ No fixture files matched the filters: ${filters.join(', ')}`,
-    );
+    console.warn(`⚠️ No fixture files matched the filters: ${filters.join(', ')}`);
     return;
   }
 
@@ -47,9 +45,7 @@ async function record() {
         `Module ${filePath}, export ${exportName} is not a Fixture instance.`,
       );
 
-      console.log(
-        `  - Recording fixture: ${exportName} (${fixture.description})...`,
-      );
+      console.log(`  - Recording fixture: ${exportName} (${fixture.description})...`);
 
       await recordSingleFixture({
         b2bClient: client,
@@ -105,9 +101,7 @@ async function recordSingleFixture({
   const artifacts = new FixtureArtifacts({ filePath, exportName });
 
   const setupStart = new Date();
-  const variables = fixture.setupRecording
-    ? await fixture.setupRecording(b2bClient)
-    : undefined;
+  const variables = fixture.setupRecording ? await fixture.setupRecording(b2bClient) : undefined;
 
   // Capture mock date (ensure it matches the execution time)
   const mockDate = setupStart.toISOString();

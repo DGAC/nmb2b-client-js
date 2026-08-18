@@ -4,11 +4,7 @@ import { MOCK_B2B_ENDPOINT } from '../constants.ts';
 import assert from 'node:assert';
 
 const B2B_FLAVOUR = process.env.B2B_FLAVOUR;
-assert(
-  B2B_FLAVOUR === undefined ||
-    B2B_FLAVOUR === 'OPS' ||
-    B2B_FLAVOUR === 'PREOPS',
-);
+assert(B2B_FLAVOUR === undefined || B2B_FLAVOUR === 'OPS' || B2B_FLAVOUR === 'PREOPS');
 
 export const server = setupServer();
 export const SOAP_ENDPOINT = getSoapEndpoint({

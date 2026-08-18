@@ -1,10 +1,7 @@
 import type { SoapOptions } from '../../soap.ts';
 import type { SoapQueryHook } from './hooks.ts';
 
-type SoapQuery<Input, Output> = (
-  input: Input,
-  options?: SoapOptions,
-) => Promise<Output>;
+type SoapQuery<Input, Output> = (input: Input, options?: SoapOptions) => Promise<Output>;
 
 export function applyHooks<TInput, TOutput>({
   service,
@@ -36,10 +33,7 @@ export function applyHooks<TInput, TOutput>({
     return { onSuccessHooks, onErrorHooks };
   }
 
-  const executeQuery: SoapQuery<TInput, TOutput> = async function (
-    input,
-    options,
-  ) {
+  const executeQuery: SoapQuery<TInput, TOutput> = async function (input, options) {
     const { onSuccessHooks, onErrorHooks } = await executeOnStartHooks({
       input,
     });
@@ -61,10 +55,7 @@ export function applyHooks<TInput, TOutput>({
         await onError({
           service,
           query,
-          error:
-            err instanceof Error
-              ? err
-              : new Error('Unknown error', { cause: err }),
+          error: err instanceof Error ? err : new Error('Unknown error', { cause: err }),
         });
       }
 

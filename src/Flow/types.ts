@@ -29,29 +29,21 @@ import type {
   UserId,
 } from '../Common/types.ts';
 
-import type {
-  FlightKeys,
-  GroupReroutingIndicator,
-  IFPLId,
-  TrafficType,
-} from '../Flight/types.ts';
+import type { FlightKeys, GroupReroutingIndicator, IFPLId, TrafficType } from '../Flight/types.ts';
 
 export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
 export type RegulationId = string; // UALPHA(UALPHA|DIGIT){0,5}DIGIT{2}UALPHA{0,1}
-export type MeasureId =
-  | { REGULATION: RegulationId }
-  | { REROUTING: ReroutingId };
+export type MeasureId = { REGULATION: RegulationId } | { REROUTING: ReroutingId };
 export type FlowId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}
 export type ScenarioId = string;
 export type SectorConfigurationId = string; // (UALPHA|DIGIT|.){1,6}
 export type PlanDataSource = 'AIRSPACE' | 'MEASURE' | 'NO_DATA' | 'TACTICAL';
 export type RegulationIdWildcard = string; // (UALPHA|DIGIT){1,8}|(UALPHA|DIGIT){0,7}*
 
-export type FlightRegulationLocation =
-  WithReferenceLocationOnPrefix<'referenceLocation'> & {
-    regulationId: RegulationId;
-    toConfirm: boolean;
-  };
+export type FlightRegulationLocation = WithReferenceLocationOnPrefix<'referenceLocation'> & {
+  regulationId: RegulationId;
+  toConfirm: boolean;
+};
 
 export type FlightAtfcmMeasureLocationCommon =
   WithReferenceLocationOnPrefixOptional<'referenceLocation'> & {
@@ -196,10 +188,9 @@ export type RegulationField =
   | 'scenarioReference'
   | 'delayConfirmationThreshold';
 
-export type SectorConfigurationPlanRetrievalRequest =
-  TacticalConfigurationRetrievalRequest & {
-    airspace: AirspaceId;
-  };
+export type SectorConfigurationPlanRetrievalRequest = TacticalConfigurationRetrievalRequest & {
+  airspace: AirspaceId;
+};
 
 export type TacticalConfigurationRetrievalRequest = B2BRequest & {
   dataset: Dataset;
@@ -213,10 +204,7 @@ export interface SectorConfigurationPlanRetrievalReplyData {
   plan: SectorConfigurationPlan;
 }
 
-export type KnownConfigurations = NMMap<
-  SectorConfigurationId,
-  NMSet<AirspaceId>
->;
+export type KnownConfigurations = NMMap<SectorConfigurationId, NMSet<AirspaceId>>;
 
 export interface SectorConfigurationPlan extends TacticalConfigurationPlan {
   airspace: AirspaceId;
@@ -277,11 +265,9 @@ export type CountSubTotalComputeMode =
    */
   | 'SUB_TOTALS_BY_REGULATION_DETAILS';
 
-export type TrafficCountsByAirspaceReply =
-  ReplyWithData<TrafficCountsReplyData>;
+export type TrafficCountsByAirspaceReply = ReplyWithData<TrafficCountsReplyData>;
 
-export type TrafficCountsByTrafficVolumeReply =
-  ReplyWithData<TrafficCountsReplyData>;
+export type TrafficCountsByTrafficVolumeReply = ReplyWithData<TrafficCountsReplyData>;
 
 export interface TrafficCountsReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
@@ -307,20 +293,13 @@ export type ScenarioImpact = {
 };
 
 export type FlowType = 'ASSOCIATED' | 'LINKED' | 'SCENARIO';
-export type FlowRoleSelection =
-  | 'EXCLUDED'
-  | 'EXEMPTED'
-  | 'INCLUDED'
-  | 'INCLUDED_AND_EXEMPTED';
+export type FlowRoleSelection = 'EXCLUDED' | 'EXEMPTED' | 'INCLUDED' | 'INCLUDED_AND_EXEMPTED';
 
 export interface Counts {
   totalCounts: CountsValue;
   flowCounts?: NMMap<FlowId, CountsValue>;
   subTotalsCountsByTrafficType?: NMMap<SubTotalsTrafficCountsType, CountsValue>;
-  subTotalsCountsByRegulationDetails?: NMMap<
-    SubTotalsRegulationDetailedType,
-    CountsValue
-  >;
+  subTotalsCountsByRegulationDetails?: NMMap<SubTotalsRegulationDetailedType, CountsValue>;
 }
 
 export type CountsValue = number;
@@ -397,12 +376,7 @@ export interface OtmvAlert {
   status: OtmvStatus;
 }
 
-export type RegulationState =
-  | 'APPLIED'
-  | 'APPLYING'
-  | 'CANCELLED'
-  | 'CANCELLING'
-  | 'TERMINATED';
+export type RegulationState = 'APPLIED' | 'APPLYING' | 'CANCELLED' | 'CANCELLING' | 'TERMINATED';
 
 export type RegulationListRequest = RegulationOrMCDMOnlyListRequest & {
   requestedRegulationFields: NMSet<RegulationField>;
@@ -470,9 +444,8 @@ export interface IRegulationOrMCDMOnly extends Measure {
   delayConfirmationThreshold?: DurationHourMinute;
 }
 
-export type RegulationOrMCDMOnly =
-  WithReferenceLocationOnPrefixOptional<'protectedLocation'> &
-    IRegulationOrMCDMOnly;
+export type RegulationOrMCDMOnly = WithReferenceLocationOnPrefixOptional<'protectedLocation'> &
+  IRegulationOrMCDMOnly;
 
 export interface Measure {
   dataId?: PlanDataId;
@@ -566,12 +539,7 @@ export interface MCDMUserAndRole {
 
 export type MCDMCoordinationLevel = 'FLIGHT' | 'MEASURE';
 
-export type MCDMUserCategory =
-  | 'IMPACTED_FMP'
-  | 'ALL_FMP'
-  | 'TOWER'
-  | 'AIRCRAFT_OPERATOR'
-  | 'NMOC';
+export type MCDMUserCategory = 'IMPACTED_FMP' | 'ALL_FMP' | 'TOWER' | 'AIRCRAFT_OPERATOR' | 'NMOC';
 
 export interface MCDMUserRoleAndApprovalState {
   user: AirNavigationUnitId;
@@ -587,21 +555,16 @@ export type MCDMRole =
   | 'NOT_INVOLVED'
   | 'ROLE_INFO';
 
-export type MCDMApprovalState =
-  | 'ACKNOWLEDGED'
-  | 'APPROVED'
-  | 'REJECTED'
-  | 'UNKNOWN';
+export type MCDMApprovalState = 'ACKNOWLEDGED' | 'APPROVED' | 'REJECTED' | 'UNKNOWN';
 
 export type LifeCycleEventType = 'CREATION' | 'DELETION' | 'UPDATE';
 
-export type TrafficVolumeLocation =
-  WithReferenceLocationOnPrefix<'referenceLocation'> & {
-    id: TrafficVolumeId;
-    flightLevels?: FlightLevelRange;
-    description?: string;
-    setIds?: NMSet<TrafficVolumeSetId>;
-  };
+export type TrafficVolumeLocation = WithReferenceLocationOnPrefix<'referenceLocation'> & {
+  id: TrafficVolumeId;
+  flightLevels?: FlightLevelRange;
+  description?: string;
+  setIds?: NMSet<TrafficVolumeSetId>;
+};
 
 export interface RegulationInitialConstraint {
   constraintPeriod: DateTimeMinutePeriod;
@@ -662,10 +625,7 @@ export type OTMVPlanRetrievalRequest = TacticalConfigurationRetrievalRequest & {
 };
 
 export type OTMVPlans = TacticalConfigurationPlan & {
-  tvsOTMVs: NMMap<
-    TrafficVolumeId,
-    NMMap<DurationHourMinute, OTMVPlanForDuration>
-  >;
+  tvsOTMVs: NMMap<TrafficVolumeId, NMMap<DurationHourMinute, OTMVPlanForDuration>>;
 };
 
 export interface OTMVPlanForDuration {
@@ -715,13 +675,11 @@ export interface OTMVPlanUpdateReplyData {
   plans: OTMVPlans;
 }
 
-export type CapacityPlanRetrievalRequest =
-  TacticalConfigurationRetrievalRequest & {
-    trafficVolumes?: NMSet<TrafficVolumeId>;
-  };
+export type CapacityPlanRetrievalRequest = TacticalConfigurationRetrievalRequest & {
+  trafficVolumes?: NMSet<TrafficVolumeId>;
+};
 
-export type CapacityPlanRetrievalReply =
-  ReplyWithData<CapacityPlanRetrievalReplyData>;
+export type CapacityPlanRetrievalReply = ReplyWithData<CapacityPlanRetrievalReplyData>;
 
 export interface CapacityPlanRetrievalReplyData {
   plans: CapacityPlans;
@@ -748,8 +706,7 @@ export type CapacityPlanUpdateRequest = B2BRequest & {
   plans: CapacityPlans;
 };
 
-export type CapacityPlanUpdateReply =
-  ReplyWithData<CapacityPlanUpdateReplyData>;
+export type CapacityPlanUpdateReply = ReplyWithData<CapacityPlanUpdateReplyData>;
 
 export interface CapacityPlanUpdateReplyData {
   plans: CapacityPlans;
@@ -787,12 +744,7 @@ export interface RunwayConfiguration {
   arrivalTaxiTime?: DurationHourMinute;
   arrivalTaxiTimeDataSource: PlanDataSource;
 }
-export type RunwayConfigurationPlanRetrievalRequest =
-  TacticalConfigurationRetrievalRequest & {
-    aerodrome: AerodromeICAOId;
-  };
-export type RunwayUsage =
-  | 'DEPARTURE'
-  | 'ARRIVAL'
-  | 'DEPARTURE_ARRIVAL'
-  | 'INACTIVE';
+export type RunwayConfigurationPlanRetrievalRequest = TacticalConfigurationRetrievalRequest & {
+  aerodrome: AerodromeICAOId;
+};
+export type RunwayUsage = 'DEPARTURE' | 'ARRIVAL' | 'DEPARTURE_ARRIVAL' | 'INACTIVE';

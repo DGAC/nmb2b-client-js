@@ -9,6 +9,5 @@ export const queryFlightPlans = createSoapQueryDefinition<
   query: 'queryFlightPlans',
   getSchema: (client) =>
     // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
-    client.describe().FlightManagementService.FlightManagementPort
-      .queryFlightPlans.input,
+    client.describe().FlightManagementService.FlightManagementPort.queryFlightPlans.input,
 });

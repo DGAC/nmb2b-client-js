@@ -28,12 +28,9 @@ describe('serialization', () => {
     input: unknown;
   }>;
 
-  test.each(serialization)(
-    '$type .input($input) => $expected',
-    ({ type, expected, input }) => {
-      expect(types[type].input(fromAny(input))).toEqual(expected);
-    },
-  );
+  test.each(serialization)('$type .input($input) => $expected', ({ type, expected, input }) => {
+    expect(types[type].input(fromAny(input))).toEqual(expected);
+  });
 });
 
 describe('deserialization', () => {
@@ -77,11 +74,8 @@ describe('deserialization', () => {
     expected: unknown;
   }>;
 
-  test.each(deserialization)(
-    '$type .output($input) => $expected',
-    ({ type, input, expected }) => {
-      const deserializer = types[type].output;
-      expect(deserializer(fromAny(input))).toEqual(expected);
-    },
-  );
+  test.each(deserialization)('$type .output($input) => $expected', ({ type, input, expected }) => {
+    const deserializer = types[type].output;
+    expect(deserializer(fromAny(input))).toEqual(expected);
+  });
 });

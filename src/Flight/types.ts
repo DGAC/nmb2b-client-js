@@ -387,10 +387,7 @@ export interface Flight {
   requestedInitialFlightLevel?: FlightLevel;
   requestedInitialSpeed?: AirSpeed;
   estimatedElapsedTime?: DurationHourMinute;
-  filingRule?:
-    | 'FILING_ALLOWED_BY_AO_CFMU'
-    | 'NOT_AUTHORISED'
-    | 'OPERATOR_MUST_REFILE';
+  filingRule?: 'FILING_ALLOWED_BY_AO_CFMU' | 'NOT_AUTHORISED' | 'OPERATOR_MUST_REFILE';
   initialFPLMessageOriginator?: MessageOriginator;
   lastFPLMessageOriginator?: MessageOriginator;
   icaoRoute?: string;
@@ -904,13 +901,7 @@ export type DatalinkCapabilities = {
   value?: string; // DataLinkCapabilities_DataType
 };
 
-export type AircraftPerformanceCategory =
-  | 'CAT_A'
-  | 'CAT_B'
-  | 'CAT_C'
-  | 'CAT_D'
-  | 'CAT_E'
-  | 'CAT_H';
+export type AircraftPerformanceCategory = 'CAT_A' | 'CAT_B' | 'CAT_C' | 'CAT_D' | 'CAT_E' | 'CAT_H';
 
 export type SpecialHandlingIndicators = {
   icaoSTSIndicators?: Array<ICAOSTSIndicator>;
@@ -932,13 +923,7 @@ export type ICAOSTSIndicator =
   | 'SAR'
   | 'STATE';
 
-export type EURSTSIndicator =
-  | 'CPDLCX'
-  | 'EXM833'
-  | 'PROTECTED'
-  | 'RNAVINOP'
-  | 'RNAVX'
-  | 'OAT';
+export type EURSTSIndicator = 'CPDLCX' | 'EXM833' | 'PROTECTED' | 'RNAVINOP' | 'RNAVX' | 'OAT';
 
 export type AircraftOperatorName_DataType = string;
 
@@ -964,12 +949,7 @@ export type ModeSCapabilities = {
   enhancedSurveillance?: EquipmentStatus;
 };
 
-export type FlightType =
-  | 'GENERAL'
-  | 'MILITARY'
-  | 'NOT_SCHEDULED'
-  | 'OTHER'
-  | 'SCHEDULED';
+export type FlightType = 'GENERAL' | 'MILITARY' | 'NOT_SCHEDULED' | 'OTHER' | 'SCHEDULED';
 
 export type EnrouteDelay = {
   delay?: DurationHourMinute;
@@ -1249,9 +1229,7 @@ export type CfmuFlightType =
    */
   | 'PREDICTED_FLIGHT';
 
-export type LoadStateAtReferenceLocation =
-  | { ENTRY: LoadState }
-  | { OCCUPANCY: OtmvStatus };
+export type LoadStateAtReferenceLocation = { ENTRY: LoadState } | { OCCUPANCY: OtmvStatus };
 
 export interface DeltaEntry {
   intruderKind: IntruderKind;
@@ -1329,9 +1307,7 @@ export type FlightListByAirspaceRequest = FlightListByLocationRequest & {
   airspace: AirspaceId;
 };
 
-export type FlightOrFlightPlan =
-  | { flight: Flight }
-  | { flightPlan: FlightPlanOrInvalidFiling };
+export type FlightOrFlightPlan = { flight: Flight } | { flightPlan: FlightPlanOrInvalidFiling };
 
 export type FlightPlanOrInvalidFiling =
   | { lastValidFlightPlan: FlightPlanSummary }
@@ -1389,8 +1365,7 @@ export interface FlightListByLocationReplyData extends FlightListReplyData {
   effectiveTrafficWindow: DateTimeMinutePeriod;
 }
 
-export type FlightListByAirspaceReply =
-  ReplyWithData<FlightListByAirspaceReplyData>;
+export type FlightListByAirspaceReply = ReplyWithData<FlightListByAirspaceReplyData>;
 
 // oxlint-disable-next-line typescript/no-empty-object-type
 export interface FlightListByAirspaceReplyData extends FlightListByLocationReplyData {}
@@ -1433,8 +1408,7 @@ export type FlightListByTrafficVolumeRequest = FlightListByLocationRequest & {
   flow?: FlowId;
 };
 
-export type FlightListByTrafficVolumeReply =
-  ReplyWithData<FlightListByTrafficVolumeReplyData>;
+export type FlightListByTrafficVolumeReply = ReplyWithData<FlightListByTrafficVolumeReplyData>;
 
 // oxlint-disable-next-line typescript/no-empty-object-type
 export interface FlightListByTrafficVolumeReplyData extends FlightListByLocationReplyData {}
@@ -1444,12 +1418,9 @@ export type FlightListByMeasureRequest = FlightListByLocationRequest & {
   mode: FlightListByMeasureMode;
 };
 
-export type FlightListByMeasureMode =
-  | 'ACTIVATED_BY_MEASURE'
-  | 'CONCERNED_BY_MEASURE';
+export type FlightListByMeasureMode = 'ACTIVATED_BY_MEASURE' | 'CONCERNED_BY_MEASURE';
 
-export type FlightListByMeasureReply =
-  ReplyWithData<FlightListByMeasureReplyData>;
+export type FlightListByMeasureReply = ReplyWithData<FlightListByMeasureReplyData>;
 
 // oxlint-disable-next-line typescript/no-empty-object-type
 export interface FlightListByMeasureReplyData extends FlightListByLocationReplyData {}
@@ -1477,8 +1448,7 @@ export type AerodromeRole =
    */
   | 'ALTERNATE';
 
-export type FlightListByAerodromeReply =
-  ReplyWithData<FlightListByAerodromeReplyData>;
+export type FlightListByAerodromeReply = ReplyWithData<FlightListByAerodromeReplyData>;
 
 // oxlint-disable-next-line typescript/no-empty-object-type
 export interface FlightListByAerodromeReplyData extends FlightListByLocationReplyData {}
@@ -1488,16 +1458,14 @@ export type FlightListByAerodromeSetRequest = FlightListByLocationRequest & {
   aerodromeRole: AerodromeRole;
 };
 
-export type FlightListByAerodromeSetReply =
-  ReplyWithData<FlightListByAerodromeSetReplyData>;
+export type FlightListByAerodromeSetReply = ReplyWithData<FlightListByAerodromeSetReplyData>;
 
 // oxlint-disable-next-line typescript/no-empty-object-type
 export interface FlightListByAerodromeSetReplyData extends FlightListByLocationReplyData {}
 
-export type FlightListByAircraftOperatorRequest =
-  FlightListByLocationRequest & {
-    calculationType?: CountsCalculationType;
-  };
+export type FlightListByAircraftOperatorRequest = FlightListByLocationRequest & {
+  calculationType?: CountsCalculationType;
+};
 
 export type FlightListByAircraftOperatorReply =
   ReplyWithData<FlightListByAircraftOperatorReplyData>;

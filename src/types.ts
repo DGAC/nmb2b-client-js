@@ -6,5 +6,4 @@ export type * from './GeneralInformation/types.ts';
 
 import type { SoapDeserializer } from './utils/types.ts';
 
-export type SafeB2BDeserializedResponse<TResponsePart> =
-  SoapDeserializer<TResponsePart>;
+export type SafeB2BDeserializedResponse<TResponsePart> = SoapDeserializer<TResponsePart>;

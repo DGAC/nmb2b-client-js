@@ -61,9 +61,7 @@ describe(downloadAndExtractWSDL, () => {
         }),
       );
 
-      for (const [relativePath, expectedContent] of Object.entries(
-        FILES_IN_ARCHIVE,
-      )) {
+      for (const [relativePath, expectedContent] of Object.entries(FILES_IN_ARCHIVE)) {
         /**
          * The archive structure includes a root directory named with the B2B version.
          * Since the extraction process removes this top-level directory, we strip the
@@ -75,9 +73,7 @@ describe(downloadAndExtractWSDL, () => {
         }
         const expectedOutputPath = path.join(OUTPUT_DIR, ...parts);
 
-        expect(await readFile(expectedOutputPath, 'utf8')).toBe(
-          expectedContent,
-        );
+        expect(await readFile(expectedOutputPath, 'utf8')).toBe(expectedContent);
       }
     });
   });
@@ -97,9 +93,7 @@ describe(downloadAndExtractWSDL, () => {
             outputDir: OUTPUT_DIR,
           }),
         );
-        expect.unreachable(
-          'downloadAndExtractWSDL() should have thrown an error',
-        );
+        expect.unreachable('downloadAndExtractWSDL() should have thrown an error');
       } catch (err) {
         assert.instanceOf(err, Error);
         expect(err.message).toMatch(/Unable.*WSDL.*/);
@@ -126,9 +120,7 @@ describe(downloadAndExtractWSDL, () => {
             outputDir: OUTPUT_DIR,
           }),
         );
-        expect.unreachable(
-          'downloadAndExtractWSDL() should have thrown an error',
-        );
+        expect.unreachable('downloadAndExtractWSDL() should have thrown an error');
       } catch (err) {
         assert.instanceOf(err, Error);
         expect(err.message).toMatch(/Invalid Content-Type/);

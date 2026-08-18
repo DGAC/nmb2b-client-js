@@ -1,9 +1,6 @@
 import { add, startOfMinute, sub } from 'date-fns';
 import { assert } from 'vitest';
-import {
-  defineFixture,
-  expectSnapshot,
-} from '../../../tests/utils/fixtures.ts';
+import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
 
 /**
  * Fixture for testing queryFlightsByAirspace.
@@ -34,20 +31,17 @@ export const nominal = defineFixture({
     });
   })
   .test('should match snapshot', expectSnapshot())
-  .test(
-    'should return a matching traffic window',
-    ({ expect, result, variables }) => {
-      assert(
-        result.data.effectiveTrafficWindow,
-        'result.data.effectiveTrafficWindow should be defined',
-      );
+  .test('should return a matching traffic window', ({ expect, result, variables }) => {
+    assert(
+      result.data.effectiveTrafficWindow,
+      'result.data.effectiveTrafficWindow should be defined',
+    );
 
-      const { wef, unt } = result.data.effectiveTrafficWindow;
+    const { wef, unt } = result.data.effectiveTrafficWindow;
 
-      expect(new Date(wef)).toEqual(new Date(variables.wef));
-      expect(new Date(unt)).toEqual(new Date(variables.unt));
-    },
-  )
+    expect(new Date(wef)).toEqual(new Date(variables.wef));
+    expect(new Date(unt)).toEqual(new Date(variables.unt));
+  })
   .test('should return a non-empty list of flights', ({ expect, result }) => {
     assert(result.data.flights, 'result.data should be defined');
 
@@ -60,14 +54,8 @@ export const nominal = defineFixture({
           flightId: {
             id: expect.stringMatching(/^(AA|AT|PO)\d+/),
             keys: {
-              aerodromeOfDeparture: expect.toBeOneOf([
-                null,
-                expect.stringMatching(/[A-Z]{4}/),
-              ]),
-              aerodromeOfDestination: expect.toBeOneOf([
-                null,
-                expect.stringMatching(/[A-Z]{4}/),
-              ]),
+              aerodromeOfDeparture: expect.toBeOneOf([null, expect.stringMatching(/[A-Z]{4}/)]),
+              aerodromeOfDestination: expect.toBeOneOf([null, expect.stringMatching(/[A-Z]{4}/)]),
               nonICAOAerodromeOfDeparture: false,
               nonICAOAerodromeOfDestination: false,
               aircraftId: expect.stringMatching(/[A-Z0-9]+/),
