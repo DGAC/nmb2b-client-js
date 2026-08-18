@@ -94,16 +94,10 @@ We use a custom framework to record real API interactions and replay them determ
 - **Registration**: Domain-level tests (`src/<Domain>/<Domain>.test.ts`) must use `registerFixtures`:
 
   ```typescript
-  /// <reference types="vite/client" />
   import { registerFixtures } from '../../tests/utils/runner';
   import { describe } from 'vitest';
 
   describe('MyDomain Fixtures', async () => {
-    // Load all fixtures in the directory (Eager load required)
-    const fixtures = import.meta.glob('./__fixtures__/*.ts', {
-      eager: true,
-    });
-
-    await registerFixtures(fixtures, import.meta.url);
+    await registerFixtures('./__fixtures__/*.ts', import.meta.url);
   });
   ```

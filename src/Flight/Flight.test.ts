@@ -1,11 +1,6 @@
-/// <reference types="vite/client" />
-import { registerFixtures } from '../../tests/utils/runner.ts';
 import { describe } from 'vitest';
+import { registerFixtures } from '../../tests/utils/runner.ts';
 
 describe('Flight Fixtures', async () => {
-  const fixtures = import.meta.glob('./__fixtures__/*.ts', {
-    eager: true,
-  });
-
-  await registerFixtures(fixtures, import.meta.url);
+  await registerFixtures('./__fixtures__/*.ts', import.meta.url);
 });
