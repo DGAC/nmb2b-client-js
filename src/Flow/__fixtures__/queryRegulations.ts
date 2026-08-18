@@ -1,9 +1,6 @@
 import { add, areIntervalsOverlapping, startOfMinute, sub } from 'date-fns';
 import { assert } from 'vitest';
-import {
-  defineFixture,
-  expectSnapshot,
-} from '../../../tests/utils/fixtures.ts';
+import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
 import { extractReferenceLocation } from '../../utils/extractReferenceLocation.ts';
 
 export const nominal = defineFixture({
@@ -53,10 +50,7 @@ export const nominal = defineFixture({
       assertRegulationArray(regulations);
 
       for (const regulation of regulations) {
-        assert(
-          regulation.applicability,
-          'Regulation must have an applicability period',
-        );
+        assert(regulation.applicability, 'Regulation must have an applicability period');
 
         expect(
           areIntervalsOverlapping(
@@ -73,49 +67,30 @@ export const nominal = defineFixture({
       }
     },
   )
-  .test(
-    'should return parseable referenceLocation and protectedLocation',
-    ({ expect, result }) => {
-      const regulations = result.data.regulations?.item;
-      assertRegulationArray(regulations);
+  .test('should return parseable referenceLocation and protectedLocation', ({ expect, result }) => {
+    const regulations = result.data.regulations?.item;
+    assertRegulationArray(regulations);
 
-      const referenceLocationMatcher = {
-        type: expect.toBeOneOf([
-          'AERODROME',
-          'AIRSPACE',
-          'AERODROME_SET',
-          'PUBLISHED_POINT',
-        ]),
-        id: expect.stringMatching(/^[^\s]+$/),
-      };
+    const referenceLocationMatcher = {
+      type: expect.toBeOneOf(['AERODROME', 'AIRSPACE', 'AERODROME_SET', 'PUBLISHED_POINT']),
+      id: expect.stringMatching(/^[^\s]+$/),
+    };
 
-      for (const regulation of regulations) {
-        assert(regulation.location, 'regulation location must exist');
+    for (const regulation of regulations) {
+      assert(regulation.location, 'regulation location must exist');
 
-        const regulationLocation = extractReferenceLocation(
-          'referenceLocation',
-          regulation.location,
-        );
+      const regulationLocation = extractReferenceLocation('referenceLocation', regulation.location);
 
-        expect(regulationLocation).toEqual(referenceLocationMatcher);
+      expect(regulationLocation).toEqual(referenceLocationMatcher);
 
-        const protectedLocation = extractReferenceLocation(
-          'protectedLocation',
-          regulation,
-        );
+      const protectedLocation = extractReferenceLocation('protectedLocation', regulation);
 
-        expect(protectedLocation).toEqual(
-          expect.toBeOneOf([undefined, referenceLocationMatcher]),
-        );
-      }
-    },
-  )
-  .test(
-    'should return a matching dataset type',
-    ({ expect, result, variables }) => {
-      expect(result.data.dataset.type).toEqual(variables.dataset.type);
-    },
-  );
+      expect(protectedLocation).toEqual(expect.toBeOneOf([undefined, referenceLocationMatcher]));
+    }
+  })
+  .test('should return a matching dataset type', ({ expect, result, variables }) => {
+    expect(result.data.dataset.type).toEqual(variables.dataset.type);
+  });
 
 function assertRegulationArray<T>(
   regulations: Array<T> | undefined | null,

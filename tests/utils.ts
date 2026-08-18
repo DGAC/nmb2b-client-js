@@ -13,12 +13,8 @@ export const shouldUseRealB2BConnection =
   // ... unless explicity allowed
   !!process.env.REAL_B2B_CONNECTIONS;
 
-export async function createMockArchive(
-  files: Record<string, string>,
-): Promise<Buffer> {
-  const tempDir = await mkdtemp(
-    path.join(os.tmpdir(), 'b2b-client-mock-archive-'),
-  );
+export async function createMockArchive(files: Record<string, string>): Promise<Buffer> {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'b2b-client-mock-archive-'));
 
   try {
     for (const [filePath, content] of Object.entries(files)) {

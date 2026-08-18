@@ -76,9 +76,7 @@ function prepareTransformer(schema: Schema): null | Transformer {
   }, null);
 }
 
-export function createKeyOrderTransformer<O extends Record<string, unknown>>(
-  schema: Schema,
-) {
+export function createKeyOrderTransformer<O extends Record<string, unknown>>(schema: Schema) {
   return function reorderSchemas(obj: O): O {
     // Loop through schema, pull property from Object
     return Object.keys(schema).reduce<any>((prev, curr) => {
@@ -143,9 +141,7 @@ export function createKeyOrderTransformer<O extends Record<string, unknown>>(
          * At this point, the value to transform is an object, and we
          * need to apply a level a recursion.
          */
-        prev[lookupKey] = transformer(
-          obj[lookupKey] as Record<string, unknown>,
-        );
+        prev[lookupKey] = transformer(obj[lookupKey] as Record<string, unknown>);
         return prev;
       }
 

@@ -21,13 +21,7 @@ describe('queryRegulations', async () => {
           unt: add(new Date(), { minutes: 1 }),
         },
         requestedRegulationFields: {
-          item: [
-            'applicability',
-            'location',
-            'reason',
-            'linkedRegulations',
-            'scenarioReference',
-          ],
+          item: ['applicability', 'location', 'reason', 'linkedRegulations', 'scenarioReference'],
         },
       });
 
@@ -52,13 +46,7 @@ describe('queryRegulations', async () => {
           unt: startOfHour(add(new Date(), { hours: 10 })),
         },
         requestedRegulationFields: {
-          item: [
-            'applicability',
-            'location',
-            'reason',
-            'linkedRegulations',
-            'scenarioReference',
-          ],
+          item: ['applicability', 'location', 'reason', 'linkedRegulations', 'scenarioReference'],
         },
       });
 
@@ -71,10 +59,7 @@ describe('queryRegulations', async () => {
       for (const item of items) {
         expect(item.regulationId).toBeDefined();
 
-        const protectedLocation = extractReferenceLocation(
-          'protectedLocation',
-          item,
-        );
+        const protectedLocation = extractReferenceLocation('protectedLocation', item);
 
         if (protectedLocation) {
           switch (protectedLocation.type) {
@@ -94,10 +79,7 @@ describe('queryRegulations', async () => {
           }
         }
 
-        const referenceLocation = extractReferenceLocation(
-          'referenceLocation',
-          item.location,
-        );
+        const referenceLocation = extractReferenceLocation('referenceLocation', item.location);
 
         if (referenceLocation) {
           switch (referenceLocation.type) {

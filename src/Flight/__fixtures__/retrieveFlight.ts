@@ -1,8 +1,5 @@
 import { sub, add } from 'date-fns';
-import {
-  defineFixture,
-  expectSnapshot,
-} from '../../../tests/utils/fixtures.ts';
+import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
 import { assert } from '../../utils/assert.ts';
 
 /**

@@ -1,13 +1,7 @@
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-  entry: [
-    'src/index.ts',
-    'src/utils/index.ts',
-    'src/types.ts',
-    'src/security.ts',
-    'src/config.ts',
-  ],
+  entry: ['src/index.ts', 'src/utils/index.ts', 'src/types.ts', 'src/security.ts', 'src/config.ts'],
   target: 'node22',
   clean: true,
   sourcemap: true,

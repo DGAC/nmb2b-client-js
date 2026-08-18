@@ -1,9 +1,6 @@
 import { add, sub } from 'date-fns';
 import { assert } from 'vitest';
-import {
-  defineFixture,
-  expectSnapshot,
-} from '../../../tests/utils/fixtures.ts';
+import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
 
 export const nominal = defineFixture({
   service: 'Flight',

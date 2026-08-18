@@ -1,8 +1,5 @@
 import { createSoapQueryDefinition } from '../utils/soap-query-definition.ts';
-import type {
-  FlightListByAerodromeSetReply,
-  FlightListByAerodromeSetRequest,
-} from './types.ts';
+import type { FlightListByAerodromeSetReply, FlightListByAerodromeSetRequest } from './types.ts';
 
 export const queryFlightsByAerodromeSet = createSoapQueryDefinition<
   FlightListByAerodromeSetRequest,
@@ -12,6 +9,5 @@ export const queryFlightsByAerodromeSet = createSoapQueryDefinition<
   query: 'queryFlightsByAerodromeSet',
   getSchema: (client) =>
     // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
-    client.describe().FlightManagementService.FlightManagementPort
-      .queryFlightsByAerodromeSet.input,
+    client.describe().FlightManagementService.FlightManagementPort.queryFlightsByAerodromeSet.input,
 });

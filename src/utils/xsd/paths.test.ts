@@ -9,9 +9,7 @@ describe(getXSDCacheDirectory, () => {
   describe('when XSD_ENDPOINT is not set', () => {
     test('should return the standard versioned path', () => {
       const dir = getXSDCacheDirectory({ XSD_PATH: XSD_CACHE_PATH });
-      expect(dir).toBe(
-        path.join(XSD_CACHE_PATH, `${B2B_VERSION}-network-manager`),
-      );
+      expect(dir).toBe(path.join(XSD_CACHE_PATH, `${B2B_VERSION}-network-manager`));
     });
   });
 
@@ -74,10 +72,7 @@ describe(getServiceWSDLFilePath, () => {
       XSD_PATH: XSD_CACHE_PATH,
     });
 
-    const expectedDir = path.join(
-      XSD_CACHE_PATH,
-      `${B2B_VERSION}-network-manager`,
-    );
+    const expectedDir = path.join(XSD_CACHE_PATH, `${B2B_VERSION}-network-manager`);
     const expectedFile = `Flow_OPS_${B2B_VERSION}.wsdl`;
     expect(filePath).toBe(path.join(expectedDir, expectedFile));
   });

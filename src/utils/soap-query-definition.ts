@@ -2,11 +2,7 @@ import { createClientAsync, type Client as SoapClient } from 'soap';
 import type { B2BRequest, Reply } from '../Common/types.ts';
 import type { SoapOptions } from '../soap.ts';
 import { applyHooks } from './hooks/index.ts';
-import {
-  assertOkReply,
-  injectSendTime,
-  type WithInjectedSendTime,
-} from './internals.ts';
+import { assertOkReply, injectSendTime, type WithInjectedSendTime } from './internals.ts';
 import { prepareSerializer } from './transformers/serializer.ts';
 import { getSoapEndpoint, type Config } from '../config.ts';
 import { getServiceWSDLFilePath } from './xsd/paths.ts';
@@ -18,10 +14,7 @@ import { logHook } from './hooks/withLog.ts';
 import { AssertionError } from 'node:assert';
 import { NMB2BError } from './NMB2BError.ts';
 
-export type SoapQueryDefinition<
-  TInput extends B2BRequest,
-  TResult extends Reply,
-> = {
+export type SoapQueryDefinition<TInput extends B2BRequest, TResult extends Reply> = {
   /**
    * Name of the service.
    */
@@ -51,16 +44,13 @@ export type SoapQueryDefinition<
   ) => (values: TInput, options?: SoapOptions) => Promise<[TResult]>;
 };
 
-export function createSoapQueryDefinition<
-  TInput extends B2BRequest,
-  TResult extends Reply,
->(queryDefinition: SoapQueryDefinition<TInput, TResult>) {
+export function createSoapQueryDefinition<TInput extends B2BRequest, TResult extends Reply>(
+  queryDefinition: SoapQueryDefinition<TInput, TResult>,
+) {
   return queryDefinition;
 }
 
-export async function createSoapService<
-  TDefinitions extends ServiceDefinition,
->({
+export async function createSoapService<TDefinitions extends ServiceDefinition>({
   serviceName,
   config,
   queryDefinitions,
@@ -87,9 +77,7 @@ export async function createSoapService<
   return createSoapServiceFromSoapClient({ config, client, queryDefinitions });
 }
 
-export function createSoapServiceFromSoapClient<
-  TDefinitions extends ServiceDefinition,
->({
+export function createSoapServiceFromSoapClient<TDefinitions extends ServiceDefinition>({
   client,
   config,
   queryDefinitions,
@@ -131,10 +119,7 @@ export type ExtractQueryDefinitions<TService> = TService extends {
   ? TDefinitions
   : never;
 
-function buildQueryFunctionFromSoapDefinition<
-  TInput extends B2BRequest,
-  TResult extends Reply,
->({
+function buildQueryFunctionFromSoapDefinition<TInput extends B2BRequest, TResult extends Reply>({
   queryDefinition,
   client,
   hooks,
@@ -142,10 +127,7 @@ function buildQueryFunctionFromSoapDefinition<
   queryDefinition: SoapQueryDefinition<TInput, TResult>;
   client: SoapClient;
   hooks: Array<SoapQueryHook>;
-}): (
-  input: WithInjectedSendTime<TInput>,
-  options?: SoapOptions,
-) => Promise<TResult> {
+}): (input: WithInjectedSendTime<TInput>, options?: SoapOptions) => Promise<TResult> {
   const schema = queryDefinition.getSchema(client);
 
   assert(
@@ -199,8 +181,5 @@ type ServiceDefinition = Record<string, SoapQueryDefinition<any, any>>;
 
 type ExtractSoapQuery<T extends SoapQueryDefinition<B2BRequest, Reply>> =
   T extends SoapQueryDefinition<infer TInput, infer TResult>
-    ? (
-        input: WithInjectedSendTime<TInput>,
-        options?: SoapOptions,
-      ) => Promise<TResult>
+    ? (input: WithInjectedSendTime<TInput>, options?: SoapOptions) => Promise<TResult>
     : never;

@@ -15,13 +15,10 @@ export function resolveB2BEnvironment() {
 
   const B2B_FLAVOUR = process.env.B2B_FLAVOUR ?? 'OPS';
   if (B2B_FLAVOUR !== 'OPS' && B2B_FLAVOUR !== 'PREOPS') {
-    throw new Error(
-      `Invalid B2B_FLAVOUR: "${B2B_FLAVOUR}". Must be OPS or PREOPS.`,
-    );
+    throw new Error(`Invalid B2B_FLAVOUR: "${B2B_FLAVOUR}". Must be OPS or PREOPS.`);
   }
 
-  const B2B_XSD_PATH =
-    process.env.B2B_XSD_PATH ?? path.join(projectRoot, 'b2b-xsd');
+  const B2B_XSD_PATH = process.env.B2B_XSD_PATH ?? path.join(projectRoot, 'b2b-xsd');
 
   return {
     // Mode and Paths

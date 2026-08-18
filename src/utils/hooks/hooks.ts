@@ -35,12 +35,8 @@ type OnRequestSuccessParameters = HookParameters & { response: unknown };
 type OnRequestErrorParameters = HookParameters & { error: Error };
 
 type OnRequestEndHooks = {
-  onRequestSuccess?: (
-    hookParameters: OnRequestSuccessParameters,
-  ) => Promise<void> | void;
-  onRequestError?: (
-    hookParameters: OnRequestErrorParameters,
-  ) => Promise<void> | void;
+  onRequestSuccess?: (hookParameters: OnRequestSuccessParameters) => Promise<void> | void;
+  onRequestError?: (hookParameters: OnRequestErrorParameters) => Promise<void> | void;
 };
 
 export function createHook(hookFn: SoapQueryHook): SoapQueryHook {

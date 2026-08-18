@@ -54,11 +54,7 @@ export default async function setup() {
   if (stats?.isSymbolicLink()) {
     const symlinkSource = await fs.readlink(targetDir);
 
-    assert.equal(
-      symlinkSource,
-      sourceDir,
-      'WSDL symlink exists but points to an invalid folder.',
-    );
+    assert.equal(symlinkSource, sourceDir, 'WSDL symlink exists but points to an invalid folder.');
 
     /**
      * If a correct symlink already exists, there's no point in cleaning up.

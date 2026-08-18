@@ -4,8 +4,7 @@ import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 import { createGeneralInformationClient } from '../index.ts';
 
 describe('queryNMB2BWSDLs', async () => {
-  const GeneralInformation =
-    await createGeneralInformationClient(TEST_B2B_OPTIONS);
+  const GeneralInformation = await createGeneralInformationClient(TEST_B2B_OPTIONS);
 
   test.runIf(shouldUseRealB2BConnection)('Version 27.0.0', async () => {
     const res = await GeneralInformation.queryNMB2BWSDLs({

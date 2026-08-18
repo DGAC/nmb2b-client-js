@@ -4,15 +4,12 @@ import type { B2BClient } from '../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
 
 type B2BService = keyof B2BClient;
-type B2BServiceMethod<TService extends B2BService> = keyof B2BClient[TService] &
-  string;
+type B2BServiceMethod<TService extends B2BService> = keyof B2BClient[TService] & string;
 
 export type B2BMethodResult<
   TService extends B2BService,
   TMethod extends B2BServiceMethod<TService>,
-> = B2BClient[TService][TMethod] extends (
-  ...args: never[]
-) => Promise<infer TResult>
+> = B2BClient[TService][TMethod] extends (...args: never[]) => Promise<infer TResult>
   ? TResult
   : unknown;
 
@@ -37,9 +34,7 @@ export interface FixtureTestContext<TVariables, TResult> {
   variables: TVariables;
 }
 
-export type FixtureSetupFn<TVariables> = (
-  client: B2BClient,
-) => Promise<TVariables>;
+export type FixtureSetupFn<TVariables> = (client: B2BClient) => Promise<TVariables>;
 export type FixtureRunFn<TVariables, TResult> = (
   client: B2BClient,
   variables: TVariables,
@@ -53,19 +48,13 @@ export type FixtureTestFn<TVariables, TResult> = (
  */
 export interface IFixtureInitial<TVariables, TResult> {
   describe(text: string): this;
-  setup<TNewVars>(
-    fn: FixtureSetupFn<TNewVars>,
-  ): IFixtureDefined<TNewVars, TResult>;
-  run(
-    fn: FixtureRunFn<TVariables, TResult>,
-  ): IFixtureRunnable<TVariables, TResult>;
+  setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars, TResult>;
+  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
 }
 
 export interface IFixtureDefined<TVariables, TResult> {
   describe(text: string): this;
-  run(
-    fn: FixtureRunFn<TVariables, TResult>,
-  ): IFixtureRunnable<TVariables, TResult>;
+  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
 }
 
 export interface IFixtureRunnable<TVariables, TResult> {
@@ -75,11 +64,7 @@ export interface IFixtureRunnable<TVariables, TResult> {
 /**
  * Public interface for the Runner/Recorder
  */
-export interface FixtureDefinition<
-  TB2BService extends B2BService,
-  TVariables,
-  TResult,
-> {
+export interface FixtureDefinition<TB2BService extends B2BService, TVariables, TResult> {
   service: TB2BService;
   method: string;
   description: string;
@@ -122,10 +107,7 @@ export class Fixture<
     fn: FixtureTestFn<TVariables, TResult>;
   }>;
 
-  constructor(info: {
-    service: TB2BService;
-    method: B2BServiceMethod<TB2BService>;
-  }) {
+  constructor(info: { service: TB2BService; method: B2BServiceMethod<TB2BService> }) {
     this.service = info.service;
     this.method = info.method;
     this.description = `${info.service}.${info.method}`;
@@ -137,18 +119,12 @@ export class Fixture<
     return this;
   }
 
-  setup<TNewVars>(
-    fn: FixtureSetupFn<TNewVars>,
-  ): IFixtureDefined<TNewVars, TResult> {
-    (
-      this as unknown as Fixture<TB2BService, TNewVars, TResult>
-    ).setupRecording = fn;
+  setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars, TResult> {
+    (this as unknown as Fixture<TB2BService, TNewVars, TResult>).setupRecording = fn;
     return this as unknown as Fixture<TB2BService, TNewVars, TResult>;
   }
 
-  run(
-    fn: FixtureRunFn<TVariables, TResult>,
-  ): IFixtureRunnable<TVariables, TResult> {
+  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult> {
     this.executeOperation = fn;
     return this;
   }
@@ -192,10 +168,7 @@ export function defineFixture<
   return new Fixture<TService, never, B2BMethodResult<TService, TMethod>>(info);
 }
 
-export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<
-  TVariables,
-  TResult
-> {
+export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables, TResult> {
   return async ({ expect, fixtureLocation, result }) => {
     const artifacts = new FixtureArtifacts(fixtureLocation);
     await expect(result).toMatchFileSnapshot(artifacts.snapshotPath);

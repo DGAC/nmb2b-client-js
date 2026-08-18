@@ -16,8 +16,8 @@ export const retrieveSectorConfigurationPlan = createSoapQueryDefinition<
   query: 'retrieveSectorConfigurationPlan',
   getSchema: (client) =>
     // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
-    client.describe().TacticalUpdatesService.TacticalUpdatesPort
-      .retrieveSectorConfigurationPlan.input,
+    client.describe().TacticalUpdatesService.TacticalUpdatesPort.retrieveSectorConfigurationPlan
+      .input,
 });
 
 export function knownConfigurationsToMap(

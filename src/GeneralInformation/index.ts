@@ -1,8 +1,5 @@
 import type { Config } from '../config.ts';
-import {
-  createSoapService,
-  type SoapService,
-} from '../utils/soap-query-definition.ts';
+import { createSoapService, type SoapService } from '../utils/soap-query-definition.ts';
 
 import { queryNMB2BWSDLs } from './queryNMB2BWSDLs.ts';
 import { retrieveUserInformation } from './retrieveUserinformation.ts';

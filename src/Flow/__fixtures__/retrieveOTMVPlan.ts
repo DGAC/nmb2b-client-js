@@ -1,9 +1,6 @@
 import { startOfMinute } from 'date-fns';
 import { assert } from 'vitest';
-import {
-  defineFixture,
-  expectSnapshot,
-} from '../../../tests/utils/fixtures.ts';
+import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
 
 export const nominal = defineFixture({
   service: 'Flow',
@@ -37,9 +34,7 @@ export const nominal = defineFixture({
       const otmvPlans = result.data.plans;
       assert(otmvPlans);
 
-      const responseTrafficVolumes = otmvPlans.tvsOTMVs?.item?.map(
-        ({ key }) => key,
-      );
+      const responseTrafficVolumes = otmvPlans.tvsOTMVs?.item?.map(({ key }) => key);
 
       expect(responseTrafficVolumes).toEqual(variables.trafficVolumes);
     },

@@ -7,9 +7,7 @@ function getEndpointHash(endpoint: string): string {
   return createHash('sha256').update(endpoint).digest('hex').slice(0, 8);
 }
 
-export function getXSDCacheDirectory(
-  config: Pick<Config, 'XSD_PATH' | 'xsdEndpoint'>,
-): string {
+export function getXSDCacheDirectory(config: Pick<Config, 'XSD_PATH' | 'xsdEndpoint'>): string {
   if (config.xsdEndpoint) {
     const hash = getEndpointHash(config.xsdEndpoint);
     return path.join(config.XSD_PATH, `${B2B_VERSION}-${hash}`);

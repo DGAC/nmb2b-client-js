@@ -39,9 +39,7 @@ export async function getWSDLDownloadURL({
 
   // oxlint-disable-next-line typescript/no-unnecessary-condition
   if (!!security && 'apiKeyId' in security) {
-    throw new Error(
-      'Should never happen, config.xsdEndpoint should be defined',
-    );
+    throw new Error('Should never happen, config.xsdEndpoint should be defined');
   }
 
   const res = await axios<string>({

@@ -28,17 +28,11 @@ describe('queryFlightsByAirspace', async () => {
      * traffic window, with a 60s precision.
      */
     expect(
-      Math.abs(
-        res.data.effectiveTrafficWindow.wef.getTime() -
-          trafficWindow.wef.getTime(),
-      ),
+      Math.abs(res.data.effectiveTrafficWindow.wef.getTime() - trafficWindow.wef.getTime()),
     ).toBeLessThan(60 * 1000);
 
     expect(
-      Math.abs(
-        res.data.effectiveTrafficWindow.unt.getTime() -
-          trafficWindow.unt.getTime(),
-      ),
+      Math.abs(res.data.effectiveTrafficWindow.unt.getTime() - trafficWindow.unt.getTime()),
     ).toBeLessThan(60 * 1000);
 
     if (!res.data.flights) {

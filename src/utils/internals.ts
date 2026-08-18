@@ -6,17 +6,13 @@ export type WithInjectedSendTime<T extends B2BRequest> = Omit<T, 'sendTime'> & {
   sendTime?: Date | undefined;
 };
 
-export function injectSendTime<T extends B2BRequest>(
-  values: WithInjectedSendTime<T>,
-): T {
+export function injectSendTime<T extends B2BRequest>(values: WithInjectedSendTime<T>): T {
   const sendTime = new Date();
 
   return { sendTime, ...values } as T;
 }
 
-export function assertOkReply<T extends Reply>(
-  reply: T,
-): asserts reply is T & { status: 'OK' } {
+export function assertOkReply<T extends Reply>(reply: T): asserts reply is T & { status: 'OK' } {
   assert(
     // oxlint-disable-next-line typescript/no-unnecessary-condition -- Just in case the response is completely broken.
     typeof reply === 'object' && reply !== null && 'status' in reply,

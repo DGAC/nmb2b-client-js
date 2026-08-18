@@ -152,9 +152,9 @@ describe(getSoapEndpoint, () => {
     });
 
     test('should use custom endpoint with PREOPS flavour', () => {
-      expect(
-        getSoapEndpoint({ endpoint: 'https://custom.com', flavour: 'PREOPS' }),
-      ).toBe('https://custom.com/B2B_PREOPS/gateway/spec/27.0.0');
+      expect(getSoapEndpoint({ endpoint: 'https://custom.com', flavour: 'PREOPS' })).toBe(
+        'https://custom.com/B2B_PREOPS/gateway/spec/27.0.0',
+      );
     });
 
     test('should handle trailing slash in custom endpoint', () => {
@@ -184,9 +184,7 @@ describe(getEndpoint, () => {
     // oxlint-disable-next-line typescript/no-deprecated -- Legacy API
     expect(getEndpoint()).toBe(getSoapEndpoint());
     // oxlint-disable-next-line typescript/no-deprecated -- Legacy API
-    expect(getEndpoint({ flavour: 'PREOPS' })).toBe(
-      getSoapEndpoint({ flavour: 'PREOPS' }),
-    );
+    expect(getEndpoint({ flavour: 'PREOPS' })).toBe(getSoapEndpoint({ flavour: 'PREOPS' }));
   });
 });
 
@@ -194,9 +192,7 @@ describe(getEndpoint, () => {
 describe(getFileEndpoint, () => {
   test('without flavour', () => {
     // oxlint-disable-next-line typescript/no-deprecated -- Legacy API
-    expect(getFileEndpoint()).toBe(
-      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec',
-    );
+    expect(getFileEndpoint()).toBe('https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec');
   });
 
   test('with flavour', () => {
@@ -209,9 +205,7 @@ describe(getFileEndpoint, () => {
 
 describe(getFileUrl, () => {
   test('without flavour', () => {
-    expect(getFileUrl('bla')).toBe(
-      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla',
-    );
+    expect(getFileUrl('bla')).toBe('https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla');
   });
 
   test('with flavour', () => {
@@ -227,9 +221,7 @@ describe(getFileUrl, () => {
   });
 
   test('with leading slash', () => {
-    expect(getFileUrl('/bla')).toBe(
-      'https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla',
-    );
+    expect(getFileUrl('/bla')).toBe('https://www.b2b.nm.eurocontrol.int/FILE_OPS/gateway/spec/bla');
   });
 
   test('with overriden endpoint', () => {

@@ -19,13 +19,10 @@ describe('retrieveAUP', async () => {
       ?.filter(({ aupState }) => aupState === 'RELEASED')
       .toSorted(
         (a, b) =>
-          (a.lastUpdate?.timestamp.valueOf() ?? 0) -
-          (b.lastUpdate?.timestamp.valueOf() ?? 0),
+          (a.lastUpdate?.timestamp.valueOf() ?? 0) - (b.lastUpdate?.timestamp.valueOf() ?? 0),
       );
 
-    AUPSummaryIds = summaries
-      ?.map(({ id }) => id)
-      .filter((id) => id !== undefined);
+    AUPSummaryIds = summaries?.map(({ id }) => id).filter((id) => id !== undefined);
   });
 
   test.runIf(shouldUseRealB2BConnection)('AUP Retrieval', async () => {

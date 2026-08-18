@@ -34,17 +34,11 @@ describe('queryFlightsByTrafficVolume', async () => {
      * traffic window, with a 60s precision.
      */
     expect(
-      Math.abs(
-        res.data.effectiveTrafficWindow.wef.getTime() -
-          trafficWindow.wef.getTime(),
-      ),
+      Math.abs(res.data.effectiveTrafficWindow.wef.getTime() - trafficWindow.wef.getTime()),
     ).toBeLessThan(60 * 1000);
 
     expect(
-      Math.abs(
-        res.data.effectiveTrafficWindow.unt.getTime() -
-          trafficWindow.unt.getTime(),
-      ),
+      Math.abs(res.data.effectiveTrafficWindow.unt.getTime() - trafficWindow.unt.getTime()),
     ).toBeLessThan(60 * 1000);
 
     expect(res.data.flights).toEqual(expect.any(Array));
@@ -62,13 +56,11 @@ describe('queryFlightsByTrafficVolume', async () => {
       };
 
       if (!flight.flight?.flightId?.keys?.nonICAOAerodromeOfDeparture) {
-        flightKeysMatcher.aerodromeOfDeparture =
-          expect.stringMatching(/^[A-Z]{4}$/);
+        flightKeysMatcher.aerodromeOfDeparture = expect.stringMatching(/^[A-Z]{4}$/);
       }
 
       if (!flight.flight?.flightId?.keys?.nonICAOAerodromeOfDestination) {
-        flightKeysMatcher.aerodromeOfDestination =
-          expect.stringMatching(/^[A-Z]{4}$/);
+        flightKeysMatcher.aerodromeOfDestination = expect.stringMatching(/^[A-Z]{4}$/);
       }
 
       expect(flight).toMatchObject({

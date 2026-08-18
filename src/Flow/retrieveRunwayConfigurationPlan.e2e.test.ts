@@ -10,12 +10,13 @@ describe('retrieveRunwayConfigurationPlan', async () => {
 
   test.runIf(shouldUseRealB2BConnection)('LFBD', async () => {
     try {
-      const res: RunwayConfigurationPlanRetrievalReply =
-        await Flow.retrieveRunwayConfigurationPlan({
+      const res: RunwayConfigurationPlanRetrievalReply = await Flow.retrieveRunwayConfigurationPlan(
+        {
           dataset: { type: 'OPERATIONAL' },
           day: new Date(),
           aerodrome: 'LFBD',
-        });
+        },
+      );
 
       expect(res.data).toBeDefined();
       expect(res.data.plan.planCutOffReached).toEqual(expect.any(Boolean));

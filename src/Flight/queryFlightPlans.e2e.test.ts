@@ -50,11 +50,7 @@ describe('queryFlightPlans', async () => {
 
     knownFlight = t;
 
-    if (
-      !knownFlight ||
-      'flightPlan' in knownFlight ||
-      !knownFlight.flight?.flightId?.keys
-    ) {
+    if (!knownFlight || 'flightPlan' in knownFlight || !knownFlight.flight?.flightId?.keys) {
       console.error('Could not find a valid callsign !');
       return;
     }
@@ -107,9 +103,7 @@ describe('queryFlightPlans', async () => {
       const { data } = res;
 
       if (!data?.summaries || data.summaries.length === 0) {
-        console.error(
-          'Query did not return any flight plan, this should never happen.',
-        );
+        console.error('Query did not return any flight plan, this should never happen.');
         return;
       }
 
@@ -134,9 +128,7 @@ describe('queryFlightPlans', async () => {
             status: expect.any(String),
           });
         } else if ('currentInvalid' in f) {
-          console.warn(
-            'Query returned a flight with a currentInvalid property',
-          );
+          console.warn('Query returned a flight with a currentInvalid property');
         }
       }
     } catch (err) {

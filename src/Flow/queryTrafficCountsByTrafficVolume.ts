@@ -12,6 +12,6 @@ export const queryTrafficCountsByTrafficVolume = createSoapQueryDefinition<
   query: 'queryTrafficCountsByTrafficVolume',
   getSchema: (client) =>
     // oxlint-disable-next-line typescript/no-unsafe-return, typescript/no-unsafe-member-access
-    client.describe().TrafficCountsService.TrafficCountsPort
-      .queryTrafficCountsByTrafficVolume.input,
+    client.describe().TrafficCountsService.TrafficCountsPort.queryTrafficCountsByTrafficVolume
+      .input,
 });
