@@ -82,7 +82,7 @@
     "@vitest/coverage-v8": "^4.1.10",
     "dotenv": "^17.4.2",
     "msw": "^2.15.0",
-    "oxfmt": "^0.61.0",
+    "oxfmt": "^0.63.0",
     "oxlint": "^1.76.0",
     "oxlint-config-presets": "^0.1.17",
     "oxlint-tsgolint": "^7.0.2001",
