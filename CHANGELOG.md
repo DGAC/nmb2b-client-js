@@ -1,5 +1,19 @@
 # @dgac/nmb2b-client
 
+## 3.0.1
+
+### Patch Changes
+
+- [#300](https://github.com/DGAC/nmb2b-client-js/pull/300) [`94ffbae`](https://github.com/DGAC/nmb2b-client-js/commit/94ffbaed4e940cf67cea0cb9f3c186cda486511e) Thanks [@kouak](https://github.com/kouak)! - Migrate from prettier to oxfmt
+
+- [#305](https://github.com/DGAC/nmb2b-client-js/pull/305) [`bd06631`](https://github.com/DGAC/nmb2b-client-js/commit/bd06631a2ac47d651aae85b11d52ecd8007abb12) Thanks [@kouak](https://github.com/kouak)! - Fix `Timestamp` NMB2B type serialization/deserialization (to/from Date instances)
+
+- [#300](https://github.com/DGAC/nmb2b-client-js/pull/300) [`94ffbae`](https://github.com/DGAC/nmb2b-client-js/commit/94ffbaed4e940cf67cea0cb9f3c186cda486511e) Thanks [@kouak](https://github.com/kouak)! - Update various dependencies
+
+- [#333](https://github.com/DGAC/nmb2b-client-js/pull/333) [`1a95318`](https://github.com/DGAC/nmb2b-client-js/commit/1a95318e6197c289af2bc8896e00cc6bb6444687) Thanks [@kouak](https://github.com/kouak)! - Changesets v3
+
+- [#300](https://github.com/DGAC/nmb2b-client-js/pull/300) [`94ffbae`](https://github.com/DGAC/nmb2b-client-js/commit/94ffbaed4e940cf67cea0cb9f3c186cda486511e) Thanks [@kouak](https://github.com/kouak)! - Remove `type-fest` dependency
+
 ## 3.0.0
 
 ### Major Changes
