@@ -26,13 +26,16 @@ jobs:
         with:
           persist-credentials: false # recommended: do not persist git credentials on disk
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 24
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Select Changesets mode
         id: select-mode
