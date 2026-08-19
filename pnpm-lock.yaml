@@ -25,7 +25,7 @@ importers:
         version: 4.1.2
       remeda:
         specifier: ^2.39.0
-        version: 2.39.0
+        version: 2.40.0
       soap:
         specifier: ^1.10.0
         version: 1.10.0(supports-color@7.2.0)
@@ -1494,8 +1494,8 @@ packages:
   quansync@1.0.0:
     resolution: {integrity: sha512-5xZacEEufv3HSTPQuchrvV6soaiACMFnq1H8wkVioctoH3TRha9Sz66lOxRwPK/qZj7HPiSveih9yAyh98gvqA==}
 
-  remeda@2.39.0:
-    resolution: {integrity: sha512-3Ki8dU1o3OVu4dwIQ2Pj+yiuP7OnEbmWAGmJ3yDRqopily5jsj8NWzPvbS89H85d6UdONKEcUnrfuHY6jN9vyw==}
+  remeda@2.40.0:
+    resolution: {integrity: sha512-Y8yxrbK8SbTao2+mTqJcjre3/eBH641nr88aAgYfOdbW5p4FH+1Jk3mMypnA+SoktEXBVA8id0o3XPbgHYvQ9Q==}
     engines: {node: '>=18.0.0'}
 
   require-directory@2.1.1:
@@ -2949,7 +2949,7 @@ snapshots:
 
   quansync@1.0.0: {}
 
-  remeda@2.39.0: {}
+  remeda@2.40.0: {}
 
   require-directory@2.1.1: {}
 
