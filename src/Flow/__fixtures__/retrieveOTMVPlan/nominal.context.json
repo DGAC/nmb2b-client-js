@@ -1,15 +1,1 @@
-{
-  "meta": {
-    "mockDate": "2026-08-02T16:00:55.974Z"
-  },
-  "variables": {
-    "dataset": {
-      "type": "OPERATIONAL"
-    },
-    "day": "2026-08-02T16:00:00.000Z",
-    "trafficVolumes": [
-      "LFEKD",
-      "LFEUH"
-    ]
-  }
-}
+{"meta":{"mockDate":":date:2026-08-20T15:01:39.386Z"},"variables":{"dataset":{"type":":OPERATIONAL"},"day":":date:2026-08-20T15:01:00.000Z","trafficVolumes":[":LFEKD",":LFEUH"]}}

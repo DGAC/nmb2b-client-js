@@ -1,5 +1,5 @@
 import { UTCDate } from '@date-fns/utc';
-import { format } from 'date-fns';
+import { format, isDate } from 'date-fns';
 import * as timeFormats from '../timeFormats.ts';
 import { assert } from '../assert.ts';
 
@@ -156,7 +156,7 @@ export const types = {
   },
   DateTimeMinute: {
     input: (d: unknown): string => {
-      assertInput(d instanceof Date, {
+      assertInput(isDate(d), {
         mode: 'serialize',
         xmlType: 'DateTimeMinute',
         message: () => `Expected Date instance, got ${JSON.stringify(d)}`,
@@ -176,7 +176,7 @@ export const types = {
   },
   DateYearMonthDay: {
     input: (d: unknown): string => {
-      assertInput(d instanceof Date, {
+      assertInput(isDate(d), {
         mode: 'serialize',
         xmlType: 'DateYearMonthDay',
         message: () => `Expected Date instance, got ${JSON.stringify(d)}`,
@@ -195,7 +195,7 @@ export const types = {
   },
   DateTimeSecond: {
     input: (d: unknown): string => {
-      assertInput(d instanceof Date, {
+      assertInput(isDate(d), {
         mode: 'serialize',
         xmlType: 'DateTimeSecond',
         message: () => `Expected Date instance, got ${JSON.stringify(d)}`,
@@ -215,7 +215,7 @@ export const types = {
   },
   Timestamp: {
     input: (d: unknown): string => {
-      assertInput(d instanceof Date, {
+      assertInput(isDate(d), {
         mode: 'serialize',
         xmlType: 'Timestamp',
         message: () => `Expected Date instance, got ${JSON.stringify(d)}`,

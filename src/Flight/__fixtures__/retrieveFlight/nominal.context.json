@@ -1,16 +1,1 @@
-{
-  "meta": {
-    "mockDate": "2026-01-03T16:31:30.966Z"
-  },
-  "variables": {
-    "keys": {
-      "aircraftId": "EZY2803",
-      "aerodromeOfDeparture": "EGGD",
-      "nonICAOAerodromeOfDeparture": false,
-      "airFiled": false,
-      "aerodromeOfDestination": "LGAV",
-      "nonICAOAerodromeOfDestination": false,
-      "estimatedOffBlockTime": "2026-01-03T14:59:00.000Z"
-    }
-  }
-}
+{"meta":{"mockDate":":date:2026-08-20T15:01:40.265Z"},"variables":{"keys":{"aircraftId":":TRA11C","aerodromeOfDeparture":":EHEH","nonICAOAerodromeOfDeparture":false,"airFiled":false,"aerodromeOfDestination":":LGZA","nonICAOAerodromeOfDestination":false,"estimatedOffBlockTime":":date:2026-08-20T13:00:00.000Z"}}}

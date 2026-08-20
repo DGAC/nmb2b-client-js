@@ -4,13 +4,13 @@
       {
         "lastValidFlightPlan": {
           "id": {
-            "id": "PO04104311",
+            "id": "PO04844724",
             "keys": {
-              "aerodromeOfDeparture": "LFPB",
-              "aerodromeOfDestination": "UDYZ",
+              "aerodromeOfDeparture": "EHEH",
+              "aerodromeOfDestination": "LGZA",
               "airFiled": false,
-              "aircraftId": "AXY607M",
-              "estimatedOffBlockTime": 2026-08-02T08:30:00.000Z,
+              "aircraftId": "TRA11C",
+              "estimatedOffBlockTime": 2026-08-20T13:00:00.000Z,
               "nonICAOAerodromeOfDeparture": false,
               "nonICAOAerodromeOfDestination": false,
             },
@@ -20,8 +20,8 @@
       },
     ],
   },
-  "requestId": "B2B_CUR1:871692098320029117",
-  "requestReceptionTime": 2026-08-02T09:53:11.000Z,
-  "sendTime": 2026-08-02T09:53:11.000Z,
+  "requestId": "B2B_CUR1:878292709903785068",
+  "requestReceptionTime": 2026-08-20T15:01:39.000Z,
+  "sendTime": 2026-08-20T15:01:39.000Z,
   "status": "OK",
 }
