@@ -2,21 +2,21 @@
   "data": {
     "flight": {
       "flightId": {
-        "id": "PO02737421",
+        "id": "PO04844724",
         "keys": {
-          "aerodromeOfDeparture": "EGGD",
-          "aerodromeOfDestination": "LGAV",
+          "aerodromeOfDeparture": "EHEH",
+          "aerodromeOfDestination": "LGZA",
           "airFiled": false,
-          "aircraftId": "EZY2803",
-          "estimatedOffBlockTime": 2026-01-03T14:59:00.000Z,
+          "aircraftId": "TRA11C",
+          "estimatedOffBlockTime": 2026-08-20T13:00:00.000Z,
           "nonICAOAerodromeOfDeparture": false,
           "nonICAOAerodromeOfDestination": false,
         },
       },
     },
   },
-  "requestId": "B2B_CUR2:25407266",
-  "requestReceptionTime": 2026-01-03T16:31:31.000Z,
-  "sendTime": 2026-01-03T16:31:31.000Z,
+  "requestId": "B2B_CUR1:878292712969820550",
+  "requestReceptionTime": 2026-08-20T15:01:40.000Z,
+  "sendTime": 2026-08-20T15:01:40.000Z,
   "status": "OK",
 }

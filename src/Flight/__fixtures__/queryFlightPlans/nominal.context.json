@@ -1,16 +1,1 @@
-{
-  "meta": {
-    "mockDate": "2026-08-02T09:53:10.890Z"
-  },
-  "variables": {
-    "keys": {
-      "aircraftId": "AXY607M",
-      "aerodromeOfDeparture": "LFPB",
-      "nonICAOAerodromeOfDeparture": false,
-      "airFiled": false,
-      "aerodromeOfDestination": "UDYZ",
-      "nonICAOAerodromeOfDestination": false,
-      "estimatedOffBlockTime": "2026-08-02T08:30:00.000Z"
-    }
-  }
-}
+{"meta":{"mockDate":":date:2026-08-20T15:01:39.555Z"},"variables":{"keys":{"aircraftId":":TRA11C","aerodromeOfDeparture":":EHEH","nonICAOAerodromeOfDeparture":false,"airFiled":false,"aerodromeOfDestination":":LGZA","nonICAOAerodromeOfDestination":false,"estimatedOffBlockTime":":date:2026-08-20T13:00:00.000Z"}}}

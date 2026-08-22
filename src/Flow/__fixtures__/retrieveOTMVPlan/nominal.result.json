@@ -1,11 +1,11 @@
 {
   "data": {
     "plans": {
-      "dataId": "O05450000214727",
+      "dataId": "O05460000124499",
       "dataset": {
         "type": "OPERATIONAL",
       },
-      "day": 2026-08-02T00:00:00.000Z,
+      "day": 2026-08-20T00:00:00.000Z,
       "planCutOffReached": true,
       "planTransferred": true,
       "tvsOTMVs": {
@@ -21,8 +21,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "TACTICAL",
                           "otmv": {
@@ -44,8 +44,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "TACTICAL",
                           "otmv": {
@@ -72,8 +72,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "TACTICAL",
                           "otmv": {
@@ -95,8 +95,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "TACTICAL",
                           "otmv": {
@@ -130,8 +130,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "AIRSPACE",
                         },
@@ -141,8 +141,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "AIRSPACE",
                           "otmv": {
@@ -169,8 +169,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "AIRSPACE",
                         },
@@ -180,8 +180,8 @@
                       "item": [
                         {
                           "applicabilityPeriod": {
-                            "unt": 2026-08-03T00:00:00.000Z,
-                            "wef": 2026-08-02T00:00:00.000Z,
+                            "unt": 2026-08-21T00:00:00.000Z,
+                            "wef": 2026-08-20T00:00:00.000Z,
                           },
                           "dataSource": "AIRSPACE",
                           "otmv": {
@@ -208,8 +208,8 @@
       },
     },
   },
-  "requestId": "B2B_CUR2:871784645021185753",
-  "requestReceptionTime": 2026-08-02T16:00:56.000Z,
-  "sendTime": 2026-08-02T16:00:56.000Z,
+  "requestId": "B2B_CUR1:878292708175730906",
+  "requestReceptionTime": 2026-08-20T15:01:39.000Z,
+  "sendTime": 2026-08-20T15:01:39.000Z,
   "status": "OK",
 }
