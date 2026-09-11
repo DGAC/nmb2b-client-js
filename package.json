@@ -73,8 +73,8 @@
     "tar": "^7.5.22"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^1.0.0",
-    "@changesets/cli": "^3.0.0",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.2",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.13",
     "@types/node": "^22.20.2",
