@@ -1,5 +1,11 @@
 # @dgac/nmb2b-client
 
+## 3.0.2
+
+### Patch Changes
+
+- [#334](https://github.com/DGAC/nmb2b-client-js/pull/334) [`58a7b43`](https://github.com/DGAC/nmb2b-client-js/commit/58a7b43c5515e8ffe9e5d91b580ae062a9528d7b) Thanks [@kouak](https://github.com/kouak)! - Update dev dependencies (oxlint, oxfmt, vite), tweak oxfmt config
+
 ## 3.0.1
 
 ### Patch Changes
