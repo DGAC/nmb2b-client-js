@@ -73,25 +73,25 @@
     "tar": "^7.5.22"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^1.0.0",
-    "@changesets/cli": "^3.0.0",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.2",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.13",
-    "@types/node": "^22.20.1",
+    "@types/node": "^22.20.2",
     "@types/proper-lockfile": "^4.1.4",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/coverage-v8": "^5.0.0",
     "dotenv": "^17.4.2",
     "msw": "^2.15.0",
-    "oxfmt": "^0.63.0",
-    "oxlint": "^1.78.0",
-    "oxlint-config-presets": "^0.1.19",
+    "oxfmt": "^0.67.0",
+    "oxlint": "^1.82.0",
+    "oxlint-config-presets": "^0.1.20",
     "oxlint-tsgolint": "^7.0.2001",
-    "tsdown": "^0.22.14",
+    "tsdown": "^0.23.0",
     "typescript": "^7.0.2",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621"
+  "packageManager": "pnpm@11.26.0+sha512.fc0e2bf890b9f983611f1ab68c0637bce914390653699f83c1a78b005ed25f2c81e77920c8fd8eee2ecf0b58b28cdcb00a84d97f69bcf7c56b2f344710238664"
 }

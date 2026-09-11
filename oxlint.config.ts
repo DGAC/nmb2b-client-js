@@ -21,6 +21,7 @@ export default defineConfig({
     },
   },
   rules: {
+    'eslint/no-unused-vars': ['error', { destructuredArrayIgnorePattern: '^_' }],
     'import/extensions': [
       'error',
       'always',
