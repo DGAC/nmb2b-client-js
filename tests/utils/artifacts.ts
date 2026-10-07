@@ -1,10 +1,11 @@
 import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import * as serde from './serializer.ts';
 
 export interface FixtureContext<TVariables = unknown> {
   meta: {
-    mockDate: string;
+    mockDate: Date;
   };
   variables: TVariables;
 }
@@ -44,7 +45,7 @@ export class FixtureArtifacts<TVariables> {
 
   async saveContext(context: FixtureContext<TVariables>): Promise<void> {
     await this.ensureDirectory();
-    await fs.writeFile(this.contextPath, JSON.stringify(context, null, 2));
+    await fs.writeFile(this.contextPath, serde.stringify(context));
   }
 
   async readContext(): Promise<FixtureContext<TVariables>> {
@@ -52,7 +53,7 @@ export class FixtureArtifacts<TVariables> {
       throw new Error(`Context file missing: ${this.contextPath}`);
     }
     const content = await fs.readFile(this.contextPath, 'utf-8');
-    return JSON.parse(content) as FixtureContext<TVariables>;
+    return serde.parse(content) as FixtureContext<TVariables>;
   }
 
   async saveMock(xml: string): Promise<void> {
