@@ -230,3 +230,7 @@ const b2bClient = await createB2BClient({
   hooks: [withPrometheusMetrics],
 });
 ```
+
+# Contributing
+
+AI tools are welcome, but issues, comments and pull request descriptions must be written in your own voice. See [AI_POLICY.md](./AI_POLICY.md).

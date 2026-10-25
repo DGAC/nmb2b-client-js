@@ -32,6 +32,13 @@ The work is done when:
 
    Pick `patch`, `minor` or `major` per semver on the public API.
 
+## Writing on GitHub
+
+`AI_POLICY.md` requires external contributors' own voice on GitHub. Before writing an issue, comment or PR description, check whether the user is a maintainer: `gh api repos/DGAC/nmb2b-client-js --jq .permissions.push`.
+
+- **`true` (maintainer)**: write and publish them.
+- **Anything else** (`false`, error, `gh` unavailable): the user writes them. Hand over short notes (what changed, why, how it was verified) for the user to put in their own words, and leave publishing to them. `/pr` output is such notes.
+
 ## Agent skills
 
 - **Issue tracker**: GitHub Issues via `gh`. See `docs/agents/issue-tracker.md`.
