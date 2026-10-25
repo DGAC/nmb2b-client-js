@@ -19,7 +19,7 @@ TypeScript client for the Eurocontrol NM B2B SOAP API (`@dgac/nmb2b-client`).
 
 The work is done when:
 
-1. The CI jobs pass locally: `pnpm format:ci`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm dedupe --check` and `pnpm test:unit --no-watch` (vitest watches by default; `--no-watch` lets it exit).
+1. `pnpm format:ci`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm dedupe --check` and `pnpm test:unit --no-watch` all pass: the local counterparts of the CI jobs (vitest watches by default; `--no-watch` lets it exit).
 2. Any change under `src/` ships with a changeset: a `.changeset/<kebab-name>.md` file, written by hand (`pnpm changeset` is interactive):
 
    ```md

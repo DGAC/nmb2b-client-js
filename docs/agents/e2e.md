@@ -6,7 +6,7 @@
 
 B2B rate-limits calls. Before running `pnpm test:e2e`, ask the user for a run budget, then spend it one run at a time, never in parallel. Keep each run's output (`> <scratchpad>/e2e-<label>.log`) so a comparison never needs a second run.
 
-## Real or mocked
+## Real or skipped
 
 `shouldUseRealB2BConnection` (`tests/utils.ts`) decides:
 
