@@ -1,117 +1,39 @@
-# Directives for AI Agents
+# AGENTS.md
 
-This document provides guidelines for AI (Artificial Intelligence) agents interacting with this repository.
+TypeScript client for the Eurocontrol NM B2B SOAP API (`@dgac/nmb2b-client`).
 
-## 1. Context & Initialization
+## Context
 
-**Before doing anything else, read the `README.md` file.**
-It contains essential information about the business context (Eurocontrol NM B2B SOAP Client) that you need to understand to name variables correctly and implement business logic relevantly.
+- **Domain vocabulary** (OTMV, regulation, traffic volume, AUP…): read `GLOSSARY.md` when it exists, otherwise `README.md` and the XSD in `b2b-xsd/`, before naming a domain concept.
+- **Package manager**: `pnpm` only.
 
-## 2. Environment Rules
+## Writing code
 
-- **Package Manager**: `pnpm` ONLY.
-  - ❌ `npm install` or `yarn install` are STRICTLY FORBIDDEN.
-  - ✅ Always use `pnpm install`.
+**Before writing code** under `src/`, `tests/` or `scripts/`, read `CODING_STANDARDS.md`: structure, types and test rules. `/code-review` checks changes against it.
 
-## 3. Project Architecture
+- `*.test.ts`: unit tests, offline, replayed through MSW.
+- `*.e2e.test.ts`: tests against a real B2B connection.
+- **Writing or changing a unit test for a SOAP operation** → `docs/agents/fixtures.md`.
 
-You must respect the existing modular structure:
+## Done
 
-- **Logic**: Each SOAP operation is a standalone file in its domain folder.
-  - Pattern: `src/<Domain>/<Action>.ts`
-  - Example: `src/Flow/retrieveOTMVPlan.ts`
-- **Types**: Interfaces matching XSD definitions must be defined in the domain's types file.
-  - Pattern: `src/<Domain>/types.ts`
-  - Example: `src/Flow/types.ts`
-- **Tests**: Tests are co-located with the source file.
-  - **Unit Tests**: `src/**/*.test.ts` (Must be fully mocked, no real network calls).
-  - **E2E Tests**: `src/**/*.e2e.test.ts` (Integration tests with real B2B connection).
-  - **Fixtures**: Scenarios for recording and replaying SOAP interactions.
-    - Pattern: `src/<Domain>/__fixtures__/<Action>.ts`
-    - Sidecar Artifacts: `src/<Domain>/__fixtures__/<Action>/<scenario>.*` (JSON context, XML mock, JSON result snapshot).
+The work is done when:
 
-## 4. Technical Conventions
+1. `pnpm format:ci`, `pnpm lint`, `pnpm typecheck` and `pnpm test:unit --no-watch` all pass (vitest watches by default; `--no-watch` lets it exit).
+2. Any change under `src/` ships with a changeset: a `.changeset/<kebab-name>.md` file, written by hand (`pnpm changeset` is interactive):
 
-### TypeScript
+   ```md
+   ---
+   '@dgac/nmb2b-client': patch
+   ---
 
-- **Strict Typing**: `any` is forbidden.
-- **Reusability**: Use existing types exported in `src/types.ts` or define new ones in the appropriate `src/<Domain>/types.ts`.
+   One-line summary for the changelog.
+   ```
 
-### Testing
-
-- **Project Separation**:
-  - Use the `unit` project for logic that doesn't require a B2B connection.
-  - Use the `e2e` project for integration tests.
-- **Implementation Details (E2E only)**:
-  - Import `shouldUseRealB2BConnection` from `tests/utils.ts`.
-  - Use `test.runIf(shouldUseRealB2BConnection)` to condition tests in `*.e2e.test.ts` files.
-  - Use `TEST_B2B_OPTIONS` from `tests/options.ts` to initialize clients.
-- **Security**:
-  - ❌ NEVER hardcode secrets or certificates in test files.
-  - ✅ Always rely on `TEST_B2B_OPTIONS` which loads from environment variables.
-
-## 5. Verification Commands
-
-Run these commands from the project root to validate your work:
-
-```bash
-# 1. Check coding style and potential errors
-pnpm lint
-
-# 2. Check TypeScript types
-pnpm typecheck
-
-# 3. Run all tests
-pnpm test --no-watch
-
-# 4. Run unit tests only
-pnpm test:unit --no-watch
-
-# 5. Run E2E tests only
-pnpm test:e2e --no-watch
-
-# 6. Run tests for a specific file
-pnpm test --no-watch <filename>
-
-# 7. Record or update fixtures from real B2B API
-pnpm update-fixtures
-```
-
-## 6. Unit Testing with Fixtures
-
-We use a custom framework to record real API interactions and replay them deterministically in unit tests.
-
-- **Definition**: Use `defineFixture(serviceMethod)` in `src/<Domain>/__fixtures__/<Action>.ts`.
-  - `.describe(text)`: Mandatory. Description of the scenario.
-  - `.setup()`: Optional. Only runs during recording. Used to find/prepare live data (e.g., finding a valid flight ID). It returns an object of `variables`.
-  - `.run()`: Mandatory. Logic to execute the SOAP call. Receives `variables` from setup.
-  - `.test()`: One or more Vitest assertions. Receives a context object containing `{ expect, result, variables }`. Use `expectSnapshot()` helper for standard snapshot validation.
-- **Recording**: To capture artifacts from the real B2B API:
-  ```bash
-  pnpm update-fixtures
-  ```
-  _Requires valid B2B credentials in `.env`._
-- **Registration**: Domain-level tests (`src/<Domain>/<Domain>.test.ts`) must use `registerFixtures`:
-
-  ```typescript
-  import { registerFixtures } from '../../tests/utils/runner';
-  import { describe } from 'vitest';
-
-  describe('MyDomain Fixtures', async () => {
-    await registerFixtures('./__fixtures__/*.ts', import.meta.url);
-  });
-  ```
+   Pick `patch`, `minor` or `major` per semver on the public API.
 
 ## Agent skills
 
-### Issue tracker
-
-Issues are tracked in GitHub Issues (`DGAC/nmb2b-client-js`) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
-
-### Triage labels
-
-Default canonical labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
-
-### Domain docs
-
-Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+- **Issue tracker**: GitHub Issues via `gh`. See `docs/agents/issue-tracker.md`.
+- **Triage labels**: see `docs/agents/triage-labels.md`.
+- **Domain docs**: one `GLOSSARY.md` and `docs/adr/` at the repo root (single-context). See `docs/agents/domain.md`.
