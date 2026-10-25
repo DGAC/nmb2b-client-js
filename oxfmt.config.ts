@@ -12,5 +12,6 @@ export default defineConfig({
     '**/__fixtures__/**/*.json',
     'CHANGELOG.md',
     'CHANGELOG.old.md',
+    '.agents/',
   ],
 });
