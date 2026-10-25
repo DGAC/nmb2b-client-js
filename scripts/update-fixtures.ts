@@ -103,9 +103,6 @@ async function recordSingleFixture({
   const setupStart = new Date();
   const variables = fixture.setupRecording ? await fixture.setupRecording(b2bClient) : undefined;
 
-  // Capture mock date (ensure it matches the execution time)
-  const mockDate = setupStart.toISOString();
-
   assert(
     fixture.executeOperation,
     `Module ${filePath}, export ${exportName} is not a complete fixture.`,
@@ -122,7 +119,7 @@ async function recordSingleFixture({
   );
 
   await artifacts.saveContext({
-    meta: { mockDate },
+    meta: { mockDate: setupStart },
     variables,
   });
 
