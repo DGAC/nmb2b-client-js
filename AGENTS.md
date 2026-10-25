@@ -12,15 +12,15 @@ TypeScript client for the Eurocontrol NM B2B SOAP API (`@dgac/nmb2b-client`).
 **Before writing code** under `src/`, `tests/` or `scripts/`, read `CODING_STANDARDS.md`: structure, types and test rules. `/code-review` checks changes against it.
 
 - `*.test.ts`: unit tests, offline, replayed through MSW.
-- `*.e2e.test.ts`: tests against a real B2B connection.
+- `*.e2e.test.ts`: tests against a real B2B connection, rate-limited. **Before running them, or any tests in a git worktree** → `docs/agents/e2e.md`.
 - **Writing or changing a unit test for a SOAP operation** → `docs/agents/fixtures.md`.
 
 ## Done
 
 The work is done when:
 
-1. `pnpm format:ci`, `pnpm lint`, `pnpm typecheck` and `pnpm test:unit --no-watch` all pass (vitest watches by default; `--no-watch` lets it exit).
-2. Any change under `src/` ships with a changeset: a `.changeset/<kebab-name>.md` file, written by hand (`pnpm changeset` is interactive):
+1. `pnpm format:ci`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm dedupe --check` and `pnpm test:unit --no-watch` all pass: the local counterparts of the CI jobs (vitest watches by default; `--no-watch` lets it exit).
+2. Any change that reaches consumers ships with a changeset: code built into `dist/` (`src/` minus `*.test.ts`, `*.test-d.ts` and `__fixtures__/`), or `dependencies`, `engines` or `exports` in `package.json`. A `.changeset/<kebab-name>.md` file, written by hand (`pnpm changeset` is interactive):
 
    ```md
    ---
