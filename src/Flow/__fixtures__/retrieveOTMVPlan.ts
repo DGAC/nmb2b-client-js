@@ -18,15 +18,16 @@ export const nominal = defineFixture({
       dataset: { type: 'OPERATIONAL' as const },
       day: now,
       trafficVolumes: ['LFEKD', 'LFEUH'],
+      otmvDuration: 11 * 60,
     });
   })
-  .run((client, { day, dataset, trafficVolumes }, { recordExchange }) =>
+  .run((client, { day, dataset, trafficVolumes, otmvDuration }, { recordExchange }) =>
     recordExchange('retrieveOTMVPlan', () =>
       client.Flow.retrieveOTMVPlan({
         dataset,
         day,
         otmvsWithDuration: {
-          item: trafficVolumes.map((trafficVolume) => ({ trafficVolume })),
+          item: trafficVolumes.map((trafficVolume) => ({ trafficVolume, otmvDuration })),
         },
       }),
     ),
@@ -43,4 +44,12 @@ export const nominal = defineFixture({
 
       expect(responseTrafficVolumes).toEqual(variables.trafficVolumes);
     },
-  );
+  )
+  .test('should only contain otmvs of the requested duration', ({ expect, result, variables }) => {
+    const otmvPlans = result.data.plans;
+    assert(otmvPlans);
+
+    for (const { value } of otmvPlans.tvsOTMVs?.item ?? []) {
+      expect(value?.item?.map(({ key }) => key)).toEqual([variables.otmvDuration]);
+    }
+  });

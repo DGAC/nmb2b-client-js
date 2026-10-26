@@ -1,7 +1,7 @@
 {
   "data": {
     "plans": {
-      "dataId": "O05480000049418",
+      "dataId": "O05480000049438",
       "dataset": {
         "type": "OPERATIONAL",
       },
@@ -14,57 +14,6 @@
             "key": "LFEKD",
             "value": {
               "item": [
-                {
-                  "key": 60,
-                  "value": {
-                    "clientSchedule": {
-                      "item": [
-                        {
-                          "applicabilityPeriod": {
-                            "unt": 2026-10-27T00:00:00.000Z,
-                            "wef": 2026-10-26T00:00:00.000Z,
-                          },
-                          "dataSource": "TACTICAL",
-                          "otmv": {
-                            "otmvDuration": 60,
-                            "peak": {
-                              "threshold": 11,
-                            },
-                            "sustained": {
-                              "crossingOccurrences": 99,
-                              "elapsed": 5940,
-                              "threshold": 9,
-                            },
-                            "trafficVolume": "LFEKD",
-                          },
-                        },
-                      ],
-                    },
-                    "nmSchedule": {
-                      "item": [
-                        {
-                          "applicabilityPeriod": {
-                            "unt": 2026-10-27T00:00:00.000Z,
-                            "wef": 2026-10-26T00:00:00.000Z,
-                          },
-                          "dataSource": "TACTICAL",
-                          "otmv": {
-                            "otmvDuration": 60,
-                            "peak": {
-                              "threshold": 11,
-                            },
-                            "sustained": {
-                              "crossingOccurrences": 99,
-                              "elapsed": 5940,
-                              "threshold": 9,
-                            },
-                            "trafficVolume": "LFEKD",
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
                 {
                   "key": 660,
                   "value": {
@@ -124,45 +73,6 @@
             "value": {
               "item": [
                 {
-                  "key": 60,
-                  "value": {
-                    "clientSchedule": {
-                      "item": [
-                        {
-                          "applicabilityPeriod": {
-                            "unt": 2026-10-27T00:00:00.000Z,
-                            "wef": 2026-10-26T00:00:00.000Z,
-                          },
-                          "dataSource": "AIRSPACE",
-                        },
-                      ],
-                    },
-                    "nmSchedule": {
-                      "item": [
-                        {
-                          "applicabilityPeriod": {
-                            "unt": 2026-10-27T00:00:00.000Z,
-                            "wef": 2026-10-26T00:00:00.000Z,
-                          },
-                          "dataSource": "AIRSPACE",
-                          "otmv": {
-                            "otmvDuration": 60,
-                            "peak": {
-                              "threshold": 9,
-                            },
-                            "sustained": {
-                              "crossingOccurrences": 99,
-                              "elapsed": 5940,
-                              "threshold": 7,
-                            },
-                            "trafficVolume": "LFEUH",
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
-                {
                   "key": 660,
                   "value": {
                     "clientSchedule": {
@@ -208,8 +118,8 @@
       },
     },
   },
-  "requestId": "902565909995427066",
-  "requestReceptionTime": 2026-10-26T14:34:41.000Z,
-  "sendTime": 2026-10-26T14:34:41.000Z,
+  "requestId": "902566132429911141",
+  "requestReceptionTime": 2026-10-26T14:35:34.000Z,
+  "sendTime": 2026-10-26T14:35:34.000Z,
   "status": "OK",
 }
