@@ -36,8 +36,8 @@ export async function recordScenario<TVariables, TResult>(
   const recordedAt = new Date().toISOString();
 
   using exchangeCapture = captureExchanges(client);
-  // Recorded exchange ids by request body: replay tells exchanges apart only by request body.
-  const recordedIds = new Map<string, RecordedExchangeId>();
+  // Replay tells recorded exchanges apart only by request body.
+  const idByRequestBody = new Map<string, RecordedExchangeId>();
   const usedIds = new Set<RecordedExchangeId>();
 
   const runContext: FixtureRunContext = {
@@ -58,12 +58,12 @@ export async function recordScenario<TVariables, TResult>(
       const [exchange] = sent.values();
       assert(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
 
-      const sameRequestId = recordedIds.get(exchange.request);
+      const sameRequestId = idByRequestBody.get(exchange.request);
       assert(
         sameRequestId === undefined,
         `Recorded exchange "${id}" sent the same request as "${sameRequestId}": replay could not tell them apart.`,
       );
-      recordedIds.set(exchange.request, id);
+      idByRequestBody.set(exchange.request, id);
 
       return {
         result,

@@ -65,6 +65,17 @@ function sendsNothingScenario() {
   );
 }
 
+function sameRequestTwiceScenario() {
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+    async (client, _variables, { recordExchange }) => {
+      const request = { dataset: { type: 'OPERATIONAL' as const }, day: new Date('2026-08-02') };
+      const first = await recordExchange('first', () => client.Flow.retrieveOTMVPlan(request));
+      const second = await recordExchange('second', () => client.Flow.retrieveOTMVPlan(request));
+      return { result: null, exchanges: { ...first.exchanges, ...second.exchanges } };
+    },
+  );
+}
+
 function concurrentScenario() {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
     async (client, _variables, { recordExchange }) => {
@@ -237,18 +248,10 @@ describe('fixture harness', () => {
 
   test('fails the recording when two exchanges send the same request', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
-    const sameRequestTwice = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
-      async (client, _variables, { recordExchange }) => {
-        const request = { dataset: { type: 'OPERATIONAL' as const }, day: new Date('2026-08-02') };
-        const first = await recordExchange('first', () => client.Flow.retrieveOTMVPlan(request));
-        const second = await recordExchange('second', () => client.Flow.retrieveOTMVPlan(request));
-        return { result: null, exchanges: { ...first.exchanges, ...second.exchanges } };
-      },
-    );
 
     server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
 
-    await expect(recordScenario(sameRequestTwice, client, location)).rejects.toThrow(
+    await expect(recordScenario(sameRequestTwiceScenario(), client, location)).rejects.toThrow(
       /"second" sent the same request as "first"/,
     );
   });
@@ -306,7 +309,7 @@ describe('fixture harness', () => {
     server.use(
       http.post(SOAP_ENDPOINT, async ({ request }) => {
         const trafficVolume = /<trafficVolume>(\w+)</.exec(await request.text())?.[1];
-        return HttpResponse.xml(OTMV_PLAN_REPLY.replace('O1', `${trafficVolume}`));
+        return HttpResponse.xml(OTMV_PLAN_REPLY.replace('O1', trafficVolume ?? 'missing'));
       }),
     );
     await recordScenario(concurrentScenario(), client, location);
