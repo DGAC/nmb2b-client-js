@@ -1,11 +1,15 @@
 import { delay, http, HttpResponse } from 'msw';
 import { mkdtemp, rm } from 'node:fs/promises';
-import { randomUUID } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import { assert, describe, expect, test } from 'vitest';
 import { TEST_B2B_OPTIONS } from '../tests/options.ts';
-import { createTestSecurities, findCredentialPaths } from '../tests/utils/credentials.ts';
+import {
+  createTestSecurities,
+  findCredentialPaths,
+  URL_PASSWORD,
+  withCredentialsInUrl,
+} from '../tests/utils/credentials.ts';
 import { MOCK_B2B_ENDPOINT } from '../tests/constants.ts';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
 import { getSoapEndpoint } from './config.ts';
@@ -86,16 +90,6 @@ const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
 const WSDL_LOOKUP_URL = getSoapEndpoint({ flavour: TEST_B2B_OPTIONS.flavour });
 
 const SECURITIES = createTestSecurities();
-
-/** A password put in a configured URL, unique to this run. */
-const URL_PASSWORD = `test-url-password-${randomUUID()}`;
-
-function withCredentialsInUrl(url: string): string {
-  const parsed = new URL(url);
-  parsed.username = 'test-url-user';
-  parsed.password = URL_PASSWORD;
-  return parsed.toString();
-}
 
 describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
   describe('a SOAP query without a usable reply', () => {

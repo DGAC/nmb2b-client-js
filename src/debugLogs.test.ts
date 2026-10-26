@@ -1,7 +1,6 @@
 import createDebug from 'debug';
 import { http, HttpResponse } from 'msw';
 import { mkdtemp, rm } from 'node:fs/promises';
-import { randomUUID } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import { format } from 'node:util';
@@ -9,21 +8,12 @@ import { create as createTar } from 'tar';
 import { expect, test } from 'vitest';
 import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from '../tests/constants.ts';
+import { URL_PASSWORD, withCredentialsInUrl } from '../tests/utils/credentials.ts';
 import { server } from '../tests/utils/msw.ts';
 import { getXSDCacheDirectory } from './utils/xsd/paths.ts';
 import { createB2BClient } from './index.ts';
 
 const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
-
-/** A password put in a configured URL, unique to this run. */
-const URL_PASSWORD = `test-url-password-${randomUUID()}`;
-
-function withCredentialsInUrl(url: string): string {
-  const parsed = new URL(url);
-  parsed.username = 'test-url-user';
-  parsed.password = URL_PASSWORD;
-  return parsed.toString();
-}
 
 /**
  * Packs the WSDL files the unit tests use into an archive shaped like the one
