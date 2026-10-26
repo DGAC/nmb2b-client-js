@@ -1,13 +1,12 @@
-import { http, HttpResponse } from 'msw';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { assert, beforeAll, describe, expect, test, vi } from 'vitest';
-import { createB2BClient, type B2BClient } from '../../src/index.ts';
+import { assert, describe, expect, test } from 'vitest';
+import { createB2BClient } from '../../src/index.ts';
 import { TEST_B2B_OPTIONS } from '../options.ts';
-import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
-import { Fixture } from './fixtures.ts';
-import { server, SOAP_ENDPOINT } from './msw.ts';
+import { assertIsFixture } from './fixtures.ts';
+import { replayScenario } from './fixtureHarness/replayScenario.ts';
+import { server } from './msw.ts';
 
 /**
  * Registers tests for fixtures loaded via import.meta.glob.
@@ -27,35 +26,32 @@ export async function registerFixtures(globPattern: string, baseUrl: string) {
 
     describe(fixtureName, () => {
       for (const [fixtureId, fixture] of Object.entries(mod)) {
-        assert(
-          fixture instanceof Fixture,
-          `Export ${fixtureId} of module ${relativePath} is not a fixture`,
+        assertIsFixture(
+          fixture,
+          `Export ${fixtureId} of module ${relativePath} is not a fixture scenario`,
         );
 
         const fixtureLocation = {
           filePath: fixturePath,
           exportName: fixtureId,
         };
-        const artifacts = new FixtureArtifacts(fixtureLocation);
+        describe(`[${fixtureId}] ${fixture.description}`, () => {
+          for (const { name, fn } of fixture.tests) {
+            // oxlint-disable-next-line vitest/expect-expect -- assertions live in the scenario's `fn`
+            test(
+              name,
+              server.boundary(async () => {
+                using replay = await replayScenario(fixture, b2bClient, fixtureLocation);
 
-        describe(`[${fixtureId}] ${fixture.description}`, async () => {
-          const context = await artifacts.readContext();
-          const xmlResponse = await artifacts.readMock();
-
-          beforeAll(() => {
-            vi.setSystemTime(new Date(context.meta.mockDate));
-            return () => {
-              vi.useRealTimers();
-            };
-          });
-
-          runFixtureTests({
-            b2bClient,
-            fixture,
-            variables: context.variables,
-            xmlResponse,
-            fixtureLocation,
-          });
+                await fn({
+                  expect,
+                  result: replay.result,
+                  fixtureLocation,
+                  variables: replay.variables,
+                });
+              }),
+            );
+          }
         });
       }
     });
@@ -82,42 +78,4 @@ async function loadModulesFromGlob(globPattern: string, baseUrl: string) {
   );
 
   return fixtures;
-}
-
-function runFixtureTests<TB2BService extends keyof B2BClient, TVariables, TResult>({
-  b2bClient,
-  fixture,
-  variables,
-  xmlResponse,
-  fixtureLocation,
-}: {
-  b2bClient: B2BClient;
-  fixture: Fixture<TB2BService, TVariables, TResult>;
-  variables: TVariables;
-  xmlResponse: string;
-  fixtureLocation: FixtureLocation;
-}) {
-  for (const { name, fn } of fixture.tests) {
-    test(
-      name,
-      server.boundary(async () => {
-        server.use(
-          http.post(SOAP_ENDPOINT, () => {
-            return HttpResponse.xml(xmlResponse);
-          }),
-        );
-
-        assert(fixture.executeOperation, 'Incomplete fixture');
-
-        const result = await fixture.executeOperation(b2bClient, variables);
-
-        await fn({
-          expect,
-          result,
-          fixtureLocation,
-          variables,
-        });
-      }),
-    );
-  }
 }

@@ -212,6 +212,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^5.0.5
         version: 5.0.5(vitest@5.0.5)
+      core-js:
+        specifier: ^3.51.0
+        version: 3.51.0
       msw:
         specifier: ^3.0.3
         version: 3.0.3(@types/node@22.20.5)(typescript@7.0.2)(vite@8.3.5(@types/node@22.20.5)(yaml@2.9.1))
@@ -1121,6 +1124,9 @@ packages:
   cookie@2.0.1:
     resolution: {integrity: sha512-yuToqVvRrj6pfDXREyQAAv8SkAEk/8GS3jQRTiUMm66TVtBYmqQeoEjL2Lmq8Rpo6271vH76InTChTitEAm65w==}
     engines: {node: '>=22'}
+
+  core-js@3.51.0:
+    resolution: {integrity: sha512-7bDKx/5jm5MxzsXxc93g6Z2+4ZsuT/MddrfRmTDJNAkWsYWHU8EVNEsBiIEWnMAMCHMmRfUEjkuo3jeNBOIHRw==}
 
   dataloader@2.2.3:
     resolution: {integrity: sha512-y2krtASINtPFS1rSDjacrFgn1dcUuoREVabwlOGOe4SdxenREqwjwjElAdwvbGM7kgZz9a3KVicWR7vcz8rnzA==}
@@ -2507,6 +2513,8 @@ snapshots:
       delayed-stream: 1.0.0
 
   cookie@2.0.1: {}
+
+  core-js@3.51.0: {}
 
   dataloader@2.2.3: {}
 

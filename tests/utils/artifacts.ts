@@ -2,9 +2,24 @@ import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-export interface FixtureContext<TVariables = unknown> {
+/**
+ * The contents of a fixture scenario's fixture artifacts: what fixture recording writes and fixture replay reads back.
+ */
+export interface FixtureArtifactContents<TVariables = unknown> {
+  /**
+   * When the recording started, just before `setup`. Replay freezes the clock at this date.
+   */
+  recordedAt: string;
+  variables: TVariables;
+  /**
+   * The raw B2B reply.
+   */
+  reply: string;
+}
+
+interface FixtureContext<TVariables> {
   meta: {
-    mockDate: string;
+    recordedAt: string;
   };
   variables: TVariables;
 }
@@ -26,11 +41,11 @@ export class FixtureArtifacts<TVariables> {
     this.dir = path.join(fixtureDir, fixtureFileName);
   }
 
-  get contextPath(): string {
+  private get contextPath(): string {
     return path.join(this.dir, `${this.id}.context.json`);
   }
 
-  get mockPath(): string {
+  private get replyPath(): string {
     return path.join(this.dir, `${this.id}.mock.xml`);
   }
 
@@ -38,32 +53,29 @@ export class FixtureArtifacts<TVariables> {
     return path.join(this.dir, `${this.id}.result.json`);
   }
 
-  private async ensureDirectory(): Promise<void> {
+  async write({
+    recordedAt,
+    variables,
+    reply,
+  }: FixtureArtifactContents<TVariables>): Promise<void> {
+    const context: FixtureContext<TVariables> = { meta: { recordedAt }, variables };
+
     await fs.mkdir(this.dir, { recursive: true });
-  }
-
-  async saveContext(context: FixtureContext<TVariables>): Promise<void> {
-    await this.ensureDirectory();
     await fs.writeFile(this.contextPath, JSON.stringify(context, null, 2));
+    await fs.writeFile(this.replyPath, reply);
   }
 
-  async readContext(): Promise<FixtureContext<TVariables>> {
-    if (!existsSync(this.contextPath)) {
-      throw new Error(`Context file missing: ${this.contextPath}`);
-    }
-    const content = await fs.readFile(this.contextPath, 'utf-8');
-    return JSON.parse(content) as FixtureContext<TVariables>;
-  }
+  async read(): Promise<FixtureArtifactContents<TVariables>> {
+    const context = JSON.parse(await readArtifact(this.contextPath)) as FixtureContext<TVariables>;
+    const reply = await readArtifact(this.replyPath);
 
-  async saveMock(xml: string): Promise<void> {
-    await this.ensureDirectory();
-    await fs.writeFile(this.mockPath, xml);
+    return { recordedAt: context.meta.recordedAt, variables: context.variables, reply };
   }
+}
 
-  async readMock(): Promise<string> {
-    if (!existsSync(this.mockPath)) {
-      throw new Error(`Mock file missing: ${this.mockPath}`);
-    }
-    return fs.readFile(this.mockPath, 'utf-8');
+async function readArtifact(filePath: string): Promise<string> {
+  if (!existsSync(filePath)) {
+    throw new Error(`Fixture artifact missing: ${filePath}`);
   }
+  return fs.readFile(filePath, 'utf-8');
 }
