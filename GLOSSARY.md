@@ -21,9 +21,13 @@ The offline run of a fixture scenario from its fixture artifacts, MSW standing i
 _Avoid_: Mocking, playback
 
 **Fixture artifact**:
-A file written by fixture recording next to the scenario, under `src/<Domain>/__fixtures__/<operation>/`: `context.json`, the recorded B2B reply, the result snapshot.
+A file written by fixture recording next to the scenario, under `src/<Domain>/__fixtures__/<operation>/`: `context.json`, the recorded exchanges (or, for a scenario that does not call `recordExchange()`, the B2B reply), the result snapshot.
 _Avoid_: Mock (alone), recording (as a noun)
 
 **Recorded exchange**:
 A SOAP request sent during fixture recording and the B2B reply to it, identified by an `<id>` within a fixture scenario.
 _Avoid_: Interaction, call, mock
+
+**Replayed exchange**:
+A recorded exchange during fixture replay, with the MSW handler that serves its reply once, to a request byte-identical to the recorded one (`ReplayedExchange`).
+_Avoid_: Mocked exchange, served exchange

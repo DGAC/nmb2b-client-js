@@ -1,5 +1,9 @@
 import { sub, add } from 'date-fns';
-import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
+import {
+  defineFixture,
+  expectRecordedRequests,
+  expectSnapshot,
+} from '../../../tests/utils/fixtures.ts';
 import { assert } from '../../utils/assert.ts';
 
 /**
@@ -37,19 +41,20 @@ export const nominal = defineFixture({
       keys: flightData.flight.flightId.keys,
     };
   })
-  .run(async (client, variables) => {
-    const result = await client.Flight.retrieveFlight({
-      dataset: { type: 'OPERATIONAL' },
-      includeProposalFlights: false,
-      flightId: {
-        keys: variables.keys,
-      },
-      requestedFlightDatasets: ['flight'],
-    });
-
-    return { result };
-  })
+  .run((client, variables, { recordExchange }) =>
+    recordExchange('retrieveFlight', () =>
+      client.Flight.retrieveFlight({
+        dataset: { type: 'OPERATIONAL' },
+        includeProposalFlights: false,
+        flightId: {
+          keys: variables.keys,
+        },
+        requestedFlightDatasets: ['flight'],
+      }),
+    ),
+  )
   .test('should have a valid flight ID', ({ expect, result }) => {
     expect(result.data?.flight?.flightId?.id).toMatch(/^(AA|AT|PO)[0-9]{8}$/);
   })
-  .test('should match snapshot', expectSnapshot());
+  .test('should match snapshot', expectSnapshot())
+  .test('should send the recorded requests', expectRecordedRequests());
