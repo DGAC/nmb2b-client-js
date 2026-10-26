@@ -46,6 +46,7 @@ export async function registerFixtures(globPattern: string, baseUrl: string) {
                 await fn({
                   expect,
                   result: replay.result,
+                  exchanges: replay.exchanges,
                   fixtureLocation,
                   variables: replay.variables,
                 });

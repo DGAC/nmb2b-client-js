@@ -1,7 +1,11 @@
 import assert from 'node:assert';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from '../artifacts.ts';
-import type { FixtureOutcome, IFixtureRunnable } from '../fixtures.ts';
+import type { FixtureOutcome, FixtureRunContext, IFixtureRunnable } from '../fixtures.ts';
+
+const runContext: FixtureRunContext = {
+  record: () => Promise.reject(new Error('record() is not implemented yet in fixture recording')),
+};
 
 /**
  * Fixture recording: runs the fixture scenario against `client` and writes its
@@ -18,7 +22,7 @@ export async function recordScenario<TVariables, TResult>(
   const recordedAt = new Date().toISOString();
   const variables = await setupRecording(client);
 
-  const result = await executeOperation(client, variables);
+  const { result, exchanges = {} } = await executeOperation(client, variables, runContext);
 
   const reply = client[service].__soapClient.lastResponse as unknown;
 
@@ -29,5 +33,5 @@ export async function recordScenario<TVariables, TResult>(
 
   await artifacts.write({ recordedAt, variables, reply });
 
-  return { variables, result };
+  return { variables, result, exchanges };
 }

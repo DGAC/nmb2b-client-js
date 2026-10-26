@@ -6,12 +6,59 @@ import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
 type B2BService = keyof B2BClient;
 type B2BServiceMethod<TService extends B2BService> = keyof B2BClient[TService] & string;
 
-export type B2BMethodResult<
-  TService extends B2BService,
-  TMethod extends B2BServiceMethod<TService>,
-> = B2BClient[TService][TMethod] extends (...args: never[]) => Promise<infer TResult>
-  ? TResult
-  : unknown;
+declare const recordedBrand: unique symbol;
+
+/**
+ * A SOAP request exactly as sent during fixture recording. Only produced by the fixture harness.
+ */
+export interface RecordedRequest {
+  readonly [recordedBrand]: 'request';
+  /**
+   * The SOAP envelope, byte for byte.
+   */
+  readonly body: string;
+}
+
+/**
+ * A B2B reply, as received during fixture recording. Only produced by the fixture harness.
+ */
+export interface RecordedReply {
+  readonly [recordedBrand]: 'reply';
+  /**
+   * The raw reply, served as is to the deserializer on replay.
+   */
+  readonly body: string;
+}
+
+/**
+ * A recorded exchange: a SOAP request sent during fixture recording and the B2B reply.
+ */
+export interface RecordedExchange {
+  readonly request: RecordedRequest;
+  readonly reply: RecordedReply;
+}
+
+/**
+ * What `.run()` returns. `exchanges` is optional while scenarios migrate to `record()`:
+ * a scenario that omits it records and replays its reply as before.
+ */
+export interface FixtureRunOutcome<TResult> {
+  result: TResult;
+  exchanges?: Record<string, RecordedExchange>;
+}
+
+/**
+ * What `.run()` receives from fixture recording and fixture replay, each with its own `record`.
+ */
+export interface FixtureRunContext {
+  /**
+   * Records the single SOAP call made by `call` as the recorded exchange `id`.
+   */
+  record: <Id extends string, T>(
+    id: Id,
+    call: () => Promise<T>,
+  ) => Promise<{ result: T; exchanges: Record<Id, RecordedExchange> }>;
+}
 
 /**
  * A strictly typed object identifying a service and its method.
@@ -30,6 +77,10 @@ export interface FixtureServiceMethod<
 export interface FixtureTestContext<TVariables, TResult> {
   expect: ExpectStatic;
   result: TResult;
+  /**
+   * The recorded exchanges returned by `.run()`; empty when it returns none.
+   */
+  exchanges: Record<string, RecordedExchange>;
   fixtureLocation: FixtureLocation;
   variables: TVariables;
 }
@@ -38,7 +89,8 @@ export type FixtureSetupFn<TVariables> = (client: B2BClient) => Promise<TVariabl
 export type FixtureRunFn<TVariables, TResult> = (
   client: B2BClient,
   variables: TVariables,
-) => Promise<TResult>;
+  context: FixtureRunContext,
+) => Promise<FixtureRunOutcome<TResult>>;
 export type FixtureTestFn<TVariables, TResult> = (
   ctx: FixtureTestContext<TVariables, TResult>,
 ) => Promise<void> | void;
@@ -46,15 +98,15 @@ export type FixtureTestFn<TVariables, TResult> = (
 /**
  * Builder interfaces to enforce call order and mandatory run().
  */
-export interface IFixtureInitial<TVariables, TResult> {
+export interface IFixtureInitial<TVariables> {
   describe(text: string): this;
-  setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars, TResult>;
-  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
+  setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars>;
+  run<TResult>(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
 }
 
-export interface IFixtureDefined<TVariables, TResult> {
+export interface IFixtureDefined<TVariables> {
   describe(text: string): this;
-  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
+  run<TResult>(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
 }
 
 /**
@@ -73,12 +125,8 @@ export interface IFixtureRunnable<TVariables, TResult> {
  * Builder of a fixture scenario, up to `.run()`.
  * It changes its own type parameters via interface casting.
  */
-export class Fixture<
-  TB2BService extends B2BService = B2BService,
-  TVariables = unknown,
-  TResult = unknown,
->
-  implements IFixtureInitial<TVariables, TResult>, IFixtureDefined<TVariables, TResult>
+export class Fixture<TB2BService extends B2BService = B2BService, TVariables = unknown>
+  implements IFixtureInitial<TVariables>, IFixtureDefined<TVariables>
 {
   /**
    * Passed on to the fixture scenario: the recorder reads this service's SOAP client.
@@ -108,12 +156,12 @@ export class Fixture<
     return this;
   }
 
-  setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars, TResult> {
-    (this as unknown as Fixture<TB2BService, TNewVars, TResult>).setupRecording = fn;
-    return this as unknown as Fixture<TB2BService, TNewVars, TResult>;
+  setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars> {
+    (this as unknown as Fixture<TB2BService, TNewVars>).setupRecording = fn;
+    return this as unknown as Fixture<TB2BService, TNewVars>;
   }
 
-  run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult> {
+  run<TResult>(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult> {
     return new FixtureScenario(this.service, this.description, this.setupRecording, fn);
   }
 }
@@ -172,13 +220,9 @@ export function assertIsFixture(
 export function defineFixture<
   TService extends B2BService,
   TMethod extends B2BServiceMethod<TService>,
->(
-  info: FixtureServiceMethod<TService, TMethod>,
-): IFixtureInitial<undefined, B2BMethodResult<TService, TMethod>> {
+>(info: FixtureServiceMethod<TService, TMethod>): IFixtureInitial<undefined> {
   // Without `.setup()`, the scenario's variables are `undefined`.
-  return new Fixture<TService, undefined, B2BMethodResult<TService, TMethod>>(info, () =>
-    Promise.resolve(undefined),
-  );
+  return new Fixture<TService, undefined>(info, () => Promise.resolve(undefined));
 }
 
 export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables, TResult> {
@@ -189,9 +233,11 @@ export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables,
 }
 
 /**
- * What fixture recording and fixture replay hand back: the variables and the scenario result.
+ * What fixture recording and fixture replay hand back: the variables, the scenario result
+ * and its recorded exchanges.
  */
 export interface FixtureOutcome<TVariables, TResult> {
   variables: TVariables;
   result: TResult;
+  exchanges: Record<string, RecordedExchange>;
 }
