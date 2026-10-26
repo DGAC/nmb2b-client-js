@@ -53,8 +53,8 @@ export const nominal = defineFixture({
       }),
     ),
   )
+  .test('should match snapshot', expectSnapshot())
+  .test('should send the recorded requests', expectRecordedRequests())
   .test('should have a valid flight ID', ({ expect, result }) => {
     expect(result.data?.flight?.flightId?.id).toMatch(/^(AA|AT|PO)[0-9]{8}$/);
-  })
-  .test('should match snapshot', expectSnapshot())
-  .test('should send the recorded requests', expectRecordedRequests());
+  });

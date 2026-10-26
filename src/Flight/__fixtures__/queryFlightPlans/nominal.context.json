@@ -1,16 +1,16 @@
 {
   "meta": {
-    "recordedAt": "2026-08-02T09:53:10.890Z"
+    "recordedAt": "2026-10-26T14:33:50.008Z"
   },
   "variables": {
     "keys": {
-      "aircraftId": "AXY607M",
-      "aerodromeOfDeparture": "LFPB",
+      "aircraftId": "AFR94WL",
+      "aerodromeOfDeparture": "LSZH",
       "nonICAOAerodromeOfDeparture": false,
       "airFiled": false,
-      "aerodromeOfDestination": "UDYZ",
+      "aerodromeOfDestination": "LFPG",
       "nonICAOAerodromeOfDestination": false,
-      "estimatedOffBlockTime": "2026-08-02T08:30:00.000Z"
+      "estimatedOffBlockTime": "2026-10-26T13:55:00.000Z"
     }
   }
 }

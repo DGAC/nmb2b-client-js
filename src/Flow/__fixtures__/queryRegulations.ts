@@ -1,6 +1,10 @@
 import { add, areIntervalsOverlapping, startOfMinute, sub } from 'date-fns';
-import { assert } from 'vitest';
-import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
+import {
+  defineFixture,
+  expectRecordedRequests,
+  expectSnapshot,
+} from '../../../tests/utils/fixtures.ts';
+import { assert } from '../../utils/assert.ts';
 import { extractReferenceLocation } from '../../utils/extractReferenceLocation.ts';
 
 export const nominal = defineFixture({
@@ -19,30 +23,33 @@ export const nominal = defineFixture({
       },
     });
   })
-  .run(async (client, { queryPeriod, dataset }) => {
+  .run(async (client, { queryPeriod, dataset }, { recordExchange }) => {
     assert(queryPeriod);
 
-    const result = await client.Flow.queryRegulations({
-      dataset,
-      queryPeriod,
-      requestedRegulationFields: {
-        item: [
-          'applicability',
-          'location',
-          'protectedLocation',
-          'reason',
-          'linkedRegulations',
-          'scenarioReference',
-          'regulationState',
-        ],
-      },
-    });
+    const exchange = await recordExchange('queryRegulations', () =>
+      client.Flow.queryRegulations({
+        dataset,
+        queryPeriod,
+        requestedRegulationFields: {
+          item: [
+            'applicability',
+            'location',
+            'protectedLocation',
+            'reason',
+            'linkedRegulations',
+            'scenarioReference',
+            'regulationState',
+          ],
+        },
+      }),
+    );
 
-    assertRegulationArray(result.data.regulations?.item);
+    assertRegulationArray(exchange.result.data.regulations?.item);
 
-    return { result };
+    return exchange;
   })
   .test('should match snapshot', expectSnapshot())
+  .test('should send the recorded requests', expectRecordedRequests())
   .test(
     'should return regulations applicable in the correct applicability interval',
     ({ expect, result, variables }) => {

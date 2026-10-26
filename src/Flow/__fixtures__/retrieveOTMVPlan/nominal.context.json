@@ -1,15 +1,16 @@
 {
   "meta": {
-    "recordedAt": "2026-08-02T16:00:55.974Z"
+    "recordedAt": "2026-10-26T14:35:34.720Z"
   },
   "variables": {
     "dataset": {
       "type": "OPERATIONAL"
     },
-    "day": "2026-08-02T16:00:00.000Z",
+    "day": "2026-10-26T14:35:00.000Z",
     "trafficVolumes": [
       "LFEKD",
       "LFEUH"
-    ]
+    ],
+    "otmvDuration": 660
   }
 }

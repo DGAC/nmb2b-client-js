@@ -1,6 +1,10 @@
 import { add, sub } from 'date-fns';
-import { assert } from 'vitest';
-import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
+import {
+  defineFixture,
+  expectRecordedRequests,
+  expectSnapshot,
+} from '../../../tests/utils/fixtures.ts';
+import { assert } from '../../utils/assert.ts';
 
 export const nominal = defineFixture({
   service: 'Flight',
@@ -32,22 +36,23 @@ export const nominal = defineFixture({
       keys: flightData.flight.flightId.keys,
     };
   })
-  .run(async (client, knownFlight) => {
-    const result = await client.Flight.queryFlightPlans({
-      aircraftId: knownFlight.keys.aircraftId,
-      nonICAOAerodromeOfDeparture: false,
-      airFiled: false,
-      nonICAOAerodromeOfDestination: false,
-      estimatedOffBlockTime: {
-        wef: sub(knownFlight.keys.estimatedOffBlockTime, {
-          minutes: 30,
-        }),
-        unt: add(knownFlight.keys.estimatedOffBlockTime, {
-          minutes: 30,
-        }),
-      },
-    });
-
-    return { result };
-  })
-  .test('should match snapshot', expectSnapshot());
+  .run((client, knownFlight, { recordExchange }) =>
+    recordExchange('queryFlightPlans', () =>
+      client.Flight.queryFlightPlans({
+        aircraftId: knownFlight.keys.aircraftId,
+        nonICAOAerodromeOfDeparture: false,
+        airFiled: false,
+        nonICAOAerodromeOfDestination: false,
+        estimatedOffBlockTime: {
+          wef: sub(knownFlight.keys.estimatedOffBlockTime, {
+            minutes: 30,
+          }),
+          unt: add(knownFlight.keys.estimatedOffBlockTime, {
+            minutes: 30,
+          }),
+        },
+      }),
+    ),
+  )
+  .test('should match snapshot', expectSnapshot())
+  .test('should send the recorded requests', expectRecordedRequests());
