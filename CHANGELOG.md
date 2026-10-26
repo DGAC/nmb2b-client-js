@@ -1,5 +1,19 @@
 # @dgac/nmb2b-client
 
+## 3.1.0
+
+### Minor Changes
+
+- [#385](https://github.com/DGAC/nmb2b-client-js/pull/385) [`e333f3b`](https://github.com/DGAC/nmb2b-client-js/commit/e333f3b335b32b5287808b21054ccc933d041ab2) Thanks [@kouak](https://github.com/kouak)! - Security hardening: a failure without a usable B2B reply, on a query or while loading the WSDL in `create*Client`, now throws `NMB2BTransportError` (`kind`, `service`, `query`, `code`, `httpStatus`, `url`, non-enumerable raw `body`), built from an allowlist of fields. Errors thrown or passed to `onRequestError` hooks no longer reference the HTTP client's request configuration, which held the credentials (client certificate, private key, passphrase). Transport failures no longer throw a generic `Error` with a `cause`, and no error thrown by the library carries a `cause` anymore.
+  
+  See [GHSA-8hgj-fw8h-7c7v](https://github.com/DGAC/nmb2b-client-js/security/advisories/GHSA-8hgj-fw8h-7c7v).
+
+### Patch Changes
+
+- [#387](https://github.com/DGAC/nmb2b-client-js/pull/387) [`48e6926`](https://github.com/DGAC/nmb2b-client-js/commit/48e69262e9cb1c598cc298d4af79f29bf9007ad9) Thanks [@kouak](https://github.com/kouak)! - Security hardening: debug logs no longer contain the `user:password@` of `config.endpoint` or `config.xsdEndpoint`, in the logged configuration nor in the logged WSDL archive URL. See [GHSA-8hgj-fw8h-7c7v](https://github.com/DGAC/nmb2b-client-js/security/advisories/GHSA-8hgj-fw8h-7c7v).
+
+- [#362](https://github.com/DGAC/nmb2b-client-js/pull/362) [`19278da`](https://github.com/DGAC/nmb2b-client-js/commit/19278dab5615ebc2779f55cecc3c8e2cc033ad9b) Thanks [@kouak](https://github.com/kouak)! - Update dependencies: axios v1.20.0, remeda v2.53.0, soap v1.14.0.
+
 ## 3.0.2
 
 ### Patch Changes
