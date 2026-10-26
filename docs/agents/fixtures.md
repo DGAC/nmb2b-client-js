@@ -43,7 +43,7 @@ Reference: `src/Flight/__fixtures__/retrieveFlight.ts`.
 
 ## Replay matches the exact request
 
-On replay, a recorded exchange's reply is served once, only to a request byte-identical to its `request.xml`; any other request, or the same one sent again, fails with MSW's unhandled request error (ADR `docs/adr/0001-fixture-replay-matches-exact-request-body.md`). A change to what the client sends (serializer, request shape, scenario inputs) therefore requires re-recording the scenarios it touches against B2B with `pnpm update-fixtures`; do not edit `request.xml` by hand.
+On replay, a recorded exchange's reply is served once, only to a request byte-identical to its `request.xml`; any other request, or the same one sent again, fails the replay with an error showing the request sent, formatted, and either the expected exchange ids or the id of the exchange already replayed (ADR `docs/adr/0001-fixture-replay-matches-exact-request-body.md`). A change to what the client sends (serializer, request shape, scenario inputs) therefore requires re-recording the scenarios it touches against B2B with `pnpm update-fixtures`; do not edit `request.xml` by hand.
 
 A scenario that does not call `recordExchange()` keeps its single `<scenario>.mock.xml`, served to any request.
 

@@ -43,6 +43,19 @@ function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
     );
 }
 
+function otmvPlanScenarioCatchingErrors({ trafficVolume }: { trafficVolume: string }) {
+  const scenario = otmvPlanScenario({ trafficVolume });
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
+    .setup(() => Promise.resolve({ day: '2026-08-02' }))
+    .run(async (client, variables, runContext) => {
+      try {
+        return await scenario.executeOperation(client, variables, runContext);
+      } catch {
+        return { result: null };
+      }
+    });
+}
+
 function sendTwiceScenario() {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
     .setup(() => Promise.resolve({ day: '2026-08-02' }))
@@ -220,9 +233,22 @@ describe('fixture harness', () => {
     await recordScenario(otmvPlanScenario({ trafficVolume: 'LFEKD' }), client, location);
     server.resetHandlers();
 
+    const replay = replayScenario(otmvPlanScenario({ trafficVolume: 'LFEEKD' }), client, location);
+
+    await expect(replay).rejects.toThrow(/matches no recorded exchange.*"retrieveOTMVPlan"/s);
+    await expect(replay).rejects.toThrow(/\n {6}<otmvsWithDuration>\n.*<trafficVolume>LFEEKD</s);
+  });
+
+  test('fails the replay on a changed request even when .run() catches its failure', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+    await recordScenario(otmvPlanScenario({ trafficVolume: 'LFEKD' }), client, location);
+    server.resetHandlers();
+
     await expect(
-      replayScenario(otmvPlanScenario({ trafficVolume: 'LFEEKD' }), client, location),
-    ).rejects.toThrow(/onUnhandledFrame/);
+      replayScenario(otmvPlanScenarioCatchingErrors({ trafficVolume: 'LFEEKD' }), client, location),
+    ).rejects.toThrow(/matches no recorded exchange/);
   });
 
   test('fails the replay when a recorded request is sent twice', async () => {
@@ -233,7 +259,7 @@ describe('fixture harness', () => {
     server.resetHandlers();
 
     await expect(replayScenario(sendTwiceScenario(), client, location)).rejects.toThrow(
-      /onUnhandledFrame/,
+      /request of the recorded exchange "retrieveOTMVPlan" was sent again/,
     );
   });
 
