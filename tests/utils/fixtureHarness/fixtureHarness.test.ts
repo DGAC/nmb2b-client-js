@@ -176,6 +176,26 @@ function multiExchangeScenario({
 }
 
 /**
+ * A fixture scenario whose `.setup()` returns `variables`, and whose `.run()` hands them to `onRun`.
+ */
+function variablesProbeScenario<TVariables>(
+  variables: TVariables,
+  onRun: (variables: TVariables) => void,
+) {
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
+    .setup(() => Promise.resolve(variables))
+    .run((client, variables, { recordExchange }) => {
+      onRun(variables);
+      return recordExchange('retrieveOTMVPlan', () =>
+        client.Flow.retrieveOTMVPlan({
+          dataset: { type: 'OPERATIONAL' },
+          day: new Date('2026-08-02'),
+        }),
+      );
+    });
+}
+
+/**
  * Runs `expectRecordedRequests()` on a fixture replay, as `registerFixtures` does for a scenario's test.
  */
 function checkRecordedRequests(
@@ -207,6 +227,38 @@ describe('fixture harness', () => {
     expect(replayed.variables).toEqual({ day: '2026-08-02', trafficVolume: 'LFEKD' });
     expect(replayed.result.data.plans.dataId).toBe('O1');
     expect(replayed.result).toEqual(recorded.result);
+  });
+
+  test('hands .run() the same variables on recording and on replay, Dates included', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const received: Array<unknown> = [];
+    const scenario = variablesProbeScenario(
+      {
+        queryPeriod: {
+          wef: new Date('2026-08-02T15:00:00Z'),
+          unt: new Date('2026-08-02T17:00:00Z'),
+        },
+        days: [new Date('2026-08-02T00:00:00Z')],
+        comment: undefined,
+      },
+      (variables) => received.push(variables),
+    );
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+    await recordScenario(scenario, client, location);
+    server.resetHandlers();
+
+    using replayed = await replayScenario(scenario, client, location);
+
+    const expected = {
+      queryPeriod: {
+        wef: new Date('2026-08-02T15:00:00.000Z'),
+        unt: new Date('2026-08-02T17:00:00.000Z'),
+      },
+      days: [new Date('2026-08-02T00:00:00.000Z')],
+    };
+    expect(received).toStrictEqual([expected, expected]);
+    expect(replayed.variables).toStrictEqual(expected);
   });
 
   test('replays a recorded exchange from its artifacts', async () => {
