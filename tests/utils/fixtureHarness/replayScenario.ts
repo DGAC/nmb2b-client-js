@@ -72,7 +72,7 @@ export async function replayScenario<TVariables, TResult>(
   };
 
   using stack = new DisposableStack();
-  stack.use(withFakeSystemTime(new Date(recordedAt)));
+  stack.use(withFakeSystemTime(recordedAt));
 
   // The client only sees a network error: fail with what went wrong instead, even when `.run()` caught it.
   const failOnUnmatchedRequest = async (cause?: unknown) => {

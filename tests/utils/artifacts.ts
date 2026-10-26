@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { deserializeFixtureContext, serializeFixtureContext } from './fixtureContext.ts';
 import type { RecordedExchange, RecordedExchangeId } from './fixtures.ts';
 
 /**
@@ -11,14 +12,14 @@ export interface FixtureArtifactContents<TVariables = unknown> {
    * When the recording ran, right after `setup`. Recording and replay freeze the clock at this date
    * during `.run()`.
    */
-  recordedAt: string;
+  recordedAt: Date;
   variables: TVariables;
   exchanges: Record<RecordedExchangeId, RecordedExchange>;
 }
 
 interface FixtureContext<TVariables> {
   meta: {
-    recordedAt: string;
+    recordedAt: Date;
   };
   variables: TVariables;
 }
@@ -91,7 +92,7 @@ export class FixtureArtifacts<TVariables> {
 
     await fs.mkdir(this.dir, { recursive: true });
     await this.removeExchanges();
-    await fs.writeFile(this.contextPath, JSON.stringify(context, null, 2));
+    await fs.writeFile(this.contextPath, serializeFixtureContext(context));
 
     for (const [exchangeId, { request, reply }] of Object.entries(exchanges)) {
       const paths = this.exchangePaths(exchangeId);
@@ -101,7 +102,9 @@ export class FixtureArtifacts<TVariables> {
   }
 
   async read(): Promise<FixtureArtifactContents<TVariables>> {
-    const context = JSON.parse(await readArtifact(this.contextPath)) as FixtureContext<TVariables>;
+    const context = deserializeFixtureContext(
+      await readArtifact(this.contextPath),
+    ) as FixtureContext<TVariables>;
     const { recordedAt } = context.meta;
     const { variables } = context;
 

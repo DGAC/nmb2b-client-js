@@ -28,7 +28,7 @@ export async function recordScenario<TVariables, TResult>(
   const artifacts = new FixtureArtifacts<TVariables>(location);
 
   const variables = await setupRecording(client);
-  const recordedAt = new Date().toISOString();
+  const recordedAt = new Date();
 
   using exchangeCapture = captureExchanges(client);
   // Replay tells recorded exchanges apart only by request body.
@@ -83,7 +83,7 @@ export async function recordScenario<TVariables, TResult>(
     },
   };
 
-  const outcome = await withDateFrozenAt(new Date(recordedAt), () =>
+  const outcome = await withDateFrozenAt(recordedAt, () =>
     executeOperation(client, variables, runContext),
   );
 

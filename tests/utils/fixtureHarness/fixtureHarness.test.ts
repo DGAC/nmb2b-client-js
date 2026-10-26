@@ -274,7 +274,7 @@ describe('fixture harness', () => {
 
     // As left by recorded exchanges deleted by hand: recording itself refuses a scenario without any.
     await new FixtureArtifacts(location).write({
-      recordedAt: '2026-08-02T16:00:56.000Z',
+      recordedAt: new Date('2026-08-02T16:00:56.000Z'),
       variables: undefined,
       exchanges: {},
     });
