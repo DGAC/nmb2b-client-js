@@ -15,13 +15,15 @@ const OTMV_PLAN_REPLY = `<?xml version='1.0' encoding='utf-8'?><S:Envelope xmlns
 
 const scenario = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
   .setup(() => Promise.resolve({ day: '2026-08-02', trafficVolume: 'LFEKD' }))
-  .run(async (client, { day, trafficVolume }) =>
-    client.Flow.retrieveOTMVPlan({
+  .run(async (client, { day, trafficVolume }) => {
+    const result = await client.Flow.retrieveOTMVPlan({
       dataset: { type: 'OPERATIONAL' },
       day: new Date(day),
       otmvsWithDuration: { item: [{ trafficVolume }] },
-    }),
-  );
+    });
+
+    return { result };
+  });
 
 describe('fixture harness', () => {
   let location: FixtureLocation;

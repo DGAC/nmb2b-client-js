@@ -17,7 +17,7 @@ export const nominal = defineFixture({
     });
   })
   .run(async (client, { day, dataset, trafficVolumes }) => {
-    const res = await client.Flow.retrieveOTMVPlan({
+    const result = await client.Flow.retrieveOTMVPlan({
       dataset,
       day,
       otmvsWithDuration: {
@@ -25,7 +25,7 @@ export const nominal = defineFixture({
       },
     });
 
-    return res;
+    return { result };
   })
   .test('should match snapshot', expectSnapshot())
   .test(

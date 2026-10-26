@@ -38,7 +38,7 @@ export const nominal = defineFixture({
     };
   })
   .run(async (client, variables) => {
-    return await client.Flight.retrieveFlight({
+    const result = await client.Flight.retrieveFlight({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
       flightId: {
@@ -46,6 +46,8 @@ export const nominal = defineFixture({
       },
       requestedFlightDatasets: ['flight'],
     });
+
+    return { result };
   })
   .test('should have a valid flight ID', ({ expect, result }) => {
     expect(result.data?.flight?.flightId?.id).toMatch(/^(AA|AT|PO)[0-9]{8}$/);

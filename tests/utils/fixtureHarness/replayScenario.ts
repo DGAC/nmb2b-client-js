@@ -3,9 +3,13 @@ import 'core-js/actual/disposable-stack/index.js';
 import { http, HttpResponse } from 'msw';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from '../artifacts.ts';
-import type { FixtureOutcome, IFixtureRunnable } from '../fixtures.ts';
+import type { FixtureOutcome, FixtureRunContext, IFixtureRunnable } from '../fixtures.ts';
 import { server, SOAP_ENDPOINT } from '../msw.ts';
 import { withFakeSystemTime } from '../withFakeSystemTime.ts';
+
+const runContext: FixtureRunContext = {
+  record: () => Promise.reject(new Error('record() is not implemented yet in fixture replay')),
+};
 
 /**
  * A fixture replay in progress: dispose it to restore the clock.
@@ -36,13 +40,14 @@ export async function replayScenario<TVariables, TResult>(
   using stack = new DisposableStack();
   stack.use(withFakeSystemTime(new Date(recordedAt)));
 
-  const result = await fixture.executeOperation(client, variables);
+  const { result, exchanges = {} } = await fixture.executeOperation(client, variables, runContext);
 
   // Hand the clock over to the caller; on throw, `stack` restores it here.
   const replay = stack.move();
   return {
     variables,
     result,
+    exchanges,
     [Symbol.dispose]: () => {
       replay.dispose();
     },

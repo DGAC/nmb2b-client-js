@@ -18,7 +18,7 @@ export const nominal = defineFixture({
     });
   })
   .run(async (client, variables) => {
-    return await client.Flight.queryFlightsByAirspace({
+    const result = await client.Flight.queryFlightsByAirspace({
       dataset: { type: 'OPERATIONAL' },
       includeProposalFlights: false,
       includeForecastFlights: false,
@@ -29,6 +29,8 @@ export const nominal = defineFixture({
       },
       airspace: 'LFEERMS',
     });
+
+    return { result };
   })
   .test('should match snapshot', expectSnapshot())
   .test('should return a matching traffic window', ({ expect, result, variables }) => {

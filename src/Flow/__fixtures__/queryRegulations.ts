@@ -22,7 +22,7 @@ export const nominal = defineFixture({
   .run(async (client, { queryPeriod, dataset }) => {
     assert(queryPeriod);
 
-    const res = await client.Flow.queryRegulations({
+    const result = await client.Flow.queryRegulations({
       dataset,
       queryPeriod,
       requestedRegulationFields: {
@@ -38,9 +38,9 @@ export const nominal = defineFixture({
       },
     });
 
-    assertRegulationArray(res.data.regulations?.item);
+    assertRegulationArray(result.data.regulations?.item);
 
-    return res;
+    return { result };
   })
   .test('should match snapshot', expectSnapshot())
   .test(

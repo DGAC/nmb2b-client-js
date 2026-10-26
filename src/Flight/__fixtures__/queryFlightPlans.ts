@@ -33,7 +33,7 @@ export const nominal = defineFixture({
     };
   })
   .run(async (client, knownFlight) => {
-    return await client.Flight.queryFlightPlans({
+    const result = await client.Flight.queryFlightPlans({
       aircraftId: knownFlight.keys.aircraftId,
       nonICAOAerodromeOfDeparture: false,
       airFiled: false,
@@ -47,5 +47,7 @@ export const nominal = defineFixture({
         }),
       },
     });
+
+    return { result };
   })
   .test('should match snapshot', expectSnapshot());

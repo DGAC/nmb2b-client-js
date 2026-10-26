@@ -15,7 +15,10 @@ import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts'
 export const nominal = defineFixture({ service: 'Flow', method: 'queryRegulations' })
   .describe('Nominal regulation query')
   .setup(async (client) => ({/* variables */}))
-  .run(async (client, variables) => client.Flow.queryRegulations({/* ... */}))
+  .run(async (client, variables) => {
+    const result = await client.Flow.queryRegulations({/* ... */});
+    return { result };
+  })
   .test('should match snapshot', expectSnapshot())
   .test('should ...', ({ expect, result, variables }) => {
     /* ... */
@@ -24,8 +27,8 @@ export const nominal = defineFixture({ service: 'Flow', method: 'queryRegulation
 
 - `.describe(text)`: the scenario description.
 - `.setup(fn)`: optional, runs **only while recording**, against live B2B, to find or prepare data (e.g. a valid flight ID). Its return value is stored in `context.json` and replayed as `variables`.
-- `.run(fn)`: the SOAP call; receives `variables`.
-- `.test(name, fn)`: one or more assertions, receiving `{ expect, result, variables }`. `expectSnapshot()` compares against `result.json`.
+- `.run(fn)`: the SOAP call; receives `(client, variables, { record })` and returns `{ result, exchanges? }`. The type of `result` seen by `.test()` is inferred from it, so `.run()` may narrow it first. `record` is not implemented yet (#370): recording and replay ignore `exchanges` until then.
+- `.test(name, fn)`: one or more assertions, receiving `{ expect, result, exchanges, variables }`; `exchanges` is what `.run()` returned (`{}` when it returned none). `expectSnapshot()` compares against `result.json`.
 
 Reference: `src/Flow/__fixtures__/queryRegulations.ts`.
 
