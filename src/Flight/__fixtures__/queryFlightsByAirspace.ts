@@ -17,21 +17,18 @@ export const nominal = defineFixture({
   .setup(() => {
     const now = startOfMinute(new Date());
     return Promise.resolve({
-      wef: sub(now, { minutes: 30 }).toISOString(),
-      unt: add(now, { minutes: 30 }).toISOString(),
+      wef: sub(now, { minutes: 30 }),
+      unt: add(now, { minutes: 30 }),
     });
   })
-  .run((client, variables, { recordExchange }) =>
+  .run((client, { wef, unt }, { recordExchange }) =>
     recordExchange('queryFlightsByAirspace', () =>
       client.Flight.queryFlightsByAirspace({
         dataset: { type: 'OPERATIONAL' },
         includeProposalFlights: false,
         includeForecastFlights: false,
         trafficType: 'LOAD',
-        trafficWindow: {
-          wef: new Date(variables.wef),
-          unt: new Date(variables.unt),
-        },
+        trafficWindow: { wef, unt },
         airspace: 'LFEERMS',
       }),
     ),
@@ -46,8 +43,8 @@ export const nominal = defineFixture({
 
     const { wef, unt } = result.data.effectiveTrafficWindow;
 
-    expect(new Date(wef)).toEqual(new Date(variables.wef));
-    expect(new Date(unt)).toEqual(new Date(variables.unt));
+    expect(wef).toEqual(variables.wef);
+    expect(unt).toEqual(variables.unt);
   })
   .test('should return a non-empty list of flights', ({ expect, result }) => {
     assert(result.data.flights, 'result.data should be defined');

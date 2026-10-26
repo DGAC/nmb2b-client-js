@@ -1,6 +1,8 @@
 {
   "meta": {
-    "recordedAt": "2026-10-26T10:55:56.682Z"
+    "recordedAt": {
+      "$date": "2026-10-26T10:55:56.682Z"
+    }
   },
   "variables": {
     "keys": {
@@ -10,7 +12,9 @@
       "airFiled": false,
       "aerodromeOfDestination": "EDDM",
       "nonICAOAerodromeOfDestination": false,
-      "estimatedOffBlockTime": "2026-10-26T09:25:00.000Z"
+      "estimatedOffBlockTime": {
+        "$date": "2026-10-26T09:25:00.000Z"
+      }
     }
   }
 }

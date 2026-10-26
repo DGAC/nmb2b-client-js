@@ -1,12 +1,16 @@
 {
   "meta": {
-    "recordedAt": "2026-10-26T14:35:34.720Z"
+    "recordedAt": {
+      "$date": "2026-10-26T14:35:34.720Z"
+    }
   },
   "variables": {
     "dataset": {
       "type": "OPERATIONAL"
     },
-    "day": "2026-10-26T14:35:00.000Z",
+    "day": {
+      "$date": "2026-10-26T14:35:00.000Z"
+    },
     "trafficVolumes": [
       "LFEKD",
       "LFEUH"

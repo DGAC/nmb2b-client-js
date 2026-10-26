@@ -3,6 +3,7 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import type { EventEmitter } from 'node:events';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, toRecordedExchange, type FixtureLocation } from '../artifacts.ts';
+import { deserializeFixtureContext, serializeFixtureContext } from '../fixtureContext.ts';
 import {
   RECORDED_EXCHANGE_ID,
   type FixtureOutcome,
@@ -18,6 +19,7 @@ import { withFakeSystemTime } from '../withFakeSystemTime.ts';
  * fixture artifacts next to `location`: `context.json` and its recorded exchanges.
  *
  * `setup` runs with the real clock; `.run()` with `Date` frozen at `recordedAt`, as on replay.
+ * `.run()` receives the variables read back from their serialization, as on replay.
  */
 export async function recordScenario<TVariables, TResult>(
   fixture: IFixtureRunnable<TVariables, TResult>,
@@ -27,8 +29,11 @@ export async function recordScenario<TVariables, TResult>(
   const { setupRecording, executeOperation } = fixture;
   const artifacts = new FixtureArtifacts<TVariables>(location);
 
-  const variables = await setupRecording(client);
-  const recordedAt = new Date().toISOString();
+  // Wrapped: without `.setup()`, the variables are `undefined`, which JSON cannot hold alone.
+  const { variables } = deserializeFixtureContext(
+    serializeFixtureContext({ variables: await setupRecording(client) }),
+  ) as { variables: TVariables };
+  const recordedAt = new Date();
 
   using exchangeCapture = captureExchanges(client);
   // Replay tells recorded exchanges apart only by request body.
@@ -83,7 +88,7 @@ export async function recordScenario<TVariables, TResult>(
     },
   };
 
-  const outcome = await withDateFrozenAt(new Date(recordedAt), () =>
+  const outcome = await withDateFrozenAt(recordedAt, () =>
     executeOperation(client, variables, runContext),
   );
 

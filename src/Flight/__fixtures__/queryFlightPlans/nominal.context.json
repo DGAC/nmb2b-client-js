@@ -1,6 +1,8 @@
 {
   "meta": {
-    "recordedAt": "2026-10-26T14:33:50.008Z"
+    "recordedAt": {
+      "$date": "2026-10-26T14:33:50.008Z"
+    }
   },
   "variables": {
     "keys": {
@@ -10,7 +12,9 @@
       "airFiled": false,
       "aerodromeOfDestination": "LFPG",
       "nonICAOAerodromeOfDestination": false,
-      "estimatedOffBlockTime": "2026-10-26T13:55:00.000Z"
+      "estimatedOffBlockTime": {
+        "$date": "2026-10-26T13:55:00.000Z"
+      }
     }
   }
 }
