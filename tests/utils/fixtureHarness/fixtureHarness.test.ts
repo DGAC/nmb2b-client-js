@@ -19,15 +19,15 @@ const OTMV_PLAN_REPLY = `<?xml version='1.0' encoding='utf-8'?><S:Envelope xmlns
 
 const scenario = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
   .setup(() => Promise.resolve({ day: '2026-08-02', trafficVolume: 'LFEKD' }))
-  .run(async (client, { day, trafficVolume }) => {
-    const result = await client.Flow.retrieveOTMVPlan({
-      dataset: { type: 'OPERATIONAL' },
-      day: new Date(day),
-      otmvsWithDuration: { item: [{ trafficVolume }] },
-    });
-
-    return { result };
-  });
+  .run((client, { day, trafficVolume }, { recordExchange }) =>
+    recordExchange('retrieveOTMVPlan', () =>
+      client.Flow.retrieveOTMVPlan({
+        dataset: { type: 'OPERATIONAL' },
+        day: new Date(day),
+        otmvsWithDuration: { item: [{ trafficVolume }] },
+      }),
+    ),
+  );
 
 function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
@@ -51,7 +51,7 @@ function otmvPlanScenarioCatchingErrors({ trafficVolume }: { trafficVolume: stri
       try {
         return await scenario.executeOperation(client, variables, runContext);
       } catch {
-        return { result: null };
+        return { result: null, exchanges: {} };
       }
     });
 }

@@ -91,7 +91,7 @@ export async function replayScenario<TVariables, TResult>(
 
   // Looked up by id rather than taken from `.run()`, which only knows them as recorded exchanges.
   const exchanges = Object.fromEntries(
-    Object.keys(outcome.exchanges ?? {}).flatMap((id) => {
+    Object.keys(outcome.exchanges).flatMap((id) => {
       const exchange = replayed[id];
       return exchange ? [[id, exchange] as const] : [];
     }),

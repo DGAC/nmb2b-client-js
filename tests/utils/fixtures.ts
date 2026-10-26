@@ -60,12 +60,11 @@ export interface ReplayedExchange extends RecordedExchange {
 }
 
 /**
- * What `.run()` returns. `exchanges` is optional while scenarios migrate to `recordExchange()`:
- * a scenario that omits it records and replays its reply as before.
+ * What `.run()` returns: its result, and the recorded exchanges returned by its `recordExchange()` calls.
  */
 export interface FixtureRunOutcome<TResult> {
   result: TResult;
-  exchanges?: Record<RecordedExchangeId, RecordedExchange>;
+  exchanges: Record<RecordedExchangeId, RecordedExchange>;
 }
 
 /**
