@@ -10,8 +10,9 @@ import { createFlightClient } from '../../index.ts';
  *
  * This test exists because `soap` only partially does it: since v1.12 it orders the top level of
  * the request, but nested elements declared with a named type (`type="common:…"`, most of the B2B
- * XSD) keep the input key order (checked with soap v1.14.0). Unit tests replay fixtures without
- * looking at the request, so only B2B can tell when nested ordering breaks.
+ * XSD) keep the input key order (checked with soap v1.14.0). Unit tests replay recorded requests
+ * byte for byte, so they catch a change in the order sent, but only B2B can tell whether that order
+ * is valid.
  *
  * `queryFlightsByAirspace` is only the carrier: read-only, cheap, with a nested `trafficWindow`.
  */

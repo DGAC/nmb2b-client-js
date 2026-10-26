@@ -5,29 +5,16 @@ import type { RecordedExchange, RecordedExchangeId } from './fixtures.ts';
 
 /**
  * The contents of a fixture scenario's fixture artifacts: what fixture recording writes and fixture replay reads back.
- *
- * A scenario either has recorded exchanges, or, until it migrates to `recordExchange()`, a single raw B2B reply.
  */
-export type FixtureArtifactContents<TVariables = unknown> = {
+export interface FixtureArtifactContents<TVariables = unknown> {
   /**
    * When the recording ran, right after `setup`. Recording and replay freeze the clock at this date
    * during `.run()`.
    */
   recordedAt: string;
   variables: TVariables;
-} & (
-  | {
-      /**
-       * The raw B2B reply of a scenario without recorded exchanges.
-       */
-      reply: string;
-      exchanges?: never;
-    }
-  | {
-      exchanges: Record<RecordedExchangeId, RecordedExchange>;
-      reply?: never;
-    }
-);
+  exchanges: Record<RecordedExchangeId, RecordedExchange>;
+}
 
 interface FixtureContext<TVariables> {
   meta: {
@@ -71,10 +58,6 @@ export class FixtureArtifacts<TVariables> {
     return path.join(this.dir, `${this.id}.context.json`);
   }
 
-  private get replyPath(): string {
-    return path.join(this.dir, `${this.id}${REPLY_SUFFIX}`);
-  }
-
   private exchangePaths(exchangeId: RecordedExchangeId): { request: string; reply: string } {
     return {
       request: path.join(this.dir, `${this.id}.${exchangeId}${REQUEST_SUFFIX}`),
@@ -103,20 +86,14 @@ export class FixtureArtifacts<TVariables> {
   }
 
   async write(contents: FixtureArtifactContents<TVariables>): Promise<void> {
-    const { recordedAt, variables } = contents;
+    const { recordedAt, variables, exchanges } = contents;
     const context: FixtureContext<TVariables> = { meta: { recordedAt }, variables };
 
     await fs.mkdir(this.dir, { recursive: true });
     await this.removeExchanges();
     await fs.writeFile(this.contextPath, JSON.stringify(context, null, 2));
 
-    if (contents.exchanges === undefined) {
-      await fs.writeFile(this.replyPath, contents.reply);
-      return;
-    }
-
-    await fs.rm(this.replyPath, { force: true });
-    for (const [exchangeId, { request, reply }] of Object.entries(contents.exchanges)) {
+    for (const [exchangeId, { request, reply }] of Object.entries(exchanges)) {
       const paths = this.exchangePaths(exchangeId);
       await fs.writeFile(paths.request, request.body);
       await fs.writeFile(paths.reply, reply.body);
@@ -130,7 +107,9 @@ export class FixtureArtifacts<TVariables> {
 
     const exchangeIds = await this.exchangeIds();
     if (exchangeIds.length === 0) {
-      return { recordedAt, variables, reply: await readArtifact(this.replyPath) };
+      throw new Error(
+        `No recorded exchange in the fixture artifacts of "${this.id}": record the fixture scenario with \`pnpm update-fixtures\`.`,
+      );
     }
 
     const exchanges: Record<RecordedExchangeId, RecordedExchange> = {};

@@ -60,12 +60,11 @@ export interface ReplayedExchange extends RecordedExchange {
 }
 
 /**
- * What `.run()` returns. `exchanges` is optional while scenarios migrate to `recordExchange()`:
- * a scenario that omits it records and replays its reply as before.
+ * What `.run()` returns: its result, and the recorded exchanges returned by its `recordExchange()` calls.
  */
 export interface FixtureRunOutcome<TResult> {
   result: TResult;
-  exchanges?: Record<RecordedExchangeId, RecordedExchange>;
+  exchanges: Record<RecordedExchangeId, RecordedExchange>;
 }
 
 /**
@@ -134,7 +133,6 @@ export interface IFixtureDefined<TVariables> {
  * A fixture scenario with its `.run()` declared: everything the fixture harness needs to run it.
  */
 export interface IFixtureRunnable<TVariables, TResult> {
-  readonly service: B2BService;
   readonly description: string;
   readonly setupRecording: FixtureSetupFn<TVariables>;
   readonly executeOperation: FixtureRunFn<TVariables, TResult>;
@@ -146,29 +144,15 @@ export interface IFixtureRunnable<TVariables, TResult> {
  * Builder of a fixture scenario, up to `.run()`.
  * It changes its own type parameters via interface casting.
  */
-export class Fixture<TB2BService extends B2BService = B2BService, TVariables = unknown>
+export class Fixture<TVariables = unknown>
   implements IFixtureInitial<TVariables>, IFixtureDefined<TVariables>
 {
-  /**
-   * Passed on to the fixture scenario: the recorder reads this service's SOAP client.
-   */
-  public readonly service: TB2BService;
-  /**
-   * Only used for the default description.
-   */
-  public readonly method: B2BServiceMethod<TB2BService>;
-
   public description: string;
 
   public setupRecording: FixtureSetupFn<TVariables>;
 
-  constructor(
-    info: { service: TB2BService; method: B2BServiceMethod<TB2BService> },
-    setupRecording: FixtureSetupFn<TVariables>,
-  ) {
-    this.service = info.service;
-    this.method = info.method;
-    this.description = `${info.service}.${info.method}`;
+  constructor(description: string, setupRecording: FixtureSetupFn<TVariables>) {
+    this.description = description;
     this.setupRecording = setupRecording;
   }
 
@@ -178,12 +162,12 @@ export class Fixture<TB2BService extends B2BService = B2BService, TVariables = u
   }
 
   setup<TNewVars>(fn: FixtureSetupFn<TNewVars>): IFixtureDefined<TNewVars> {
-    (this as unknown as Fixture<TB2BService, TNewVars>).setupRecording = fn;
-    return this as unknown as Fixture<TB2BService, TNewVars>;
+    (this as unknown as Fixture<TNewVars>).setupRecording = fn;
+    return this as unknown as Fixture<TNewVars>;
   }
 
   run<TResult>(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult> {
-    return new FixtureScenario(this.service, this.description, this.setupRecording, fn);
+    return new FixtureScenario(this.description, this.setupRecording, fn);
   }
 }
 
@@ -191,19 +175,16 @@ export class Fixture<TB2BService extends B2BService = B2BService, TVariables = u
  * A fixture scenario, as returned by `.run()`: complete by construction.
  */
 class FixtureScenario<TVariables, TResult> implements IFixtureRunnable<TVariables, TResult> {
-  public readonly service: B2BService;
   public readonly description: string;
   public readonly setupRecording: FixtureSetupFn<TVariables>;
   public readonly executeOperation: FixtureRunFn<TVariables, TResult>;
   public readonly tests: Array<{ name: string; fn: FixtureTestFn<TVariables, TResult> }> = [];
 
   constructor(
-    service: B2BService,
     description: string,
     setupRecording: FixtureSetupFn<TVariables>,
     executeOperation: FixtureRunFn<TVariables, TResult>,
   ) {
-    this.service = service;
     this.description = description;
     this.setupRecording = setupRecording;
     this.executeOperation = executeOperation;
@@ -242,8 +223,8 @@ export function defineFixture<
   TService extends B2BService,
   TMethod extends B2BServiceMethod<TService>,
 >(info: FixtureServiceMethod<TService, TMethod>): IFixtureInitial<undefined> {
-  // Without `.setup()`, the scenario's variables are `undefined`.
-  return new Fixture<TService, undefined>(info, () => Promise.resolve(undefined));
+  // `info` only names the default description. Without `.setup()`, the scenario's variables are `undefined`.
+  return new Fixture<undefined>(`${info.service}.${info.method}`, () => Promise.resolve(undefined));
 }
 
 export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables, TResult> {

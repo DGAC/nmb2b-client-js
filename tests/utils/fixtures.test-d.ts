@@ -14,7 +14,7 @@ type OTMVPlanReply = Awaited<ReturnType<FlowService['retrieveOTMVPlan']>>;
 describe('defineFixture', () => {
   test('infers the result seen by .test() from what .run() returns', () => {
     defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
-      .run(() => Promise.resolve({ result: { narrowed: true as const } }))
+      .run(() => Promise.resolve({ result: { narrowed: true as const }, exchanges: {} }))
       .test('result', ({ result }) => {
         expectTypeOf(result).toEqualTypeOf<{ narrowed: true }>();
       });
@@ -34,6 +34,12 @@ describe('defineFixture', () => {
 
   test('rejects a .run() that does not return { result }', () => {
     const run = () => Promise.resolve('bare result');
+
+    expectTypeOf(run).not.toExtend<FixtureRunFn<undefined, unknown>>();
+  });
+
+  test('rejects a .run() that returns no exchanges', () => {
+    const run = () => Promise.resolve({ result: 'unrecorded' });
 
     expectTypeOf(run).not.toExtend<FixtureRunFn<undefined, unknown>>();
   });

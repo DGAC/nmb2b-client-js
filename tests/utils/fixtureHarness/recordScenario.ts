@@ -15,8 +15,7 @@ import { withFakeSystemTime } from '../withFakeSystemTime.ts';
 
 /**
  * Fixture recording: runs the fixture scenario against `client` and writes its
- * fixture artifacts next to `location`: `context.json`, and either its recorded
- * exchanges or, for a scenario that does not call `recordExchange()`, the B2B reply.
+ * fixture artifacts next to `location`: `context.json` and its recorded exchanges.
  *
  * `setup` runs with the real clock; `.run()` with `Date` frozen at `recordedAt`, as on replay.
  */
@@ -25,7 +24,7 @@ export async function recordScenario<TVariables, TResult>(
   client: B2BClient,
   location: FixtureLocation,
 ): Promise<FixtureOutcome<TVariables, TResult>> {
-  const { service, setupRecording, executeOperation } = fixture;
+  const { setupRecording, executeOperation } = fixture;
   const artifacts = new FixtureArtifacts<TVariables>(location);
 
   const variables = await setupRecording(client);
@@ -93,27 +92,18 @@ export async function recordScenario<TVariables, TResult>(
     `recordExchange() failed, caught by .run(): ${failedChecks.join(' ')}`,
   );
 
-  if (outcome.exchanges !== undefined) {
-    const { outside } = exchangeCapture;
-    assert(
-      outside.length === 0,
-      `${outside.length} SOAP request(s) sent outside recordExchange(): the replay would not serve them.`,
-    );
-
-    await artifacts.write({ recordedAt, variables, exchanges: outcome.exchanges });
-    return { variables, result: outcome.result, exchanges: outcome.exchanges };
-  }
-
-  const reply = client[service].__soapClient.lastResponse as unknown;
-
+  const { outside } = exchangeCapture;
   assert(
-    reply && typeof reply === 'string',
-    'No SOAP response captured. Did the executeOperation execute a SOAP query?',
+    outside.length === 0,
+    `${outside.length} SOAP request(s) sent outside recordExchange(): the replay would not serve them.`,
+  );
+  assert(
+    Object.keys(outcome.exchanges).length > 0,
+    '.run() recorded no exchange: wrap its SOAP calls in recordExchange() and return their exchanges.',
   );
 
-  await artifacts.write({ recordedAt, variables, reply });
-
-  return { variables, result: outcome.result, exchanges: {} };
+  await artifacts.write({ recordedAt, variables, exchanges: outcome.exchanges });
+  return { variables, result: outcome.result, exchanges: outcome.exchanges };
 }
 
 interface SentExchange {
