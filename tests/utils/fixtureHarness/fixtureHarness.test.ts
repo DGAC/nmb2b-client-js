@@ -1,3 +1,6 @@
+// DisposableStack is native from Node 24; tests also run on Node 22. recordScenario needs it
+// here, outside `pnpm update-fixtures` (which requires Node 24).
+import 'core-js/actual/disposable-stack/index.js';
 import { http, HttpResponse } from 'msw';
 import fs from 'node:fs/promises';
 import os from 'node:os';

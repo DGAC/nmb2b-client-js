@@ -62,7 +62,7 @@ describe('<Domain> Fixtures', async () => {
 
 ## Recording
 
-`pnpm update-fixtures [filter...]` records every scenario (or those matching the filters) against the real B2B API. It needs B2B credentials in `.env`; when they are missing, ask the user to run it.
+`pnpm update-fixtures [filter...]` records every scenario (or those matching the filters) against the real B2B API. It needs Node 24 or later (the recorder uses `using` and runs without Vitest's transform) and B2B credentials in `.env`; when they are missing, ask the user to run it.
 
 ## Harness
 

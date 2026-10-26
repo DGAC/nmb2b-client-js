@@ -52,11 +52,9 @@ export async function recordScenario<TVariables, TResult>(
     },
   };
 
-  // No `using`: this file also runs under plain Node 22, outside Vitest.
-  const clock = withFakeSystemTime(new Date(recordedAt));
-  const outcome = await executeOperation(client, variables, runContext).finally(() => {
-    clock[Symbol.dispose]();
-  });
+  const outcome = await withDateFrozenAt(new Date(recordedAt), () =>
+    executeOperation(client, variables, runContext),
+  );
 
   if (outcome.exchanges !== undefined) {
     await artifacts.write({ recordedAt, variables, exchanges: outcome.exchanges });
@@ -73,4 +71,10 @@ export async function recordScenario<TVariables, TResult>(
   await artifacts.write({ recordedAt, variables, reply });
 
   return { variables, result: outcome.result, exchanges: {} };
+}
+
+async function withDateFrozenAt<T>(now: Date, run: () => Promise<T>): Promise<T> {
+  using stack = new DisposableStack();
+  stack.use(withFakeSystemTime(now));
+  return await run();
 }
