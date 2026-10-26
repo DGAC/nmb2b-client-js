@@ -43,6 +43,19 @@ function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
     );
 }
 
+function catchesFailedReplayScenario({ trafficVolume }: { trafficVolume: string }) {
+  const scenario = otmvPlanScenario({ trafficVolume });
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
+    .setup(() => Promise.resolve({ day: '2026-08-02' }))
+    .run(async (client, variables, runContext) => {
+      try {
+        return await scenario.executeOperation(client, variables, runContext);
+      } catch {
+        return { result: null };
+      }
+    });
+}
+
 function sendTwiceScenario() {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
     .setup(() => Promise.resolve({ day: '2026-08-02' }))
@@ -228,29 +241,13 @@ describe('fixture harness', () => {
 
   test('fails the replay on a changed request even when .run() catches its failure', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
-    const catchesFailure = ({ trafficVolume }: { trafficVolume: string }) =>
-      defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
-        async (client, _variables, { recordExchange }) => {
-          try {
-            return await recordExchange('retrieveOTMVPlan', () =>
-              client.Flow.retrieveOTMVPlan({
-                dataset: { type: 'OPERATIONAL' },
-                day: new Date('2026-08-02'),
-                otmvsWithDuration: { item: [{ trafficVolume }] },
-              }),
-            );
-          } catch {
-            return { result: null };
-          }
-        },
-      );
 
     server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
-    await recordScenario(catchesFailure({ trafficVolume: 'LFEKD' }), client, location);
+    await recordScenario(otmvPlanScenario({ trafficVolume: 'LFEKD' }), client, location);
     server.resetHandlers();
 
     await expect(
-      replayScenario(catchesFailure({ trafficVolume: 'LFEEKD' }), client, location),
+      replayScenario(catchesFailedReplayScenario({ trafficVolume: 'LFEEKD' }), client, location),
     ).rejects.toThrow(/matches no recorded exchange/);
   });
 
