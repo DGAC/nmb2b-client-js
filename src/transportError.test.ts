@@ -1,7 +1,4 @@
 import { delay, http, HttpResponse } from 'msw';
-import { mkdtemp, rm } from 'node:fs/promises';
-import os from 'node:os';
-import path from 'node:path';
 import { assert, describe, expect, test } from 'vitest';
 import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import {
@@ -12,6 +9,7 @@ import {
 } from '../tests/utils/credentials.ts';
 import { MOCK_B2B_ENDPOINT } from '../tests/constants.ts';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
+import { createTempDirectory } from '../tests/utils/tempDirectory.ts';
 import { getSoapEndpoint } from './config.ts';
 import type { Security } from './security.ts';
 import {
@@ -72,18 +70,6 @@ function createClientWithEmptyCache(
     security,
     xsdEndpoint: xsdEndpoint && withCredentialsInUrl(xsdEndpoint),
   });
-}
-
-/**
- * Creates an empty temporary directory, removed when disposed.
- */
-async function createTempDirectory(prefix: string) {
-  const directory = await mkdtemp(path.join(os.tmpdir(), prefix));
-
-  return {
-    path: directory,
-    [Symbol.asyncDispose]: () => rm(directory, { recursive: true, force: true }),
-  };
 }
 
 const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
