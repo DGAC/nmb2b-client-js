@@ -2,6 +2,8 @@
 
 Unit tests for SOAP operations record real B2B interactions once, then replay them offline through MSW.
 
+Failures B2B cannot produce on demand (network failure, timeout, proxy error page, corrupt WSDL archive) cannot be recorded: their tests write MSW handlers by hand, through the public API (e.g. `src/transportError.test.ts`).
+
 ## Layout
 
 - Scenarios: `src/<Domain>/__fixtures__/<operation>.ts`. Each exported constant is one scenario; its name is the scenario name.
