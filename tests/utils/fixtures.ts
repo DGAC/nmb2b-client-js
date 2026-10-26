@@ -1,4 +1,4 @@
-import { AssertionError } from 'node:assert';
+import assert, { AssertionError } from 'node:assert';
 import type { ExpectStatic } from 'vitest';
 import type { B2BClient } from '../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
@@ -173,4 +173,30 @@ export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables,
     const artifacts = new FixtureArtifacts(fixtureLocation);
     await expect(result).toMatchFileSnapshot(artifacts.snapshotPath);
   };
+}
+
+/**
+ * What fixture recording and fixture replay hand back: the variables and the scenario result.
+ */
+export interface FixtureOutcome<TVariables, TResult> {
+  variables: TVariables;
+  result: TResult;
+}
+
+export function asCompleteFixture<TVariables, TResult>(
+  fixture: IFixtureRunnable<TVariables, TResult>,
+  location: FixtureLocation,
+) {
+  assert(fixture instanceof Fixture, 'Not a Fixture instance');
+  // The builder interfaces are implemented by `Fixture` with the same type parameters.
+  const { service, setupRecording, executeOperation } = fixture as Fixture<
+    B2BService,
+    TVariables,
+    TResult
+  >;
+  assert(
+    executeOperation,
+    `Module ${location.filePath}, export ${location.exportName} is not a complete fixture.`,
+  );
+  return { service, setupRecording, executeOperation };
 }

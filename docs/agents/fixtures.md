@@ -45,3 +45,9 @@ describe('<Domain> Fixtures', async () => {
 ## Recording
 
 `pnpm update-fixtures [filter...]` records every scenario (or those matching the filters) against the real B2B API. It needs B2B credentials in `.env`; when they are missing, ask the user to run it.
+
+## Harness
+
+Fixture recording and fixture replay live in `tests/utils/fixtureHarness/`, one operation per file: `recordScenario(fixture, client, location)` and `replayScenario(fixture, client, location)`. `pnpm update-fixtures` and `registerFixtures` only delegate to them; test the harness through these two operations (`fixtureHarness.test.ts`).
+
+`recordScenario.ts` runs outside Vitest, in `pnpm update-fixtures`: it must not import `vitest`, MSW, or anything that does. There is no `index.ts`, which would pull replay dependencies into the recorder.

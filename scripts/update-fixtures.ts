@@ -1,12 +1,12 @@
 import assert from 'node:assert';
 import { glob } from 'node:fs/promises';
 import { join, relative } from 'node:path';
-import type { B2BClient, CreateB2BClientOptions } from '../src/index.ts';
+import type { CreateB2BClientOptions } from '../src/index.ts';
 import { createB2BClient } from '../src/index.ts';
 import { fromValues } from '../src/security.ts';
 import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.ts';
-import { FixtureArtifacts } from '../tests/utils/artifacts.ts';
-import { assertIsFixture, type Fixture } from '../tests/utils/fixtures.ts';
+import { assertIsFixture } from '../tests/utils/fixtures.ts';
+import { recordScenario } from '../tests/utils/fixtureHarness/recordScenario.ts';
 
 const ROOT_DIR = join(import.meta.dirname, '..');
 
@@ -47,12 +47,7 @@ async function record() {
 
       console.log(`  - Recording fixture: ${exportName} (${fixture.description})...`);
 
-      await recordSingleFixture({
-        b2bClient: client,
-        fixture,
-        filePath,
-        exportName,
-      });
+      await recordScenario(fixture, client, { filePath, exportName });
 
       console.log(`    ✅ Success`);
     }
@@ -85,48 +80,6 @@ function filterFixtures(fixtures: Array<string>, filters: Array<string>) {
     const relPath = relative(ROOT_DIR, filePath).toLowerCase();
     return filters.some((filter) => relPath.includes(filter.toLowerCase()));
   });
-}
-
-async function recordSingleFixture({
-  b2bClient,
-  fixture,
-  filePath,
-  exportName,
-}: {
-  b2bClient: B2BClient;
-  fixture: Fixture;
-  filePath: string;
-  exportName: string;
-}) {
-  const artifacts = new FixtureArtifacts({ filePath, exportName });
-
-  const setupStart = new Date();
-  const variables = fixture.setupRecording ? await fixture.setupRecording(b2bClient) : undefined;
-
-  // Capture mock date (ensure it matches the execution time)
-  const mockDate = setupStart.toISOString();
-
-  assert(
-    fixture.executeOperation,
-    `Module ${filePath}, export ${exportName} is not a complete fixture.`,
-  );
-
-  await fixture.executeOperation(b2bClient, variables);
-
-  const serviceClient = b2bClient[fixture.service];
-  const lastResponse = serviceClient.__soapClient.lastResponse as unknown;
-
-  assert(
-    lastResponse && typeof lastResponse === 'string',
-    'No SOAP response captured. Did the executeOperation execute a SOAP query?',
-  );
-
-  await artifacts.saveContext({
-    meta: { mockDate },
-    variables,
-  });
-
-  await artifacts.saveMock(lastResponse);
 }
 
 async function findFixtureFiles(baseDirectory: string): Promise<string[]> {
