@@ -3,7 +3,8 @@
  * - `network`: the connection failed before a complete HTTP response was received
  *   (connection failure, timeout, TLS error, connection lost while reading the body…);
  * - `http`: an HTTP response was received with an error status;
- * - `parse`: a response was received but could not be read;
+ * - `parse`: a response was received but could not be read (not XML, a WSDL
+ *   archive with an invalid content type or corrupt…);
  * - `fault`: the server answered with a SOAP fault.
  */
 export type NMB2BTransportErrorKind = 'network' | 'http' | 'parse' | 'fault';
