@@ -1,3 +1,5 @@
+import { stripUrlCredentials } from './stripUrlCredentials.ts';
+
 /**
  * What went wrong when no usable B2B reply was obtained:
  * - `network`: the connection failed before a complete HTTP response was received
@@ -84,27 +86,9 @@ export class NMB2BTransportError extends Error {
     this.query = query;
     this.code = code;
     this.httpStatus = httpStatus;
-    this.url = url && withoutCredentials(url);
+    this.url = url && stripUrlCredentials(url);
 
     // Non-enumerable, see `body`.
     Object.defineProperty(this, 'body', { value: body });
   }
-}
-
-function withoutCredentials(url: string): string {
-  let parsed: URL;
-  try {
-    parsed = new URL(url);
-  } catch {
-    return 'INVALID_URL';
-  }
-
-  // `user:secret@host` parses as a URL with the `user:` protocol.
-  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-    return 'INVALID_URL';
-  }
-
-  parsed.username = '';
-  parsed.password = '';
-  return parsed.toString();
 }
