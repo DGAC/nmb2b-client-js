@@ -37,6 +37,11 @@ export interface RecordedReply {
 export type RecordedExchangeId = string;
 
 /**
+ * The format of a `RecordedExchangeId`, checked by fixture recording.
+ */
+export const RECORDED_EXCHANGE_ID = /^[a-z][a-zA-Z0-9]*$/;
+
+/**
  * A recorded exchange: a SOAP request sent during fixture recording and the B2B reply.
  */
 export interface RecordedExchange {
