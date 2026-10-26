@@ -39,7 +39,7 @@ describe('fixture harness', () => {
     const recorded = await recordScenario(scenario, client, location);
     server.resetHandlers();
 
-    const replayed = await replayScenario(scenario, client, location);
+    using replayed = await replayScenario(scenario, client, location);
 
     expect(replayed.variables).toEqual({ day: '2026-08-02', trafficVolume: 'LFEKD' });
     expect(replayed.result.data.plans.dataId).toBe('O1');

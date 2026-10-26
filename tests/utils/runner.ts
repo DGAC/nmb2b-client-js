@@ -41,13 +41,14 @@ export async function registerFixtures(globPattern: string, baseUrl: string) {
             test(
               name,
               server.boundary(async () => {
-                const { result, variables } = await replayScenario(
-                  fixture,
-                  b2bClient,
-                  fixtureLocation,
-                );
+                using replay = await replayScenario(fixture, b2bClient, fixtureLocation);
 
-                await fn({ expect, result, fixtureLocation, variables });
+                await fn({
+                  expect,
+                  result: replay.result,
+                  fixtureLocation,
+                  variables: replay.variables,
+                });
               }),
             );
           }

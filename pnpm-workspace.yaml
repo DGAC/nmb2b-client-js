@@ -1,2 +1,4 @@
 allowBuilds:
+  # postinstall only prints a funding banner
+  core-js: false
   msw: true
