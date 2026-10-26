@@ -175,6 +175,26 @@ describe('fixture harness', () => {
     );
   });
 
+  test('fails the recording when a request is sent outside recordExchange()', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const sendsOutside = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+      async (client, _variables, { recordExchange }) => {
+        const request = { dataset: { type: 'OPERATIONAL' as const }, day: new Date('2026-08-02') };
+        const recorded = await recordExchange('retrieveOTMVPlan', () =>
+          client.Flow.retrieveOTMVPlan(request),
+        );
+        await client.Flow.retrieveOTMVPlan(request);
+        return recorded;
+      },
+    );
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+
+    await expect(recordScenario(sendsOutside, client, location)).rejects.toThrow(
+      /outside recordExchange\(\)/,
+    );
+  });
+
   test('records a request sent through another service than the fixture scenario', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
     const otherService = defineFixture({ service: 'Flight', method: 'retrieveFlight' }).run(

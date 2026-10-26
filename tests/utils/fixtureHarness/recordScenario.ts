@@ -57,6 +57,12 @@ export async function recordScenario<TVariables, TResult>(
   );
 
   if (outcome.exchanges !== undefined) {
+    const { outside } = exchangeCapture;
+    assert(
+      outside.length === 0,
+      `${outside.length} SOAP request(s) sent outside recordExchange(): the replay would not serve them.`,
+    );
+
     await artifacts.write({ recordedAt, variables, exchanges: outcome.exchanges });
     return { variables, result: outcome.result, exchanges: outcome.exchanges };
   }
@@ -86,13 +92,16 @@ type SentExchanges = Map<string, SentExchange>;
 /**
  * Listens to the SOAP clients of every service of `client`, until disposed. `during(call)` returns
  * the SOAP exchanges sent by `call`: those of concurrent calls go to their own `during()`.
+ * `outside` lists the node-soap exchange ids of the requests sent outside any `during()`.
  */
 function captureExchanges(client: B2BClient) {
   const current = new AsyncLocalStorage<SentExchanges>();
+  const outside: Array<string> = [];
 
   function onRequest(request: string, eid: string) {
     const store = current.getStore();
     if (!store) {
+      outside.push(eid);
       return;
     }
 
@@ -124,6 +133,7 @@ function captureExchanges(client: B2BClient) {
   }
 
   return {
+    outside,
     async during<T>(call: () => Promise<T>): Promise<{ result: T; sent: SentExchanges }> {
       const sent: SentExchanges = new Map();
       const result = await current.run(sent, call);
