@@ -58,6 +58,35 @@ function sendTwiceScenario() {
     );
 }
 
+function sendsNothingScenario() {
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+    (_client, _variables, { recordExchange }) =>
+      recordExchange('retrieveOTMVPlan', () => Promise.resolve(null)),
+  );
+}
+
+function concurrentScenario() {
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+    async (client, _variables, { recordExchange }) => {
+      const outcomes = await Promise.all(
+        ['LFEKD', 'LFEEKD'].map((trafficVolume, index) =>
+          recordExchange(`exchange${index}`, () =>
+            client.Flow.retrieveOTMVPlan({
+              dataset: { type: 'OPERATIONAL' },
+              day: new Date('2026-08-02'),
+              otmvsWithDuration: { item: [{ trafficVolume }] },
+            }),
+          ),
+        ),
+      );
+      return {
+        result: outcomes.map(({ result }) => result),
+        exchanges: Object.assign({}, ...outcomes.map(({ exchanges }) => exchanges)),
+      };
+    },
+  );
+}
+
 function multiExchangeScenario({
   exchangeIds,
 }: {
@@ -175,6 +204,55 @@ describe('fixture harness', () => {
     );
   });
 
+  test('fails the recording when recordExchange() sends no request', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+    await expect(recordScenario(sendsNothingScenario(), client, location)).rejects.toThrow(
+      /exactly one SOAP request, it sent 0/,
+    );
+  });
+
+  test.each(['RetrieveOTMVPlan', 'retrieve-otmv-plan', 'retrieve.otmv', ''])(
+    'fails the recording on the invalid exchange id %j',
+    async (id) => {
+      const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+
+      await expect(
+        recordScenario(multiExchangeScenario({ exchangeIds: [id] }), client, location),
+      ).rejects.toThrow(/Invalid recorded exchange id/);
+    },
+  );
+
+  test('fails the recording when an exchange id is used twice', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+
+    await expect(
+      recordScenario(multiExchangeScenario({ exchangeIds: ['first', 'first'] }), client, location),
+    ).rejects.toThrow(/"first" is used twice/);
+  });
+
+  test('fails the recording when two exchanges send the same request', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const sameRequestTwice = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+      async (client, _variables, { recordExchange }) => {
+        const request = { dataset: { type: 'OPERATIONAL' as const }, day: new Date('2026-08-02') };
+        const first = await recordExchange('first', () => client.Flow.retrieveOTMVPlan(request));
+        const second = await recordExchange('second', () => client.Flow.retrieveOTMVPlan(request));
+        return { result: null, exchanges: { ...first.exchanges, ...second.exchanges } };
+      },
+    );
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+
+    await expect(recordScenario(sameRequestTwice, client, location)).rejects.toThrow(
+      /"second" sent the same request as "first"/,
+    );
+  });
+
   test('fails the recording when a request is sent outside recordExchange()', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
     const sendsOutside = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
@@ -213,28 +291,31 @@ describe('fixture harness', () => {
 
   test('records concurrent recordExchange() calls each with its own request', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
-    const concurrent = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
-      async (client, _variables, { recordExchange }) => {
-        const [first, second] = await Promise.all(
-          ['LFEKD', 'LFEEKD'].map((trafficVolume, index) =>
-            recordExchange(`exchange${index}`, () =>
-              client.Flow.retrieveOTMVPlan({
-                dataset: { type: 'OPERATIONAL' },
-                day: new Date('2026-08-02'),
-                otmvsWithDuration: { item: [{ trafficVolume }] },
-              }),
-            ),
-          ),
-        );
-        return { result: null, exchanges: { ...first?.exchanges, ...second?.exchanges } };
-      },
-    );
 
     server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
-    const recorded = await recordScenario(concurrent, client, location);
+    const recorded = await recordScenario(concurrentScenario(), client, location);
 
     expect(recorded.exchanges.exchange0?.request.body).toContain('<trafficVolume>LFEKD<');
     expect(recorded.exchanges.exchange1?.request.body).toContain('<trafficVolume>LFEEKD<');
+  });
+
+  test('replays concurrent recordExchange() calls each with its own reply', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+    // Each request gets a reply naming its traffic volume, so that a swapped reply shows.
+    server.use(
+      http.post(SOAP_ENDPOINT, async ({ request }) => {
+        const trafficVolume = /<trafficVolume>(\w+)</.exec(await request.text())?.[1];
+        return HttpResponse.xml(OTMV_PLAN_REPLY.replace('O1', `${trafficVolume}`));
+      }),
+    );
+    await recordScenario(concurrentScenario(), client, location);
+    server.resetHandlers();
+
+    using replayed = await replayScenario(concurrentScenario(), client, location);
+
+    expect(replayed.result.map((result) => result.data.plans.dataId)).toEqual(['LFEKD', 'LFEEKD']);
+    expect(Object.keys(replayed.exchanges).toSorted()).toEqual(['exchange0', 'exchange1']);
   });
 
   // oxlint-disable-next-line vitest/expect-expect -- assertions live in checkRecordedRequests()
@@ -273,16 +354,12 @@ describe('fixture harness', () => {
 
   test('expectRecordedRequests() fails when recordExchange() sends no request', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
-    const sendsNothing = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
-      (_client, _variables, { recordExchange }) =>
-        recordExchange('retrieveOTMVPlan', () => Promise.resolve(null)),
-    );
 
     server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
     await recordScenario(otmvPlanScenario({ trafficVolume: 'LFEKD' }), client, location);
     server.resetHandlers();
 
-    using replayed = await replayScenario(sendsNothing, client, location);
+    using replayed = await replayScenario(sendsNothingScenario(), client, location);
 
     await expect(checkRecordedRequests(replayed, location)).rejects.toThrow(/never requested/);
   });

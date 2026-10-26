@@ -8,8 +8,14 @@ import type {
   FixtureRunContext,
   IFixtureRunnable,
   RecordedExchange,
+  RecordedExchangeId,
 } from '../fixtures.ts';
 import { withFakeSystemTime } from '../withFakeSystemTime.ts';
+
+/**
+ * A recorded exchange id: part of the fixture artifact file names, `<scenario>.<id>.request.xml`.
+ */
+const RECORDED_EXCHANGE_ID = /^[a-z][a-zA-Z0-9]*$/;
 
 /**
  * Fixture recording: runs the fixture scenario against `client` and writes its
@@ -30,9 +36,19 @@ export async function recordScenario<TVariables, TResult>(
   const recordedAt = new Date().toISOString();
 
   using exchangeCapture = captureExchanges(client);
+  // Recorded exchange ids by request body: replay tells exchanges apart only by request body.
+  const recordedIds = new Map<string, RecordedExchangeId>();
+  const usedIds = new Set<RecordedExchangeId>();
 
   const runContext: FixtureRunContext = {
     recordExchange: async (id, call) => {
+      assert(
+        RECORDED_EXCHANGE_ID.test(id),
+        `Invalid recorded exchange id "${id}": it must match /${RECORDED_EXCHANGE_ID.source}/.`,
+      );
+      assert(!usedIds.has(id), `Recorded exchange id "${id}" is used twice.`);
+      usedIds.add(id);
+
       const { result, sent } = await exchangeCapture.during(call);
 
       assert(
@@ -41,6 +57,13 @@ export async function recordScenario<TVariables, TResult>(
       );
       const [exchange] = sent.values();
       assert(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
+
+      const sameRequestId = recordedIds.get(exchange.request);
+      assert(
+        sameRequestId === undefined,
+        `Recorded exchange "${id}" sent the same request as "${sameRequestId}": replay could not tell them apart.`,
+      );
+      recordedIds.set(exchange.request, id);
 
       return {
         result,
