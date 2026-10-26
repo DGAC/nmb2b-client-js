@@ -34,8 +34,7 @@ export interface FixtureReplay<TVariables, TResult>
  * Fixture replay: runs the fixture scenario offline from the fixture artifacts
  * next to `location`. MSW serves each recorded exchange's reply only to a POST whose
  * body is byte-identical to its recorded request, so that a changed request fails
- * the replay with an error showing the request sent; a scenario without recorded
- * exchanges gets its reply served to any POST.
+ * the replay with an error showing the request sent.
  *
  * The clock stays frozen at `recordedAt` until the returned replay is disposed, so that
  * the scenario's tests run at the recorded date too: `using replay = await replayScenario(...)`.
@@ -126,12 +125,6 @@ function installReplayHandlers(
   contents: FixtureArtifactContents,
   onUnmatchedRequest: (request: UnmatchedRequest) => void,
 ): Record<RecordedExchangeId, ReplayedExchange> {
-  if (contents.exchanges === undefined) {
-    const { reply } = contents;
-    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(reply)));
-    return {};
-  }
-
   const { exchanges } = contents;
   // Installed first, so that the exchanges' handlers take precedence over it.
   server.use(

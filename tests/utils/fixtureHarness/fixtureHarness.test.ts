@@ -263,6 +263,19 @@ describe('fixture harness', () => {
     );
   });
 
+  test('fails the replay when the fixture artifacts hold no recorded exchange', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const recordsNothing = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(() =>
+      Promise.resolve({ result: null, exchanges: {} }),
+    );
+
+    await recordScenario(recordsNothing, client, location);
+
+    await expect(replayScenario(recordsNothing, client, location)).rejects.toThrow(
+      /No recorded exchange in the fixture artifacts/,
+    );
+  });
+
   test('fails the recording when recordExchange() sends two requests', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
 
