@@ -53,6 +53,7 @@
     "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\"",
     "downloadWSDL": "node ./scripts/downloadWSDL.ts",
     "format:ci": "oxfmt --check .",
+    "generate-credential-fixtures": "node ./scripts/generate-credential-fixtures.ts",
     "lint": "oxlint --type-aware --report-unused-disable-directives",
     "lint:ci": "oxlint --type-aware --report-unused-disable-directives --format=github",
     "test": "vitest",
