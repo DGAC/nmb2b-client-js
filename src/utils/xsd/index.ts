@@ -3,7 +3,6 @@ import lockfile from 'proper-lockfile';
 import type { Config } from '../../config.ts';
 import { createDebugLogger } from '../debug.ts';
 import { createDir, dirExists } from '../fs.ts';
-import { stripUrlCredentials } from '../stripUrlCredentials.ts';
 import { downloadAndExtractWSDL } from './downloadAndExtractWSDL.ts';
 import { getWSDLDownloadURL } from './getWSDLDownloadURL.ts';
 import { getXSDCacheDirectory } from './paths.ts';
@@ -52,8 +51,6 @@ export async function download(config: DownloadOptions): Promise<void> {
     }
 
     const url = await getWSDLDownloadURL(config);
-
-    debug(`Downloading ${stripUrlCredentials(url)}`);
 
     await downloadAndExtractWSDL(url, {
       security: config.security,
