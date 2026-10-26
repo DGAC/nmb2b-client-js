@@ -97,6 +97,10 @@ export async function recordScenario<TVariables, TResult>(
     outside.length === 0,
     `${outside.length} SOAP request(s) sent outside recordExchange(): the replay would not serve them.`,
   );
+  assert(
+    Object.keys(outcome.exchanges).length > 0,
+    '.run() recorded no exchange: wrap its SOAP calls in recordExchange() and return their exchanges.',
+  );
 
   await artifacts.write({ recordedAt, variables, exchanges: outcome.exchanges });
   return { variables, result: outcome.result, exchanges: outcome.exchanges };

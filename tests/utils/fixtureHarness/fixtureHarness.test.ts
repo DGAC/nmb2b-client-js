@@ -79,6 +79,12 @@ function sendsNothingScenario() {
   );
 }
 
+function recordsNothingScenario() {
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(() =>
+    Promise.resolve({ result: null, exchanges: {} }),
+  );
+}
+
 function sameRequestTwiceScenario() {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
     async (client, _variables, { recordExchange }) => {
@@ -265,15 +271,26 @@ describe('fixture harness', () => {
 
   test('fails the replay when the fixture artifacts hold no recorded exchange', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
-    const recordsNothing = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(() =>
-      Promise.resolve({ result: null, exchanges: {} }),
-    );
 
-    await recordScenario(recordsNothing, client, location);
+    // As left by recorded exchanges deleted by hand: recording itself refuses a scenario without any.
+    await new FixtureArtifacts(location).write({
+      recordedAt: '2026-08-02T16:00:56.000Z',
+      variables: undefined,
+      exchanges: {},
+    });
 
-    await expect(replayScenario(recordsNothing, client, location)).rejects.toThrow(
+    await expect(replayScenario(recordsNothingScenario(), client, location)).rejects.toThrow(
       /No recorded exchange in the fixture artifacts/,
     );
+  });
+
+  test('fails the recording when .run() records no exchange', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+    await expect(recordScenario(recordsNothingScenario(), client, location)).rejects.toThrow(
+      /\.run\(\) recorded no exchange/,
+    );
+    expect(await new FixtureArtifacts(location).exchangeIds()).toEqual([]);
   });
 
   test('fails the recording when recordExchange() sends two requests', async () => {
