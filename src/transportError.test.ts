@@ -1,13 +1,15 @@
 import { delay, http, HttpResponse } from 'msw';
-import { mkdtemp, rm } from 'node:fs/promises';
-import { randomUUID } from 'node:crypto';
-import os from 'node:os';
-import path from 'node:path';
 import { assert, describe, expect, test } from 'vitest';
 import { TEST_B2B_OPTIONS } from '../tests/options.ts';
-import { createTestSecurities, findCredentialPaths } from '../tests/utils/credentials.ts';
+import {
+  createTestSecurities,
+  findCredentialPaths,
+  URL_PASSWORD,
+  withCredentialsInUrl,
+} from '../tests/utils/credentials.ts';
 import { MOCK_B2B_ENDPOINT } from '../tests/constants.ts';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
+import { withTempDirectory } from '../tests/utils/withTempDirectory.ts';
 import { getSoapEndpoint } from './config.ts';
 import type { Security } from './security.ts';
 import {
@@ -70,32 +72,10 @@ function createClientWithEmptyCache(
   });
 }
 
-/**
- * Creates an empty temporary directory, removed when disposed.
- */
-async function createTempDirectory(prefix: string) {
-  const directory = await mkdtemp(path.join(os.tmpdir(), prefix));
-
-  return {
-    path: directory,
-    [Symbol.asyncDispose]: () => rm(directory, { recursive: true, force: true }),
-  };
-}
-
 const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
 const WSDL_LOOKUP_URL = getSoapEndpoint({ flavour: TEST_B2B_OPTIONS.flavour });
 
 const SECURITIES = createTestSecurities();
-
-/** A password put in a configured URL, unique to this run. */
-const URL_PASSWORD = `test-url-password-${randomUUID()}`;
-
-function withCredentialsInUrl(url: string): string {
-  const parsed = new URL(url);
-  parsed.username = 'test-url-user';
-  parsed.password = URL_PASSWORD;
-  return parsed.toString();
-}
 
 describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
   describe('a SOAP query without a usable reply', () => {
@@ -203,7 +183,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
   describe('loading the WSDL archive without a usable reply', () => {
     test('a network failure is a network transport error', async () => {
       server.use(http.get(WSDL_ARCHIVE_URL, () => HttpResponse.error()));
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -221,7 +201,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       server.use(
         http.get(WSDL_ARCHIVE_URL, () => HttpResponse.html('<p>Unavailable</p>', { status: 503 })),
       );
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -235,7 +215,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
 
     test('an invalid content type is a parse transport error with its body', async () => {
       server.use(http.get(WSDL_ARCHIVE_URL, () => HttpResponse.html('<p>Bad Gateway</p>')));
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -258,7 +238,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
             }),
         ),
       );
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -288,7 +268,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
             return new HttpResponse(body, { status, headers: { 'content-type': contentType } });
           }),
         );
-        await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+        await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
         const error = await captureError(
           createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -312,7 +292,7 @@ describe.each([
 ])('with %s security, looking up the WSDL URL without a usable reply', (_, security) => {
   test('a network failure is a network transport error', async () => {
     server.use(http.post(WSDL_LOOKUP_URL, () => HttpResponse.error()));
-    await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+    await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
     const error = await captureError(createClientWithEmptyCache(security, xsd.path, undefined));
 
@@ -327,7 +307,7 @@ describe.each([
     server.use(
       http.post(WSDL_LOOKUP_URL, () => HttpResponse.html('<p>Unavailable</p>', { status: 503 })),
     );
-    await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+    await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
     const error = await captureError(createClientWithEmptyCache(security, xsd.path, undefined));
 
@@ -339,7 +319,7 @@ describe.each([
 
   test('a reply without a WSDL file is a parse transport error with its body', async () => {
     server.use(http.post(WSDL_LOOKUP_URL, () => HttpResponse.xml('<reply/>')));
-    await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+    await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
     const error = await captureError(createClientWithEmptyCache(security, xsd.path, undefined));
 

@@ -155,3 +155,16 @@ function getNeedles(security: Security): Array<Buffer> {
     ...buffers.flatMap((b) => [b, Buffer.from(b.toString('base64'))]),
   ];
 }
+
+/** A password put in a configured URL, unique to this run. */
+export const URL_PASSWORD = `test-url-password-${randomUUID()}`;
+
+/**
+ * Returns `url` with a user and `URL_PASSWORD` in it.
+ */
+export function withCredentialsInUrl(url: string): string {
+  const parsed = new URL(url);
+  parsed.username = 'test-url-user';
+  parsed.password = URL_PASSWORD;
+  return parsed.toString();
+}

@@ -52,8 +52,6 @@ export async function download(config: DownloadOptions): Promise<void> {
 
     const url = await getWSDLDownloadURL(config);
 
-    debug(`Downloading ${url}`);
-
     await downloadAndExtractWSDL(url, {
       security: config.security,
       outputDir,

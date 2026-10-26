@@ -3,6 +3,7 @@ import { assertValidSecurity } from './security.ts';
 import type { B2BFlavour } from './constants.ts';
 import { B2B_VERSION, B2BFlavours } from './constants.ts';
 import { assert } from './utils/assert.ts';
+import { stripUrlCredentials } from './utils/stripUrlCredentials.ts';
 import type { SoapQueryHook } from './utils/hooks/hooks.ts';
 
 export interface Config {
@@ -167,7 +168,8 @@ export function getFileUrl(
 
 /**
  * Creates a safe copy of the configuration object for logging purposes.
- * Masks all sensitive security credentials (passwords, keys, secrets) with 'xxxxxxxxxxxxxxxx'.
+ * Masks all sensitive security credentials (passwords, keys, secrets) with 'xxxxxxxxxxxxxxxx',
+ * and removes credentials from `endpoint` and `xsdEndpoint` (see {@link stripUrlCredentials}).
  *
  * @param config - The configuration object to obfuscate.
  * @returns A new configuration object with sensitive data masked.
@@ -175,6 +177,10 @@ export function getFileUrl(
 export function obfuscate(config: Config) {
   return {
     ...config,
+    ...(config.endpoint !== undefined && { endpoint: stripUrlCredentials(config.endpoint) }),
+    ...(config.xsdEndpoint !== undefined && {
+      xsdEndpoint: stripUrlCredentials(config.xsdEndpoint),
+    }),
     security: Object.fromEntries(
       Object.entries(config.security).map(([key]) => [key, 'xxxxxxxxxxxxxxxx']),
     ),
