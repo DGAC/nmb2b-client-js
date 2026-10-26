@@ -1,4 +1,6 @@
 import assert from 'node:assert';
+import { AsyncLocalStorage } from 'node:async_hooks';
+import type { EventEmitter } from 'node:events';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, toRecordedExchange, type FixtureLocation } from '../artifacts.ts';
 import type {
@@ -23,28 +25,26 @@ export async function recordScenario<TVariables, TResult>(
 ): Promise<FixtureOutcome<TVariables, TResult>> {
   const { service, setupRecording, executeOperation } = fixture;
   const artifacts = new FixtureArtifacts<TVariables>(location);
-  const soapClient = client[service].__soapClient;
 
   const variables = await setupRecording(client);
   const recordedAt = new Date().toISOString();
 
+  using exchangeCapture = captureExchanges(client);
+
   const runContext: FixtureRunContext = {
     recordExchange: async (id, call) => {
-      soapClient.lastRequest = undefined;
-      soapClient.lastResponse = undefined;
+      const { result, sent } = await exchangeCapture.during(call);
 
-      const result = await call();
-
-      const request = soapClient.lastRequest as unknown;
-      const reply = soapClient.lastResponse as unknown;
       assert(
-        typeof request === 'string' && typeof reply === 'string',
-        `No SOAP exchange captured for "${id}". Did recordExchange() wrap a SOAP query?`,
+        sent.size === 1,
+        `recordExchange("${id}") must send exactly one SOAP request, it sent ${sent.size}.`,
       );
+      const [exchange] = sent.values();
+      assert(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
 
       return {
         result,
-        exchanges: { [id]: toRecordedExchange(request, reply) } as Record<
+        exchanges: { [id]: toRecordedExchange(exchange.request, exchange.reply) } as Record<
           typeof id,
           RecordedExchange
         >,
@@ -61,7 +61,7 @@ export async function recordScenario<TVariables, TResult>(
     return { variables, result: outcome.result, exchanges: outcome.exchanges };
   }
 
-  const reply = soapClient.lastResponse as unknown;
+  const reply = client[service].__soapClient.lastResponse as unknown;
 
   assert(
     reply && typeof reply === 'string',
@@ -71,6 +71,68 @@ export async function recordScenario<TVariables, TResult>(
   await artifacts.write({ recordedAt, variables, reply });
 
   return { variables, result: outcome.result, exchanges: {} };
+}
+
+interface SentExchange {
+  request: string;
+  reply?: string;
+}
+
+/**
+ * The SOAP exchanges sent by one call, by node-soap exchange id (`eid`), which pairs a response with its request.
+ */
+type SentExchanges = Map<string, SentExchange>;
+
+/**
+ * Listens to the SOAP clients of every service of `client`, until disposed. `during(call)` returns
+ * the SOAP exchanges sent by `call`: those of concurrent calls go to their own `during()`.
+ */
+function captureExchanges(client: B2BClient) {
+  const current = new AsyncLocalStorage<SentExchanges>();
+
+  function onRequest(request: string, eid: string) {
+    const store = current.getStore();
+    if (!store) {
+      return;
+    }
+
+    store.set(eid, { request });
+  }
+
+  function onResponse(reply: unknown, _response: unknown, eid: string) {
+    const store = current.getStore();
+    if (!store || typeof reply !== 'string') {
+      return;
+    }
+
+    const exchange = store.get(eid);
+    if (exchange) {
+      exchange.reply = reply;
+    }
+  }
+
+  const stack = new DisposableStack();
+  for (const service of Object.values(client)) {
+    // `soap.Client`'s `[method: string]: any` index signature hides its EventEmitter typings.
+    const soapClient: EventEmitter = service.__soapClient;
+    soapClient.on('request', onRequest);
+    soapClient.on('response', onResponse);
+    stack.defer(() => {
+      soapClient.off('request', onRequest);
+      soapClient.off('response', onResponse);
+    });
+  }
+
+  return {
+    async during<T>(call: () => Promise<T>): Promise<{ result: T; sent: SentExchanges }> {
+      const sent: SentExchanges = new Map();
+      const result = await current.run(sent, call);
+      return { result, sent };
+    },
+    [Symbol.dispose]: () => {
+      stack.dispose();
+    },
+  };
 }
 
 async function withDateFrozenAt<T>(now: Date, run: () => Promise<T>): Promise<T> {

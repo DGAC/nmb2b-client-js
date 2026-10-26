@@ -42,6 +42,22 @@ function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
     );
 }
 
+function sendTwiceScenario() {
+  return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
+    .setup(() => Promise.resolve({ day: '2026-08-02' }))
+    .run((client, { day }, { recordExchange }) =>
+      recordExchange('retrieveOTMVPlan', async () => {
+        const request = {
+          dataset: { type: 'OPERATIONAL' as const },
+          day: new Date(day),
+          otmvsWithDuration: { item: [{ trafficVolume: 'LFEKD' }] },
+        };
+        await client.Flow.retrieveOTMVPlan(request);
+        return client.Flow.retrieveOTMVPlan(request);
+      }),
+    );
+}
+
 function multiExchangeScenario({
   exchangeIds,
 }: {
@@ -139,23 +155,66 @@ describe('fixture harness', () => {
 
   test('fails the replay when a recorded request is sent twice', async () => {
     const client = await createB2BClient(TEST_B2B_OPTIONS);
-    const sendTwice = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+    await recordScenario(otmvPlanScenario({ trafficVolume: 'LFEKD' }), client, location);
+    server.resetHandlers();
+
+    await expect(replayScenario(sendTwiceScenario(), client, location)).rejects.toThrow(
+      /onUnhandledFrame/,
+    );
+  });
+
+  test('fails the recording when recordExchange() sends two requests', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+
+    await expect(recordScenario(sendTwiceScenario(), client, location)).rejects.toThrow(
+      /exactly one SOAP request/,
+    );
+  });
+
+  test('records a request sent through another service than the fixture scenario', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const otherService = defineFixture({ service: 'Flight', method: 'retrieveFlight' }).run(
       (client, _variables, { recordExchange }) =>
-        recordExchange('retrieveOTMVPlan', async () => {
-          const request = {
-            dataset: { type: 'OPERATIONAL' as const },
-            day: new Date('2026-08-02'),
-          };
-          await client.Flow.retrieveOTMVPlan(request);
-          return client.Flow.retrieveOTMVPlan(request);
-        }),
+        recordExchange('retrieveOTMVPlan', () =>
+          client.Flow.retrieveOTMVPlan({ dataset: { type: 'OPERATIONAL' }, day: new Date() }),
+        ),
     );
 
     server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
-    await recordScenario(sendTwice, client, location);
-    server.resetHandlers();
+    const recorded = await recordScenario(otherService, client, location);
 
-    await expect(replayScenario(sendTwice, client, location)).rejects.toThrow(/onUnhandledFrame/);
+    expect(recorded.exchanges.retrieveOTMVPlan?.request.body).toContain('OTMVPlanRetrievalRequest');
+    expect(recorded.exchanges.retrieveOTMVPlan?.reply.body).toBe(OTMV_PLAN_REPLY);
+  });
+
+  test('records concurrent recordExchange() calls each with its own request', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const concurrent = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+      async (client, _variables, { recordExchange }) => {
+        const [first, second] = await Promise.all(
+          ['LFEKD', 'LFEEKD'].map((trafficVolume, index) =>
+            recordExchange(`exchange${index}`, () =>
+              client.Flow.retrieveOTMVPlan({
+                dataset: { type: 'OPERATIONAL' },
+                day: new Date('2026-08-02'),
+                otmvsWithDuration: { item: [{ trafficVolume }] },
+              }),
+            ),
+          ),
+        );
+        return { result: null, exchanges: { ...first?.exchanges, ...second?.exchanges } };
+      },
+    );
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+    const recorded = await recordScenario(concurrent, client, location);
+
+    expect(recorded.exchanges.exchange0?.request.body).toContain('<trafficVolume>LFEKD<');
+    expect(recorded.exchanges.exchange1?.request.body).toContain('<trafficVolume>LFEEKD<');
   });
 
   // oxlint-disable-next-line vitest/expect-expect -- assertions live in checkRecordedRequests()
