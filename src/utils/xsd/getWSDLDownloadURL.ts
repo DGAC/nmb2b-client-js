@@ -6,6 +6,8 @@ import type { B2BFlavour } from '../../constants.ts';
 import { B2B_VERSION } from '../../constants.ts';
 import type { Security } from '../../security.ts';
 import { timeFormatWithSeconds } from '../timeFormats.ts';
+import { NMB2BTransportError } from '../NMB2BTransportError.ts';
+import { sanitizeError } from '../sanitizeError.ts';
 import { createAxiosConfig } from './createAxiosConfig.ts';
 
 const makeQuery = ({ version }: { version: string }) => `
@@ -42,18 +44,28 @@ export async function getWSDLDownloadURL({
     throw new Error('Should never happen, config.xsdEndpoint should be defined');
   }
 
+  const url = getSoapEndpoint({ flavour });
+
   const res = await axios<string>({
-    url: getSoapEndpoint({ flavour }),
+    url,
     method: 'POST',
     data: makeQuery({ version: B2B_VERSION }),
     responseType: 'text',
     ...createAxiosConfig({ security }),
+  }).catch((err: unknown) => {
+    throw sanitizeError(err, { url });
   });
 
   const matches = /<id>(.+)<\/id>/.exec(res.data);
 
   if (!matches?.[1]) {
-    throw new Error(`Could not extract WSDL tarball file from B2B response`);
+    throw new NMB2BTransportError({
+      kind: 'parse',
+      message: 'Could not extract WSDL tarball file from B2B response',
+      httpStatus: res.status,
+      url,
+      body: res.data,
+    });
   }
 
   return getFileUrl(matches[1], { flavour });

@@ -1,4 +1,5 @@
 export { NMB2BError } from './utils/NMB2BError.ts';
+export { NMB2BTransportError, type NMB2BTransportErrorKind } from './utils/NMB2BTransportError.ts';
 
 export {
   createAirspaceClient,

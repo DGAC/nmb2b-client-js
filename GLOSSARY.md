@@ -4,6 +4,16 @@ A TypeScript client for the Eurocontrol NM B2B SOAP API. NM B2B vocabulary (regu
 
 ## Language
 
+### Errors
+
+**Reply error**:
+NM processed the request and returned a reply whose status is not `OK` (`NMB2BError`).
+_Avoid_: B2B error, NM error
+
+**Transport error**:
+No usable B2B reply was obtained: network failure, HTTP error status, unreadable response or SOAP fault, on a query or while loading the WSDL (`NMB2BTransportError`).
+_Avoid_: Network error (it is one `kind` of transport error), HTTP error, SOAP error
+
 ### Test fixtures
 
 Terms keep their `Fixture` / `Recorded` prefix so they do not collide with B2B vocabulary (e.g. `scenarioReference`).

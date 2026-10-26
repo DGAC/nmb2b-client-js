@@ -13,6 +13,7 @@ import type { SoapQueryHook } from './hooks/hooks.ts';
 import { logHook } from './hooks/withLog.ts';
 import { AssertionError } from 'node:assert';
 import { NMB2BError } from './NMB2BError.ts';
+import { sanitizeError } from './sanitizeError.ts';
 
 export type SoapQueryDefinition<TInput extends B2BRequest, TResult extends Reply> = {
   /**
@@ -167,10 +168,11 @@ function buildQueryFunctionFromSoapDefinition<TInput extends B2BRequest, TResult
           throw err;
         }
 
-        throw new Error(
-          `[Query ${queryDefinition.service}.${queryDefinition.query}] Error thrown during query execution: ${err instanceof Error ? err.message : 'Unknown error'}`,
-          { cause: err },
-        );
+        throw sanitizeError(err, {
+          service: queryDefinition.service,
+          query: queryDefinition.query,
+          messagePrefix: `[Query ${queryDefinition.service}.${queryDefinition.query}] Error thrown during query execution: `,
+        });
       }
     },
   });

@@ -102,8 +102,14 @@ const res = await Airspace.queryCompleteAIXMDatasets();
 
 ## Error handling
 
+- `NMB2BError` (_reply error_): NM processed the request and returned a reply whose status is not `OK`.
+- `NMB2BTransportError` (_transport error_): no usable B2B reply was obtained, on a query or while loading the WSDL in `create*Client`. `kind` tells what went wrong (`network`, `http`, `parse` or `fault`), along with `code` (system error code), `httpStatus` and `url` when known. The library does not retry: decide from these fields.
+- Any other error is a configuration error, a bug in the library, or an error thrown by your own hooks: retrying will not help.
+
+None of the errors the library throws carries the credentials given to the client, nor a `cause`, so they can be logged or forwarded to an error tracker. One exception, outside the library's own errors: when your own code (an `onRequestSuccess` hook) throws something other than an `Error`, `onRequestError` hooks receive an `Error('Unknown error')` whose `cause` is that value. `NMB2BTransportError.body` holds the raw response body: it is non-enumerable, and unfiltered server content.
+
 ```typescript
-import { createAirspaceClient, NMB2BError } from '@dgac/nmb2b-client';
+import { createAirspaceClient, NMB2BError, NMB2BTransportError } from '@dgac/nmb2b-client';
 
 try {
   const Airspace = await createAirspaceClient({ security });
@@ -112,6 +118,16 @@ try {
 } catch (err) {
   if (err instanceof NMB2BError) {
     if (err.status === 'OBJECT_NOT_FOUND') {
+      // ...
+    }
+  }
+
+  if (err instanceof NMB2BTransportError) {
+    switch (err.kind) {
+      case 'network': // err.code: 'ECONNRESET', 'ECONNABORTED'…
+      case 'http': // err.httpStatus, err.body
+      case 'parse':
+      case 'fault':
       // ...
     }
   }
