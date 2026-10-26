@@ -19,7 +19,7 @@ export interface FixtureArtifactContents<TVariables = unknown> {
 
 interface FixtureContext<TVariables> {
   meta: {
-    mockDate: string;
+    recordedAt: string;
   };
   variables: TVariables;
 }
@@ -58,7 +58,7 @@ export class FixtureArtifacts<TVariables> {
     variables,
     reply,
   }: FixtureArtifactContents<TVariables>): Promise<void> {
-    const context: FixtureContext<TVariables> = { meta: { mockDate: recordedAt }, variables };
+    const context: FixtureContext<TVariables> = { meta: { recordedAt }, variables };
 
     await fs.mkdir(this.dir, { recursive: true });
     await fs.writeFile(this.contextPath, JSON.stringify(context, null, 2));
@@ -69,7 +69,7 @@ export class FixtureArtifacts<TVariables> {
     const context = JSON.parse(await readArtifact(this.contextPath)) as FixtureContext<TVariables>;
     const reply = await readArtifact(this.replyPath);
 
-    return { recordedAt: context.meta.mockDate, variables: context.variables, reply };
+    return { recordedAt: context.meta.recordedAt, variables: context.variables, reply };
   }
 }
 
