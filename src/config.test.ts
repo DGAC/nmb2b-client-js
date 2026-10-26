@@ -266,4 +266,19 @@ describe(obfuscate, () => {
       xsdEndpoint: 'https://fake-b2b.test/wsdl',
     });
   });
+
+  test('should report endpoints it cannot clean as INVALID_URL', () => {
+    const obfuscated = obfuscate(
+      fromPartial({
+        endpoint: 'endpoint-user:endpoint-password@fake-b2b.test/soap',
+        xsdEndpoint: 'https://xsd-user:xsd-password@fake b2b.test/wsdl',
+        security: { apiKeyId: 'bar', apiSecretKey: 'baz' },
+      }),
+    );
+
+    expect(obfuscated).toMatchObject({
+      endpoint: 'INVALID_URL',
+      xsdEndpoint: 'INVALID_URL',
+    });
+  });
 });
