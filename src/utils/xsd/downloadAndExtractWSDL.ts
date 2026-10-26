@@ -8,6 +8,7 @@ import { text } from 'node:stream/consumers';
 import { assert } from '../assert.ts';
 import { NMB2BTransportError } from '../NMB2BTransportError.ts';
 import { sanitizeError } from '../sanitizeError.ts';
+import { stripUrlCredentials } from '../stripUrlCredentials.ts';
 const debug = createDebugLogger('wsdl-downloader');
 
 export async function downloadAndExtractWSDL(
@@ -22,7 +23,7 @@ export async function downloadAndExtractWSDL(
 ): Promise<void> {
   const options = createAxiosConfig({ security });
 
-  debug(`Downloading ${url}`);
+  debug(`Downloading ${stripUrlCredentials(url)}`);
 
   const messagePrefix = 'Unable to download WSDL: ';
 
