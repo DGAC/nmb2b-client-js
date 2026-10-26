@@ -3,19 +3,15 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import type { EventEmitter } from 'node:events';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, toRecordedExchange, type FixtureLocation } from '../artifacts.ts';
-import type {
-  FixtureOutcome,
-  FixtureRunContext,
-  IFixtureRunnable,
-  RecordedExchange,
-  RecordedExchangeId,
+import {
+  RECORDED_EXCHANGE_ID,
+  type FixtureOutcome,
+  type FixtureRunContext,
+  type IFixtureRunnable,
+  type RecordedExchange,
+  type RecordedExchangeId,
 } from '../fixtures.ts';
 import { withFakeSystemTime } from '../withFakeSystemTime.ts';
-
-/**
- * A recorded exchange id: part of the fixture artifact file names, `<scenario>.<id>.request.xml`.
- */
-const RECORDED_EXCHANGE_ID = /^[a-z][a-zA-Z0-9]*$/;
 
 /**
  * Fixture recording: runs the fixture scenario against `client` and writes its
@@ -42,7 +38,7 @@ export async function recordScenario<TVariables, TResult>(
   // Checked again after `.run()`, which could catch them and still return exchanges.
   const failedChecks: Array<string> = [];
 
-  function check(condition: boolean, message: string): asserts condition {
+  function failRecordingUnless(condition: boolean, message: string): asserts condition {
     if (!condition) {
       failedChecks.push(message);
       assert.fail(message);
@@ -51,24 +47,28 @@ export async function recordScenario<TVariables, TResult>(
 
   const runContext: FixtureRunContext = {
     recordExchange: async (id, call) => {
-      check(
+      failRecordingUnless(
         RECORDED_EXCHANGE_ID.test(id),
         `Invalid recorded exchange id "${id}": it must match /${RECORDED_EXCHANGE_ID.source}/.`,
       );
-      check(!usedIds.has(id), `Recorded exchange id "${id}" is used twice.`);
+      failRecordingUnless(!usedIds.has(id), `Recorded exchange id "${id}" is used twice.`);
       usedIds.add(id);
 
-      const { result, sent } = await exchangeCapture.during(call);
+      const { result, sent } = await exchangeCapture.during(call).catch((error: unknown) => {
+        // A B2B error records no exchange: `.run()` may retry under the same id.
+        usedIds.delete(id);
+        throw error;
+      });
 
-      check(
+      failRecordingUnless(
         sent.size === 1,
         `recordExchange("${id}") must send exactly one SOAP request, it sent ${sent.size}.`,
       );
       const [exchange] = sent.values();
-      check(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
+      failRecordingUnless(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
 
       const sameRequestId = idByRequestBody.get(exchange.request);
-      check(
+      failRecordingUnless(
         sameRequestId === undefined,
         `Recorded exchange "${id}" sent the same request as "${sameRequestId}": replay could not tell them apart.`,
       );
