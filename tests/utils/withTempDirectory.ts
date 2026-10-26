@@ -5,7 +5,7 @@ import path from 'node:path';
 /**
  * Creates an empty temporary directory, removed when disposed.
  */
-export async function createTempDirectory(prefix: string) {
+export async function withTempDirectory(prefix: string) {
   const directory = await mkdtemp(path.join(os.tmpdir(), prefix));
 
   return {

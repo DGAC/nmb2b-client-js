@@ -7,7 +7,7 @@ import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from '../tests/constants.ts';
 import { URL_PASSWORD, withCredentialsInUrl } from '../tests/utils/credentials.ts';
 import { server } from '../tests/utils/msw.ts';
-import { createTempDirectory } from '../tests/utils/tempDirectory.ts';
+import { withTempDirectory } from '../tests/utils/withTempDirectory.ts';
 import { getXSDCacheDirectory } from './utils/xsd/paths.ts';
 import { createB2BClient } from './index.ts';
 
@@ -62,7 +62,7 @@ test('debug logs never contain credentials of configured URLs', async () => {
     ),
   );
 
-  await using xsd = await createTempDirectory('b2b-client-debug-logs-');
+  await using xsd = await withTempDirectory('b2b-client-debug-logs-');
   using output = withCapturedDebugOutput();
 
   await createB2BClient({

@@ -9,7 +9,7 @@ import {
 } from '../tests/utils/credentials.ts';
 import { MOCK_B2B_ENDPOINT } from '../tests/constants.ts';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
-import { createTempDirectory } from '../tests/utils/tempDirectory.ts';
+import { withTempDirectory } from '../tests/utils/withTempDirectory.ts';
 import { getSoapEndpoint } from './config.ts';
 import type { Security } from './security.ts';
 import {
@@ -183,7 +183,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
   describe('loading the WSDL archive without a usable reply', () => {
     test('a network failure is a network transport error', async () => {
       server.use(http.get(WSDL_ARCHIVE_URL, () => HttpResponse.error()));
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -201,7 +201,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       server.use(
         http.get(WSDL_ARCHIVE_URL, () => HttpResponse.html('<p>Unavailable</p>', { status: 503 })),
       );
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -215,7 +215,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
 
     test('an invalid content type is a parse transport error with its body', async () => {
       server.use(http.get(WSDL_ARCHIVE_URL, () => HttpResponse.html('<p>Bad Gateway</p>')));
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -238,7 +238,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
             }),
         ),
       );
-      await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+      await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
       const error = await captureError(
         createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -268,7 +268,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
             return new HttpResponse(body, { status, headers: { 'content-type': contentType } });
           }),
         );
-        await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+        await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
         const error = await captureError(
           createClientWithEmptyCache(security, xsd.path, WSDL_ARCHIVE_URL),
@@ -292,7 +292,7 @@ describe.each([
 ])('with %s security, looking up the WSDL URL without a usable reply', (_, security) => {
   test('a network failure is a network transport error', async () => {
     server.use(http.post(WSDL_LOOKUP_URL, () => HttpResponse.error()));
-    await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+    await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
     const error = await captureError(createClientWithEmptyCache(security, xsd.path, undefined));
 
@@ -307,7 +307,7 @@ describe.each([
     server.use(
       http.post(WSDL_LOOKUP_URL, () => HttpResponse.html('<p>Unavailable</p>', { status: 503 })),
     );
-    await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+    await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
     const error = await captureError(createClientWithEmptyCache(security, xsd.path, undefined));
 
@@ -319,7 +319,7 @@ describe.each([
 
   test('a reply without a WSDL file is a parse transport error with its body', async () => {
     server.use(http.post(WSDL_LOOKUP_URL, () => HttpResponse.xml('<reply/>')));
-    await using xsd = await createTempDirectory('b2b-client-test-xsd-');
+    await using xsd = await withTempDirectory('b2b-client-test-xsd-');
 
     const error = await captureError(createClientWithEmptyCache(security, xsd.path, undefined));
 
