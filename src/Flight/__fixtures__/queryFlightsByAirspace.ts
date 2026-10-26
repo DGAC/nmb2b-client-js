@@ -1,6 +1,10 @@
 import { add, startOfMinute, sub } from 'date-fns';
-import { assert } from 'vitest';
-import { defineFixture, expectSnapshot } from '../../../tests/utils/fixtures.ts';
+import {
+  defineFixture,
+  expectRecordedRequests,
+  expectSnapshot,
+} from '../../../tests/utils/fixtures.ts';
+import { assert } from '../../utils/assert.ts';
 
 /**
  * Fixture for testing queryFlightsByAirspace.
@@ -17,22 +21,23 @@ export const nominal = defineFixture({
       unt: add(now, { minutes: 30 }).toISOString(),
     });
   })
-  .run(async (client, variables) => {
-    const result = await client.Flight.queryFlightsByAirspace({
-      dataset: { type: 'OPERATIONAL' },
-      includeProposalFlights: false,
-      includeForecastFlights: false,
-      trafficType: 'LOAD',
-      trafficWindow: {
-        wef: new Date(variables.wef),
-        unt: new Date(variables.unt),
-      },
-      airspace: 'LFEERMS',
-    });
-
-    return { result };
-  })
+  .run((client, variables, { recordExchange }) =>
+    recordExchange('queryFlightsByAirspace', () =>
+      client.Flight.queryFlightsByAirspace({
+        dataset: { type: 'OPERATIONAL' },
+        includeProposalFlights: false,
+        includeForecastFlights: false,
+        trafficType: 'LOAD',
+        trafficWindow: {
+          wef: new Date(variables.wef),
+          unt: new Date(variables.unt),
+        },
+        airspace: 'LFEERMS',
+      }),
+    ),
+  )
   .test('should match snapshot', expectSnapshot())
+  .test('should send the recorded requests', expectRecordedRequests())
   .test('should return a matching traffic window', ({ expect, result, variables }) => {
     assert(
       result.data.effectiveTrafficWindow,
