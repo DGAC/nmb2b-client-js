@@ -2,7 +2,7 @@ import { fromPartial } from '@total-typescript/shoehorn';
 import { AssertionError } from 'node:assert';
 import type { Client as SoapClient } from 'soap';
 import { assert, describe, expect, test, vi } from 'vitest';
-import { createHook, NMB2BError } from '../index.ts';
+import { createHook, NMB2BError, NMB2BTransportError } from '../index.ts';
 import type { B2BRequest, ReplyWithData } from '../types.ts';
 import type { SoapQueryHook } from '../utils/hooks/hooks.ts';
 import {
@@ -68,22 +68,21 @@ describe('hooks', () => {
       const error = new Error('Test error');
       executeQuery.mockRejectedValueOnce(error);
 
-      try {
-        await soapService.soapQuery(input);
-        expect.unreachable('Expected the soap query to throw');
-      } catch {
-        // Do nothing
-      }
+      const thrown = await soapService.soapQuery(input).then(
+        () => expect.unreachable('Expected the soap query to throw'),
+        (err: unknown) => err,
+      );
 
       expect(onRequestError).toHaveBeenCalledExactlyOnceWith({
         service: 'test-service',
         query: 'testSoapQuery',
-        error: new Error(
-          '[Query test-service.testSoapQuery] Error thrown during query execution: Test error',
-          { cause: error },
-        ),
+        error: expect.objectContaining({
+          message:
+            '[Query test-service.testSoapQuery] Error thrown during query execution: Test error',
+        }),
       });
-
+      expect(onRequestError.mock.calls[0]?.[0].error).toBe(thrown);
+      expect(onRequestError.mock.calls[0]?.[0].error.cause).toBeUndefined();
       expect(onRequestSuccess).not.toHaveBeenCalled();
       expect(onRequestStart).toHaveBeenCalledBefore(onRequestError);
     });
@@ -163,8 +162,8 @@ describe('hooks', () => {
 });
 
 describe('error handling', () => {
-  describe('when a request throws an error', () => {
-    test('should throw the original error', async () => {
+  describe('when a request throws an error that is neither an HTTP nor a SOAP failure', () => {
+    test('should throw an Error, without the original error', async () => {
       const { soapService, executeQuery } = withMockedSoapService();
 
       const error = new Error('Test error');
@@ -174,8 +173,9 @@ describe('error handling', () => {
         await soapService.soapQuery({ foo: 'bar' });
         expect.unreachable('soapService call must throw');
       } catch (err) {
-        assert(err instanceof Error);
-        expect(err.cause).toBe(error);
+        assert.instanceOf(err, Error);
+        assert.notInstanceOf(err, NMB2BTransportError);
+        expect(err.cause).toBeUndefined();
         expect(err.message).toMatch(/error thrown/i);
         expect(err.message).toMatch(/Test error/);
       }
@@ -183,7 +183,7 @@ describe('error handling', () => {
   });
 
   describe('when a request throws a non error', () => {
-    test('should throw an error instance, with the original thrown object as `cause`', async () => {
+    test('should throw an Error, without the original thrown object', async () => {
       const { soapService, executeQuery } = withMockedSoapService();
 
       const error = 'non-error';
@@ -193,8 +193,9 @@ describe('error handling', () => {
         await soapService.soapQuery({ foo: 'bar' });
         expect.unreachable('soapService call must throw');
       } catch (err) {
-        assert(err instanceof Error);
-        expect(err.cause).toBe(error);
+        assert.instanceOf(err, Error);
+        assert.notInstanceOf(err, NMB2BTransportError);
+        expect(err.cause).toBeUndefined();
         expect(err.message).toMatch(/error thrown/i);
         expect(err.message).toMatch(/Unknown error/);
       }
