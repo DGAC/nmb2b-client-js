@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from '../artifacts.ts';
-import { asCompleteFixture, type FixtureOutcome, type IFixtureRunnable } from '../fixtures.ts';
+import type { FixtureOutcome, IFixtureRunnable } from '../fixtures.ts';
 
 /**
  * Fixture recording: runs the fixture scenario against `client` and writes its
@@ -12,11 +12,11 @@ export async function recordScenario<TVariables, TResult>(
   client: B2BClient,
   location: FixtureLocation,
 ): Promise<FixtureOutcome<TVariables, TResult>> {
-  const { service, setupRecording, executeOperation } = asCompleteFixture(fixture, location);
+  const { service, setupRecording, executeOperation } = fixture;
   const artifacts = new FixtureArtifacts<TVariables>(location);
 
   const recordedAt = new Date().toISOString();
-  const variables = (setupRecording ? await setupRecording(client) : undefined) as TVariables;
+  const variables = await setupRecording(client);
 
   const result = await executeOperation(client, variables);
 

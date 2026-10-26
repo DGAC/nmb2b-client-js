@@ -4,7 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { assert, describe, expect, test } from 'vitest';
 import { createB2BClient } from '../../src/index.ts';
 import { TEST_B2B_OPTIONS } from '../options.ts';
-import { Fixture } from './fixtures.ts';
+import { assertIsFixture } from './fixtures.ts';
 import { replayScenario } from './fixtureHarness/replayScenario.ts';
 import { server } from './msw.ts';
 
@@ -26,9 +26,9 @@ export async function registerFixtures(globPattern: string, baseUrl: string) {
 
     describe(fixtureName, () => {
       for (const [fixtureId, fixture] of Object.entries(mod)) {
-        assert(
-          fixture instanceof Fixture,
-          `Export ${fixtureId} of module ${relativePath} is not a fixture`,
+        assertIsFixture(
+          fixture,
+          `Export ${fixtureId} of module ${relativePath} is not a fixture scenario`,
         );
 
         const fixtureLocation = {

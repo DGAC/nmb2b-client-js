@@ -1,4 +1,4 @@
-import assert, { AssertionError } from 'node:assert';
+import { AssertionError } from 'node:assert';
 import type { ExpectStatic } from 'vitest';
 import type { B2BClient } from '../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
@@ -57,61 +57,50 @@ export interface IFixtureDefined<TVariables, TResult> {
   run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult>;
 }
 
+/**
+ * A fixture scenario with its `.run()` declared: everything the fixture harness needs to run it.
+ */
 export interface IFixtureRunnable<TVariables, TResult> {
+  readonly service: B2BService;
+  readonly description: string;
+  readonly setupRecording: FixtureSetupFn<TVariables>;
+  readonly executeOperation: FixtureRunFn<TVariables, TResult>;
+  readonly tests: ReadonlyArray<{ name: string; fn: FixtureTestFn<TVariables, TResult> }>;
   test(name: string, fn: FixtureTestFn<TVariables, TResult>): this;
 }
 
 /**
- * Public interface for the Runner/Recorder
- */
-export interface FixtureDefinition<TB2BService extends B2BService, TVariables, TResult> {
-  service: TB2BService;
-  method: string;
-  description: string;
-  setupRecording?: FixtureSetupFn<TVariables>;
-  executeOperation?: FixtureRunFn<TVariables, TResult>;
-  tests: Array<{ name: string; fn: FixtureTestFn<TVariables, TResult> }>;
-}
-
-/**
- * The final Fixture object consumed by the runner.
- * It also acts as its own builder via interface casting.
+ * Builder of a fixture scenario, up to `.run()`.
+ * It changes its own type parameters via interface casting.
  */
 export class Fixture<
   TB2BService extends B2BService = B2BService,
   TVariables = unknown,
   TResult = unknown,
 >
-  implements
-    IFixtureInitial<TVariables, TResult>,
-    IFixtureDefined<TVariables, TResult>,
-    IFixtureRunnable<TVariables, TResult>,
-    FixtureDefinition<TB2BService, TVariables, TResult>
+  implements IFixtureInitial<TVariables, TResult>, IFixtureDefined<TVariables, TResult>
 {
   /**
-   * Used by the recorder to access the correct internal SOAP client.
+   * Passed on to the fixture scenario: the recorder reads this service's SOAP client.
    */
   public readonly service: TB2BService;
   /**
-   * Used by the recorder to identify the method being tested.
+   * Only used for the default description.
    */
   public readonly method: B2BServiceMethod<TB2BService>;
 
   public description: string;
 
-  public setupRecording?: FixtureSetupFn<TVariables>;
-  public executeOperation?: FixtureRunFn<TVariables, TResult>;
+  public setupRecording: FixtureSetupFn<TVariables>;
 
-  public readonly tests: Array<{
-    name: string;
-    fn: FixtureTestFn<TVariables, TResult>;
-  }>;
-
-  constructor(info: { service: TB2BService; method: B2BServiceMethod<TB2BService> }) {
+  constructor(
+    info: { service: TB2BService; method: B2BServiceMethod<TB2BService> },
+    setupRecording: FixtureSetupFn<TVariables>,
+  ) {
     this.service = info.service;
     this.method = info.method;
     this.description = `${info.service}.${info.method}`;
-    this.tests = [];
+    this.setupRecording = setupRecording;
   }
 
   describe(text: string): this {
@@ -125,8 +114,30 @@ export class Fixture<
   }
 
   run(fn: FixtureRunFn<TVariables, TResult>): IFixtureRunnable<TVariables, TResult> {
-    this.executeOperation = fn;
-    return this;
+    return new FixtureScenario(this.service, this.description, this.setupRecording, fn);
+  }
+}
+
+/**
+ * A fixture scenario, as returned by `.run()`: complete by construction.
+ */
+class FixtureScenario<TVariables, TResult> implements IFixtureRunnable<TVariables, TResult> {
+  public readonly service: B2BService;
+  public readonly description: string;
+  public readonly setupRecording: FixtureSetupFn<TVariables>;
+  public readonly executeOperation: FixtureRunFn<TVariables, TResult>;
+  public readonly tests: Array<{ name: string; fn: FixtureTestFn<TVariables, TResult> }> = [];
+
+  constructor(
+    service: B2BService,
+    description: string,
+    setupRecording: FixtureSetupFn<TVariables>,
+    executeOperation: FixtureRunFn<TVariables, TResult>,
+  ) {
+    this.service = service;
+    this.description = description;
+    this.setupRecording = setupRecording;
+    this.executeOperation = executeOperation;
   }
 
   test(name: string, fn: FixtureTestFn<TVariables, TResult>): this {
@@ -136,19 +147,18 @@ export class Fixture<
 }
 
 /**
- *
- * Assert something is a valid Fixture.
+ * Assert something is a fixture scenario built by `defineFixture(...).run(...)`.
  *
  * @remarks
  *
- * `assert(fixture instanceof Fixture)` will refine `fixture` to `Fixture<any, any, any>`
- * This will refine `fixture` to `Fixture`, which defaults to `Fixture<B2BService, unknown, unknown>`.
+ * Refines `fixture` to `IFixtureRunnable<unknown, unknown>`: a module loaded at runtime
+ * carries no type parameters.
  */
 export function assertIsFixture(
   fixture: unknown,
-  message = 'Not a Fixture instance',
-): asserts fixture is Fixture {
-  if (!(fixture instanceof Fixture)) {
+  message = 'Not a fixture scenario',
+): asserts fixture is IFixtureRunnable<unknown, unknown> {
+  if (!(fixture instanceof FixtureScenario)) {
     throw new AssertionError({
       message,
       stackStartFn: assertIsFixture,
@@ -164,8 +174,11 @@ export function defineFixture<
   TMethod extends B2BServiceMethod<TService>,
 >(
   info: FixtureServiceMethod<TService, TMethod>,
-): IFixtureInitial<never, B2BMethodResult<TService, TMethod>> {
-  return new Fixture<TService, never, B2BMethodResult<TService, TMethod>>(info);
+): IFixtureInitial<undefined, B2BMethodResult<TService, TMethod>> {
+  // Without `.setup()`, the scenario's variables are `undefined`.
+  return new Fixture<TService, undefined, B2BMethodResult<TService, TMethod>>(info, () =>
+    Promise.resolve(undefined),
+  );
 }
 
 export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables, TResult> {
@@ -181,22 +194,4 @@ export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables,
 export interface FixtureOutcome<TVariables, TResult> {
   variables: TVariables;
   result: TResult;
-}
-
-export function asCompleteFixture<TVariables, TResult>(
-  fixture: IFixtureRunnable<TVariables, TResult>,
-  location: FixtureLocation,
-) {
-  assert(fixture instanceof Fixture, 'Not a Fixture instance');
-  // The builder interfaces are implemented by `Fixture` with the same type parameters.
-  const { service, setupRecording, executeOperation } = fixture as Fixture<
-    B2BService,
-    TVariables,
-    TResult
-  >;
-  assert(
-    executeOperation,
-    `Module ${location.filePath}, export ${location.exportName} is not a complete fixture.`,
-  );
-  return { service, setupRecording, executeOperation };
 }

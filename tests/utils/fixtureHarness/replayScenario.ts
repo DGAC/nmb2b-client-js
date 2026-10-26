@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { onTestFinished, vi } from 'vitest';
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from '../artifacts.ts';
-import { asCompleteFixture, type FixtureOutcome, type IFixtureRunnable } from '../fixtures.ts';
+import type { FixtureOutcome, IFixtureRunnable } from '../fixtures.ts';
 import { server, SOAP_ENDPOINT } from '../msw.ts';
 
 /**
@@ -17,7 +17,6 @@ export async function replayScenario<TVariables, TResult>(
   client: B2BClient,
   location: FixtureLocation,
 ): Promise<FixtureOutcome<TVariables, TResult>> {
-  const { executeOperation } = asCompleteFixture(fixture, location);
   const artifacts = new FixtureArtifacts<TVariables>(location);
   const { recordedAt, variables, reply } = await artifacts.read();
 
@@ -29,6 +28,6 @@ export async function replayScenario<TVariables, TResult>(
     vi.useRealTimers();
   });
 
-  const result = await executeOperation(client, variables);
+  const result = await fixture.executeOperation(client, variables);
   return { variables, result };
 }

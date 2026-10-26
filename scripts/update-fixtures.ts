@@ -42,7 +42,7 @@ async function record() {
     for (const [exportName, fixture] of Object.entries(fixtureModule)) {
       assertIsFixture(
         fixture,
-        `Module ${filePath}, export ${exportName} is not a Fixture instance.`,
+        `Module ${filePath}, export ${exportName} is not a fixture scenario.`,
       );
 
       console.log(`  - Recording fixture: ${exportName} (${fixture.description})...`);
