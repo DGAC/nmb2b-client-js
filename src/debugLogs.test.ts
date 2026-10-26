@@ -1,8 +1,5 @@
 import createDebug from 'debug';
 import { http, HttpResponse } from 'msw';
-import { mkdtemp, rm } from 'node:fs/promises';
-import os from 'node:os';
-import path from 'node:path';
 import { format } from 'node:util';
 import { create as createTar } from 'tar';
 import { expect, test } from 'vitest';
@@ -10,6 +7,7 @@ import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from '../tests/constants.ts';
 import { URL_PASSWORD, withCredentialsInUrl } from '../tests/utils/credentials.ts';
 import { server } from '../tests/utils/msw.ts';
+import { createTempDirectory } from '../tests/utils/tempDirectory.ts';
 import { getXSDCacheDirectory } from './utils/xsd/paths.ts';
 import { createB2BClient } from './index.ts';
 
@@ -64,21 +62,16 @@ test('debug logs never contain credentials of configured URLs', async () => {
     ),
   );
 
-  const XSD_PATH = await mkdtemp(path.join(os.tmpdir(), 'b2b-client-debug-logs-'));
+  await using xsd = await createTempDirectory('b2b-client-debug-logs-');
+  using output = withCapturedDebugOutput();
 
-  try {
-    using output = withCapturedDebugOutput();
+  await createB2BClient({
+    ...TEST_B2B_OPTIONS,
+    XSD_PATH: xsd.path,
+    endpoint: withCredentialsInUrl(MOCK_B2B_ENDPOINT),
+    xsdEndpoint: withCredentialsInUrl(WSDL_ARCHIVE_URL),
+  });
 
-    await createB2BClient({
-      ...TEST_B2B_OPTIONS,
-      XSD_PATH,
-      endpoint: withCredentialsInUrl(MOCK_B2B_ENDPOINT),
-      xsdEndpoint: withCredentialsInUrl(WSDL_ARCHIVE_URL),
-    });
-
-    expect(output.lines.join('\n')).toContain(`Downloading ${WSDL_ARCHIVE_URL}`);
-    expect(output.lines.filter((line) => line.includes(URL_PASSWORD))).toEqual([]);
-  } finally {
-    await rm(XSD_PATH, { recursive: true, force: true });
-  }
+  expect(output.lines.join('\n')).toContain(`Downloading ${WSDL_ARCHIVE_URL}`);
+  expect(output.lines.filter((line) => line.includes(URL_PASSWORD))).toEqual([]);
 });
