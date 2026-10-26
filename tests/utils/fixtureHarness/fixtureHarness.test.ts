@@ -2,13 +2,14 @@
 // here, outside `pnpm update-fixtures` (which requires Node 24).
 import 'core-js/actual/disposable-stack/index.js';
 import { http, HttpResponse } from 'msw';
+import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { beforeEach, describe, expect, test } from 'vitest';
 import { createB2BClient } from '../../../src/index.ts';
 import { TEST_B2B_OPTIONS } from '../../options.ts';
-import type { FixtureLocation } from '../artifacts.ts';
+import { FixtureArtifacts, type FixtureLocation } from '../artifacts.ts';
 import { defineFixture, expectRecordedRequests, type RecordedExchangeId } from '../fixtures.ts';
 import { recordScenario } from './recordScenario.ts';
 import { replayScenario, type FixtureReplay } from './replayScenario.ts';
@@ -254,6 +255,28 @@ describe('fixture harness', () => {
     await expect(recordScenario(sameRequestTwiceScenario(), client, location)).rejects.toThrow(
       /"second" sent the same request as "first"/,
     );
+  });
+
+  test('fails the recording when .run() catches a failed recordExchange()', async () => {
+    const client = await createB2BClient(TEST_B2B_OPTIONS);
+    const catchesFailure = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' }).run(
+      async (client, _variables, { recordExchange }) => {
+        const request = { dataset: { type: 'OPERATIONAL' as const }, day: new Date('2026-08-02') };
+        const [first] = await Promise.allSettled([
+          recordExchange('first', () => client.Flow.retrieveOTMVPlan(request)),
+          recordExchange('Second', () => client.Flow.retrieveOTMVPlan(request)),
+        ]);
+        assert(first.status === 'fulfilled');
+        return first.value;
+      },
+    );
+
+    server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(OTMV_PLAN_REPLY)));
+
+    await expect(recordScenario(catchesFailure, client, location)).rejects.toThrow(
+      /caught by \.run\(\): Invalid recorded exchange id "Second"/,
+    );
+    expect(await new FixtureArtifacts(location).exchangeIds()).toEqual([]);
   });
 
   test('fails the recording when a request is sent outside recordExchange()', async () => {

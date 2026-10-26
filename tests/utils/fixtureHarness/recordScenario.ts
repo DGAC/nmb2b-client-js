@@ -39,27 +39,36 @@ export async function recordScenario<TVariables, TResult>(
   // Replay tells recorded exchanges apart only by request body.
   const idByRequestBody = new Map<string, RecordedExchangeId>();
   const usedIds = new Set<RecordedExchangeId>();
+  // Checked again after `.run()`, which could catch them and still return exchanges.
+  const failedChecks: Array<string> = [];
+
+  function check(condition: boolean, message: string): asserts condition {
+    if (!condition) {
+      failedChecks.push(message);
+      assert.fail(message);
+    }
+  }
 
   const runContext: FixtureRunContext = {
     recordExchange: async (id, call) => {
-      assert(
+      check(
         RECORDED_EXCHANGE_ID.test(id),
         `Invalid recorded exchange id "${id}": it must match /${RECORDED_EXCHANGE_ID.source}/.`,
       );
-      assert(!usedIds.has(id), `Recorded exchange id "${id}" is used twice.`);
+      check(!usedIds.has(id), `Recorded exchange id "${id}" is used twice.`);
       usedIds.add(id);
 
       const { result, sent } = await exchangeCapture.during(call);
 
-      assert(
+      check(
         sent.size === 1,
         `recordExchange("${id}") must send exactly one SOAP request, it sent ${sent.size}.`,
       );
       const [exchange] = sent.values();
-      assert(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
+      check(exchange?.reply !== undefined, `No B2B reply captured for "${id}".`);
 
       const sameRequestId = idByRequestBody.get(exchange.request);
-      assert(
+      check(
         sameRequestId === undefined,
         `Recorded exchange "${id}" sent the same request as "${sameRequestId}": replay could not tell them apart.`,
       );
@@ -77,6 +86,11 @@ export async function recordScenario<TVariables, TResult>(
 
   const outcome = await withDateFrozenAt(new Date(recordedAt), () =>
     executeOperation(client, variables, runContext),
+  );
+
+  assert(
+    failedChecks.length === 0,
+    `recordExchange() failed, caught by .run(): ${failedChecks.join(' ')}`,
   );
 
   if (outcome.exchanges !== undefined) {
