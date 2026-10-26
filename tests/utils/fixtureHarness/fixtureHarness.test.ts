@@ -43,7 +43,7 @@ function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
     );
 }
 
-function catchesFailedReplayScenario({ trafficVolume }: { trafficVolume: string }) {
+function otmvPlanScenarioCatchingErrors({ trafficVolume }: { trafficVolume: string }) {
   const scenario = otmvPlanScenario({ trafficVolume });
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
     .setup(() => Promise.resolve({ day: '2026-08-02' }))
@@ -247,7 +247,7 @@ describe('fixture harness', () => {
     server.resetHandlers();
 
     await expect(
-      replayScenario(catchesFailedReplayScenario({ trafficVolume: 'LFEEKD' }), client, location),
+      replayScenario(otmvPlanScenarioCatchingErrors({ trafficVolume: 'LFEEKD' }), client, location),
     ).rejects.toThrow(/matches no recorded exchange/);
   });
 

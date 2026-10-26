@@ -164,7 +164,8 @@ async function unmatchedRequestError(
   { body, exchanges }: UnmatchedRequest,
   options: ErrorOptions,
 ): Promise<Error> {
-  // Formatted for display only: matching compares the raw body.
+  // Formatted for display only: matching compares the raw body. oxfmt has no XML parser:
+  // HTML mode formats SOAP envelopes.
   const { code, errors } = await format('request.html', body, {
     htmlWhitespaceSensitivity: 'ignore',
   });
@@ -185,7 +186,7 @@ async function unmatchedRequestError(
     .map((id) => `"${id}"`)
     .join(', ');
   return new Error(
-    `The request matches no recorded exchange of the fixture scenario (expected: ${expectedIds}): re-record the fixture scenario if the change is intended.\n\nRequest sent:\n${formatted}`,
+    `The request matches no recorded exchange of the fixture scenario (expected: ${expectedIds}): re-record it with \`pnpm update-fixtures\` if the change is intended.\n\nRequest sent:\n${formatted}`,
     options,
   );
 }
