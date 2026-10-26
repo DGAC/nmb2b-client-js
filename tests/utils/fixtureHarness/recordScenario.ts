@@ -15,27 +15,19 @@ export async function recordScenario<TVariables, TResult>(
   const { service, setupRecording, executeOperation } = asCompleteFixture(fixture, location);
   const artifacts = new FixtureArtifacts<TVariables>(location);
 
-  const setupStart = new Date();
+  const recordedAt = new Date().toISOString();
   const variables = (setupRecording ? await setupRecording(client) : undefined) as TVariables;
-
-  // Capture mock date (ensure it matches the execution time)
-  const mockDate = setupStart.toISOString();
 
   const result = await executeOperation(client, variables);
 
-  const lastResponse = client[service].__soapClient.lastResponse as unknown;
+  const reply = client[service].__soapClient.lastResponse as unknown;
 
   assert(
-    lastResponse && typeof lastResponse === 'string',
+    reply && typeof reply === 'string',
     'No SOAP response captured. Did the executeOperation execute a SOAP query?',
   );
 
-  await artifacts.saveContext({
-    meta: { mockDate },
-    variables,
-  });
-
-  await artifacts.saveMock(lastResponse);
+  await artifacts.write({ recordedAt, variables, reply });
 
   return { variables, result };
 }
