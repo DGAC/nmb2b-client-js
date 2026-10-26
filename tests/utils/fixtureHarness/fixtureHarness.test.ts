@@ -18,12 +18,12 @@ import { server, SOAP_ENDPOINT } from '../msw.ts';
 const OTMV_PLAN_REPLY = `<?xml version='1.0' encoding='utf-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><fw:OTMVPlanRetrievalReply xmlns:fw="eurocontrol/cfmu/b2b/FlowServices"><requestReceptionTime>2026-08-02 16:00:56</requestReceptionTime><requestId>B2B_CUR2:1</requestId><sendTime>2026-08-02 16:00:56</sendTime><status>OK</status><data><plans><dataId>O1</dataId><dataset><type>OPERATIONAL</type></dataset><day>2026-08-02</day><planTransferred>true</planTransferred><planCutOffReached>true</planCutOffReached></plans></data></fw:OTMVPlanRetrievalReply></S:Body></S:Envelope>`;
 
 const scenario = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
-  .setup(() => Promise.resolve({ day: '2026-08-02', trafficVolume: 'LFEKD' }))
+  .setup(() => Promise.resolve({ day: new Date('2026-08-02'), trafficVolume: 'LFEKD' }))
   .run((client, { day, trafficVolume }, { recordExchange }) =>
     recordExchange('retrieveOTMVPlan', () =>
       client.Flow.retrieveOTMVPlan({
         dataset: { type: 'OPERATIONAL' },
-        day: new Date(day),
+        day,
         otmvsWithDuration: { item: [{ trafficVolume }] },
       }),
     ),
@@ -31,12 +31,12 @@ const scenario = defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
 
 function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
-    .setup(() => Promise.resolve({ day: '2026-08-02' }))
+    .setup(() => Promise.resolve({ day: new Date('2026-08-02') }))
     .run((client, { day }, { recordExchange }) =>
       recordExchange('retrieveOTMVPlan', () =>
         client.Flow.retrieveOTMVPlan({
           dataset: { type: 'OPERATIONAL' },
-          day: new Date(day),
+          day,
           otmvsWithDuration: { item: [{ trafficVolume }] },
         }),
       ),
@@ -46,7 +46,7 @@ function otmvPlanScenario({ trafficVolume }: { trafficVolume: string }) {
 function otmvPlanScenarioCatchingErrors({ trafficVolume }: { trafficVolume: string }) {
   const scenario = otmvPlanScenario({ trafficVolume });
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
-    .setup(() => Promise.resolve({ day: '2026-08-02' }))
+    .setup(() => Promise.resolve({ day: new Date('2026-08-02') }))
     .run(async (client, variables, runContext) => {
       try {
         return await scenario.executeOperation(client, variables, runContext);
@@ -58,12 +58,12 @@ function otmvPlanScenarioCatchingErrors({ trafficVolume }: { trafficVolume: stri
 
 function sendTwiceScenario() {
   return defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
-    .setup(() => Promise.resolve({ day: '2026-08-02' }))
+    .setup(() => Promise.resolve({ day: new Date('2026-08-02') }))
     .run((client, { day }, { recordExchange }) =>
       recordExchange('retrieveOTMVPlan', async () => {
         const request = {
           dataset: { type: 'OPERATIONAL' as const },
-          day: new Date(day),
+          day,
           otmvsWithDuration: { item: [{ trafficVolume: 'LFEKD' }] },
         };
         await client.Flow.retrieveOTMVPlan(request);
@@ -224,7 +224,7 @@ describe('fixture harness', () => {
 
     using replayed = await replayScenario(scenario, client, location);
 
-    expect(replayed.variables).toEqual({ day: '2026-08-02', trafficVolume: 'LFEKD' });
+    expect(replayed.variables).toEqual({ day: new Date('2026-08-02'), trafficVolume: 'LFEKD' });
     expect(replayed.result.data.plans.dataId).toBe('O1');
     expect(replayed.result).toEqual(recorded.result);
   });
