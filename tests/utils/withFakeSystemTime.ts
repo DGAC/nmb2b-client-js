@@ -1,15 +1,15 @@
-import { vi } from 'vitest';
+import FakeTimers from '@sinonjs/fake-timers';
 
 /**
  * Freezes `Date` at `now` until disposed. Timers and network are untouched.
  *
- * Implemented with `vi`, so it must run inside a Vitest test.
+ * Does not depend on Vitest: fixture recording uses it too, outside Vitest.
  */
 export function withFakeSystemTime(now: Date): Disposable {
-  vi.setSystemTime(now);
+  const clock = FakeTimers.install({ now, toFake: ['Date'] });
   return {
     [Symbol.dispose]: () => {
-      vi.useRealTimers();
+      clock.uninstall();
     },
   };
 }

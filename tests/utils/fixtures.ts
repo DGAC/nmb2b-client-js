@@ -1,4 +1,5 @@
 import { AssertionError } from 'node:assert';
+import type { RequestHandler } from 'msw';
 import type { ExpectStatic } from 'vitest';
 import type { B2BClient } from '../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
@@ -31,6 +32,11 @@ export interface RecordedReply {
 }
 
 /**
+ * Identifies a recorded exchange within a fixture scenario; part of its fixture artifact file names.
+ */
+export type RecordedExchangeId = string;
+
+/**
  * A recorded exchange: a SOAP request sent during fixture recording and the B2B reply.
  */
 export interface RecordedExchange {
@@ -39,22 +45,32 @@ export interface RecordedExchange {
 }
 
 /**
- * What `.run()` returns. `exchanges` is optional while scenarios migrate to `record()`:
+ * A recorded exchange during fixture replay, with the MSW handler that serves its reply.
+ */
+export interface ReplayedExchange extends RecordedExchange {
+  /**
+   * Serves the recorded reply once, to a request byte-identical to the recorded request.
+   */
+  readonly handler: RequestHandler;
+}
+
+/**
+ * What `.run()` returns. `exchanges` is optional while scenarios migrate to `recordExchange()`:
  * a scenario that omits it records and replays its reply as before.
  */
 export interface FixtureRunOutcome<TResult> {
   result: TResult;
-  exchanges?: Record<string, RecordedExchange>;
+  exchanges?: Record<RecordedExchangeId, RecordedExchange>;
 }
 
 /**
- * What `.run()` receives from fixture recording and fixture replay, each with its own `record`.
+ * What `.run()` receives from fixture recording and fixture replay, each with its own `recordExchange`.
  */
 export interface FixtureRunContext {
   /**
    * Records the single SOAP call made by `call` as the recorded exchange `id`.
    */
-  record: <Id extends string, T>(
+  recordExchange: <Id extends RecordedExchangeId, T>(
     id: Id,
     call: () => Promise<T>,
   ) => Promise<{ result: T; exchanges: Record<Id, RecordedExchange> }>;
@@ -78,9 +94,9 @@ export interface FixtureTestContext<TVariables, TResult> {
   expect: ExpectStatic;
   result: TResult;
   /**
-   * The recorded exchanges returned by `.run()`; empty when it returns none.
+   * The recorded exchanges returned by `.run()`, as replayed; empty when it returns none.
    */
-  exchanges: Record<string, RecordedExchange>;
+  exchanges: Record<RecordedExchangeId, ReplayedExchange>;
   fixtureLocation: FixtureLocation;
   variables: TVariables;
 }
@@ -233,11 +249,30 @@ export function expectSnapshot<TVariables, TResult>(): FixtureTestFn<TVariables,
 }
 
 /**
+ * Asserts that the replay sent exactly the recorded requests: the recorded exchanges
+ * returned by `.run()` are those on disk, and each of them was requested. Each replays once at most:
+ * a second identical request fails the replay.
+ */
+export function expectRecordedRequests<TVariables, TResult>(): FixtureTestFn<TVariables, TResult> {
+  return async ({ expect, fixtureLocation, exchanges }) => {
+    const recorded = await new FixtureArtifacts(fixtureLocation).exchangeIds();
+
+    expect(recorded, 'recorded exchanges on disk').not.toHaveLength(0);
+    expect(Object.keys(exchanges).toSorted(), 'recorded exchanges returned by .run()').toEqual(
+      recorded,
+    );
+    for (const [id, { handler }] of Object.entries(exchanges)) {
+      expect(handler.isUsed, `recorded exchange "${id}" never requested`).toBe(true);
+    }
+  };
+}
+
+/**
  * What fixture recording and fixture replay hand back: the variables, the scenario result
  * and its recorded exchanges.
  */
 export interface FixtureOutcome<TVariables, TResult> {
   variables: TVariables;
   result: TResult;
-  exchanges: Record<string, RecordedExchange>;
+  exchanges: Record<RecordedExchangeId, RecordedExchange>;
 }

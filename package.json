@@ -75,6 +75,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
+    "@sinonjs/fake-timers": "^15.4.0",
     "@total-typescript/shoehorn": "^0.1.2",
     "@types/debug": "^4.1.13",
     "@types/node": "^22.20.5",

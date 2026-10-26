@@ -20,10 +20,10 @@ describe('defineFixture', () => {
       });
   });
 
-  test('infers the result type of a record() call returned as is', () => {
+  test('infers the result type of a recordExchange() call returned as is', () => {
     defineFixture({ service: 'Flow', method: 'retrieveOTMVPlan' })
-      .run((client, _variables, { record }) =>
-        record('retrieveOTMVPlan', () =>
+      .run((client, _variables, { recordExchange }) =>
+        recordExchange('retrieveOTMVPlan', () =>
           client.Flow.retrieveOTMVPlan({ dataset: { type: 'OPERATIONAL' }, day: new Date() }),
         ),
       )
