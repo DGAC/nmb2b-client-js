@@ -235,17 +235,35 @@ describe(obfuscate, () => {
   test('should obfuscate all security values', () => {
     const obfuscated = obfuscate(
       fromPartial({
-        xsdEndpoint: 'foobar',
+        xsdEndpoint: 'https://fake-b2b.test/wsdl',
         security: { apiKeyId: 'bar', apiSecretKey: 'baz' },
       }),
     );
 
     expect(obfuscated).toEqual({
-      xsdEndpoint: 'foobar',
+      xsdEndpoint: 'https://fake-b2b.test/wsdl',
       security: {
         apiKeyId: 'xxxxxxxxxxxxxxxx',
         apiSecretKey: 'xxxxxxxxxxxxxxxx',
       },
+    });
+  });
+
+  test('should remove credentials from endpoint and xsdEndpoint', () => {
+    const obfuscated = obfuscate(
+      fromPartial({
+        endpoint: 'https://endpoint-user:endpoint-password@fake-b2b.test/soap',
+        xsdEndpoint: 'https://xsd-user:xsd-password@fake-b2b.test/wsdl',
+        security: { apiKeyId: 'bar', apiSecretKey: 'baz' },
+      }),
+    );
+
+    expect(JSON.stringify(obfuscated)).not.toMatch(
+      /endpoint-user|endpoint-password|xsd-user|xsd-password/,
+    );
+    expect(obfuscated).toMatchObject({
+      endpoint: 'https://fake-b2b.test/soap',
+      xsdEndpoint: 'https://fake-b2b.test/wsdl',
     });
   });
 });
