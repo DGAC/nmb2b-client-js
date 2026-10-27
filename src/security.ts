@@ -1,12 +1,13 @@
-import { assert } from './utils/assert.ts';
-import { createDebugLogger } from './utils/debug.ts';
-const debug = createDebugLogger('security');
 import fs from 'node:fs';
 
 import type { ISecurity } from 'soap';
 import { ClientSSLSecurity, ClientSSLSecurityPFX, BasicAuthSecurity } from 'soap';
 
 import type { Config } from './config.ts';
+import { assert } from './utils/assert.ts';
+import { createDebugLogger } from './utils/debug.ts';
+
+const debug = createDebugLogger('security');
 
 /**
  * Security configuration using a PFX / PKCS #12 certificate.
@@ -151,6 +152,7 @@ export function fromEnv(): Security {
     return envSecurity;
   }
 
+  // oxlint-disable-next-line node/no-process-env -- fromEnv() exists to read the environment
   envSecurity = fromValues(process.env);
 
   return envSecurity;

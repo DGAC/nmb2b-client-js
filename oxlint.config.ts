@@ -6,7 +6,7 @@ import vitest from 'oxlint-config-presets/@vitest/recommended.json' with { type:
 
 export default defineConfig({
   extends: [eslintRecommended, tsStrict, tsStylistic, vitest],
-  plugins: ['import'],
+  plugins: ['import', 'node', 'unicorn'],
   options: {
     typeAware: true,
   },
@@ -21,7 +21,11 @@ export default defineConfig({
     },
   },
   rules: {
+    'eslint/eqeqeq': 'error',
+    'eslint/no-console': 'error',
     'eslint/no-unused-vars': ['error', { destructuredArrayIgnorePattern: '^_' }],
+    'eslint/object-shorthand': 'error',
+    'eslint/prefer-const': 'error',
     'import/extensions': [
       'error',
       'always',
@@ -31,6 +35,8 @@ export default defineConfig({
         ignorePackages: true,
       },
     ],
+    'import/first': 'error',
+    'import/no-cycle': 'error',
     'typescript/array-type': 'off',
     'typescript/consistent-indexed-object-style': 'off',
     'typescript/consistent-type-definitions': 'off',
@@ -45,6 +51,8 @@ export default defineConfig({
         allowRegExp: false,
       },
     ],
+    'typescript/switch-exhaustiveness-check': 'error',
+    'unicorn/prefer-node-protocol': 'error',
   },
   overrides: [
     {
@@ -59,6 +67,20 @@ export default defineConfig({
         'vitest/valid-describe-callback': 'off',
         'vitest/no-conditional-expect': 'off',
         'vitest/require-mock-type-parameters': 'off',
+      },
+    },
+    {
+      // CLI scripts and e2e tests report to the console on purpose
+      files: ['scripts/**/*', 'src/**/*.e2e.test.ts'],
+      rules: {
+        'eslint/no-console': 'off',
+      },
+    },
+    {
+      // The library should take its config from the caller, not from the environment
+      files: ['src/**/*'],
+      rules: {
+        'node/no-process-env': 'error',
       },
     },
   ],

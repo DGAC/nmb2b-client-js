@@ -156,7 +156,7 @@ function buildQueryFunctionFromSoapDefinition<TInput extends B2BRequest, TResult
   return applyHooks<WithInjectedSendTime<TInput>, TResult>({
     service: queryDefinition.service,
     query: queryDefinition.query,
-    hooks: hooks,
+    hooks,
     queryFn: async (input, options?): Promise<TResult> => {
       try {
         const withSendTime: TInput = injectSendTime(input);
