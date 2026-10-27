@@ -1,5 +1,6 @@
-import path from 'node:path';
 import { createHash } from 'node:crypto';
+import path from 'node:path';
+
 import type { Config } from '../../config.ts';
 import { B2B_VERSION, type B2BFlavour } from '../../constants.ts';
 

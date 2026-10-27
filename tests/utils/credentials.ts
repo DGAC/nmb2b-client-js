@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+
 import type { Security } from '../../src/security.ts';
 import {
   CREDENTIAL_FIXTURES,

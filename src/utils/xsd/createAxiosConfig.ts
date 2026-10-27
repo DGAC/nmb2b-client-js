@@ -1,5 +1,6 @@
-import type { Security } from '../../security.ts';
 import https from 'node:https';
+
+import type { Security } from '../../security.ts';
 
 export function createAxiosConfig({ security }: { security?: Security }) {
   if (!!security && 'apiKeyId' in security) {

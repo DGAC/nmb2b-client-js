@@ -1,8 +1,9 @@
 import { add, sub } from 'date-fns';
-import { createFlightClient } from '../index.ts';
+import { describe, test, expect, assert } from 'vitest';
+
 import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
 import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
-import { describe, test, expect, assert } from 'vitest';
+import { createFlightClient } from '../index.ts';
 
 describe('queryFlightsByAirspace', async () => {
   const Flight = await createFlightClient(TEST_B2B_OPTIONS);

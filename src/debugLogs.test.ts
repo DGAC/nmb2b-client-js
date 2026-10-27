@@ -1,15 +1,17 @@
+import { format } from 'node:util';
+
 import createDebug from 'debug';
 import { http, HttpResponse } from 'msw';
-import { format } from 'node:util';
 import { create as createTar } from 'tar';
 import { expect, test } from 'vitest';
-import { TEST_B2B_OPTIONS } from '../tests/options.ts';
+
 import { MOCK_B2B_ENDPOINT, MOCK_B2B_XSD_ENDPOINT } from '../tests/constants.ts';
+import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import { URL_PASSWORD, withCredentialsInUrl } from '../tests/utils/credentials.ts';
 import { server } from '../tests/utils/msw.ts';
 import { withTempDirectory } from '../tests/utils/withTempDirectory.ts';
-import { getXSDCacheDirectory } from './utils/xsd/paths.ts';
 import { createB2BClient } from './index.ts';
+import { getXSDCacheDirectory } from './utils/xsd/paths.ts';
 
 const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
 

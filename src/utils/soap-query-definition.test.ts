@@ -1,7 +1,9 @@
-import { fromPartial } from '@total-typescript/shoehorn';
 import { AssertionError } from 'node:assert';
+
+import { fromPartial } from '@total-typescript/shoehorn';
 import type { Client as SoapClient } from 'soap';
 import { assert, describe, expect, test, vi } from 'vitest';
+
 import { createHook, NMB2BError, NMB2BTransportError } from '../index.ts';
 import type { B2BRequest, ReplyWithData } from '../types.ts';
 import type { SoapQueryHook } from '../utils/hooks/hooks.ts';

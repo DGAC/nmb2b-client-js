@@ -1,10 +1,12 @@
 import { assert } from './utils/assert.ts';
 import { createDebugLogger } from './utils/debug.ts';
 const debug = createDebugLogger('security');
-import type { Config } from './config.ts';
+import fs from 'node:fs';
+
 import type { ISecurity } from 'soap';
 import { ClientSSLSecurity, ClientSSLSecurityPFX, BasicAuthSecurity } from 'soap';
-import fs from 'node:fs';
+
+import type { Config } from './config.ts';
 
 /**
  * Security configuration using a PFX / PKCS #12 certificate.

@@ -19,7 +19,6 @@ import type {
   TerminalProcedure,
   TrafficVolumeId,
 } from '../Airspace/types.ts';
-
 import type {
   AirNavigationUnitId,
   B2BRequest,
@@ -50,7 +49,6 @@ import type {
   TimeHourMinutePeriod,
   WeightKg,
 } from '../Common/types.ts';
-
 import type {
   CountsCalculationType,
   CountsInterval,

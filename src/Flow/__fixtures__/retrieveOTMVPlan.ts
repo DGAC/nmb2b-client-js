@@ -1,4 +1,5 @@
 import { startOfMinute } from 'date-fns';
+
 import {
   defineFixture,
   expectRecordedRequests,

@@ -1,6 +1,8 @@
-import { add, startOfDay } from 'date-fns';
 import { inspect } from 'util';
+
+import { add, startOfDay } from 'date-fns';
 import { describe, expect, test } from 'vitest';
+
 import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
 import { NMB2BError, createFlowClient } from '../index.ts';
 

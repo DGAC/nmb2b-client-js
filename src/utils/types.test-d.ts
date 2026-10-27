@@ -1,4 +1,5 @@
 import { describe, test, expectTypeOf } from 'vitest';
+
 import type { SoapDeserializer, EmptyObjectToNullish } from './types.ts';
 
 describe('EmptyObjectToNullish', () => {

@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import type { EventEmitter } from 'node:events';
+
 import type { B2BClient } from '../../../src/index.ts';
 import { FixtureArtifacts, toRecordedExchange, type FixtureLocation } from '../artifacts.ts';
 import { deserializeFixtureContext, serializeFixtureContext } from '../fixtureContext.ts';

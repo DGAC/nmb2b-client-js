@@ -1,5 +1,7 @@
 import { delay, http, HttpResponse } from 'msw';
 import { assert, describe, expect, test } from 'vitest';
+
+import { MOCK_B2B_ENDPOINT } from '../tests/constants.ts';
 import { TEST_B2B_OPTIONS } from '../tests/options.ts';
 import {
   createTestSecurities,
@@ -7,17 +9,16 @@ import {
   URL_PASSWORD,
   withCredentialsInUrl,
 } from '../tests/utils/credentials.ts';
-import { MOCK_B2B_ENDPOINT } from '../tests/constants.ts';
 import { server, SOAP_ENDPOINT } from '../tests/utils/msw.ts';
 import { withTempDirectory } from '../tests/utils/withTempDirectory.ts';
 import { getSoapEndpoint } from './config.ts';
-import type { Security } from './security.ts';
 import {
   createB2BClient,
   createGeneralInformationClient,
   createHook,
   NMB2BTransportError,
 } from './index.ts';
+import type { Security } from './security.ts';
 
 /**
  * Awaits `promise`, which must reject with an `Error`, and returns that error.

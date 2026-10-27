@@ -1,8 +1,9 @@
+import { sub } from 'date-fns';
+import { describe, test, expect, assert } from 'vitest';
+
 import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
 import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 import { createAirspaceClient } from '../index.ts';
-import { sub } from 'date-fns';
-import { describe, test, expect, assert } from 'vitest';
 
 describe('queryCompleteAIXMDatasets', async () => {
   const Airspace = await createAirspaceClient(TEST_B2B_OPTIONS);

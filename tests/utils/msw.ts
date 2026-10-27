@@ -1,7 +1,9 @@
+import assert from 'node:assert';
+
 import { setupServer } from 'msw/node';
+
 import { getSoapEndpoint } from '../../src/config.ts';
 import { MOCK_B2B_ENDPOINT } from '../constants.ts';
-import assert from 'node:assert';
 
 const B2B_FLAVOUR = process.env.B2B_FLAVOUR;
 assert(B2B_FLAVOUR === undefined || B2B_FLAVOUR === 'OPS' || B2B_FLAVOUR === 'PREOPS');

@@ -11,7 +11,6 @@ import type {
   WithReferenceLocationOnPrefix,
   WithReferenceLocationOnPrefixOptional,
 } from '../Airspace/types.ts';
-
 import type {
   AirNavigationUnitId,
   B2BRequest,
@@ -28,7 +27,6 @@ import type {
   ReplyWithData,
   UserId,
 } from '../Common/types.ts';
-
 import type { FlightKeys, GroupReroutingIndicator, IFPLId, TrafficType } from '../Flight/types.ts';
 
 export type ReroutingId = string; // (UALPHA|DIGIT|SPECIAL_CHARACTER){1,8}

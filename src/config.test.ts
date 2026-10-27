@@ -1,4 +1,6 @@
 import { fromPartial } from '@total-typescript/shoehorn';
+import { describe, expect, test } from 'vitest';
+
 import {
   assertValidConfig,
   getEndpoint,
@@ -8,8 +10,6 @@ import {
   isConfigValid,
   obfuscate,
 } from './config.ts';
-
-import { describe, expect, test } from 'vitest';
 
 const VALID_SECURITY_MOCK = {
   apiKeyId: 'valid-id',

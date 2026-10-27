@@ -2,6 +2,7 @@
 import 'core-js/actual/disposable-stack/index.js';
 import { http, HttpResponse } from 'msw';
 import { format } from 'oxfmt';
+
 import type { B2BClient } from '../../../src/index.ts';
 import {
   FixtureArtifacts,

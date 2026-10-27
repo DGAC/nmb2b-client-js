@@ -1,4 +1,5 @@
 import { isAxiosError, type AxiosResponse } from 'axios';
+
 import { NMB2BTransportError, type NMB2BTransportErrorKind } from './NMB2BTransportError.ts';
 
 type SanitizeErrorContext = {

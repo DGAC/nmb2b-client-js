@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import { withFakeSystemTime } from './withFakeSystemTime.ts';
 
 describe('withFakeSystemTime', () => {
