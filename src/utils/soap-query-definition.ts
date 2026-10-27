@@ -1,19 +1,21 @@
+import { AssertionError } from 'node:assert';
+
 import { createClientAsync, type Client as SoapClient } from 'soap';
+
 import type { B2BRequest, Reply } from '../Common/types.ts';
-import type { SoapOptions } from '../soap.ts';
-import { applyHooks } from './hooks/index.ts';
-import { assertOkReply, injectSendTime, type WithInjectedSendTime } from './internals.ts';
-import { prepareSerializer } from './transformers/serializer.ts';
 import { getSoapEndpoint, type Config } from '../config.ts';
-import { getServiceWSDLFilePath } from './xsd/paths.ts';
 import { prepareSecurity } from '../security.ts';
+import type { SoapOptions } from '../soap.ts';
 import { deserializer as customDeserializer } from '../utils/transformers/index.ts';
 import { assert } from './assert.ts';
 import type { SoapQueryHook } from './hooks/hooks.ts';
+import { applyHooks } from './hooks/index.ts';
 import { logHook } from './hooks/withLog.ts';
-import { AssertionError } from 'node:assert';
+import { assertOkReply, injectSendTime, type WithInjectedSendTime } from './internals.ts';
 import { NMB2BError } from './NMB2BError.ts';
 import { sanitizeError } from './sanitizeError.ts';
+import { prepareSerializer } from './transformers/serializer.ts';
+import { getServiceWSDLFilePath } from './xsd/paths.ts';
 
 export type SoapQueryDefinition<TInput extends B2BRequest, TResult extends Reply> = {
   /**

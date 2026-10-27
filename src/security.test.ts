@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+
 import {
   assertValidSecurity,
   isValidSecurity,

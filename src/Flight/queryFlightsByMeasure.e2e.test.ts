@@ -1,6 +1,8 @@
-import { add, startOfHour, sub } from 'date-fns';
 import { inspect } from 'util';
+
+import { add, startOfHour, sub } from 'date-fns';
 import { assert, beforeAll, describe, expect, test } from 'vitest';
+
 import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
 import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 import type { Regulation } from '../Flow/types.ts';

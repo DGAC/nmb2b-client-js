@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+
 import { NMB2BTransportError } from '../index.ts';
 
 test.each([

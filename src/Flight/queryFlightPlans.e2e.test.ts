@@ -1,11 +1,13 @@
 import { inspect } from 'util';
+
+import { sub, add } from 'date-fns';
+import { describe, beforeAll, expect, test, assert } from 'vitest';
+
+import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
+import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 import { NMB2BError, createFlightClient } from '../index.ts';
 import type { SafeB2BDeserializedResponse } from '../types.ts';
-import { sub, add } from 'date-fns';
-import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
 import type { FlightOrFlightPlan as B2BFlight } from './types.ts';
-import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
-import { describe, beforeAll, expect, test, assert } from 'vitest';
 
 describe('queryFlightPlans', async () => {
   const Flight = await createFlightClient(TEST_B2B_OPTIONS);

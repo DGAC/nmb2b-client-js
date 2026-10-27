@@ -1,10 +1,10 @@
-import type { Security } from './security.ts';
-import { assertValidSecurity } from './security.ts';
 import type { B2BFlavour } from './constants.ts';
 import { B2B_VERSION, B2BFlavours } from './constants.ts';
+import type { Security } from './security.ts';
+import { assertValidSecurity } from './security.ts';
 import { assert } from './utils/assert.ts';
-import { stripUrlCredentials } from './utils/stripUrlCredentials.ts';
 import type { SoapQueryHook } from './utils/hooks/hooks.ts';
+import { stripUrlCredentials } from './utils/stripUrlCredentials.ts';
 
 export interface Config {
   /**

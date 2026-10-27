@@ -1,6 +1,8 @@
 import { AssertionError } from 'node:assert';
+
 import type { RequestHandler } from 'msw';
 import type { ExpectStatic } from 'vitest';
+
 import type { B2BClient } from '../../src/index.ts';
 import { FixtureArtifacts, type FixtureLocation } from './artifacts.ts';
 

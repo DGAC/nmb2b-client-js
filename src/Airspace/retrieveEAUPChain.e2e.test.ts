@@ -1,5 +1,6 @@
 import { sub } from 'date-fns';
 import { describe, expect, test } from 'vitest';
+
 import { TEST_B2B_OPTIONS } from '../../tests/options.ts';
 import { shouldUseRealB2BConnection } from '../../tests/utils.ts';
 import { createAirspaceClient } from '../index.ts';

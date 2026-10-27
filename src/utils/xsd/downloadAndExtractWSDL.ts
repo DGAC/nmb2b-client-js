@@ -1,14 +1,16 @@
-import axios, { AxiosHeaders } from 'axios';
-import { extract } from 'tar';
-import type { Security } from '../../security.ts';
-import { createDebugLogger } from '../debug.ts';
-import { createAxiosConfig } from './createAxiosConfig.ts';
 import type { Readable } from 'node:stream';
 import { text } from 'node:stream/consumers';
+
+import axios, { AxiosHeaders } from 'axios';
+import { extract } from 'tar';
+
+import type { Security } from '../../security.ts';
 import { assert } from '../assert.ts';
+import { createDebugLogger } from '../debug.ts';
 import { NMB2BTransportError } from '../NMB2BTransportError.ts';
 import { sanitizeError } from '../sanitizeError.ts';
 import { stripUrlCredentials } from '../stripUrlCredentials.ts';
+import { createAxiosConfig } from './createAxiosConfig.ts';
 const debug = createDebugLogger('wsdl-downloader');
 
 export async function downloadAndExtractWSDL(

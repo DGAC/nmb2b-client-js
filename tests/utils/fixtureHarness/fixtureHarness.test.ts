@@ -1,19 +1,21 @@
 // DisposableStack is native from Node 24; tests also run on Node 22. recordScenario needs it
 // here, outside `pnpm update-fixtures` (which requires Node 24).
 import 'core-js/actual/disposable-stack/index.js';
-import { http, HttpResponse } from 'msw';
 import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+
+import { http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, test } from 'vitest';
+
 import { createB2BClient } from '../../../src/index.ts';
 import { TEST_B2B_OPTIONS } from '../../options.ts';
 import { FixtureArtifacts, type FixtureLocation } from '../artifacts.ts';
 import { defineFixture, expectRecordedRequests, type RecordedExchangeId } from '../fixtures.ts';
+import { server, SOAP_ENDPOINT } from '../msw.ts';
 import { recordScenario } from './recordScenario.ts';
 import { replayScenario, type FixtureReplay } from './replayScenario.ts';
-import { server, SOAP_ENDPOINT } from '../msw.ts';
 
 const OTMV_PLAN_REPLY = `<?xml version='1.0' encoding='utf-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><fw:OTMVPlanRetrievalReply xmlns:fw="eurocontrol/cfmu/b2b/FlowServices"><requestReceptionTime>2026-08-02 16:00:56</requestReceptionTime><requestId>B2B_CUR2:1</requestId><sendTime>2026-08-02 16:00:56</sendTime><status>OK</status><data><plans><dataId>O1</dataId><dataset><type>OPERATIONAL</type></dataset><day>2026-08-02</day><planTransferred>true</planTransferred><planCutOffReached>true</planCutOffReached></plans></data></fw:OTMVPlanRetrievalReply></S:Body></S:Envelope>`;
 

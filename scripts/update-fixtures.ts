@@ -1,12 +1,13 @@
 import assert from 'node:assert';
 import { glob } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+
 import type { CreateB2BClientOptions } from '../src/index.ts';
 import { createB2BClient } from '../src/index.ts';
 import { fromValues } from '../src/security.ts';
 import { resolveB2BEnvironment } from '../tests/resolveB2BEnvironment.ts';
-import { assertIsFixture } from '../tests/utils/fixtures.ts';
 import { recordScenario } from '../tests/utils/fixtureHarness/recordScenario.ts';
+import { assertIsFixture } from '../tests/utils/fixtures.ts';
 
 const ROOT_DIR = join(import.meta.dirname, '..');
 

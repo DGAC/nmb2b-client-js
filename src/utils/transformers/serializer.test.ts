@@ -1,7 +1,9 @@
+import { AssertionError } from 'node:assert';
+
 import { UTCDate } from '@date-fns/utc';
 import { describe, expect, test } from 'vitest';
+
 import { assertIsValidSchema, prepareSerializer, createKeyOrderTransformer } from './serializer.ts';
-import { AssertionError } from 'node:assert';
 
 describe(createKeyOrderTransformer, () => {
   type TestCase = [

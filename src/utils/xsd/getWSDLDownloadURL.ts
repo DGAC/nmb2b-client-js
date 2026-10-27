@@ -1,13 +1,14 @@
 import { UTCDateMini } from '@date-fns/utc';
 import axios from 'axios';
 import { format } from 'date-fns';
+
 import { getFileUrl, getSoapEndpoint } from '../../config.ts';
 import type { B2BFlavour } from '../../constants.ts';
 import { B2B_VERSION } from '../../constants.ts';
 import type { Security } from '../../security.ts';
-import { timeFormatWithSeconds } from '../timeFormats.ts';
 import { NMB2BTransportError } from '../NMB2BTransportError.ts';
 import { sanitizeError } from '../sanitizeError.ts';
+import { timeFormatWithSeconds } from '../timeFormats.ts';
 import { createAxiosConfig } from './createAxiosConfig.ts';
 
 const makeQuery = ({ version }: { version: string }) => `

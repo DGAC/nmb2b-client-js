@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import { deserializeFixtureContext, serializeFixtureContext } from './fixtureContext.ts';
 
 function roundTrip(value: unknown): unknown {

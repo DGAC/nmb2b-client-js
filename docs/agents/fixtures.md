@@ -51,8 +51,9 @@ On replay, a recorded exchange's reply is served once, only to a request byte-id
 Each domain has one `src/<Domain>/<Domain>.test.ts` that loads all its scenarios; create it when the domain has none:
 
 ```ts
-import { registerFixtures } from '../../tests/utils/runner.ts';
 import { describe } from 'vitest';
+
+import { registerFixtures } from '../../tests/utils/runner.ts';
 
 describe('<Domain> Fixtures', async () => {
   await registerFixtures('./__fixtures__/*.ts', import.meta.url);
