@@ -21,6 +21,7 @@ export default defineConfig({
     },
   },
   rules: {
+    'eslint/eqeqeq': 'error',
     'eslint/no-unused-vars': ['error', { destructuredArrayIgnorePattern: '^_' }],
     'eslint/prefer-const': 'error',
     'import/extensions': [
