@@ -6,7 +6,7 @@ import vitest from 'oxlint-config-presets/@vitest/recommended.json' with { type:
 
 export default defineConfig({
   extends: [eslintRecommended, tsStrict, tsStylistic, vitest],
-  plugins: ['import'],
+  plugins: ['import', 'unicorn'],
   options: {
     typeAware: true,
   },
@@ -51,6 +51,7 @@ export default defineConfig({
       },
     ],
     'typescript/switch-exhaustiveness-check': 'error',
+    'unicorn/prefer-node-protocol': 'error',
   },
   overrides: [
     {

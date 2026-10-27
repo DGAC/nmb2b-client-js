@@ -1,4 +1,4 @@
-import { inspect } from 'util';
+import { inspect } from 'node:util';
 
 import { add, sub } from 'date-fns';
 import { assert, beforeAll, describe, expect, test } from 'vitest';

@@ -34,14 +34,18 @@ try {
   // Node checks neither the validity period nor the issuer of a client
   // certificate before sending a request: 100 years spares regenerating it.
   openssl([
+    /* oxlint-disable unicorn/no-useless-spread -- openssl arguments grouped by option */
     ...['req', '-x509', '-newkey', 'ec', '-pkeyopt', 'ec_paramgen_curve:P-256', '-noenc'],
     ...['-subj', CERTIFICATE_SUBJECT, '-days', '36500'],
     ...['-keyout', keyPath, '-out', certPath],
+    /* oxlint-enable unicorn/no-useless-spread */
   ]);
 
   const pfx = openssl([
+    /* oxlint-disable unicorn/no-useless-spread -- openssl arguments grouped by option */
     ...['pkcs12', '-export', '-inkey', keyPath, '-in', certPath],
     ...['-passout', 'env:PFX_PASSPHRASE'],
+    /* oxlint-enable unicorn/no-useless-spread */
   ]);
 
   const key = createPrivateKey(readFileSync(keyPath)).export({
