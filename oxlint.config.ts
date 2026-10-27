@@ -31,6 +31,7 @@ export default defineConfig({
         ignorePackages: true,
       },
     ],
+    'import/first': 'error',
     'import/no-cycle': 'error',
     'typescript/array-type': 'off',
     'typescript/consistent-indexed-object-style': 'off',
