@@ -152,6 +152,7 @@ export function fromEnv(): Security {
     return envSecurity;
   }
 
+  // oxlint-disable-next-line node/no-process-env -- fromEnv() exists to read the environment
   envSecurity = fromValues(process.env);
 
   return envSecurity;

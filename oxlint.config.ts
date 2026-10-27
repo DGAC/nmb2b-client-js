@@ -6,7 +6,7 @@ import vitest from 'oxlint-config-presets/@vitest/recommended.json' with { type:
 
 export default defineConfig({
   extends: [eslintRecommended, tsStrict, tsStylistic, vitest],
-  plugins: ['import', 'unicorn'],
+  plugins: ['import', 'node', 'unicorn'],
   options: {
     typeAware: true,
   },
@@ -74,6 +74,13 @@ export default defineConfig({
       files: ['scripts/**/*', 'src/**/*.e2e.test.ts'],
       rules: {
         'eslint/no-console': 'off',
+      },
+    },
+    {
+      // The library should take its config from the caller, not from the environment
+      files: ['src/**/*'],
+      rules: {
+        'node/no-process-env': 'error',
       },
     },
   ],
