@@ -45,6 +45,7 @@ export default defineConfig({
         allowRegExp: false,
       },
     ],
+    'typescript/switch-exhaustiveness-check': 'error',
   },
   overrides: [
     {
