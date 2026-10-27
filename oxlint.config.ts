@@ -22,6 +22,7 @@ export default defineConfig({
   },
   rules: {
     'eslint/eqeqeq': 'error',
+    'eslint/no-console': 'error',
     'eslint/no-unused-vars': ['error', { destructuredArrayIgnorePattern: '^_' }],
     'eslint/object-shorthand': 'error',
     'eslint/prefer-const': 'error',
@@ -66,6 +67,13 @@ export default defineConfig({
         'vitest/valid-describe-callback': 'off',
         'vitest/no-conditional-expect': 'off',
         'vitest/require-mock-type-parameters': 'off',
+      },
+    },
+    {
+      // CLI scripts and e2e tests report to the console on purpose
+      files: ['scripts/**/*', 'src/**/*.e2e.test.ts'],
+      rules: {
+        'eslint/no-console': 'off',
       },
     },
   ],
