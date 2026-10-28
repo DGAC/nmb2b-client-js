@@ -183,7 +183,7 @@ importers:
         version: 4.1.2
       remeda:
         specifier: ^2.53.0
-        version: 2.53.0
+        version: 2.54.1
       soap:
         specifier: ^1.14.0
         version: 1.14.0
@@ -1552,8 +1552,8 @@ packages:
   quansync@1.0.0:
     resolution: {integrity: sha512-5xZacEEufv3HSTPQuchrvV6soaiACMFnq1H8wkVioctoH3TRha9Sz66lOxRwPK/qZj7HPiSveih9yAyh98gvqA==}
 
-  remeda@2.53.0:
-    resolution: {integrity: sha512-1jeHr8AUMB3r089AOmaiHBPAcGTep27JCbMt8MeXXXquDkO3h2N4CtuK++4Oas8mulCUiOUDeZqN+ssrcatKlw==}
+  remeda@2.54.1:
+    resolution: {integrity: sha512-l3pxw2Hz5V2FG3RaU9C6z121H8dF5VYjj3z6lnHoN3SCRLoxr+pZS2dq8dDe3NA+9kyKm56A1BB2Ejr+DrLlJw==}
     engines: {node: '>=18.0.0'}
 
   resolve-pkg-maps@1.0.0:
@@ -2906,7 +2906,7 @@ snapshots:
 
   quansync@1.0.0: {}
 
-  remeda@2.53.0: {}
+  remeda@2.54.1: {}
 
   resolve-pkg-maps@1.0.0: {}
 
