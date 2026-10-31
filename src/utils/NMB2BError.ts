@@ -76,6 +76,10 @@ export class NMB2BError extends Error {
       this.inputValidationErrors = reply.inputValidationErrors;
     }
 
+    if (reply.outputValidationErrors) {
+      this.outputValidationErrors = reply.outputValidationErrors;
+    }
+
     if (reply.warnings) {
       this.warnings = reply.warnings;
     }
