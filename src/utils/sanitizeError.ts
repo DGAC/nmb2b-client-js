@@ -28,7 +28,7 @@ type SanitizeErrorContext = {
  */
 export function sanitizeError(err: unknown, context: SanitizeErrorContext): Error {
   const { service, query } = context;
-  const message = `${context.messagePrefix ?? ''}${err instanceof Error ? err.message : 'Unknown error'}`;
+  const message = `${context.messagePrefix ?? ''}${describeFailure(err)}`;
 
   // A response was received, but it is not a usable B2B reply. Checked before
   // axios errors, so that the kind does not depend on `soap` disabling axios'
@@ -79,6 +79,19 @@ export function sanitizeError(err: unknown, context: SanitizeErrorContext): Erro
     code: isNodeError(err) && typeof err.code === 'string' ? err.code : undefined,
     url: context.url,
   });
+}
+
+/**
+ * States what went wrong. For a response that is not a usable reply, it comes
+ * from what the library knows, since what `soap` throws depends on the body. It
+ * never includes the body: see {@link NMB2BTransportError.body}.
+ */
+function describeFailure(err: unknown): string {
+  if (isSoapResponseError(err) && soapResponseErrorKind(err) === 'http') {
+    return `HTTP status ${err.response.status}`;
+  }
+
+  return err instanceof Error ? err.message : 'Unknown error';
 }
 
 /**

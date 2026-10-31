@@ -156,6 +156,30 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(error.body).toBe('not xml at all');
     });
 
+    test.each([
+      ['a JSON body', '{"message": "Endpoint request timed out"}', 504, 'application/json'],
+      ['an HTML page', '<html><body>Bad Gateway</body></html>', 502, 'text/html'],
+      ['an empty body', '', 504, 'text/plain'],
+    ])('an error status with %s says so in its message', async (_, body, status, contentType) => {
+      server.use(
+        http.post(
+          SOAP_ENDPOINT,
+          () => new HttpResponse(body, { status, headers: { 'content-type': contentType } }),
+        ),
+      );
+
+      const { client } = await createClientWithCredentialsInUrl(security);
+      const error = await captureError(client.retrieveUserInformation({}));
+
+      assert.instanceOf(error, NMB2BTransportError);
+      expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
+      expect(error).toMatchObject({ kind: 'http', httpStatus: status, url: SOAP_ENDPOINT });
+      expect(error.message).toBe(
+        `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: HTTP status ${status}`,
+      );
+      expect(error.body).toBe(body);
+    });
+
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
       const envelope = `<?xml version="1.0" encoding="UTF-8"?>
 <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
