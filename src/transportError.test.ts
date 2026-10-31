@@ -79,6 +79,16 @@ const WSDL_LOOKUP_URL = getSoapEndpoint({ flavour: TEST_B2B_OPTIONS.flavour });
 /** Body of the reply seen on `retrieveEAUPChain` against real B2B. */
 const OBSERVED_BODY = '{"message": "Endpoint request timed out"}';
 
+const FAULT_ENVELOPE = `<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <S:Fault>
+      <faultcode>S:Server</faultcode>
+      <faultstring>Internal failure</faultstring>
+    </S:Fault>
+  </S:Body>
+</S:Envelope>`;
+
 const SECURITIES = createTestSecurities();
 
 describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
@@ -165,25 +175,25 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
     });
 
     test.each([
-      ['a 504 with a JSON body', OBSERVED_BODY, 504, 'application/json', 'http', 'HTTP status 504'],
+      ['a 504 with a JSON body', 'HTTP status 504', OBSERVED_BODY, 504, 'application/json', 'http'],
       [
         'a 502 with an HTML page',
+        'HTTP status 502',
         '<p>Bad Gateway</p>',
         502,
         'text/html',
         'http',
-        'HTTP status 502',
       ],
-      ['a 504 with an empty body', '', 504, 'text/plain', 'http', 'HTTP status 504'],
+      ['a 504 with an empty body', 'HTTP status 504', '', 504, 'text/plain', 'http'],
       [
         'a 200 with a JSON body',
+        'Unreadable reply (HTTP status 200)',
         OBSERVED_BODY,
         200,
         'application/json',
         'parse',
-        'Unreadable reply (HTTP status 200)',
       ],
-    ])('%s states what went wrong', async (_, body, status, contentType, kind, failure) => {
+    ])('%s reads "%s"', async (_, failure, body, status, contentType, kind) => {
       server.use(
         http.post(
           SOAP_ENDPOINT,
@@ -204,16 +214,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
     });
 
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
-      const envelope = `<?xml version="1.0" encoding="UTF-8"?>
-<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
-  <S:Body>
-    <S:Fault>
-      <faultcode>S:Server</faultcode>
-      <faultstring>Internal failure</faultstring>
-    </S:Fault>
-  </S:Body>
-</S:Envelope>`;
-      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(envelope, { status: 500 })));
+      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(FAULT_ENVELOPE, { status: 500 })));
 
       const { client, hookErrors } = await createClientWithCredentialsInUrl(security);
       const error = await captureError(client.retrieveUserInformation({}));
@@ -223,10 +224,18 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors).toHaveLength(1);
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'fault', httpStatus: 500 });
+      expect(error.body).toBe(FAULT_ENVELOPE);
+    });
+
+    test('a SOAP fault keeps its own message', async () => {
+      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(FAULT_ENVELOPE, { status: 500 })));
+
+      const { client } = await createClientWithCredentialsInUrl(security);
+      const error = await captureError(client.retrieveUserInformation({}));
+
       expect(error.message).toBe(
         '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: S:Server: Internal failure',
       );
-      expect(error.body).toBe(envelope);
     });
   });
 
