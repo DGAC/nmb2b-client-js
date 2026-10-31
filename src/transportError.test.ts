@@ -96,7 +96,9 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
         query: 'retrieveUserInformation',
         url: SOAP_ENDPOINT,
       });
-      expect(error.message).toMatch(/^\[Query GeneralInformation\.retrieveUserInformation\] /);
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Network error',
+      );
       expect(error.httpStatus).toBeUndefined();
     });
 
@@ -223,7 +225,9 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors).toHaveLength(1);
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'fault', httpStatus: 500 });
-      expect(error.message).toMatch(/Internal failure/);
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: S:Server: Internal failure',
+      );
       expect(error.body).toBe(envelope);
     });
   });
@@ -258,6 +262,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       assert.instanceOf(error, NMB2BTransportError);
       expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
       expect(error).toMatchObject({ kind: 'http', httpStatus: 503, url: WSDL_ARCHIVE_URL });
+      expect(error.message).toBe('Unable to download WSDL: HTTP status 503');
       expect(error.body).toBe('<p>Unavailable</p>');
     });
 
@@ -362,6 +367,7 @@ describe.each([
     assert.instanceOf(error, NMB2BTransportError);
     expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
     expect(error).toMatchObject({ kind: 'http', httpStatus: 503, url: WSDL_LOOKUP_URL });
+    expect(error.message).toBe('Request failed with status code 503');
     expect(error.body).toBe('<p>Unavailable</p>');
   });
 
