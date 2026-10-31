@@ -132,6 +132,18 @@ const WSDL_LOOKUP_FAILURES: Array<[string, Failure]> = [
       },
     },
   ],
+  [
+    'with a 200, without a WSDL file',
+    {
+      handler: () => HttpResponse.xml('<reply/>'),
+      expectedError: {
+        kind: 'parse',
+        message: 'Could not extract WSDL tarball file from B2B response',
+        httpStatus: 200,
+        body: '<reply/>',
+      },
+    },
+  ],
 ];
 
 const WSDL_ARCHIVE_FAILURES: Array<[string, Failure]> = [
@@ -151,6 +163,18 @@ const WSDL_ARCHIVE_FAILURES: Array<[string, Failure]> = [
         message: 'Unable to download WSDL: HTTP status 503',
         httpStatus: 503,
         body: '<p>Unavailable</p>',
+      },
+    },
+  ],
+  [
+    'with a 200, with an invalid Content-Type',
+    {
+      handler: () => HttpResponse.html('<p>Bad Gateway</p>'),
+      expectedError: {
+        kind: 'parse',
+        message: 'Unable to download WSDL: Invalid Content-Type: text/html',
+        httpStatus: 200,
+        body: '<p>Bad Gateway</p>',
       },
     },
   ],
