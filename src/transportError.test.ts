@@ -157,7 +157,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(JSON.stringify(error)).not.toContain('Bad Gateway');
     });
 
-    test('an unreadable reply is a parse transport error', async () => {
+    test('an invalid response body is a parse transport error', async () => {
       server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.text('not xml at all')));
 
       const { client, hookErrors } = await createClientWithCredentialsInUrl(security);

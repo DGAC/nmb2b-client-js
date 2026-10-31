@@ -84,7 +84,7 @@ export function sanitizeError(err: unknown, context: SanitizeErrorContext): Erro
 /**
  * States what went wrong.
  *
- * On an error status or an unreadable body, it comes from what the library
+ * On an error status or an invalid body, it comes from what the library
  * knows, since what `soap` throws depends on the body, and never includes that
  * body: see {@link NMB2BTransportError.body}. A SOAP fault keeps its own message.
  */
@@ -106,7 +106,7 @@ function describeFailure(err: unknown): string {
 
 /**
  * What `soap` throws when a response was received but is not a usable reply
- * (`soap/lib/client.js`): an error status, an unreadable body or a SOAP fault.
+ * (`soap/lib/client.js`): an error status, an invalid body or a SOAP fault.
  *
  * `soap` sends its requests with axios: `response` is the axios response.
  */
