@@ -180,6 +180,29 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(error.body).toBe(body);
     });
 
+    test.each([
+      ['a JSON body', '{"message": "Endpoint request timed out"}', 'application/json'],
+      ['a body that is not XML', 'not xml at all', 'text/plain'],
+    ])('a 200 response with %s says so in its message', async (_, body, contentType) => {
+      server.use(
+        http.post(
+          SOAP_ENDPOINT,
+          () => new HttpResponse(body, { headers: { 'content-type': contentType } }),
+        ),
+      );
+
+      const { client } = await createClientWithCredentialsInUrl(security);
+      const error = await captureError(client.retrieveUserInformation({}));
+
+      assert.instanceOf(error, NMB2BTransportError);
+      expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
+      expect(error).toMatchObject({ kind: 'parse', httpStatus: 200, url: SOAP_ENDPOINT });
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200)',
+      );
+      expect(error.body).toBe(body);
+    });
+
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
       const envelope = `<?xml version="1.0" encoding="UTF-8"?>
 <S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">

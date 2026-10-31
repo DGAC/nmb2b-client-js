@@ -87,8 +87,16 @@ export function sanitizeError(err: unknown, context: SanitizeErrorContext): Erro
  * never includes the body: see {@link NMB2BTransportError.body}.
  */
 function describeFailure(err: unknown): string {
-  if (isSoapResponseError(err) && soapResponseErrorKind(err) === 'http') {
-    return `HTTP status ${err.response.status}`;
+  if (isSoapResponseError(err)) {
+    const kind = soapResponseErrorKind(err);
+
+    if (kind === 'http') {
+      return `HTTP status ${err.response.status}`;
+    }
+
+    if (kind === 'parse') {
+      return `Unreadable reply (HTTP status ${err.response.status})`;
+    }
   }
 
   return err instanceof Error ? err.message : 'Unknown error';
