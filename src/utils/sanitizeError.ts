@@ -86,8 +86,7 @@ export function sanitizeError(err: unknown, context: SanitizeErrorContext): Erro
  *
  * On an error status or an unreadable body, it comes from what the library
  * knows, since what `soap` throws depends on the body, and never includes that
- * body: see {@link NMB2BTransportError.body}. The `Content-Type` of an unreadable
- * body tells what came back instead of XML. A SOAP fault keeps its own message.
+ * body: see {@link NMB2BTransportError.body}. A SOAP fault keeps its own message.
  */
 function describeFailure(err: unknown): string {
   if (isSoapResponseError(err)) {
@@ -98,11 +97,7 @@ function describeFailure(err: unknown): string {
     }
 
     if (kind === 'parse') {
-      const contentType = err.response.headers['content-type'] as unknown;
-
-      return typeof contentType === 'string'
-        ? `Unreadable reply (HTTP status ${err.response.status}, Content-Type: ${contentType})`
-        : `Unreadable reply (HTTP status ${err.response.status})`;
+      return `Unreadable reply (HTTP status ${err.response.status})`;
     }
   }
 
