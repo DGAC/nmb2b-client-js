@@ -9,7 +9,7 @@ type SanitizeErrorContext = {
   url?: string;
   service?: string;
   query?: string;
-  /** Put before the original message, e.g. where the failure happened. */
+  /** Put before the message, e.g. where the failure happened. */
   messagePrefix?: string;
 };
 
@@ -82,9 +82,11 @@ export function sanitizeError(err: unknown, context: SanitizeErrorContext): Erro
 }
 
 /**
- * States what went wrong. For a response that is not a usable reply, it comes
- * from what the library knows, since what `soap` throws depends on the body. It
- * never includes the body: see {@link NMB2BTransportError.body}.
+ * States what went wrong.
+ *
+ * On an error status or an unreadable body, it comes from what the library
+ * knows, since what `soap` throws depends on the body, and never includes that
+ * body: see {@link NMB2BTransportError.body}. A SOAP fault keeps its own message.
  */
 function describeFailure(err: unknown): string {
   if (isSoapResponseError(err)) {
