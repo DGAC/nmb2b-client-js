@@ -1,5 +1,15 @@
 # @dgac/nmb2b-client
 
+## 3.1.1
+
+### Patch Changes
+
+- [#400](https://github.com/DGAC/nmb2b-client-js/pull/400) [`443fe03`](https://github.com/DGAC/nmb2b-client-js/commit/443fe0315362c97c867b33fe6ad37165095efd53) Thanks [@kouak](https://github.com/kouak)! - `NMB2BError` now has `name` set to `NMB2BError`, so its stack trace and log output no longer start with `Error`.
+
+- [#402](https://github.com/DGAC/nmb2b-client-js/pull/402) [`c3bd5bc`](https://github.com/DGAC/nmb2b-client-js/commit/c3bd5bc176100a467b18aa495bda17b91f2b6f45) Thanks [@kouak](https://github.com/kouak)! - `NMB2BError` now exposes the `outputValidationErrors` of the reply, which were always `undefined`.
+
+- [#403](https://github.com/DGAC/nmb2b-client-js/pull/403) [`15ff106`](https://github.com/DGAC/nmb2b-client-js/commit/15ff10636758d2d97fc6fcd7ccb1dadf599bc5b9) Thanks [@kouak](https://github.com/kouak)! - `NMB2BTransportError` built from a query response now states what went wrong in its `message` (`HTTP status 504`, `Invalid response body (HTTP status 200)`), instead of `Unknown error` or whatever `soap` threw.
+
 ## 3.1.0
 
 ### Minor Changes
