@@ -345,6 +345,22 @@ describe(createB2BClient, () => {
         expect(error.kind).toBe(expectedError.kind);
       });
 
+      test('should report the HTTP status, if any', async () => {
+        server.use(useHandler(handler));
+
+        const error = await captureWSDLError(SECURITY, xsdEndpoint);
+
+        expect(error.httpStatus).toBe(expectedError.httpStatus);
+      });
+
+      test('should hold the body of the response, if any', async () => {
+        server.use(useHandler(handler));
+
+        const error = await captureWSDLError(SECURITY, xsdEndpoint);
+
+        expect(error.body).toBe(expectedError.body);
+      });
+
       test('should report the URL', async () => {
         server.use(useHandler(handler));
 
