@@ -43,3 +43,26 @@ test('keeps the message and reply fields', () => {
   expect(error.requestId).toBe('REQUEST-1');
   expect(error.requestReceptionTime).toBe(requestReceptionTime);
 });
+
+test('exposes the output validation errors of the reply', () => {
+  const outputValidationErrors = [
+    {
+      group: 'FLOW',
+      category: 'VALIDATION',
+      type: 'INVALID_ATTRIBUTE_VALUE',
+      parameters: {},
+    } as const,
+  ];
+  const error = new NMB2BError({
+    reply: { status: 'INVALID_OUTPUT', outputValidationErrors },
+  });
+
+  expect(error.outputValidationErrors).toEqual(outputValidationErrors);
+  expect(error.message).toBe('INVALID_OUTPUT');
+});
+
+test('leaves the output validation errors unset when the reply has none', () => {
+  const error = new NMB2BError({ reply: { status: 'INVALID_OUTPUT' } });
+
+  expect(error).not.toHaveProperty('outputValidationErrors');
+});
