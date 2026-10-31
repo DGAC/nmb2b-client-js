@@ -9,7 +9,7 @@ type SanitizeErrorContext = {
   url?: string;
   service?: string;
   query?: string;
-  /** Put before the original message, e.g. where the failure happened. */
+  /** Put before the message, e.g. where the failure happened. */
   messagePrefix?: string;
 };
 
@@ -28,7 +28,7 @@ type SanitizeErrorContext = {
  */
 export function sanitizeError(err: unknown, context: SanitizeErrorContext): Error {
   const { service, query } = context;
-  const message = `${context.messagePrefix ?? ''}${err instanceof Error ? err.message : 'Unknown error'}`;
+  const message = `${context.messagePrefix ?? ''}${describeFailure(err)}`;
 
   // A response was received, but it is not a usable B2B reply. Checked before
   // axios errors, so that the kind does not depend on `soap` disabling axios'
@@ -82,8 +82,31 @@ export function sanitizeError(err: unknown, context: SanitizeErrorContext): Erro
 }
 
 /**
+ * States what went wrong.
+ *
+ * On an error status or an invalid body, it comes from what the library
+ * knows, since what `soap` throws depends on the body, and never includes that
+ * body: see {@link NMB2BTransportError.body}. A SOAP fault keeps its own message.
+ */
+function describeFailure(err: unknown): string {
+  if (isSoapResponseError(err)) {
+    const kind = soapResponseErrorKind(err);
+
+    if (kind === 'http') {
+      return `HTTP status ${err.response.status}`;
+    }
+
+    if (kind === 'parse') {
+      return `Invalid response body (HTTP status ${err.response.status})`;
+    }
+  }
+
+  return err instanceof Error ? err.message : 'Unknown error';
+}
+
+/**
  * What `soap` throws when a response was received but is not a usable reply
- * (`soap/lib/client.js`): an error status, an unreadable body or a SOAP fault.
+ * (`soap/lib/client.js`): an error status, an invalid body or a SOAP fault.
  *
  * `soap` sends its requests with axios: `response` is the axios response.
  */

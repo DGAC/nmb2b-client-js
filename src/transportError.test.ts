@@ -76,6 +76,19 @@ function createClientWithEmptyCache(
 const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
 const WSDL_LOOKUP_URL = getSoapEndpoint({ flavour: TEST_B2B_OPTIONS.flavour });
 
+/** Body of the reply seen on `retrieveEAUPChain` against real B2B. */
+const OBSERVED_BODY = '{"message": "Endpoint request timed out"}';
+
+const FAULT_ENVELOPE = `<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <S:Fault>
+      <faultcode>S:Server</faultcode>
+      <faultstring>Internal failure</faultstring>
+    </S:Fault>
+  </S:Body>
+</S:Envelope>`;
+
 const SECURITIES = createTestSecurities();
 
 describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
@@ -96,7 +109,9 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
         query: 'retrieveUserInformation',
         url: SOAP_ENDPOINT,
       });
-      expect(error.message).toMatch(/^\[Query GeneralInformation\.retrieveUserInformation\] /);
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Network error',
+      );
       expect(error.httpStatus).toBeUndefined();
     });
 
@@ -142,7 +157,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(JSON.stringify(error)).not.toContain('Bad Gateway');
     });
 
-    test('an unreadable reply is a parse transport error', async () => {
+    test('an invalid response body is a parse transport error', async () => {
       server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.text('not xml at all')));
 
       const { client, hookErrors } = await createClientWithCredentialsInUrl(security);
@@ -153,20 +168,100 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors).toHaveLength(1);
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'parse', httpStatus: 200 });
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Invalid response body (HTTP status 200)',
+      );
       expect(error.body).toBe('not xml at all');
     });
 
+    describe.each([
+      [
+        'with a 504, with a JSON body',
+        {
+          response: { body: OBSERVED_BODY, statusCode: 504, contentType: 'application/json' },
+          expectedError: { kind: 'http', message: 'HTTP status 504' },
+        },
+      ],
+      [
+        'with a 502, with an HTML page',
+        {
+          response: { body: '<p>Bad Gateway</p>', statusCode: 502, contentType: 'text/html' },
+          expectedError: { kind: 'http', message: 'HTTP status 502' },
+        },
+      ],
+      [
+        'with a 504, with an empty body',
+        {
+          response: { body: '', statusCode: 504, contentType: 'text/plain' },
+          expectedError: { kind: 'http', message: 'HTTP status 504' },
+        },
+      ],
+      [
+        'with a 200, with a JSON body',
+        {
+          response: { body: OBSERVED_BODY, statusCode: 200, contentType: 'application/json' },
+          expectedError: { kind: 'parse', message: 'Invalid response body (HTTP status 200)' },
+        },
+      ],
+      [
+        'with a 302, with an HTML page',
+        {
+          response: {
+            body: '<html><body>Moved</body></html>',
+            statusCode: 302,
+            contentType: 'text/html',
+          },
+          expectedError: { kind: 'parse', message: 'Invalid response body (HTTP status 302)' },
+        },
+      ],
+    ])('%s', (_, { response, expectedError }) => {
+      async function captureTransportError() {
+        server.use(
+          http.post(
+            SOAP_ENDPOINT,
+            () =>
+              new HttpResponse(response.body, {
+                status: response.statusCode,
+                headers: { 'content-type': response.contentType },
+              }),
+          ),
+        );
+
+        const { client } = await createClientWithCredentialsInUrl(security);
+        const error = await captureError(client.retrieveUserInformation({}));
+
+        assert.instanceOf(error, NMB2BTransportError);
+        return error;
+      }
+
+      test(`should read "${expectedError.message}"`, async () => {
+        const error = await captureTransportError();
+
+        expect(error.message).toBe(
+          `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${expectedError.message}`,
+        );
+      });
+
+      test(`should report kind "${expectedError.kind}" with the status, URL and body of the response`, async () => {
+        const error = await captureTransportError();
+
+        expect(error).toMatchObject({
+          kind: expectedError.kind,
+          httpStatus: response.statusCode,
+          url: SOAP_ENDPOINT,
+        });
+        expect(error.body).toBe(response.body);
+      });
+
+      test('should not expose any credential', async () => {
+        const error = await captureTransportError();
+
+        expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
+      });
+    });
+
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
-      const envelope = `<?xml version="1.0" encoding="UTF-8"?>
-<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
-  <S:Body>
-    <S:Fault>
-      <faultcode>S:Server</faultcode>
-      <faultstring>Internal failure</faultstring>
-    </S:Fault>
-  </S:Body>
-</S:Envelope>`;
-      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(envelope, { status: 500 })));
+      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(FAULT_ENVELOPE, { status: 500 })));
 
       const { client, hookErrors } = await createClientWithCredentialsInUrl(security);
       const error = await captureError(client.retrieveUserInformation({}));
@@ -176,8 +271,18 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors).toHaveLength(1);
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'fault', httpStatus: 500 });
-      expect(error.message).toMatch(/Internal failure/);
-      expect(error.body).toBe(envelope);
+      expect(error.body).toBe(FAULT_ENVELOPE);
+    });
+
+    test('a SOAP fault keeps its own message', async () => {
+      server.use(http.post(SOAP_ENDPOINT, () => HttpResponse.xml(FAULT_ENVELOPE, { status: 500 })));
+
+      const { client } = await createClientWithCredentialsInUrl(security);
+      const error = await captureError(client.retrieveUserInformation({}));
+
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: S:Server: Internal failure',
+      );
     });
   });
 
@@ -211,6 +316,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       assert.instanceOf(error, NMB2BTransportError);
       expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
       expect(error).toMatchObject({ kind: 'http', httpStatus: 503, url: WSDL_ARCHIVE_URL });
+      expect(error.message).toBe('Unable to download WSDL: HTTP status 503');
       expect(error.body).toBe('<p>Unavailable</p>');
     });
 
@@ -315,6 +421,7 @@ describe.each([
     assert.instanceOf(error, NMB2BTransportError);
     expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
     expect(error).toMatchObject({ kind: 'http', httpStatus: 503, url: WSDL_LOOKUP_URL });
+    expect(error.message).toBe('Request failed with status code 503');
     expect(error.body).toBe('<p>Unavailable</p>');
   });
 
