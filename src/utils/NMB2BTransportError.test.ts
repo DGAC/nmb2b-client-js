@@ -13,3 +13,21 @@ test.each([
 
   expect(error.url).toBe(expected);
 });
+
+test('is named NMB2BTransportError', () => {
+  const error = new NMB2BTransportError({ message: 'boom', kind: 'network' });
+
+  expect(error.name).toBe('NMB2BTransportError');
+});
+
+test('is an Error', () => {
+  const error = new NMB2BTransportError({ message: 'boom', kind: 'network' });
+
+  expect(error).toBeInstanceOf(Error);
+});
+
+test('starts its stack trace with its name and message', () => {
+  const error = new NMB2BTransportError({ message: 'boom', kind: 'network' });
+
+  expect(error.stack).toMatch(/^NMB2BTransportError: boom\n/);
+});

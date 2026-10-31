@@ -4,6 +4,8 @@ import type { B2B_Error, Reply, ReplyStatus } from '../Common/types.ts';
  * Represents an error response received from NM B2B
  */
 export class NMB2BError extends Error {
+  override readonly name = 'NMB2BError';
+
   /**
    * UTC time at which the request was received at NM.
    *
