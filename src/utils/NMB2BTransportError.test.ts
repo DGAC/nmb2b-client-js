@@ -31,3 +31,14 @@ test('starts its stack trace with its name and message', () => {
 
   expect(error.stack).toMatch(/^NMB2BTransportError: boom\n/);
 });
+
+test('keeps the body out of default serialisation', () => {
+  const error = new NMB2BTransportError({
+    message: 'boom',
+    kind: 'http',
+    body: '<p>Bad Gateway</p>',
+  });
+
+  expect(Object.keys(error)).not.toContain('body');
+  expect(JSON.stringify(error)).not.toContain('Bad Gateway');
+});
