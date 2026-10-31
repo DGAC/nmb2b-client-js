@@ -174,37 +174,37 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(error.body).toBe('not xml at all');
     });
 
-    test.each([
+    describe.each([
       [
-        'a 504 with a JSON body reads "HTTP status 504"',
+        'with a 504, with a JSON body',
         {
           response: { body: OBSERVED_BODY, statusCode: 504, contentType: 'application/json' },
           expectedError: { kind: 'http', message: 'HTTP status 504' },
         },
       ],
       [
-        'a 502 with an HTML page reads "HTTP status 502"',
+        'with a 502, with an HTML page',
         {
           response: { body: '<p>Bad Gateway</p>', statusCode: 502, contentType: 'text/html' },
           expectedError: { kind: 'http', message: 'HTTP status 502' },
         },
       ],
       [
-        'a 504 with an empty body reads "HTTP status 504"',
+        'with a 504, with an empty body',
         {
           response: { body: '', statusCode: 504, contentType: 'text/plain' },
           expectedError: { kind: 'http', message: 'HTTP status 504' },
         },
       ],
       [
-        'a 200 with a JSON body reads "Invalid response body (HTTP status 200)"',
+        'with a 200, with a JSON body',
         {
           response: { body: OBSERVED_BODY, statusCode: 200, contentType: 'application/json' },
           expectedError: { kind: 'parse', message: 'Invalid response body (HTTP status 200)' },
         },
       ],
       [
-        'a 302 with an HTML page reads "Invalid response body (HTTP status 302)"',
+        'with a 302, with an HTML page',
         {
           response: {
             body: '<html><body>Moved</body></html>',
@@ -214,32 +214,34 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
           expectedError: { kind: 'parse', message: 'Invalid response body (HTTP status 302)' },
         },
       ],
-    ])('%s', async (_, { response, expectedError }) => {
-      server.use(
-        http.post(
-          SOAP_ENDPOINT,
-          () =>
-            new HttpResponse(response.body, {
-              status: response.statusCode,
-              headers: { 'content-type': response.contentType },
-            }),
-        ),
-      );
+    ])('%s', (_, { response, expectedError }) => {
+      test(`should read "${expectedError.message}"`, async () => {
+        server.use(
+          http.post(
+            SOAP_ENDPOINT,
+            () =>
+              new HttpResponse(response.body, {
+                status: response.statusCode,
+                headers: { 'content-type': response.contentType },
+              }),
+          ),
+        );
 
-      const { client } = await createClientWithCredentialsInUrl(security);
-      const error = await captureError(client.retrieveUserInformation({}));
+        const { client } = await createClientWithCredentialsInUrl(security);
+        const error = await captureError(client.retrieveUserInformation({}));
 
-      assert.instanceOf(error, NMB2BTransportError);
-      expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
-      expect(error).toMatchObject({
-        kind: expectedError.kind,
-        httpStatus: response.statusCode,
-        url: SOAP_ENDPOINT,
+        assert.instanceOf(error, NMB2BTransportError);
+        expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
+        expect(error).toMatchObject({
+          kind: expectedError.kind,
+          httpStatus: response.statusCode,
+          url: SOAP_ENDPOINT,
+        });
+        expect(error.message).toBe(
+          `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${expectedError.message}`,
+        );
+        expect(error.body).toBe(response.body);
       });
-      expect(error.message).toBe(
-        `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${expectedError.message}`,
-      );
-      expect(error.body).toBe(response.body);
     });
 
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
