@@ -30,12 +30,10 @@ describe(getWSDLDownloadURL, () => {
   describe('when the reply holds no WSDL file', () => {
     const REPLY_BODY = '<reply/>';
 
-    function createReplyHandler() {
-      return () => HttpResponse.xml(REPLY_BODY);
-    }
+    const REPLY_HANDLER = () => HttpResponse.xml(REPLY_BODY);
 
     test('should read "Could not extract WSDL tarball file from B2B response"', async () => {
-      server.use(http.post(url, createReplyHandler()));
+      server.use(http.post(url, REPLY_HANDLER));
 
       const error = await captureTransportError();
 
@@ -43,7 +41,7 @@ describe(getWSDLDownloadURL, () => {
     });
 
     test('should report kind "parse"', async () => {
-      server.use(http.post(url, createReplyHandler()));
+      server.use(http.post(url, REPLY_HANDLER));
 
       const error = await captureTransportError();
 
@@ -51,7 +49,7 @@ describe(getWSDLDownloadURL, () => {
     });
 
     test('should report HTTP status 200', async () => {
-      server.use(http.post(url, createReplyHandler()));
+      server.use(http.post(url, REPLY_HANDLER));
 
       const error = await captureTransportError();
 
@@ -59,7 +57,7 @@ describe(getWSDLDownloadURL, () => {
     });
 
     test('should report the URL', async () => {
-      server.use(http.post(url, createReplyHandler()));
+      server.use(http.post(url, REPLY_HANDLER));
 
       const error = await captureTransportError();
 
@@ -67,7 +65,7 @@ describe(getWSDLDownloadURL, () => {
     });
 
     test('should hold the body of the reply', async () => {
-      server.use(http.post(url, createReplyHandler()));
+      server.use(http.post(url, REPLY_HANDLER));
 
       const error = await captureTransportError();
 

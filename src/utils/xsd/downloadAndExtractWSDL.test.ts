@@ -123,16 +123,14 @@ describe(downloadAndExtractWSDL, () => {
       },
     ],
   ])('%s', (_, { response, expectedError }) => {
-    function createResponseHandler() {
-      return () =>
-        new HttpResponse(response.body, {
-          status: response.status,
-          headers: { 'content-type': response.contentType },
-        });
-    }
+    const RESPONSE_HANDLER = () =>
+      new HttpResponse(response.body, {
+        status: response.status,
+        headers: { 'content-type': response.contentType },
+      });
 
     test(`should read "${expectedError.message}"`, async () => {
-      server.use(http.get(url, createResponseHandler()));
+      server.use(http.get(url, RESPONSE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -140,7 +138,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test(`should report kind "${expectedError.kind}"`, async () => {
-      server.use(http.get(url, createResponseHandler()));
+      server.use(http.get(url, RESPONSE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -148,7 +146,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test(`should report HTTP status ${response.status}`, async () => {
-      server.use(http.get(url, createResponseHandler()));
+      server.use(http.get(url, RESPONSE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -156,7 +154,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test('should report the URL', async () => {
-      server.use(http.get(url, createResponseHandler()));
+      server.use(http.get(url, RESPONSE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -164,7 +162,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test('should hold the body of the response', async () => {
-      server.use(http.get(url, createResponseHandler()));
+      server.use(http.get(url, RESPONSE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -173,15 +171,13 @@ describe(downloadAndExtractWSDL, () => {
   });
 
   describe('when the remote server responds with a corrupt archive', () => {
-    function createCorruptArchiveHandler() {
-      return () =>
-        new HttpResponse('definitely not a tarball', {
-          headers: { 'content-type': 'application/gzip' },
-        });
-    }
+    const CORRUPT_ARCHIVE_HANDLER = () =>
+      new HttpResponse('definitely not a tarball', {
+        headers: { 'content-type': 'application/gzip' },
+      });
 
     test('should report kind "parse"', async () => {
-      server.use(http.get(url, createCorruptArchiveHandler()));
+      server.use(http.get(url, CORRUPT_ARCHIVE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -189,7 +185,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test('should report the URL', async () => {
-      server.use(http.get(url, createCorruptArchiveHandler()));
+      server.use(http.get(url, CORRUPT_ARCHIVE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -197,7 +193,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test('should not expose any credential', async () => {
-      server.use(http.get(url, createCorruptArchiveHandler()));
+      server.use(http.get(url, CORRUPT_ARCHIVE_HANDLER));
 
       const error = await captureTransportError();
 
@@ -215,25 +211,23 @@ describe(downloadAndExtractWSDL, () => {
       { response: { status: 503, contentType: 'text/html' } },
     ],
   ])('%s', (_, { response }) => {
-    function createLostConnectionHandler() {
-      return () => {
-        const body = new ReadableStream({
-          async pull(controller) {
-            controller.enqueue(new TextEncoder().encode('partial'));
-            await delay(20);
-            controller.error(new Error('Connection lost'));
-          },
-        });
+    const LOST_CONNECTION_HANDLER = () => {
+      const body = new ReadableStream({
+        async pull(controller) {
+          controller.enqueue(new TextEncoder().encode('partial'));
+          await delay(20);
+          controller.error(new Error('Connection lost'));
+        },
+      });
 
-        return new HttpResponse(body, {
-          status: response.status,
-          headers: { 'content-type': response.contentType },
-        });
-      };
-    }
+      return new HttpResponse(body, {
+        status: response.status,
+        headers: { 'content-type': response.contentType },
+      });
+    };
 
     test('should report kind "network"', async () => {
-      server.use(http.get(url, createLostConnectionHandler()));
+      server.use(http.get(url, LOST_CONNECTION_HANDLER));
 
       const error = await captureTransportError();
 
@@ -241,7 +235,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test('should report the URL', async () => {
-      server.use(http.get(url, createLostConnectionHandler()));
+      server.use(http.get(url, LOST_CONNECTION_HANDLER));
 
       const error = await captureTransportError();
 
@@ -249,7 +243,7 @@ describe(downloadAndExtractWSDL, () => {
     });
 
     test('should not expose any credential', async () => {
-      server.use(http.get(url, createLostConnectionHandler()));
+      server.use(http.get(url, LOST_CONNECTION_HANDLER));
 
       const error = await captureTransportError();
 
