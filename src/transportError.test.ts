@@ -215,7 +215,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
         },
       ],
     ])('%s', (_, { response, expectedError }) => {
-      test(`should read "${expectedError.message}"`, async () => {
+      async function captureTransportError() {
         server.use(
           http.post(
             SOAP_ENDPOINT,
@@ -231,16 +231,32 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
         const error = await captureError(client.retrieveUserInformation({}));
 
         assert.instanceOf(error, NMB2BTransportError);
-        expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
+        return error;
+      }
+
+      test(`should read "${expectedError.message}"`, async () => {
+        const error = await captureTransportError();
+
+        expect(error.message).toBe(
+          `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${expectedError.message}`,
+        );
+      });
+
+      test(`should report kind "${expectedError.kind}" with the status, URL and body of the response`, async () => {
+        const error = await captureTransportError();
+
         expect(error).toMatchObject({
           kind: expectedError.kind,
           httpStatus: response.statusCode,
           url: SOAP_ENDPOINT,
         });
-        expect(error.message).toBe(
-          `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${expectedError.message}`,
-        );
         expect(error.body).toBe(response.body);
+      });
+
+      test('should not expose any credential', async () => {
+        const error = await captureTransportError();
+
+        expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
       });
     });
 
