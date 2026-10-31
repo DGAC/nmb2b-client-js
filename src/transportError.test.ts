@@ -175,37 +175,54 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
     });
 
     test.each([
-      ['a 504 with a JSON body', 'HTTP status 504', OBSERVED_BODY, 504, 'application/json', 'http'],
       [
-        'a 502 with an HTML page',
-        'HTTP status 502',
-        '<p>Bad Gateway</p>',
-        502,
-        'text/html',
-        'http',
-      ],
-      ['a 504 with an empty body', 'HTTP status 504', '', 504, 'text/plain', 'http'],
-      [
-        'a 200 with a JSON body',
-        'Invalid response body (HTTP status 200)',
-        OBSERVED_BODY,
-        200,
-        'application/json',
-        'parse',
+        'a 504 with a JSON body reads "HTTP status 504"',
+        {
+          response: { body: OBSERVED_BODY, statusCode: 504, contentType: 'application/json' },
+          expectedError: { kind: 'http', message: 'HTTP status 504' },
+        },
       ],
       [
-        'a 302 with an HTML page',
-        'Invalid response body (HTTP status 302)',
-        '<html><body>Moved</body></html>',
-        302,
-        'text/html',
-        'parse',
+        'a 502 with an HTML page reads "HTTP status 502"',
+        {
+          response: { body: '<p>Bad Gateway</p>', statusCode: 502, contentType: 'text/html' },
+          expectedError: { kind: 'http', message: 'HTTP status 502' },
+        },
       ],
-    ])('%s reads "%s"', async (_, failure, body, status, contentType, kind) => {
+      [
+        'a 504 with an empty body reads "HTTP status 504"',
+        {
+          response: { body: '', statusCode: 504, contentType: 'text/plain' },
+          expectedError: { kind: 'http', message: 'HTTP status 504' },
+        },
+      ],
+      [
+        'a 200 with a JSON body reads "Invalid response body (HTTP status 200)"',
+        {
+          response: { body: OBSERVED_BODY, statusCode: 200, contentType: 'application/json' },
+          expectedError: { kind: 'parse', message: 'Invalid response body (HTTP status 200)' },
+        },
+      ],
+      [
+        'a 302 with an HTML page reads "Invalid response body (HTTP status 302)"',
+        {
+          response: {
+            body: '<html><body>Moved</body></html>',
+            statusCode: 302,
+            contentType: 'text/html',
+          },
+          expectedError: { kind: 'parse', message: 'Invalid response body (HTTP status 302)' },
+        },
+      ],
+    ])('%s', async (_, { response, expectedError }) => {
       server.use(
         http.post(
           SOAP_ENDPOINT,
-          () => new HttpResponse(body, { status, headers: { 'content-type': contentType } }),
+          () =>
+            new HttpResponse(response.body, {
+              status: response.statusCode,
+              headers: { 'content-type': response.contentType },
+            }),
         ),
       );
 
@@ -214,11 +231,15 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
 
       assert.instanceOf(error, NMB2BTransportError);
       expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
-      expect(error).toMatchObject({ kind, httpStatus: status, url: SOAP_ENDPOINT });
+      expect(error).toMatchObject({
+        kind: expectedError.kind,
+        httpStatus: response.statusCode,
+        url: SOAP_ENDPOINT,
+      });
       expect(error.message).toBe(
-        `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${failure}`,
+        `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${expectedError.message}`,
       );
-      expect(error.body).toBe(body);
+      expect(error.body).toBe(response.body);
     });
 
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
