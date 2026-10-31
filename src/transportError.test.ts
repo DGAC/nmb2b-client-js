@@ -169,7 +169,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'parse', httpStatus: 200 });
       expect(error.message).toBe(
-        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200)',
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200, Content-Type: text/plain)',
       );
       expect(error.body).toBe('not xml at all');
     });
@@ -187,10 +187,18 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       ['a 504 with an empty body', 'HTTP status 504', '', 504, 'text/plain', 'http'],
       [
         'a 200 with a JSON body',
-        'Unreadable reply (HTTP status 200)',
+        'Unreadable reply (HTTP status 200, Content-Type: application/json)',
         OBSERVED_BODY,
         200,
         'application/json',
+        'parse',
+      ],
+      [
+        'a 302 with an HTML page',
+        'Unreadable reply (HTTP status 302, Content-Type: text/html)',
+        '<html><body>Moved</body></html>',
+        302,
+        'text/html',
         'parse',
       ],
     ])('%s reads "%s"', async (_, failure, body, status, contentType, kind) => {
@@ -211,6 +219,20 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
         `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${failure}`,
       );
       expect(error.body).toBe(body);
+    });
+
+    test('a 200 without a Content-Type reads "Unreadable reply (HTTP status 200)"', async () => {
+      const body = new TextEncoder().encode('not xml at all');
+      server.use(http.post(SOAP_ENDPOINT, () => new HttpResponse(body)));
+
+      const { client } = await createClientWithCredentialsInUrl(security);
+      const error = await captureError(client.retrieveUserInformation({}));
+
+      assert.instanceOf(error, NMB2BTransportError);
+      expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200)',
+      );
     });
 
     test('a SOAP fault is a fault transport error with the fault envelope as body', async () => {
