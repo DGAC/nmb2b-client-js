@@ -392,7 +392,19 @@ describe(createB2BClient, () => {
     });
   });
 
-  describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
+  /**
+   * The WSDL URL lookup only happens without `xsdEndpoint`, which API Gateway
+   * security requires: only certificate security goes through it.
+   */
+  const SECURITY_CASES: Array<
+    [string, { security: Security; wsdlLookupFailures: Array<[string, Failure]> }]
+  > = [
+    ['API Gateway', { security: SECURITIES['API Gateway'], wsdlLookupFailures: [] }],
+    ['PFX', { security: SECURITIES.PFX, wsdlLookupFailures: WSDL_LOOKUP_FAILURES }],
+    ['PEM', { security: SECURITIES.PEM, wsdlLookupFailures: WSDL_LOOKUP_FAILURES }],
+  ];
+
+  describe.each(SECURITY_CASES)('with %s security', (_, { security, wsdlLookupFailures }) => {
     test.each(QUERY_FAILURES)(
       'should not expose any credential when a query fails, %s',
       async (_title, { handler, requestOptions }) => {
@@ -414,17 +426,8 @@ describe(createB2BClient, () => {
         expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
       },
     );
-  });
 
-  /**
-   * The WSDL URL lookup only happens without `xsdEndpoint`, which API Gateway
-   * security requires: only certificate security goes through it.
-   */
-  describe.each([
-    ['PFX', SECURITIES.PFX],
-    ['PEM', SECURITIES.PEM],
-  ])('with %s security', (_, security) => {
-    test.each(WSDL_LOOKUP_FAILURES)(
+    test.each(wsdlLookupFailures)(
       'should not expose any credential when looking up the WSDL URL fails, %s',
       async (_title, { handler }) => {
         server.use(http.post(WSDL_LOOKUP_URL, handler));
