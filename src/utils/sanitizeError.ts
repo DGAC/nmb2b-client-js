@@ -97,7 +97,7 @@ function describeFailure(err: unknown): string {
     }
 
     if (kind === 'parse') {
-      return `Unreadable reply (HTTP status ${err.response.status})`;
+      return `Invalid response body (HTTP status ${err.response.status})`;
     }
   }
 

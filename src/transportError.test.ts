@@ -169,7 +169,7 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'parse', httpStatus: 200 });
       expect(error.message).toBe(
-        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200)',
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Invalid response body (HTTP status 200)',
       );
       expect(error.body).toBe('not xml at all');
     });
@@ -187,10 +187,18 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       ['a 504 with an empty body', 'HTTP status 504', '', 504, 'text/plain', 'http'],
       [
         'a 200 with a JSON body',
-        'Unreadable reply (HTTP status 200)',
+        'Invalid response body (HTTP status 200)',
         OBSERVED_BODY,
         200,
         'application/json',
+        'parse',
+      ],
+      [
+        'a 302 with an HTML page',
+        'Invalid response body (HTTP status 302)',
+        '<html><body>Moved</body></html>',
+        302,
+        'text/html',
         'parse',
       ],
     ])('%s reads "%s"', async (_, failure, body, status, contentType, kind) => {
