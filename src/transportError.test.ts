@@ -76,6 +76,9 @@ function createClientWithEmptyCache(
 const WSDL_ARCHIVE_URL = 'https://fake-b2b.test/wsdl/archive.tar.gz';
 const WSDL_LOOKUP_URL = getSoapEndpoint({ flavour: TEST_B2B_OPTIONS.flavour });
 
+/** Body of the reply seen on `retrieveEAUPChain` against real B2B. */
+const OBSERVED_BODY = '{"message": "Endpoint request timed out"}';
+
 const SECURITIES = createTestSecurities();
 
 describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
@@ -155,14 +158,32 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
       expect(hookErrors).toHaveLength(1);
       expect(hookErrors[0]).toBe(error);
       expect(error).toMatchObject({ kind: 'parse', httpStatus: 200 });
+      expect(error.message).toBe(
+        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200)',
+      );
       expect(error.body).toBe('not xml at all');
     });
 
     test.each([
-      ['a JSON body', '{"message": "Endpoint request timed out"}', 504, 'application/json'],
-      ['an HTML page', '<html><body>Bad Gateway</body></html>', 502, 'text/html'],
-      ['an empty body', '', 504, 'text/plain'],
-    ])('an error status with %s says so in its message', async (_, body, status, contentType) => {
+      ['a 504 with a JSON body', OBSERVED_BODY, 504, 'application/json', 'http', 'HTTP status 504'],
+      [
+        'a 502 with an HTML page',
+        '<p>Bad Gateway</p>',
+        502,
+        'text/html',
+        'http',
+        'HTTP status 502',
+      ],
+      ['a 504 with an empty body', '', 504, 'text/plain', 'http', 'HTTP status 504'],
+      [
+        'a 200 with a JSON body',
+        OBSERVED_BODY,
+        200,
+        'application/json',
+        'parse',
+        'Unreadable reply (HTTP status 200)',
+      ],
+    ])('%s states what went wrong', async (_, body, status, contentType, kind, failure) => {
       server.use(
         http.post(
           SOAP_ENDPOINT,
@@ -175,32 +196,9 @@ describe.each(Object.entries(SECURITIES))('with %s security', (_, security) => {
 
       assert.instanceOf(error, NMB2BTransportError);
       expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
-      expect(error).toMatchObject({ kind: 'http', httpStatus: status, url: SOAP_ENDPOINT });
+      expect(error).toMatchObject({ kind, httpStatus: status, url: SOAP_ENDPOINT });
       expect(error.message).toBe(
-        `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: HTTP status ${status}`,
-      );
-      expect(error.body).toBe(body);
-    });
-
-    test.each([
-      ['a JSON body', '{"message": "Endpoint request timed out"}', 'application/json'],
-      ['a body that is not XML', 'not xml at all', 'text/plain'],
-    ])('a 200 response with %s says so in its message', async (_, body, contentType) => {
-      server.use(
-        http.post(
-          SOAP_ENDPOINT,
-          () => new HttpResponse(body, { headers: { 'content-type': contentType } }),
-        ),
-      );
-
-      const { client } = await createClientWithCredentialsInUrl(security);
-      const error = await captureError(client.retrieveUserInformation({}));
-
-      assert.instanceOf(error, NMB2BTransportError);
-      expect(findCredentialPaths(error, security, [URL_PASSWORD])).toEqual([]);
-      expect(error).toMatchObject({ kind: 'parse', httpStatus: 200, url: SOAP_ENDPOINT });
-      expect(error.message).toBe(
-        '[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: Unreadable reply (HTTP status 200)',
+        `[Query GeneralInformation.retrieveUserInformation] Error thrown during query execution: ${failure}`,
       );
       expect(error.body).toBe(body);
     });
