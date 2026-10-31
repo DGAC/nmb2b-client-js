@@ -7,7 +7,7 @@ import { NMB2BTransportError } from './NMB2BTransportError.ts';
 import { sanitizeError } from './sanitizeError.ts';
 
 describe(sanitizeError, () => {
-  const URL = 'https://fake-b2b.test/soap';
+  const RESPONSE_URL = 'https://fake-b2b.test/soap';
   const CONTEXT_URL = 'https://fake-b2b.test/context';
   const PASSWORD = 'url-password';
   const URL_WITH_CREDENTIALS = `https://user:${PASSWORD}@fake-b2b.test/soap`;
@@ -27,7 +27,7 @@ describe(sanitizeError, () => {
     status,
     body,
     root,
-    url = URL,
+    url = RESPONSE_URL,
   }: {
     status: number;
     body: string;
@@ -142,11 +142,12 @@ describe(sanitizeError, () => {
     });
 
     test('should report the URL of the response rather than that of the context', () => {
-      const error = captureTransportError(createSoapError({ status: 504, body: '' }), {
-        url: CONTEXT_URL,
-      });
+      const error = captureTransportError(
+        createSoapError({ status: 504, body: '', url: RESPONSE_URL }),
+        { url: CONTEXT_URL },
+      );
 
-      expect(error.url).toBe(URL);
+      expect(error.url).toBe(RESPONSE_URL);
     });
 
     test('should fall back on the URL of the context', () => {
@@ -225,7 +226,7 @@ describe(sanitizeError, () => {
       test('should report its URL, without credentials', () => {
         const error = captureTransportError(FAILURE, {});
 
-        expect(error.url).toBe(URL);
+        expect(error.url).toBe(RESPONSE_URL);
       });
 
       test('should fall back on the URL of the context', () => {
