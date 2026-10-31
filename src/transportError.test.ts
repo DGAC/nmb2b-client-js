@@ -83,6 +83,18 @@ const QUERY_FAILURES: Array<[string, Failure]> = [
     },
   ],
   [
+    'with a 502, with an HTML page',
+    {
+      handler: () => HttpResponse.html('<p>Bad Gateway</p>', { status: 502 }),
+      expectedError: {
+        kind: 'http',
+        message: 'HTTP status 502',
+        httpStatus: 502,
+        body: '<p>Bad Gateway</p>',
+      },
+    },
+  ],
+  [
     'with a 200, with a JSON body',
     {
       handler: () => HttpResponse.json(JSON.parse(OBSERVED_BODY)),
