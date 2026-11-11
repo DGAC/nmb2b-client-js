@@ -84,7 +84,7 @@
     "@vitest/coverage-v8": "^5.0.5",
     "core-js": "^3.51.0",
     "msw": "^3.0.3",
-    "oxfmt": "^0.74.0",
+    "oxfmt": "^0.77.0",
     "oxlint": "^1.89.0",
     "oxlint-config-presets": "^0.1.21",
     "oxlint-tsgolint": "^7.0.2005",
