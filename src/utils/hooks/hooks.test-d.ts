@@ -7,14 +7,17 @@ import type { FlightPlanListReply, FlightPlanListRequest } from '../../Flight/ty
 import type { FlowService } from '../../Flow/index.ts';
 import type { GeneralInformationService } from '../../GeneralInformation/index.ts';
 import type { WithInjectedSendTime } from '../internals.ts';
-import type { ExtractQueryDefinitions } from '../soap-query-definition.ts';
 import {
   createHook,
-  type OnRequestErrorParameters,
   type OnRequestStartParameters,
   type OnRequestSuccessParameters,
   type SoapQueryHook,
 } from './hooks.ts';
+
+/**
+ * The queries a caller sees on a service: its keys, without the service's own members.
+ */
+type QueriesOf<TService> = Exclude<keyof TService, '__soapClient' | 'config' | '__definitions'>;
 
 describe('createHook', () => {
   test('should accept a hook typed with `string` and `unknown`', () => {
@@ -87,43 +90,51 @@ describe('createHook', () => {
 });
 
 describe('hook parameters', () => {
-  test('should reject a query that the service does not have', () => {
+  test('should not be callable with a query that the service does not have', () => {
+    const input = {} as WithInjectedSendTime<FlightPlanListRequest>;
+
+    expectTypeOf<SoapQueryHook>()
+      // @ts-expect-error -- `queryRegulations` is a Flow query
+      .toBeCallableWith({ service: 'Flight', query: 'queryRegulations', input });
+  });
+
+  test('should exclude a query that the service does not have from the start parameters', () => {
     expectTypeOf<{
       service: 'Flight';
       query: 'queryRegulations';
-      input: WithInjectedSendTime<B2BRequest>;
+      input: WithInjectedSendTime<FlightPlanListRequest>;
     }>().not.toExtend<OnRequestStartParameters>();
   });
 
-  test('should reject an unknown service', () => {
+  test('should exclude an unknown service from the success parameters', () => {
     expectTypeOf<{
       service: 'Unknown';
       query: 'queryFlightPlans';
-      response: Reply & { status: 'OK' };
+      response: FlightPlanListReply & { status: 'OK' };
     }>().not.toExtend<OnRequestSuccessParameters>();
   });
 
   test('should cover every Airspace query', () => {
     expectTypeOf<
       Extract<OnRequestStartParameters, { service: 'Airspace' }>['query']
-    >().toEqualTypeOf<keyof ExtractQueryDefinitions<AirspaceService>>();
+    >().toEqualTypeOf<QueriesOf<AirspaceService>>();
   });
 
   test('should cover every Flight query', () => {
-    expectTypeOf<
-      Extract<OnRequestSuccessParameters, { service: 'Flight' }>['query']
-    >().toEqualTypeOf<keyof ExtractQueryDefinitions<FlightService>>();
+    expectTypeOf<Extract<OnRequestStartParameters, { service: 'Flight' }>['query']>().toEqualTypeOf<
+      QueriesOf<FlightService>
+    >();
   });
 
   test('should cover every Flow query', () => {
-    expectTypeOf<Extract<OnRequestErrorParameters, { service: 'Flow' }>['query']>().toEqualTypeOf<
-      keyof ExtractQueryDefinitions<FlowService>
+    expectTypeOf<Extract<OnRequestStartParameters, { service: 'Flow' }>['query']>().toEqualTypeOf<
+      QueriesOf<FlowService>
     >();
   });
 
   test('should cover every GeneralInformation query', () => {
     expectTypeOf<
       Extract<OnRequestStartParameters, { service: 'GeneralInformation' }>['query']
-    >().toEqualTypeOf<keyof ExtractQueryDefinitions<GeneralInformationService>>();
+    >().toEqualTypeOf<QueriesOf<GeneralInformationService>>();
   });
 });
