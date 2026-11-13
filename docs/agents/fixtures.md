@@ -7,7 +7,8 @@ Failures B2B cannot produce on demand (network failure, timeout, proxy error pag
 ## Layout
 
 - Scenarios: `src/<Domain>/__fixtures__/<operation>.ts`. Each exported constant is one scenario; its name is the scenario name.
-- Artifacts, written by recording, under `src/<Domain>/__fixtures__/<operation>/`:
+- Scenarios about what every operation shares rather than one operation (e.g. reply errors) go to `src/Common/__fixtures__/<subject>.ts`, calling whichever operation produces the case.
+- Artifacts, written by recording, in the directory named after the scenario file (`src/<Domain>/__fixtures__/<operation>/`, or `src/Common/__fixtures__/<subject>/`):
   - `<scenario>.context.json`: setup variables and `meta.recordedAt`, written and read through `tests/utils/fixtureContext.ts`.
   - `<scenario>.<id>.request.xml` and `<scenario>.<id>.mock.xml`: one recorded exchange per `recordExchange(id, …)` call, the SOAP request as sent and the B2B reply.
   - `<scenario>.result.json`: the parsed result snapshot, written by `expectSnapshot()`.
@@ -41,6 +42,26 @@ export const nominal = defineFixture({ service: 'Flow', method: 'queryRegulation
 - `.test(name, fn)`: one or more assertions, receiving `{ expect, result, exchanges, variables }`; `exchanges` is what `.run()` returned, each with the MSW `handler` that replayed it. `expectSnapshot()` compares against `result.json`; `expectRecordedRequests()` asserts that the exchange ids returned by `.run()` are exactly those on disk, and that each was requested.
 
 Reference: `src/Flight/__fixtures__/retrieveFlight.ts`.
+
+## Recording an expected reply error
+
+To record a reply NM answers with an error (e.g. `INVALID_INPUT`), catch the `NMB2BError` inside the `recordExchange()` call and return it, narrowed to the expected status: the exchange is then recorded, and the error is `.run()`'s result. Any other error is rethrown: a reply error then records no exchange, and `.run()` may retry it under the same id. Throw when the call succeeds, so that recording fails instead of keeping an `OK` reply. Assert the error fields under test rather than `expectSnapshot()`, which would freeze its `requestId` and timestamps.
+
+```ts
+recordExchange('queryFlightsByAirspace', async () => {
+  try {
+    await client.Flight.queryFlightsByAirspace({/* ... */});
+  } catch (error) {
+    if (error instanceof NMB2BError && error.status === 'INVALID_INPUT') {
+      return error;
+    }
+    throw error;
+  }
+  throw new Error('queryFlightsByAirspace should reply INVALID_INPUT');
+});
+```
+
+Reference: `src/Common/__fixtures__/replyErrors.ts`.
 
 ## Replay matches the exact request
 
