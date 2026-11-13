@@ -247,6 +247,24 @@ const b2bClient = await createB2BClient({
 });
 ```
 
+Hook parameters are a union with one variant per query, discriminated by `service` and `query`. Narrowing on both types `input` and `response` as the caller of that query sees them, with no cast:
+
+- `input` is the request given to the query, before `sendTime` is injected: `sendTime` may be absent.
+- `response` is the deserialized reply returned to the caller, with `status: 'OK'`.
+
+```typescript
+import { createHook } from '@dgac/nmb2b-client';
+
+const withFlightPlanCount = createHook(() => ({
+  onRequestSuccess: ({ service, query, response }) => {
+    if (service === 'Flight' && query === 'queryFlightPlans') {
+      // `response` is a `FlightPlanListReply & { status: 'OK' }`
+      flightPlansGauge.set(response.data?.summaries?.length ?? 0);
+    }
+  },
+}));
+```
+
 # Contributing
 
 AI tools are welcome, but issues, comments and pull request descriptions must be written in your own voice. See [AI_POLICY.md](./AI_POLICY.md).
