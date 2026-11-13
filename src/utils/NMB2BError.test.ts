@@ -50,7 +50,6 @@ test('exposes the output validation errors of the reply', () => {
       group: 'FLOW',
       category: 'VALIDATION',
       type: 'INVALID_ATTRIBUTE_VALUE',
-      parameters: {},
     } as const,
   ];
   const error = new NMB2BError({
