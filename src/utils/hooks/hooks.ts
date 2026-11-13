@@ -1,7 +1,4 @@
-import type { AirspaceService } from '../../Airspace/index.ts';
-import type { FlightService } from '../../Flight/index.ts';
-import type { FlowService } from '../../Flow/index.ts';
-import type { GeneralInformationService } from '../../GeneralInformation/index.ts';
+import type { B2BClient } from '../../createB2BClient.ts';
 import type { WithInjectedSendTime } from '../internals.ts';
 import type { ExtractQueryDefinitions, SoapQueryDefinition } from '../soap-query-definition.ts';
 import type { Prettify } from '../types.ts';
@@ -30,14 +27,9 @@ export type SoapQueryHook = (
 /**
  * The services whose queries run hooks, keyed by the `service` name hooks receive.
  */
-type HookedServices = {
-  Airspace: AirspaceService;
-  Flight: FlightService;
-  Flow: FlowService;
-  GeneralInformation: GeneralInformationService;
-};
+type HookedServices = B2BClient;
 
-type QueryHookParametersOf<TService extends keyof HookedServices> = {
+type ServiceQueryHookParameters<TService extends keyof HookedServices> = {
   [
     TQuery in keyof ExtractQueryDefinitions<HookedServices[TService]> & string
   ]: ExtractQueryDefinitions<HookedServices[TService]>[TQuery] extends SoapQueryDefinition<
@@ -72,7 +64,7 @@ type QueryHookParametersOf<TService extends keyof HookedServices> = {
  * One variant per query of the client, discriminated by `service` and `query`.
  */
 type QueryHookParameters = {
-  [TService in keyof HookedServices]: QueryHookParametersOf<TService>;
+  [TService in keyof HookedServices]: ServiceQueryHookParameters<TService>;
 }[keyof HookedServices];
 
 /**
