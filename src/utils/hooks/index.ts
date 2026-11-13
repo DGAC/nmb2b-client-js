@@ -3,6 +3,28 @@ import type { SoapQueryHook } from './hooks.ts';
 
 type SoapQuery<Input, Output> = (input: Input, options?: SoapOptions) => Promise<Output>;
 
+/**
+ * {@link SoapQueryHook}, with the per-query union widened to what `applyHooks` knows at runtime.
+ */
+type UntypedSoapQueryHook = (hookParameters: {
+  service: string;
+  query: string;
+  input: unknown;
+}) => undefined | UntypedOnRequestEndHooks | Promise<UntypedOnRequestEndHooks>;
+
+type UntypedOnRequestEndHooks = {
+  onRequestSuccess?: (hookParameters: {
+    service: string;
+    query: string;
+    response: unknown;
+  }) => Promise<void> | void;
+  onRequestError?: (hookParameters: {
+    service: string;
+    query: string;
+    error: Error;
+  }) => Promise<void> | void;
+};
+
 export function applyHooks<TInput, TOutput>({
   service,
   query,
@@ -14,11 +36,22 @@ export function applyHooks<TInput, TOutput>({
   hooks: Array<SoapQueryHook>;
   queryFn: SoapQuery<TInput, TOutput>;
 }) {
+  /**
+   * The one cast between the runtime call and the per-query union of hook parameters.
+   *
+   * `service`, `query`, `TInput` and `TOutput` come from one query definition, whose service
+   * and query names are the variant's discriminants (`createSoapServiceFromSoapClient`),
+   * with `TInput` the input before `sendTime` injection and `TOutput` the reply after
+   * `assertOkReply` (`buildQueryFunctionFromSoapDefinition`). Being generic, they cannot be
+   * related to the union here.
+   */
+  const untypedHooks = hooks as Array<UntypedSoapQueryHook>;
+
   async function executeOnStartHooks({ input }: { input: TInput }) {
     const onSuccessHooks = [];
     const onErrorHooks = [];
 
-    for (const onRequestStart of hooks) {
+    for (const onRequestStart of untypedHooks) {
       const hookResult = await onRequestStart({ service, query, input });
 
       if (hookResult?.onRequestSuccess) {
