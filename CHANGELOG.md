@@ -1,5 +1,21 @@
 # @dgac/nmb2b-client
 
+## 3.2.0
+
+### Minor Changes
+
+- [#423](https://github.com/DGAC/nmb2b-client-js/pull/423) [`33a995d`](https://github.com/DGAC/nmb2b-client-js/commit/33a995d48d84180113bca6435412f02724681d8d) Thanks [@kouak](https://github.com/kouak)! - Type hook parameters per query: narrowing on `service` and `query` types `input` as the query's request and `response` as its OK reply.
+  
+  ```typescript
+  createHook(() => ({
+    onRequestSuccess: ({ service, query, response }) => {
+      if (service === 'Flight' && query === 'queryFlightPlans') {
+        response.data?.summaries; // response: FlightPlanListReply & { status: 'OK' }, no cast
+      }
+    },
+  }));
+  ```
+
 ## 3.1.1
 
 ### Patch Changes
