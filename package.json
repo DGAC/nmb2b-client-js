@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@date-fns/utc": "^2.1.1",
-    "axios": "^1.20.0",
+    "axios": "^1.21.1",
     "date-fns": "^4.4.0",
     "debug": "^4.4.3",
     "proper-lockfile": "^4.1.2",
