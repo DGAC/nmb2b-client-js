@@ -165,12 +165,21 @@ export type ServiceGroup =
   | 'GENERAL_INFORMATION'
   | 'PUBLISH_SUBSCRIBE';
 
+/**
+ * An error reported by NM in a reply, in its SOAP shape: lists and maps are wrapped in `item`.
+ */
 export interface B2B_Error {
-  attributes?: string[];
+  /**
+   * The attributes the error is about, e.g. `{ item: ['dataset', 'trafficWindow'] }`.
+   */
+  attributes?: NMList<string>;
   group: ServiceGroup;
   category: string;
   type: ErrorType;
-  parameters: { [key: string]: string };
+  /**
+   * Details on the error, as key/value pairs, e.g. `{ item: [{ key: 'CONSTRAINT', value: '…' }] }`.
+   */
+  parameters?: NMMap<string, string>;
   message?: string;
 }
 
