@@ -2,7 +2,7 @@
 
 Unit tests for SOAP operations record real B2B interactions once, then replay them offline through MSW.
 
-Failures B2B cannot produce on demand (network failure, timeout, proxy error page, corrupt WSDL archive) cannot be recorded: their tests write MSW handlers by hand, through the public API (e.g. `src/transportError.test.ts`).
+Failures B2B cannot produce on demand (network failure, timeout, proxy error page, corrupt WSDL archive) cannot be recorded: their tests write MSW handlers by hand. `src/transportError.test.ts` covers one failure of each kind through the public API, so through the real `soap` and axios. The others are tested next to the code that words them (`src/utils/xsd/`), and `src/utils/sanitizeError.test.ts` builds what these libraries throw by hand.
 
 ## Layout
 
